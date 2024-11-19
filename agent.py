@@ -1,3 +1,6 @@
+# cd ~/
+# sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest uvicorn langgraph.agent:app --host 0.0.0.0 --port 8123 --reload
+
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
 from langgraph.graph import StateGraph, MessagesState
@@ -9,7 +12,7 @@ import subprocess
 import os
 from dotenv import load_dotenv
 
-load_dotenv('keys')
+load_dotenv('langgraph/keys')
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 os.environ['LANGCHAIN_PROJECT'] = 'simon'
