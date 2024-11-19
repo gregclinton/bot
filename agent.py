@@ -1,4 +1,4 @@
-# cd ~/
+# cd ~
 # sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest uvicorn langgraph.agent:app --host 0.0.0.0 --port 8123 --reload
 
 from langchain_openai import ChatOpenAI
