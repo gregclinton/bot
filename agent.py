@@ -6,9 +6,13 @@ from langgraph.checkpoint.memory import MemorySaver
 from langchain.schema import SystemMessage, HumanMessage
 from langchain_community.tools import TavilySearchResults
 import subprocess
+import os
 from dotenv import load_dotenv
 
 load_dotenv('keys')
+os.environ['LANGCHAIN_TRACING_V2'] = 'true'
+os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
+os.environ['LANGCHAIN_PROJECT'] = 'simon'
 
 model = 'gpt-4o-mini'
 temperature = 0
@@ -109,3 +113,6 @@ async def post_prompt(req: Request):
         'model': model,
         'temperature': temperature,
     }
+os.environ['LANGCHAIN_TRACING_V2'] = 'true'
+os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
+os.environ['LANGCHAIN_PROJECT'] = 'simon'
