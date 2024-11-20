@@ -9,7 +9,7 @@ load_dotenv('keys')
 
 def create_db():
     import os
-    os.environ["USER_AGENT"] = "simon"
+    os.environ["USER_AGENT"] = "WebBaseLoader"
     from langchain_community.document_loaders import WebBaseLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 
@@ -25,15 +25,16 @@ def create_db():
 
     Chroma.from_documents(
         documents = splits,
-        collection_name = "rag-chroma",
+        collection_name = "weng-blogs",
         embedding = OpenAIEmbeddings(),
         persist_directory = 'storage'
     )
 
 # create_db()
 
-retriever = create_retriever_tool(Chroma(
-        collection_name = "rag-chroma",
+retriever = create_retriever_tool(
+    Chroma(
+        collection_name = "weng-blogs",
         embedding_function = OpenAIEmbeddings(),
         persist_directory = 'storage'
     ).as_retriever(),
