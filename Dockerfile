@@ -20,3 +20,5 @@ RUN pip install fastapi uvicorn
 RUN pip install tavily_python
 
 RUN pip install "langgraph-cli[inmem]==0.1.55"
+
+RUN pip install beautifulsoup4
