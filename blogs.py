@@ -32,7 +32,7 @@ def create_db():
 
 # create_db()
 
-retriever = create_retriever_tool(
+weng = create_retriever_tool(
     Chroma(
         collection_name = "weng-blogs",
         embedding_function = OpenAIEmbeddings(),
@@ -41,5 +41,3 @@ retriever = create_retriever_tool(
     "retrieve_blog_posts",
     "Search and return information about Lilian Weng blog posts on LLM agents, prompt engineering, and adversarial attacks on LLMs.",
 )
-
-tools = [retriever]
