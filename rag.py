@@ -10,26 +10,35 @@ from dotenv import load_dotenv
 
 load_dotenv('keys')
 
-urls = [
-    "https://lilianweng.github.io/posts/2023-06-23-agent/",
-    "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-    "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
-]
+def create_db():
+    urls = [
+        "https://lilianweng.github.io/posts/2023-06-23-agent/",
+        "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
+        "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
+    ]
 
-docs = [WebBaseLoader(url).load() for url in urls]
+    docs = [WebBaseLoader(url).load() for url in urls]
 
-docs_list = [item for sublist in docs for item in sublist]
+    docs_list = [item for sublist in docs for item in sublist]
 
-text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-    chunk_size = 100, chunk_overlap = 50
-)
-doc_splits = text_splitter.split_documents(docs_list)
-print(doc_splits[0])
+    text_splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
+        chunk_size = 100, chunk_overlap = 50
+    )
+    doc_splits = text_splitter.split_documents(docs_list)
 
-vectorstore = Chroma.from_documents(
-    documents = doc_splits,
-    collection_name = "rag-chroma",
-    embedding = OpenAIEmbeddings(),
+    vectorstore = Chroma.from_documents(
+        documents=doc_splits,
+        collection_name="rag-chroma",
+        embedding=OpenAIEmbeddings(),
+        persist_directory='storage'
+    )
+
+# create_db()
+
+vectorstore = Chroma(
+    collection_name="rag-chroma",
+    embedding_function=OpenAIEmbeddings(),
+    persist_directory='storage'
 )
 
 retriever = vectorstore.as_retriever()
