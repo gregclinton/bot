@@ -5,7 +5,6 @@ from langgraph.graph import StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 from langchain.schema import SystemMessage, HumanMessage
-import subprocess
 import os
 from dotenv import load_dotenv
 
@@ -14,7 +13,7 @@ os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 os.environ['LANGCHAIN_PROJECT'] = 'simon'
 
-def graph(system_instruction, tools):
+def react(system_instruction, tools):
 
     def call_model(state: MessagesState):
         llm = ChatOpenAI(model = 'gpt-4o-mini', temperature = 0).bind_tools(tools)

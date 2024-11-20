@@ -1,4 +1,4 @@
-from langchain_community.tools import TavilySearchResults
+from langchain_community.tools import tool, TavilySearchResults
 
 search = TavilySearchResults(
     max_results=2,
@@ -8,9 +8,10 @@ search = TavilySearchResults(
     include_images=False
 )
 
+@tool
 def shell(line):
     """
         run a shell command
     """
-    print(line, flush = True)
+    import subprocess
     return subprocess.run(line, shell = True, capture_output = True, text = True).stdout
