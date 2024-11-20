@@ -12,16 +12,17 @@ load_dotenv('keys')
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 
-def react(agent_name, system_instruction, tools):
+def get_model(model, temperature, instructions, tools):
+    def call_model(state: MessagesState):
+        llm = ChatOpenAI(model = model, temperature = 0).bind_tools(tools)
+        return {'messages': llm.invoke([SystemMessage(instructions)] + state['messages'])}
+    return call_model
+
+def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 0):
     os.environ['LANGCHAIN_PROJECT'] = agent_name
 
-    def call_model(state: MessagesState):
-        llm = ChatOpenAI(model = 'gpt-4o-mini', temperature = 0).bind_tools(tools)
-        instructions = SystemMessage(content = system_instruction)
-        return {'messages': llm.invoke([instructions] + state['messages'])}
-
     workflow = StateGraph(MessagesState)
-    workflow.add_node('agent', call_model)
+    workflow.add_node('agent', get_model(model, temperature, instructions, tools))
     workflow.add_node('tools', ToolNode(tools = tools))
     workflow.add_conditional_edges('agent', tools_condition)
     workflow.add_edge('tools', 'agent')
