@@ -4,7 +4,7 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
-from langchain.schema import SystemMessage, HumanMessage
+from langchain.schema import SystemMessage
 import os
 from dotenv import load_dotenv
 

@@ -1,6 +1,7 @@
 # sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest uvicorn server:app --host 0.0.0.0 --port 8123 --reload
 
 import simon
+from langchain.schema import HumanMessage
 from fastapi import FastAPI, Request
 
 app = FastAPI()
