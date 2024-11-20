@@ -1,6 +1,6 @@
 {
     "graphs": {
-      "agent": "./agent.py:graph"
+      "agent": "./simon.py:graph"
     },
     "dependencies": ["."]
 }
