@@ -13,10 +13,10 @@ def create_db():
     from langchain_community.document_loaders import WebBaseLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-    docs = [WebBaseLoader(url).load() for url in [
-        "https://lilianweng.github.io/posts/2023-06-23-agent/",
-        "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
-        "https://lilianweng.github.io/posts/2023-10-25-adv-attack-llm/",
+    docs = [WebBaseLoader(f"https://lilianweng.github.io/posts/{path}/").load() for path in [
+        "2023-06-23-agent",
+        "2023-03-15-prompt-engineering",
+        "2023-10-25-adv-attack-llm",
     ]]
 
     splits = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
