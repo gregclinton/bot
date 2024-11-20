@@ -1,5 +1,5 @@
 keys
 __pycache__
 nginx.conf
-.lang*
+.langgraph_api
 .cache
