@@ -5,7 +5,7 @@ from fastapi import FastAPI, Request
 
 app = FastAPI()
 
-graph = agent.build_graph()
+graph = agent.graph
 
 thread_id = 1
 thread = {

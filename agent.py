@@ -45,3 +45,5 @@ def build_graph():
     workflow.add_edge('tools', 'agent')
     workflow.set_entry_point('agent')
     return workflow.compile(checkpointer = MemorySaver())
+
+graph = build_graph()
