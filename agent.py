@@ -1,6 +1,5 @@
-# cd ~
 # sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest uvicorn langgraph.agent:app --host 0.0.0.0 --port 8123 --reload
-# sudo docker run -p 2024:2024 -v `pwd`:/root -w /root agent:latest langgraph dev --config langgraph/langgraph.json
+# sudo docker run -p 2024:2024 -v `pwd`:/root -w /root agent:latest langgraph dev
 
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
