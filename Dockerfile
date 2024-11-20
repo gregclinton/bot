@@ -23,4 +23,4 @@ RUN pip install "langgraph-cli[inmem]==0.1.55"
 
 RUN pip install beautifulsoup4
 
-RUN pip install chromadb
+RUN pip install langchain-chroma
