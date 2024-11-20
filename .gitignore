@@ -3,4 +3,4 @@ __pycache__
 nginx.conf
 .langgraph_api
 .cache
-storage
+chroma

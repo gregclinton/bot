@@ -27,7 +27,7 @@ def create_db():
         documents = splits,
         collection_name = "weng-blogs",
         embedding = OpenAIEmbeddings(),
-        persist_directory = 'storage'
+        persist_directory = 'chroma'
     )
 
 # create_db()
@@ -36,7 +36,7 @@ weng = create_retriever_tool(
     Chroma(
         collection_name = "weng-blogs",
         embedding_function = OpenAIEmbeddings(),
-        persist_directory = 'storage'
+        persist_directory = 'chroma'
     ).as_retriever(),
     "retrieve_blog_posts",
     "Search and return information about Lilian Weng blog posts on LLM agents, prompt engineering, and adversarial attacks on LLMs.",
