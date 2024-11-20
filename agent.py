@@ -1,6 +1,6 @@
 # cd ~
 # sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest uvicorn langgraph.agent:app --host 0.0.0.0 --port 8123 --reload
-# sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest langgraph
+# sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest langgraph dev
 
 from langchain_openai import ChatOpenAI
 from langchain_anthropic import ChatAnthropic
@@ -117,6 +117,3 @@ async def post_prompt(req: Request):
         'model': model,
         'temperature': temperature,
     }
-os.environ['LANGCHAIN_TRACING_V2'] = 'true'
-os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
-os.environ['LANGCHAIN_PROJECT'] = 'simon'
