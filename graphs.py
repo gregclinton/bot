@@ -11,9 +11,9 @@ from dotenv import load_dotenv
 load_dotenv('keys')
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
-os.environ['LANGCHAIN_PROJECT'] = 'simon'
 
-def react(system_instruction, tools):
+def react(agent_name, system_instruction, tools):
+    os.environ['LANGCHAIN_PROJECT'] = agent_name
 
     def call_model(state: MessagesState):
         llm = ChatOpenAI(model = 'gpt-4o-mini', temperature = 0).bind_tools(tools)
