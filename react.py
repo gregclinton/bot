@@ -5,7 +5,6 @@ from langgraph.graph import StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 from langchain.schema import SystemMessage, HumanMessage
-from langchain_community.tools import TavilySearchResults
 import subprocess
 import os
 from dotenv import load_dotenv
@@ -15,27 +14,11 @@ os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 os.environ['LANGCHAIN_PROJECT'] = 'simon'
 
-def build_graph():
-    search = TavilySearchResults(
-        max_results=2,
-        search_depth="advanced",
-        include_answer=True,
-        include_raw_content=False,
-        include_images=False
-    )
-
-    def shell(line):
-        """
-            run a shell command
-        """
-        print(line, flush = True)
-        return subprocess.run(line, shell = True, capture_output = True, text = True).stdout
-
-    tools = [search, shell]
+def graph(system_instruction, tools):
 
     def call_model(state: MessagesState):
         llm = ChatOpenAI(model = 'gpt-4o-mini', temperature = 0).bind_tools(tools)
-        instructions = SystemMessage(content = r"""Your name is Simon.""")
+        instructions = SystemMessage(content = system_instruction)
         return {'messages': llm.invoke([instructions] + state['messages'])}
 
     workflow = StateGraph(MessagesState)
@@ -45,5 +28,3 @@ def build_graph():
     workflow.add_edge('tools', 'agent')
     workflow.set_entry_point('agent')
     return workflow.compile(checkpointer = MemorySaver())
-
-graph = build_graph()
