@@ -24,4 +24,4 @@ async def delete_thread():
 
 @app.delete('/prompts/last')
 async def delete_last_prompt():
-    threads.delete_last_prompt()
+    graph.delete_last_prompt()

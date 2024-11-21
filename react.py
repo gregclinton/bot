@@ -5,8 +5,9 @@ from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
 from threads import thread
 import llms
+from graph import Graph
 
-class React:
+class React(Graph):
     def __init__(self, instructions, tools, model="gpt-4o-mini", temperature=0):
         workflow = StateGraph(MessagesState)
         workflow.add_node('agent', llms.get(model, temperature, instructions, tools))
@@ -15,9 +16,3 @@ class React:
         workflow.add_edge('tools', 'agent')
         workflow.set_entry_point('agent')
         self.graph = workflow.compile(checkpointer = MemorySaver())
-
-    def run(self, prompt):
-        for event in self.graph.stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
-            pass
-
-        return event['messages'][-1].content

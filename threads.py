@@ -1,6 +1,5 @@
 # sudo docker run -p 2024:2024 -v `pwd`:/root -w /root agent:latest langgraph dev
 
-from langchain.schema import HumanMessage
 import os
 from dotenv import load_dotenv
 
@@ -21,11 +20,3 @@ def thread():
 def delete_thread():
     global thread_id
     thread_id += 1
-
-def delete_last_prompt(assistant_name):
-    msgs = assistants[assistant_name].get_state(thread()).values['messages']
-
-    while not isinstance(msgs[-1], HumanMessage):
-        msgs.pop()
-
-    msgs.pop()
