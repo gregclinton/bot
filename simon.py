@@ -1,7 +1,7 @@
 import graphs
 import chroma
 
-chroma.store("flowers", "roses are red, violets are blue")
+# chroma.store("flowers", "roses are red, violets are blue")
 
 graph = graphs.react("simon", """
 Your name is Simon. Just do your best.
