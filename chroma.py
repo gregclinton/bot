@@ -3,7 +3,6 @@
 
 from langchain_chroma import Chroma
 from langchain_openai import OpenAIEmbeddings
-from langchain.tools.retriever import create_retriever_tool
 
 embedding = OpenAIEmbeddings()
 
@@ -22,6 +21,8 @@ def store(collection_name, text):
         persist_directory = f"chroma/{collection_name}")
 
 def retriever(collection_name, description = ""):
+    from langchain.tools.retriever import create_retriever_tool
+
     return create_retriever_tool(
         Chroma(
             collection_name = collection_name,
