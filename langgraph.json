@@ -1,6 +1,6 @@
 {
     "graphs": {
-      "agent": "./simon.py:graph"
+      "agent": "./play.py:graph"
     },
     "dependencies": ["."]
 }

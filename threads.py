@@ -1,5 +1,3 @@
-# sudo docker run -p 2024:2024 -v `pwd`:/root -w /root agent:latest langgraph dev
-
 import os
 from dotenv import load_dotenv
 

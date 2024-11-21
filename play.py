@@ -1,3 +1,6 @@
+# sudo docker run -v `pwd`:/root -w /root agent:latest python3 play.py
+# sudo docker run -v `pwd`:/root -w /root agent:latest langgraph dev
+
 from react import React
 import chroma
 

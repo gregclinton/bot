@@ -1,5 +1,3 @@
-# sudo docker run -p 2024:2024 -v `pwd`:/root -w /root agent:latest langgraph dev
-
 from langgraph.graph import StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
