@@ -9,7 +9,8 @@ collection_name = "Greg-Clinton"
 graphs.react("simon", """
 Your name is Simon. Do your best.
 """, [
-    chroma.retriever(collection_name)
+    shell,
+    # chroma.retriever(collection_name)
 ])
 
-print(graphs.run("How old is Greg Clinton?"))
+#  print(graphs.run("How old is Greg Clinton?"))

@@ -7,7 +7,7 @@ app = FastAPI()
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
-    graphs.run(await req.json())['prompt'])
+    return { "content":  graphs.run((await req.json())['prompt']) }
 
 @app.delete('/thread/current')
 async def delete_thread():
