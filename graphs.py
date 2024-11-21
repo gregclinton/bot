@@ -12,6 +12,8 @@ load_dotenv('keys')
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 
+graph = None
+
 def get_model(model, temperature, instructions, tools):
     def call_model(state: MessagesState):
         llm = ChatOpenAI(model = model, temperature = 0).bind_tools(tools)
@@ -19,6 +21,7 @@ def get_model(model, temperature, instructions, tools):
     return call_model
 
 def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 0):
+    global graph
     os.environ['LANGCHAIN_PROJECT'] = agent_name
 
     workflow = StateGraph(MessagesState)
@@ -27,11 +30,13 @@ def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 
     workflow.add_conditional_edges('agent', tools_condition)
     workflow.add_edge('tools', 'agent')
     workflow.set_entry_point('agent')
-    return workflow.compile(checkpointer = MemorySaver())
+    graph = workflow.compile(checkpointer = MemorySaver())
 
-def run(graph, prompt):
+thread_id = 1
+
+def run(prompt):
     thread = {
-        'configurable': {'thread_id': "1"},
+        'configurable': {'thread_id': str(thread_id)},
         'recursion_limit': 100
     }
 
