@@ -6,7 +6,7 @@ from fastapi import FastAPI, Request
 
 app = FastAPI()
 
-assistant = graphs.react("simon", """
+graphs.react("simon", """
 Your name is Simon. Do your best.
 """, [
     shell,
@@ -15,7 +15,7 @@ Your name is Simon. Do your best.
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
-    return { "content":  graphs.run(assistant, (await req.json())['prompt']) }
+    return { "content":  graphs.run("simon", (await req.json())['prompt']) }
 
 @app.delete('/thread/current')
 async def delete_thread():
@@ -23,4 +23,4 @@ async def delete_thread():
 
 @app.delete('/prompts/last')
 async def delete_last_prompt():
-    graphs.delete_last_prompt(assistant)
+    graphs.delete_last_prompt("simon")
