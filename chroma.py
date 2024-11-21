@@ -1,3 +1,4 @@
+# https://python.langchain.com/docs/integrations/vectorstores/chroma/
 # https://langchain-ai.github.io/langgraph/tutorials/rag/langgraph_agentic_rag/#retriever
 
 from langchain_chroma import Chroma
