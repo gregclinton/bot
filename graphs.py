@@ -29,7 +29,7 @@ def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 
     workflow.set_entry_point('agent')
     return workflow.compile(checkpointer = MemorySaver())
 
-def run(graph, question):
+def run(graph, prompt):
     for event in graph.stream({"messages": [('user', prompt)]}, thread, stream_mode = 'values'):
         pass
 
