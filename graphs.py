@@ -30,6 +30,11 @@ def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 
     return workflow.compile(checkpointer = MemorySaver())
 
 def run(graph, prompt):
+    thread = {
+        'configurable': {'thread_id': "1"},
+        'recursion_limit': 100
+    }
+
     for event in graph.stream({"messages": [('user', prompt)]}, thread, stream_mode = 'values'):
         pass
 

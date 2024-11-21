@@ -1,12 +1,13 @@
 import graphs
 import chroma
+from tools import shell
 
-# chroma.store("flowers", "roses are red, violets are blue")
+chroma.store("Greg-Clinton", "Greg Clinton is 67 years old")
 
 graph = graphs.react("simon", """
-Your name is Simon. Just do your best.
+Your name is Simon. Do your best.
 """, [
     chroma.retriever('flowers')
 ])
 
-print(graphs.run(graph, "What color are roses?"))
+print(graphs.run(graph, "How old is Greg Clinton?"))
