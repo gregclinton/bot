@@ -32,13 +32,7 @@ async def delete_last_prompt():
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
-    prompt = (await req.json())['prompt']
-
-    for event in graph.stream({"messages": [('user', prompt)]}, thread, stream_mode = 'values'):
+    for event in graph.stream({"messages": [('user', (await req.json())['prompt'])]}, thread, stream_mode = 'values'):
         pass
 
-    msg = event['messages'][-1]
- 
-    return {
-        'content': msg.content
-    }
+    return event['messages'][-1]
