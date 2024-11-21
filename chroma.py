@@ -11,7 +11,7 @@ def store(collection_name, text):
     from langchain_text_splitters import RecursiveCharacterTextSplitter
 
     splits = RecursiveCharacterTextSplitter.from_tiktoken_encoder(
-        chunk_size = 100, chunk_overlap = 50
+        chunk_size = 1000, chunk_overlap = 100
     ).split_documents([Document(text)])
 
     Chroma.from_documents(
