@@ -4,7 +4,7 @@ from langchain_openai import ChatOpenAI
 from langgraph.graph import StateGraph, MessagesState
 from langgraph.prebuilt import ToolNode, tools_condition
 from langgraph.checkpoint.memory import MemorySaver
-from langchain.schema import SystemMessage
+from langchain.schema import SystemMessage, HumanMessage
 import os
 from dotenv import load_dotenv
 
@@ -34,13 +34,26 @@ def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 
 
 thread_id = 1
 
-def run(prompt):
-    thread = {
+def thread():
+    return  {
         'configurable': {'thread_id': str(thread_id)},
         'recursion_limit': 100
     }
 
-    for event in graph.stream({"messages": [('user', prompt)]}, thread, stream_mode = 'values'):
+def run(prompt):
+    for event in graph.stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
         pass
 
     return event['messages'][-1].content
+
+def delete_thread():
+    global thread_id
+    thread_id += 1
+
+def delete_last_prompt():
+    msgs = graph.get_state(thread()).values['messages']
+
+    while not isinstance(msgs[-1], HumanMessage):
+        msgs.pop()
+
+    msgs.pop()
