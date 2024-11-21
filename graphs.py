@@ -39,7 +39,7 @@ def thread():
         'recursion_limit': 100
     }
 
-def run(assistant_name):
+def run(assistant_name, prompt):
     for event in assistants[assistant_name].stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
         pass
 
