@@ -1,6 +1,5 @@
-from langchain.schema import HumanMessage
+from langchain.schema import SystemMessage, HumanMessage
 from langchain_openai import ChatOpenAI
-from langchain.schema import SystemMessage
 from threads import thread
 
 class Graph:
