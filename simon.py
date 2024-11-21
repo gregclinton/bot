@@ -1,6 +1,10 @@
 import graphs
-from tools import search, shell
+import chroma
+
+chroma.store("flowers", ["roses are red", "violets are blue"])
 
 graph = graphs.react("simon", """
 Your name is Simon. Just do your best.
-""", [search, shell])
+""", [
+    chroma.retriever('flowers')
+])
