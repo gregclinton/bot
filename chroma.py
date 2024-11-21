@@ -13,7 +13,7 @@ def store(collection_name, documents):
         embedding = embedding,
         persist_directory = f"chroma/{collection_name}")
 
-def retriever(collection_name, description):
+def retriever(collection_name, description = ""):
     return create_retriever_tool(
         Chroma(
             collection_name = collection_name,
@@ -21,4 +21,4 @@ def retriever(collection_name, description):
             persist_directory = f"chroma/{collection_name}"
         ).as_retriever(),
         f"retrieve_{collection_name}",
-        f"Retrieve information about  {description}")
+        f"Retrieve information about {collection_name}. {description}}")
