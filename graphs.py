@@ -12,8 +12,6 @@ load_dotenv('keys')
 os.environ['LANGCHAIN_TRACING_V2'] = 'true'
 os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
 
-graph = None
-
 def get_model(model, temperature, instructions, tools):
     def call_model(state: MessagesState):
         llm = ChatOpenAI(model = model, temperature = 0).bind_tools(tools)
@@ -21,7 +19,6 @@ def get_model(model, temperature, instructions, tools):
     return call_model
 
 def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 0):
-    global graph
     os.environ['LANGCHAIN_PROJECT'] = agent_name
 
     workflow = StateGraph(MessagesState)
@@ -30,7 +27,7 @@ def react(agent_name, instructions, tools, model = 'gpt-4o-mini', temperature = 
     workflow.add_conditional_edges('agent', tools_condition)
     workflow.add_edge('tools', 'agent')
     workflow.set_entry_point('agent')
-    graph = workflow.compile(checkpointer = MemorySaver())
+    return workflow.compile(checkpointer = MemorySaver())
 
 thread_id = 1
 
@@ -41,7 +38,7 @@ def thread():
     }
 
 def run(prompt):
-    for event in graph.stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
+    for event in assistant.stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
         pass
 
     return event['messages'][-1].content
@@ -51,7 +48,7 @@ def delete_thread():
     thread_id += 1
 
 def delete_last_prompt():
-    msgs = graph.get_state(thread()).values['messages']
+    msgs = assistant.get_state(thread()).values['messages']
 
     while not isinstance(msgs[-1], HumanMessage):
         msgs.pop()
