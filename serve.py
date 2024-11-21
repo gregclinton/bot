@@ -1,6 +1,7 @@
 # sudo docker run -p 8123:8123 -v `pwd`:/root -w /root agent:latest uvicorn serve:app --host 0.0.0.0 --port 8123 --reload
 
-import graphs, threads
+from react import React
+import threads
 from tools import shell, search
 from fastapi import FastAPI, Request
 
