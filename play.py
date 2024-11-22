@@ -2,8 +2,7 @@
 # sudo docker run -v `pwd`:/root -w /root agent:latest langgraph dev
 
 import assistants
-from tools import search
 
-assistants.cast("coder", "Keep your answers brief.", [search])
+assistants.cast("coder", "Keep your answers brief.", "cast")
 
-print(assistants.get("coder").run("Hello"))
+print(assistants.get("coder").run("Cast an admin to do command line activities."))
