@@ -3,7 +3,12 @@ from langchain_openai import ChatOpenAI
 from threads import thread
 
 class Assistant:
-    def __init__(self):
+    def __init__(self, instructions, tools, model, temperature):
+        def call_model(state):
+            llm = ChatOpenAI(model = model, temperature = 0).bind_tools(tools)
+            return {'messages': llm.invoke([SystemMessage(instructions)] + state['messages'])}
+
+        self.model = call_model
         self.graph = None
 
     def run(self, prompt):
@@ -19,10 +24,3 @@ class Assistant:
             msgs.pop()
 
         msgs.pop()
-
-    @staticmethod
-    def get_model(model, temperature, instructions, tools):
-        def call_model(state):
-            llm = ChatOpenAI(model = model, temperature = 0).bind_tools(tools)
-            return {'messages': llm.invoke([SystemMessage(instructions)] + state['messages'])}
-        return call_model

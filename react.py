@@ -5,8 +5,9 @@ from assistant import Assistant
 
 class React(Assistant):
     def __init__(self, instructions, tools, model="gpt-4o-mini", temperature=0):
+        super().__init__(instructions, tools, model, temperature) 
         workflow = StateGraph(MessagesState)
-        workflow.add_node('agent', Assistant.get_model(model, temperature, instructions, tools))
+        workflow.add_node('agent', self.model)
         workflow.add_node('tools', ToolNode(tools = tools))
         workflow.add_conditional_edges('agent', tools_condition)
         workflow.add_edge('tools', 'agent')
