@@ -2,7 +2,7 @@ from langchain.schema import SystemMessage, HumanMessage
 from langchain_openai import ChatOpenAI
 from threads import thread
 
-class Graph:
+class Assistant:
     def __init__(self):
         self.graph = None
 
