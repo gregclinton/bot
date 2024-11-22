@@ -1,8 +1,10 @@
 from react import React
 from tools import search, shell
+from langchain_community.tools import tool
 
 assistants = {}
 
+@tool
 def cast(job_title, instructions, tools):
     """
 Cast an AI assistant with a job title, instructions and a set of tools.
