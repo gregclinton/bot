@@ -1,18 +1,7 @@
 # sudo docker run -v `pwd`:/root -w /root agent:latest python3 play.py
 # sudo docker run -v `pwd`:/root -w /root agent:latest langgraph dev
 
-from react import React
-import chroma
+import assistants
+from tools import search
 
-collection_name = "Greg-Clinton"
-
-# chroma.store(collection_name, "Greg Clinton is 67 years old")
-
-assistant = React("""
-Keep your answers brief.
-""",
-[
-    chroma.retriever(collection_name)
-])
-
-print(assistant.run("How old is Greg Clinton?"))
+print(assistants.cast("coder", "Keep your answers brief.", [search]).run("Weather today in sf?"))
