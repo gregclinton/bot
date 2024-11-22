@@ -11,16 +11,10 @@ def call_model(state):
 workflow = StateGraph(MessagesState)
 workflow.add_node('agent', call_model)
 workflow.set_entry_point('agent')
-subgraph = workflow.compile(checkpointer = MemorySaver())
-
-workflow = StateGraph(MessagesState)
-workflow.add_node('agent', call_model)
-workflow.add_node('joker', subgraph=subgraph)
-workflow.set_entry_point('agent')
-workflow.add_edge("agent", "joker")
 graph = workflow.compile(checkpointer = MemorySaver())
 
-prompt = "flower"
+
+prompt = "does flower rhyme with poor"
 thread = {'configurable': {'thread_id': "1"},}
 for event in graph.stream({"messages": [('user', prompt)]}, thread, stream_mode = 'values'):
     pass
