@@ -14,7 +14,6 @@ You must provide at least one tool.
     print(f"{job_title} {instructions} {tools}")
     tools = list(map(lambda t : {"search": search, "shell": shell}[t], tools.split(",")))
     assistants[job_title] = React(instructions, tools)
-    return get(job_title)
 
 def get(job_title):
     return assistants[job_title]
