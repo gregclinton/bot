@@ -5,15 +5,19 @@ from langchain_community.tools import tool
 assistants = {}
 
 @tool
-def cast(job_title, instructions, tools):
+def cast(role, instructions, tools):
     """
-Cast an AI assistant with a job title, instructions and a set of tools.
+Cast an AI assistant with the specified role, instructions and a set of tools.
 Tools is a comma separated string of tool names.
 These may include search, cast, chroma and/or shell.
 You must provide at least one tool.
     """
-    assistants[job_title] = React(instructions, list(map(lambda t : {"search": search, "shell": shell}[t], tools.split(","))))
+    assistants[role] = React(instructions, list(map(lambda t : {"search": search, "shell": shell}[t], tools.split(","))))
     return "success"
 
-def get(job_title):
-    return assistants[job_title]
+@tool
+def call(role, prompt):
+    """
+Call the assistant with the specified role and prompt.
+    """
+    return assistants[role].run(prompt)

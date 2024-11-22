@@ -4,8 +4,7 @@
 from react import React
 import assistants
 
-print(React("Be good.", [assistants.cast]).run("""
+print(React("Be good.", [assistants.cast, assistants.call]).run("""
 Cast an AI assistant with job title "admin" to do command line activities.
+Then call it to list files in the current working directory and show me the listing.
 """))
-
-print(assistants.get("admin").run("List the files in the current working directory."))
