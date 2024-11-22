@@ -4,4 +4,6 @@
 import assistants
 from tools import search
 
-print(assistants.cast("coder", "Keep your answers brief.", [search]).run("Weather today in sf?"))
+assistants.cast("coder", "Keep your answers brief.", [search])
+
+print(assistants.get("coder").run("Hello"))
