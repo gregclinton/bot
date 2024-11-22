@@ -5,6 +5,12 @@ from react import React
 from assistants import cast, call
 
 print(React("Be good.", [cast, call]).run("""
+Cast a singer to sing happy birthday.
+Then call it to sing
+"""))
+exit()
+
+print(React("Be good.", [cast, call]).run("""
 Cast an admin assistant to do command line activities.
 Then call it to list files in the current working directory and show me the listing.
 """))

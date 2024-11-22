@@ -5,13 +5,22 @@ import tools
 assistants = {}
 
 @tool
-def cast(role, instructions, tools_csv):
+def nop():
+    """Does absolutely nothing"""
+    return "success"
+
+tools.put("nop", nop)
+
+@tool
+def cast(role, instructions, tools_csv = ""):
     """
 Cast an AI assistant with the specified role, instructions and a set of tools.
 Tools is a comma separated string of tool names.
 These may include search, cast, chroma and/or shell.
 You must provide at least one tool.
     """
+    if len(tools_csv) == 0:
+        tools_csv = "nop"
     assistants[role] = React(instructions, list(map(lambda t : tools.get(t), tools_csv.split(","))))
     return "success"
 
