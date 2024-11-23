@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv('keys')
 
-from langgraph.graph import StateGraph, START, END, MessagesState
+from langgraph.graph import StateGraph, MessagesState
 from langchain_openai import ChatOpenAI
 from typing import Literal
 from typing_extensions import TypedDict
