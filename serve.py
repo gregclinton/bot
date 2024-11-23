@@ -17,6 +17,8 @@ assistant = Assistant(supervisor.create(llm,
     "agent": create_react_agent(llm, [shell, search], state_modifier="Do your best."),
 }))
 
+print(assistant.run('hello'))
+
 @app.post('/prompts')
 async def post_prompt(req: Request):
     return { "content": assistant.run((await req.json())['prompt']) }

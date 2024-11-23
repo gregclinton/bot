@@ -4,8 +4,6 @@ from typing_extensions import TypedDict
 from langchain_core.messages import SystemMessage
 from langgraph.checkpoint.memory import MemorySaver
 
-# https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#construct-graph
-
 def create(llm, prompt, agents):
     class AgentState(MessagesState):
         next: str
@@ -18,6 +16,7 @@ def create(llm, prompt, agents):
 
     builder.add_node("supervisor", supervisor)
     builder.add_conditional_edges("supervisor", lambda state: state["next"])
+    builder.add_edge("supervisor", END)
 
     for name, node in agents.items():
         builder.add_node(name, node)
