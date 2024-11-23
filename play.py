@@ -49,4 +49,4 @@ agents = {
 
 graph = create_supervisor(llm, f"From {','.join(agents.keys())}, pick the more appropriate. Respond {END} when either has responded.", agents)
 
-graph.invoke({"messages": [("user", "Files size of chat.js in current working directory?")]})
+graph.invoke({"messages": [("user", "File size of chat.js in current working directory?")]})
