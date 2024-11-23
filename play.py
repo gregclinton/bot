@@ -15,16 +15,16 @@ from tools import shell
 
 # https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#construct-graph
 
+llm = ChatOpenAI(model = "gpt-4o-mini")
+
 class AgentState(MessagesState):
     next: str
 
-
-llm = ChatOpenAI(model = "gpt-4o-mini")
+builder = StateGraph(AgentState)
 
 rabbi = lambda state: {"messages": [HumanMessage(content="The meaning of life is to be good.")]}
 admin = create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool.")
 
-builder = StateGraph(AgentState)
 builder.add_node("rabbi", rabbi)
 builder.add_node("admin", admin)
 
