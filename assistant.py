@@ -1,15 +1,9 @@
-from langchain.schema import SystemMessage, HumanMessage
-from langchain_openai import ChatOpenAI
+from langchain.schema import HumanMessage
 from threads import thread
 
 class Assistant:
-    def __init__(self, instructions, tools, model, temperature):
-        def call_model(state):
-            llm = ChatOpenAI(model = model, temperature = 0).bind_tools(tools)
-            return {'messages': llm.invoke([SystemMessage(instructions)] + state['messages'])}
-
-        self.model = call_model
-        self.graph = None
+    def __init__(self, graph):
+        self.graph = graph
 
     def run(self, prompt):
         for event in self.graph.stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
