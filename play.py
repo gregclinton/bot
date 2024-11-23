@@ -40,10 +40,10 @@ def supervisor_node(state: AgentState) -> AgentState:
     return {"next": next_}
 
 def rabbi(state):
-    return {"messages": [HumanMessage(content="To be good.", name="rabbi")]}
+    return {"messages": [HumanMessage(content="To be good. FINISH", name="rabbi")]}
 
 def accountant(state):
-    return {"messages": [HumanMessage(content="In April.", name="accountant")]}
+    return {"messages": [HumanMessage(content="In April. FINISH", name="accountant")]}
 
 builder = StateGraph(AgentState)
 builder.add_node("supervisor", supervisor_node)
@@ -58,6 +58,6 @@ builder.set_entry_point("supervisor")
 
 graph = builder.compile()
 
-for s in graph.stream({"messages": [("user", "When do I file my taxes?")]}, subgraphs = True):
+for s in graph.stream({"messages": [("user", "When do I pay my taxes?")]}, subgraphs = True):
     print(s)
     print("----")
