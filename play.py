@@ -52,6 +52,6 @@ builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
 graph = builder.compile()
 
-for event in graph.stream({"messages": [("user", "What is the meaning of life")]}):
+for event in graph.stream({"messages": [("user", "Size of chat.js in current working directory.")]}):
     print(event)
     print("-----")
