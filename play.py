@@ -43,8 +43,8 @@ def create_supervisor(llm, prompt, agents):
 llm = ChatOpenAI(model = "gpt-4o-mini")
 
 agents = {
-    "rabbi": lambda state: {"messages": [HumanMessage(content="The meaning of life is to be good.")]},
-    "admin": create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool."),
+    "rabbi": lambda state: {"messages": [HumanMessage("The meaning of life is to be good.")]},
+    "admin": create_react_agent(llm, [shell], state_modifier="You are an admin. Use the shell tool."),
 }
 
 graph = create_supervisor(llm, f"From {','.join(agents.keys())}, pick the more appropriate. Respond {END} when either has responded.", agents)
