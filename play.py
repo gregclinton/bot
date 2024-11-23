@@ -19,14 +19,12 @@ class AgentState(MessagesState):
     next: str
 
 members = ["rabbi", "admin"]
-options = members + [END]
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
 
-class Router(TypedDict):
-    next: Literal[*options]
-
 def supervisor(state):
+    class Router(TypedDict):
+        next: Literal[*(members + [END])]
     prompt = f"From {members} pick the more appropriate. Respond {END} when either has responded."
     return llm.with_structured_output(Router).invoke([SystemMessage(prompt)] + state["messages"])
 
