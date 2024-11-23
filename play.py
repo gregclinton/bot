@@ -47,7 +47,6 @@ agents = {
     "admin": create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool."),
 }
 
-graph = create_supervisor(llm, f"From 'rabbi' and 'admin', pick the more appropriate. Respond {END} when either has responded.", agents)
+graph = create_supervisor(llm, f"From {','.join(agents.keys())}, pick the more appropriate. Respond {END} when either has responded.", agents)
 
-for event in graph.stream({"messages": [("user", "What is the meaning of life?")]}):
-    pass 
+graph.invoke({"messages": [("user", "Files size of chat.js in current working directory?")]})
