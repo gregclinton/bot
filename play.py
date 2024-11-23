@@ -37,12 +37,12 @@ def supervise(builder):
         return llm.with_structured_output(Router).invoke([SystemMessage(prompt)] + state["messages"])
 
     builder.add_node("supervisor", supervisor)
+    builder.add_conditional_edges("supervisor", lambda state: state["next"])
 
     for member in members:
         builder.add_edge(member, "supervisor")
 
 supervise(builder)
-builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
 graph = builder.compile()
 
