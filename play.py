@@ -28,9 +28,7 @@ admin = create_react_agent(llm, tools=[shell], state_modifier="You are an admin.
 builder.add_node("rabbi", rabbi)
 builder.add_node("admin", admin)
 
-def supervise(builder):
-    members = ["rabbi", "admin"]
-
+def supervise(builder, members):
     def supervisor(state):
         class Router(TypedDict): next: Literal[*(members + [END])]
         prompt = f"From {members} pick the more appropriate. Respond {END} when either has responded."
@@ -42,7 +40,7 @@ def supervise(builder):
     for member in members:
         builder.add_edge(member, "supervisor")
 
-supervise(builder)
+supervise(builder, ["rabbi", "admin"])
 builder.set_entry_point("supervisor")
 graph = builder.compile()
 
