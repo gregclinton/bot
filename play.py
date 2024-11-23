@@ -14,7 +14,7 @@ from langchain_core.messages import HumanMessage
 class AgentState(MessagesState):
     next: str
 
-members = ["researcher", "coder"]
+members = ["rabbi", "accountant"]
 options = members + ["FINISH"]
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
@@ -33,22 +33,22 @@ def supervisor_node(state: AgentState) -> AgentState:
     )
 
     messages = [{"role": "system", "content": system_prompt}] + state["messages"]
-    next = llm.with_structured_output(Router).invoke(messages)["next"]
+    next_ = llm.with_structured_output(Router).invoke(messages)["next"]
     if next_ == "FINISH":
         next_ = END
 
     return {"next": next_}
 
-def research_node(state):
-    return {"messages": [HumanMessage(content="yellow", name="researcher")]}
+def rabbi(state):
+    return {"messages": [HumanMessage(content="To be good.", name="rabbi")]}
 
-def code_node(state):
-    return {"messages": [HumanMessage(content="red", name="coder")]}
+def accountant(state):
+    return {"messages": [HumanMessage(content="In April.", name="accountant")]}
 
 builder = StateGraph(AgentState)
 builder.add_node("supervisor", supervisor_node)
-builder.add_node("researcher", research_node)
-builder.add_node("coder", code_node)
+builder.add_node("rabbi", rabbi)
+builder.add_node("accountant", accountant)
 
 for member in members:
     builder.add_edge(member, "supervisor")
@@ -57,3 +57,7 @@ builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
 
 graph = builder.compile()
+
+for s in graph.stream({"messages": [("user", "When do I file my taxes?")]}, subgraphs = True):
+    print(s)
+    print("----")
