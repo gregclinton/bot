@@ -9,7 +9,7 @@ from langgraph.graph import StateGraph, END, MessagesState
 from langchain_openai import ChatOpenAI
 from typing import Literal
 from typing_extensions import TypedDict
-from langchain_core.messages import HumanMessage
+from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.prebuilt import create_react_agent
 from tools import shell
 
@@ -19,7 +19,7 @@ class AgentState(MessagesState):
     next: str
 
 members = ["rabbi", "admin"]
-options = members + ["FINISH"]
+options = members + [END]
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
 
@@ -27,15 +27,8 @@ class Router(TypedDict):
     next: Literal[*options]
 
 def supervisor(state):
-    system_prompt = f"From {members} pick the more appropriate. Respond FINISH when either has responded."
-
-    messages = [{"role": "system", "content": system_prompt}] + state["messages"]
-    next_ = llm.with_structured_output(Router).invoke(messages)["next"]
-
-    if next_ == "FINISH":
-        next_ = END
-
-    return {"next": next_}
+    prompt = f"From {members} pick the more appropriate. Respond {END} when either has responded."
+    return llm.with_structured_output(Router).invoke([SystemMessage(prompt)] + state["messages"])
 
 rabbi = lambda state: {"messages": [HumanMessage(content="The meaning of life is to be good.")]}
 admin = create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool.")
@@ -52,6 +45,6 @@ builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
 graph = builder.compile()
 
-for event in graph.stream({"messages": [("user", "Size of chat.js in current working directory.")]}):
+for event in graph.stream({"messages": [("user", "What is the meaning of life?")]}):
     print(event)
     print("-----")
