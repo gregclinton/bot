@@ -37,14 +37,8 @@ def supervisor(state):
 
     return {"next": next_}
 
-def rabbi(state):
-    return {"messages": [HumanMessage(content="The meaning of life is to be good.")]}
-
-def admin(state):
-    return {"messages": [HumanMessage(content="You file your taxes on April 15.")]}
-
+rabbi = lambda state: {"messages": [HumanMessage(content="The meaning of life is to be good.")]}
 admin = create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool.")
-
 
 builder = StateGraph(AgentState)
 builder.add_node("supervisor", supervisor)
@@ -58,6 +52,6 @@ builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
 graph = builder.compile()
 
-for event in graph.stream({"messages": [("user", "List files in my current working directory")]}):
+for event in graph.stream({"messages": [("user", "What is the meaning of life")]}):
     print(event)
     print("-----")
