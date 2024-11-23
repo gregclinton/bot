@@ -2,6 +2,7 @@ from langgraph.graph import StateGraph, END, MessagesState
 from typing import Literal
 from typing_extensions import TypedDict
 from langchain_core.messages import SystemMessage
+from langgraph.checkpoint.memory import MemorySaver
 
 # https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#construct-graph
 
@@ -23,4 +24,4 @@ def create(llm, prompt, agents):
         builder.add_edge(name, "supervisor")
 
     builder.set_entry_point("supervisor")
-    return builder.compile()
+    return builder.compile(checkpointer=MemorySaver())

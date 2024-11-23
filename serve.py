@@ -3,19 +3,19 @@
 import threads
 from tools import shell, search
 from fastapi import FastAPI, Request
+from langgraph.graph import END
 from langgraph.prebuilt import create_react_agent
 from langchain_openai import ChatOpenAI
-from langgraph.graph import StateGraph, MessagesState
-from langgraph.checkpoint.memory import MemorySaver
 from assistant import Assistant
+import supervisor
 
 app = FastAPI()
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
-builder = StateGraph(MessagesState)
-builder.add_node('agent', create_react_agent(llm, [shell, search], state_modifier="Do your best."))
-builder.set_entry_point('agent')
-assistant = Assistant(builder.compile(checkpointer = MemorySaver()))
+assistant = Assistant(supervisor.create(llm,
+    f"Respond 'agent' the first time and '{END}' thereafter.", {
+    "agent": create_react_agent(llm, [shell, search], state_modifier="Do your best."),
+}))
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
