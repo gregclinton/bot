@@ -25,26 +25,21 @@ class Router(TypedDict):
     next: Literal[*options]
 
 def supervisor_node(state: AgentState) -> AgentState:
-    system_prompt = (
-        "You are a supervisor tasked with managing a conversation between the"
-        f" following workers: {members}. Given the following user request,"
-        " respond with the worker to act next. Each worker will perform a"
-        " task and respond with their results and status. When finished,"
-        " respond with FINISH."
-    )
+    system_prompt = f"From {members} pick the more appropriate. Respond FINISH when either has responded."
 
     messages = [{"role": "system", "content": system_prompt}] + state["messages"]
     next_ = llm.with_structured_output(Router).invoke(messages)["next"]
+
     if next_ == "FINISH":
         next_ = END
 
     return {"next": next_}
 
 def rabbi(state):
-    return {"messages": [HumanMessage(content="The meaning of life is to be good. FINISH")]}
+    return {"messages": [HumanMessage(content="The meaning of life is to be good.")]}
 
 def accountant(state):
-    return {"messages": [HumanMessage(content="You file your taxes on April 15. FINISH")]}
+    return {"messages": [HumanMessage(content="You file your taxes on April 15.")]}
 
 builder = StateGraph(AgentState)
 builder.add_node("supervisor", supervisor_node)
@@ -56,9 +51,8 @@ for member in members:
 
 builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
-
 graph = builder.compile()
 
-for s in graph.stream({"messages": [("user", "What is the meaning of life?")]}, subgraphs = True):
-    print(s)
-    print("----")
+for event in graph.stream({"messages": [("user", "When do I file my taxes?")]}):
+    print(event)
+    print("-----")
