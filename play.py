@@ -65,4 +65,11 @@ builder = StateGraph(AgentState)
 builder.add_node("supervisor", supervisor_node)
 builder.add_node("researcher", research_node)
 builder.add_node("coder", code_node)
+
+for member in members:
+    builder.add_edge(member, "supervisor")
+
+builder.add_conditional_edges("supervisor", lambda state: state["next"])
 builder.set_entry_point("supervisor")
+
+graph = builder.compile()
