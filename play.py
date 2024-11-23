@@ -25,7 +25,7 @@ class Router(TypedDict):
     next: Literal[*options]
 
 def supervisor_node(state: AgentState) -> AgentState:
-    system_prompt = f"From {members} pick the more appropriate. Respond FINISH when either has responded."
+    system_prompt = f"From {members} pick the more appropriate. Pick FINISH when either has responded."
 
     messages = [{"role": "system", "content": system_prompt}] + state["messages"]
     next_ = llm.with_structured_output(Router).invoke(messages)["next"]
