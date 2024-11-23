@@ -11,6 +11,19 @@ from typing import Literal
 from typing_extensions import TypedDict
 from langchain_core.messages import HumanMessage
 
+
+from langchain.agents import create_react_agent
+from langchain import hub
+from tools import shell
+
+llm = ChatOpenAI(model = "gpt-4o-mini")
+
+agent = create_react_agent(llm=llm, tools=[shell], prompt=hub.pull("hwchase17/react"))
+for event in agent.invoke({"messages": [{"role": "user", "content": "Hi"}]}):
+    print(event)
+
+exit()
+
 # https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#construct-graph
 
 class AgentState(MessagesState):
