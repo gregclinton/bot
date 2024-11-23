@@ -11,6 +11,8 @@ from typing import Literal
 from typing_extensions import TypedDict
 from langchain_core.messages import HumanMessage
 
+# https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#construct-graph
+
 class AgentState(MessagesState):
     next: str
 
@@ -20,7 +22,6 @@ options = members + ["FINISH"]
 llm = ChatOpenAI(model = "gpt-4o-mini")
 
 class Router(TypedDict):
-    """Worker to route to next. If no workers needed, route to FINISH."""
     next: Literal[*options]
 
 def supervisor_node(state: AgentState) -> AgentState:
@@ -40,10 +41,10 @@ def supervisor_node(state: AgentState) -> AgentState:
     return {"next": next_}
 
 def rabbi(state):
-    return {"messages": [HumanMessage(content="To be good. FINISH", name="rabbi")]}
+    return {"messages": [HumanMessage(content="The meaning of life is to be good. FINISH")]}
 
 def accountant(state):
-    return {"messages": [HumanMessage(content="In April. FINISH", name="accountant")]}
+    return {"messages": [HumanMessage(content="You file your taxes on April 15. FINISH")]}
 
 builder = StateGraph(AgentState)
 builder.add_node("supervisor", supervisor_node)
@@ -58,6 +59,6 @@ builder.set_entry_point("supervisor")
 
 graph = builder.compile()
 
-for s in graph.stream({"messages": [("user", "When do I pay my taxes?")]}, subgraphs = True):
+for s in graph.stream({"messages": [("user", "What is the meaning of life?")]}, subgraphs = True):
     print(s)
     print("----")
