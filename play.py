@@ -23,8 +23,7 @@ members = ["rabbi", "admin"]
 llm = ChatOpenAI(model = "gpt-4o-mini")
 
 def supervisor(state):
-    class Router(TypedDict):
-        next: Literal[*(members + [END])]
+    class Router(TypedDict): next: Literal[*(members + [END])]
     prompt = f"From {members} pick the more appropriate. Respond {END} when either has responded."
     return llm.with_structured_output(Router).invoke([SystemMessage(prompt)] + state["messages"])
 
