@@ -12,38 +12,42 @@ from typing_extensions import TypedDict
 from langchain_core.messages import SystemMessage, HumanMessage
 from langgraph.prebuilt import create_react_agent
 from tools import shell
+import os
+
+os.environ['LANGCHAIN_TRACING_V2'] = 'true'
+os.environ['LANGCHAIN_ENDPOINT'] = 'https://api.smith.langchain.com'
+os.environ['LANGCHAIN_PROJECT'] = "play"
 
 # https://langchain-ai.github.io/langgraph/tutorials/multi_agent/agent_supervisor/#construct-graph
 
-llm = ChatOpenAI(model = "gpt-4o-mini")
+def create_supervisor(llm, prompt, agents):
+    class AgentState(MessagesState):
+        next: str
 
-class AgentState(MessagesState):
-    next: str
+    builder = StateGraph(AgentState)
 
-builder = StateGraph(AgentState)
-
-rabbi = lambda state: {"messages": [HumanMessage(content="The meaning of life is to be good.")]}
-admin = create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool.")
-
-builder.add_node("rabbi", rabbi)
-builder.add_node("admin", admin)
-
-def supervise(builder, members):
     def supervisor(state):
-        class Router(TypedDict): next: Literal[*(members + [END])]
-        prompt = f"From {members} pick the more appropriate. Respond {END} when either has responded."
+        class Router(TypedDict): next: Literal[*(list(agents.keys()) + [END])]
         return llm.with_structured_output(Router).invoke([SystemMessage(prompt)] + state["messages"])
 
     builder.add_node("supervisor", supervisor)
     builder.add_conditional_edges("supervisor", lambda state: state["next"])
 
-    for member in members:
-        builder.add_edge(member, "supervisor")
+    for name, node in agents.items():
+        builder.add_node(name, node)
+        builder.add_edge(name, "supervisor")
 
-supervise(builder, ["rabbi", "admin"])
-builder.set_entry_point("supervisor")
-graph = builder.compile()
+    builder.set_entry_point("supervisor")
+    return builder.compile()
+
+llm = ChatOpenAI(model = "gpt-4o-mini")
+
+agents = {
+    "rabbi": lambda state: {"messages": [HumanMessage(content="The meaning of life is to be good.")]},
+    "admin": create_react_agent(llm, tools=[shell], state_modifier="You are an admin. Use the shell tool."),
+}
+
+graph = create_supervisor(llm, f"From 'rabbi' and 'admin', pick the more appropriate. Respond {END} when either has responded.", agents)
 
 for event in graph.stream({"messages": [("user", "What is the meaning of life?")]}):
-    print(event)
-    print("-----")
+    pass 
