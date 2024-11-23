@@ -24,8 +24,8 @@ llm = ChatOpenAI(model = "gpt-4o-mini")
 class Router(TypedDict):
     next: Literal[*options]
 
-def supervisor_node(state: AgentState) -> AgentState:
-    system_prompt = f"From {members} pick the more appropriate. Pick FINISH when either has responded."
+def supervisor(state):
+    system_prompt = f"From {members} pick the more appropriate. Respond FINISH when either has responded."
 
     messages = [{"role": "system", "content": system_prompt}] + state["messages"]
     next_ = llm.with_structured_output(Router).invoke(messages)["next"]
@@ -42,7 +42,7 @@ def accountant(state):
     return {"messages": [HumanMessage(content="You file your taxes on April 15.")]}
 
 builder = StateGraph(AgentState)
-builder.add_node("supervisor", supervisor_node)
+builder.add_node("supervisor", supervisor)
 builder.add_node("rabbi", rabbi)
 builder.add_node("accountant", accountant)
 
