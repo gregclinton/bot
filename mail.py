@@ -10,15 +10,15 @@ def add_email(sender, recipient, user, body):
         email += f"Re: {user}\n"
     email += "\n" + body
     emails.append(email)
-    print(email)
+    print(to_string(email))
     if '@' not in recipient and recipient not in ["Management", "company"]:
         departments.add(recipient)
 
 def to_string(email):
     text = "----------------------------------------------------------------\n"
-    text += f"To: {email.recipient}\nFrom: {email.sender}\n"
-    if email.user:
-        test += f"Re: {email.user}\n"
+    text += "To: " + email["recipient"] + "\nFrom: " + email["sender"] + "\n"
+    if "user" in email:
+        test += "Re: " + email["user"] + "\n"
     text += body
  
 with open('mail.txt', 'r') as file:
@@ -33,7 +33,6 @@ with open('mail.txt', 'r') as file:
                 email["body"] = body
                 emails.append(email)
                 body = ""
-            print(email)
         elif line.startswith("To: "):
             email["recipient"] = value()
         elif line.startswith("From: "):
@@ -46,8 +45,9 @@ with open('mail.txt', 'r') as file:
 
 for department in ["Sales"]:
     for email in emails:
-        if email.recipient in [department, "company"]:
+        if email["recipient"] in [department, "company"]:
             print(to_string(email))
-      
-        with open('mail.txt', 'r') as file:
-            print(llm.invoke(to_string(email)))
+            continue
+        
+            with open('mail.txt', 'r') as file:
+                print(llm.invoke(to_string(email)))
