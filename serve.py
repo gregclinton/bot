@@ -13,10 +13,10 @@ app = FastAPI()
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
 assistant = Assistant(supervisor.create(llm, {
-    "agent": create_react_agent(llm, [shell, search]),
+    "agent": create_react_agent(llm, [shell, search], state_modifier=f"Preface your response with {END}."),
 }))
 
-assistant.run('hello')
+print(assistant.run('hello'))
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
