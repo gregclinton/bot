@@ -52,7 +52,7 @@ with open('mail.txt', 'r') as file:
         emails.append(parse(cut))
 
 for department in ["Sales"]:
-    instuction = f"You are an AI worker in {department}. Take care of emails addressed to you."
+    instuction = f"You are an AI worker in {department}. Take care of emails to you only if they require a reply. "
     prompt = ""
 
     for email in emails:
