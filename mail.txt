@@ -60,6 +60,6 @@ This is not a real product yet.
 
 ----------------------------------------------------------------
 To: Betty
-From: greg.clinton@gmail.company
+From: john.smith@example.com
 
-Hi
+Hi.

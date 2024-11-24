@@ -15,7 +15,7 @@ def invoke(prompt):
         },
         json = {
             "model": "gpt-4o-mini",
-            "temperature": 0
+            "temperature": 0,
             "messages": [{"role": "user", "content": prompt}],
         }
     ).json()["choices"][0]["message"]["content"]
