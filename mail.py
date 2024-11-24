@@ -52,8 +52,22 @@ with open('mail.txt', 'r') as file:
         emails.append(parse(cut))
 
 for department in ["Sales"]:
-    instruction = f"You are an AI worker in {department}. Take care of emails to you only if they require a reply. "
+    instruction = f"You are an AI worker in {department}. "
+    instruction += "Take care of emails to you only if they require a reply. "
+    instruction += "The emails are shown in chronological order. "
     prompt = ""
+    last_email = None
+
+    # get last email to this department
+    for email in emails:
+        if email["recipient"] == department:
+            last_email = email
+
+    if not last_email:
+        return
+
+    is_email = lambda s : "@" in s
+    user = email["sender"] if is_email(email["sender"]) else email["user"] if "user" in email else None
 
     # include unanswered emails to this department
     # for each unanswered email include all emails with same user
