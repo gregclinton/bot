@@ -66,5 +66,6 @@ This is not a real product yet.
 ----------------------------------------------------------------
 To: Sales
 From: john.smith@example.com
+Re: john.smith@example.com
 
 Hi. What is my balance?
