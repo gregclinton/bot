@@ -10,7 +10,7 @@ with open('mail.txt', 'r') as file:
             if '@' not in recipient and recipient not in ["above", "company"]:
                 departments.add(recipient)
 
-for department in departments:
+for department in ["Betty"]:
     print(department)
 exit()
 
