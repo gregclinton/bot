@@ -6,17 +6,24 @@ from fastapi import FastAPI, Request
 from langgraph.graph import END
 from langgraph.prebuilt import create_react_agent
 from langchain_openai import ChatOpenAI
+from langchain.schema import SystemMessage
 from assistant import Assistant
 import supervisor
 
 app = FastAPI()
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
+
+def call_model(state):
+    return {"messages": [llm.invoke([SystemMessage(f"Prefix response with {END}: ")] + state["messages"])]}
+
 assistant = Assistant(supervisor.create(llm, {
-    "agent": create_react_agent(llm, [shell, search], state_modifier=f"Preface your response with {END}."),
+    "accountant": call_model,
+    "rabbi": call_model,
+    # "rabbi": create_react_agent(llm, [shell, search], state_modifier=f"Preface your response with {END}."),
 }))
 
-print(assistant.run('hello'))
+print(assistant.run("Does God exist?"))
 
 @app.post('/prompts')
 async def post_prompt(req: Request):

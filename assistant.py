@@ -7,7 +7,6 @@ class Assistant:
 
     def run(self, prompt):
         for event in self.graph.stream({"messages": [('user', prompt)]}, thread(), stream_mode = 'values'):
-            print(event)
             pass
 
         return event['messages'][-1].content

@@ -5,15 +5,9 @@ from langchain_core.messages import SystemMessage
 from langgraph.checkpoint.memory import MemorySaver
 
 def create(llm, agents):
-    members = ", ".join(agents.keys())
+    members = " or ".join(agents.keys())
 
-    prompt = (
-        "You are a supervisor tasked with managing a conversation between the"
-        f" following workers: {members}. Given the following user request,"
-        " respond with the worker to act next. Each worker will perform a"
-        " task and respond with their results and status. When finished,"
-        f" respond with {END}."
-    )
+    prompt = f"If you see {END}, set next to {END}, otherwise set next to one of {members} as appropriate."
 
     class AgentState(MessagesState):
         next: str
