@@ -26,7 +26,7 @@ const chat = {
 
         post(prompt);
 
-        await fetch('/agent/prompts', {
+        await fetch('/company/prompts', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -42,7 +42,7 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = "";
-        fetch('/agent/thread/current', { method: 'DELETE' });
+        fetch('/company/thread/current', { method: 'DELETE' });
     }
 };
 
