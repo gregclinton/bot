@@ -7,12 +7,13 @@ with open('mail.txt', 'r') as file:
         line = line.rstrip()
         if line.startswith("To: "):
             recipient = line.split(" ")[1]
-            if '@' not in recipient and recipient not in ["above", "company"]:
+            if '@' not in recipient and recipient not in ["Management", "company"]:
                 departments.add(recipient)
 
-for department in ["Betty"]:
+for department in ["Sales"]:
     print(department)
-exit()
 
 with open('mail.txt', 'r') as file:
     print(llm.invoke(file.read()))
+
+exit()
