@@ -3,42 +3,40 @@ import llm
 departments = set()
 emails = []
 
-def add_email(sender, recipient, user, text):
+def add_email(sender, recipient, user, body):
     email = "----------------------------------------------------------------\n"
     email += f"To: {recipient}\nFrom: {sender}\n"
     if user:
         email += f"Re: {user}\n"
-    email += "\n" + text
+    email += "\n" + body
     emails.append(email)
     print(email)
     if '@' not in recipient and recipient not in ["Management", "company"]:
         departments.add(recipient)
-
+ 
 with open('mail.txt', 'r') as file:
-    text = ""
-    user = sender = recipient = None
+    email = {}
+    body = ""
 
     for line in file.readlines():
-        line = line.rstrip()
-        if len(line) == 0:
-            continue
-
         value = lambda: line.split(" ")[1]
 
         if line.startswith('--------'):
-            if len(text):
-                add_email(sender, recipient, user, text)
-                text = ""
+            if len(body):
+                email["body"] = body
+                emails.append(email)
+                body = ""
+            print(email)
         elif line.startswith("To: "):
-            recipient = value()
+            email["recipient"] = value()
         elif line.startswith("From: "):
-            sender = value()
+            email["sender"] = value()
         elif line.startswith("Re: "):
-            user = value()
+            email["user"] = value()
         else:
-            text += line + "\n"
+            body += line
 
-    add_email(sender, recipient, user, text)
+    emails.append(email)
 exit()
 
 for department in ["Sales"]:
