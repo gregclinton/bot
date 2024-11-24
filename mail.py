@@ -7,7 +7,7 @@ class Email:
         self.user = user
         self.body = body
 
-    def to_string():
+    def to_string(self):
         text = "--------------------------------------------------------------------------------\n"
         text += ("To: " + self.recipient + "\nFrom: " + self.sender + "\n")
         if self.user:
@@ -69,8 +69,8 @@ for department in ["Sales"]:
         if email.recipient == department:
             last_email = email
 
-    if not last_email:
-        continue
+#    if not last_email:
+#        continue
 
     # include unanswered emails to this department
     # for each unanswered email include all emails with same user
@@ -82,4 +82,4 @@ for department in ["Sales"]:
 
     with open('mail.txt', 'r') as file:
         for cut in split_cuts(llm.invoke(instruction, prompt)):
-            print(to_string(from_string(cut)))
+            print(Email.from_string(cut).to_string())
