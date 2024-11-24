@@ -59,7 +59,6 @@ for department in ["Sales"]:
         if email["recipient"] in [department, "company"]:
             prompt += to_string(email)
 
-    if True:
-        with open('mail.txt', 'r') as file:
-            for cut in split_cuts(llm.invoke(instuction, prompt)):
-                print(to_string(parse(cut)))
+    with open('mail.txt', 'r') as file:
+        for cut in split_cuts(llm.invoke(instuction, prompt)):
+            print(to_string(parse(cut)))
