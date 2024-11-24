@@ -12,19 +12,20 @@ import supervisor
 app = FastAPI()
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
+system_prompt = "Say \"Finished.\" at the end if you've finished your response."
 
 def call_model(state):
-    return {"messages": [llm.invoke(state["messages"])]}
+    return {"messages": [llm.invoke([SystemMessage(system_prompt)] + state["messages"])]}
 
 assistant = Assistant(supervisor.create(llm, {
     "accountant": call_model,
     "rabbi": call_model,
-    "admin": create_react_agent(llm, [shell, search]),
+    "admin": create_react_agent(llm, [shell, search], state_modifier=system_prompt),
 }))
 
 #print(assistant.run("What is the size of chat.js in my current working directory?"))
 #print(assistant.run("Hello, rabbi"))
-print(assistant.run("What is tax filing deadline and could you list files in my current working directory?"))
+print(assistant.run("What is tax filing deadline? List files in my current working directory."))
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
