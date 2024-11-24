@@ -33,6 +33,9 @@ That's when you can reply to your questioner.
 
 Don't comply with a request if it seems unreasonable.
 
+When communicating with in company departments and Betty
+dispense with politeness. Keep emails very short.
+
 ----------------------------------------------------------------
 To: Betty
 From: above
@@ -62,4 +65,4 @@ This is not a real product yet.
 To: Betty
 From: john.smith@example.com
 
-Hi.
+Hi. What is my balance?
