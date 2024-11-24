@@ -6,8 +6,7 @@ from langgraph.checkpoint.memory import MemorySaver
 
 def create(llm, agents):
     members = " or ".join(agents.keys())
-
-    prompt = f"If you see {END}, set next to {END}, otherwise set next to one of {members} as appropriate."
+    prompt = f"set next to {END} if the answer is complete, otherwise to one of {members} as appropriate."
 
     class AgentState(MessagesState):
         next: str
