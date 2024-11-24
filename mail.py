@@ -25,7 +25,7 @@ def parse(text):
         elif line.startswith("Re: "):
             email["user"] = value()
         else:
-            body += line
+            body += line + "\n"
 
     email["body"] = body
     return email
@@ -56,6 +56,7 @@ for department in ["Sales"]:
         if email["recipient"] in [department, "company"]:
             prompt += to_string(email)
 
+    print(prompt)
     if True:
         with open('mail.txt', 'r') as file:
             for cut in split_cuts(llm.invoke(instuction, prompt)):
