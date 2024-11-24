@@ -20,7 +20,6 @@ def to_string(email):
     if email.user:
         test += f"Re: {email.user}\n"
     text += body
-    print(text)
  
 with open('mail.txt', 'r') as file:
     email = {}
