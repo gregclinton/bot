@@ -10,31 +10,37 @@ def to_string(email):
         test += "Re: " + email["user"] + "\n"
     text += email["body"]
     return text
- 
-with open('mail.txt', 'r') as file:
+
+def parse(text):
     email = {}
     body = ""
 
-    for line in file.readlines():
+    for line in text.split("\n"):
         value = lambda: line.rstrip().split(" ")[1]
 
-        if line.startswith('--------'):
-            if len(body):
-                email["body"] = body
-                emails.append(email)
-                email = {}
-                body = ""
-        elif line.startswith("To: "):
+        if line.startswith("To: "):
             email["recipient"] = value()
         elif line.startswith("From: "):
             email["sender"] = value()
         elif line.startswith("Re: "):
             email["user"] = value()
-        else:
+        elif not line.startswith('--------'):
             body += line
 
     email["body"] = body
-    emails.append(email)
+    return email
+
+with open('mail.txt', 'r') as file:
+    text = ""
+
+    for line in file.readlines():
+        if line.startswith('--------'):
+            if len(text):
+                emails.append(parse(text))
+                text = ""
+        text += line
+
+    emails.append(parse(text))
 
 for department in ["Sales"]:
     instuction = f"You are an AI worker in {department}. Take care of emails addressed to you."
