@@ -49,7 +49,6 @@ for department in ["Sales"]:
     for email in emails:
         if email.recipient in [department, "company"]:
             print(to_string(email))
-        print(text)
       
-#        with open('mail.txt', 'r') as file:
-#            print(llm.invoke(file.read()))
+        with open('mail.txt', 'r') as file:
+            print(llm.invoke(to_string(email)))
