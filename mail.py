@@ -42,6 +42,9 @@ def split_cuts(text):
         else:
             cut += line + "\n"
 
+    if len(cut):
+        cuts.append(cut)
+
     return cuts
 
 with open('mail.txt', 'r') as file:
@@ -56,7 +59,6 @@ for department in ["Sales"]:
         if email["recipient"] in [department, "company"]:
             prompt += to_string(email)
 
-    print(prompt)
     if True:
         with open('mail.txt', 'r') as file:
             for cut in split_cuts(llm.invoke(instuction, prompt)):
