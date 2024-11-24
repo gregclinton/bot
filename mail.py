@@ -37,11 +37,12 @@ with open('mail.txt', 'r') as file:
     emails.append(email)
 
 for department in ["Sales"]:
-    text = ""
+    instuction = f"You are an AI worker in {department}. Take care of emails addressed to you."
+    prompt = ""
     for email in emails:
         if email["recipient"] in [department, "company"]:
-            text += to_string(email)
+            prompt += to_string(email)
 
     if True:
         with open('mail.txt', 'r') as file:
-            print(llm.invoke(text))
+            print(llm.invoke(instuction, prompt))

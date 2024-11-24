@@ -6,7 +6,7 @@ import os
 
 load_dotenv("keys")
 
-def invoke(prompt):
+def invoke(instuction, prompt):
     return requests.post(
         "https://api.openai.com/v1/chat/completions", 
         headers = {
@@ -16,6 +16,9 @@ def invoke(prompt):
         json = {
             "model": "gpt-4o-mini",
             "temperature": 0,
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": [
+                {"role": "system", "content": instuction},
+                {"role": "user", "content": prompt}
+            ],
         }
     ).json()["choices"][0]["message"]["content"]
