@@ -17,6 +17,7 @@ Put your department name in the From: field.
 Put the user email address, if applicable, in the Re: field.
 Skip a line.
 Put whatever short message you need to send.
+Insert line breaks if you approach 80 characters.
 
 When you see To: company, it's applies to all of you.
 When you see From: above, that's me. It's kind of a God joke.
@@ -29,6 +30,8 @@ First send emails to any department you need answers from.
 Emails get processed in the blink of an eye.
 In milliseconds you will receive your answers.
 That's when you can reply to your questioner.
+
+Don't comply with a request if it seems unreasonable.
 
 ----------------------------------------------------------------
 To: Betty
