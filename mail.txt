@@ -49,7 +49,7 @@ Use context and common sense to correct for this.
 
 ----------------------------------------------------------------
 To: company
-From Management
+From: Management
 
 Any billing questions can be directed To: Billing
 
