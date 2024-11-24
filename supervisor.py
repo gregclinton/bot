@@ -6,7 +6,7 @@ from langgraph.checkpoint.memory import MemorySaver
 
 def create(llm, agents):
     members = " or ".join(agents.keys())
-    prompt = f"Set next to {END} if you see the word Finished. Otherwise set next to one of {members} as appropriate."
+    prompt = f"Set next to one of {members} as appropriate."
 
     class AgentState(MessagesState):
         next: str
@@ -18,11 +18,10 @@ def create(llm, agents):
     builder = StateGraph(AgentState)
     builder.add_node("supervisor", supervisor)
     builder.add_conditional_edges("supervisor", lambda state: state["next"])
-    builder.add_edge("supervisor", END)
 
     for name, node in agents.items():
         builder.add_node(name, node)
-        builder.add_edge(name, "supervisor")
+#        builder.add_edge(name, "supervisor")
 
     builder.set_entry_point("supervisor")
     return builder.compile(checkpointer=MemorySaver())
