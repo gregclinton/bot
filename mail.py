@@ -1,6 +1,8 @@
 import llm
 
-# print(llm.invoke("hi"))
+with open('mail.txt', 'r') as file:
+    print(llm.invoke(file.read()))
+exit()
 
 with open('mail.txt', 'r') as file:
     for line in file.readlines():
