@@ -22,6 +22,7 @@ with open('mail.txt', 'r') as file:
             if len(body):
                 email["body"] = body
                 emails.append(email)
+                email = {}
                 body = ""
         elif line.startswith("To: "):
             email["recipient"] = value()
@@ -40,7 +41,7 @@ for department in ["Sales"]:
     for email in emails:
         if email["recipient"] in [department, "company"]:
             text += to_string(email)
-    print(text)
-    if False:
+
+    if True:
         with open('mail.txt', 'r') as file:
             print(llm.invoke(text))
