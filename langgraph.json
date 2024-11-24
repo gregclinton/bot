@@ -1,6 +1,0 @@
-{
-    "graphs": {
-      "agent": "./play.py:graph"
-    },
-    "dependencies": ["."]
-}

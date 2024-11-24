@@ -20,8 +20,6 @@ const chat = {
             post.append(top, bottom);
             post.classList.add('post');
             document.getElementById('chat').appendChild(post);
-            Prism.highlightAll();
-            MathJax.typesetPromise();
 
             post.scrollIntoView({ behavior: 'smooth' });
         }
@@ -37,8 +35,7 @@ const chat = {
         })
         .then(response => response.json())
         .then(o => {
-            reply = o.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
-            post(marked.parse(reply));
+            post(o.content);
             chat.waiting = false;
         });
     },
@@ -46,36 +43,6 @@ const chat = {
     clear: () => {
         document.getElementById('chat').innerHTML = "";
         fetch('/agent/thread/current', { method: 'DELETE' });
-    },
-
-    paste: () => {
-        navigator.clipboard.readText()
-        .then(prompt => {
-            if (prompt !== '') {
-                chat.prompt(prompt);
-            }
-        })
-    },
-
-    redo: () => {
-        const div = document.getElementById('chat');
-
-        if (div.children.length > 1) {
-            const prompt = div.lastChild.previousSibling.lastChild.innerHTML;
-
-            chat.back();
-            chat.prompt(prompt);
-        }
-    },
-
-    back: () => {
-        const div = document.getElementById('chat');
-
-        if (div.children.length > 1) {
-            div.removeChild(div.lastChild);
-            div.removeChild(div.lastChild);
-            fetch('/agent/prompts/last', { method: 'DELETE' });
-        }
     }
 };
 

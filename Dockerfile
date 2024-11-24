@@ -1,4 +1,4 @@
-# docker build -t agent .
+# docker build -t company .
 
 FROM ubuntu:24.04
 
@@ -11,16 +11,4 @@ RUN apt update && apt upgrade -y && \
 
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11 
 
-RUN pip install langgraph langsmith langchain-core langchain-community
-
-RUN pip install langchain_openai langchain_anthropic
-
 RUN pip install fastapi uvicorn
-
-RUN pip install tavily_python
-
-RUN pip install "langgraph-cli[inmem]==0.1.55"
-
-RUN pip install beautifulsoup4
-
-RUN pip install langchain-chroma

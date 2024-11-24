@@ -20,11 +20,6 @@ body, html
     font-weight: bold;
 }
 
-#chat p:first-of-type /* markdown adds a <p> */
-{
-    margin: 0px;
-}
-
 #chat .post
 {
     margin-left: 15px;
