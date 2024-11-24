@@ -52,13 +52,17 @@ with open('mail.txt', 'r') as file:
         emails.append(parse(cut))
 
 for department in ["Sales"]:
-    instuction = f"You are an AI worker in {department}. Take care of emails to you only if they require a reply. "
+    instruction = f"You are an AI worker in {department}. Take care of emails to you only if they require a reply. "
     prompt = ""
 
+    # include unanswered emails to this department
+    # for each unanswered email include all emails with same user
+    # and always include emails to company
+    # and always include emails from Management to this department
     for email in emails:
         if email["recipient"] in [department, "company"]:
             prompt += to_string(email)
 
     with open('mail.txt', 'r') as file:
-        for cut in split_cuts(llm.invoke(instuction, prompt)):
+        for cut in split_cuts(llm.invoke(instruction, prompt)):
             print(to_string(parse(cut)))
