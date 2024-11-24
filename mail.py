@@ -13,6 +13,14 @@ def add_email(sender, recipient, user, body):
     print(email)
     if '@' not in recipient and recipient not in ["Management", "company"]:
         departments.add(recipient)
+
+def to_string(email):
+    text = "----------------------------------------------------------------\n"
+    text += f"To: {email.recipient}\nFrom: {email.sender}\n"
+    if email.user:
+        test += f"Re: {email.user}\n"
+    text += body
+    print(text)
  
 with open('mail.txt', 'r') as file:
     email = {}
@@ -35,14 +43,13 @@ with open('mail.txt', 'r') as file:
             email["user"] = value()
         else:
             body += line
-
     emails.append(email)
-exit()
 
 for department in ["Sales"]:
-    print(department)
-
-with open('mail.txt', 'r') as file:
-    print(llm.invoke(file.read()))
-
-exit()
+    for email in emails:
+        if email.recipient in [department, "company"]:
+            print(to_string(email))
+        print(text)
+      
+#        with open('mail.txt', 'r') as file:
+#            print(llm.invoke(file.read()))
