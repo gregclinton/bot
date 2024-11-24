@@ -11,4 +11,4 @@ RUN apt update && apt upgrade -y && \
 
 RUN curl -sS https://bootstrap.pypa.io/get-pip.py | python3.11 
 
-RUN pip install fastapi uvicorn
+RUN pip install fastapi uvicorn python-dotenv requests
