@@ -12,12 +12,11 @@ import supervisor
 app = FastAPI()
 
 llm = ChatOpenAI(model = "gpt-4o-mini")
-assistant = Assistant(supervisor.create(llm,
-    f"Respond 'agent' the first time and '{END}' thereafter.", {
-    "agent": create_react_agent(llm, [shell, search], state_modifier="Do your best."),
+assistant = Assistant(supervisor.create(llm, {
+    "agent": create_react_agent(llm, [shell, search]),
 }))
 
-print(assistant.run('hello'))
+assistant.run('hello')
 
 @app.post('/prompts')
 async def post_prompt(req: Request):
