@@ -31,7 +31,7 @@ class Email:
                 user = value()
             else:
                 body += line + "\n"
-        return Email(sender, recipient, body, user)        
+        return Email(sender, recipient, body, user)
 
 departments = set()
 emails = []
@@ -60,8 +60,8 @@ with open('mail.txt', 'r') as file:
 for department in ["Sales"]:
     instruction = f"You are an AI worker in {department}. "
     instruction += "Take care of emails to you only if they require a reply. "
+
     instruction += "The emails are shown in chronological order. "
-    prompt = ""
     last_email = None
 
     # get last email to this department
@@ -76,9 +76,11 @@ for department in ["Sales"]:
     # for each unanswered email include all emails with same user
     # and always include emails to company
     # and always include emails from Management to this department
+    prompt = ""
+
     for email in emails:
         if email.recipient in [department, "company"]:
-            prompt += to_string(email)
+            prompt += email.to_string()
 
     with open('mail.txt', 'r') as file:
         for cut in split_cuts(llm.invoke(instruction, prompt)):
