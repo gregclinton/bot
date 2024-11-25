@@ -32,8 +32,8 @@ def run():
                 instruction += "The messages are shown in chronological order. "
 
                 completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
-                Messages.append_string_to_file(calls, completion)
                 last_msg = Message.from_string(completion)
+                Messages.append_string_to_file(calls, last_msg.to_string())
                 if last_msg.recipient == account:
                     return { "content" : last_msg.body }
 

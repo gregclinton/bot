@@ -34,7 +34,7 @@ class Messages:
 
     @staticmethod
     def fix_perforations(s):
-        return re.sub(r"^-{10,}$", "-" * 60, s, flags=re.MULTILINE)
+        return re.sub(r"^-{3,}$", "-" * 60, s, flags=re.MULTILINE)
 
     @staticmethod
     def to_string(msgs):
