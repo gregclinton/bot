@@ -11,7 +11,7 @@ calls = f"{company}.calls.txt"
 
 departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
-def run()
+def run():
     for department in [departments]:
         account = None
 

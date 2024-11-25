@@ -5,8 +5,7 @@ from messages import Messages, Message
 import os
 import company
 
-company = "sephora"
-calls = f"{company}.calls.txt"
+calls = "sephora.calls.txt"
 
 app = FastAPI()
 
