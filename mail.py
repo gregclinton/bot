@@ -13,7 +13,7 @@ class Email:
         if self.user:
             text += "Re: " + self.user + "\n"
         text += self.body
-        return text
+        return text.rstrip()
 
     @staticmethod
     def from_string(text):
