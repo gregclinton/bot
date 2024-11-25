@@ -63,13 +63,12 @@ for department in ["Sales"]:
     instruction += "The emails are shown in chronological order. "
     last_email = None
 
-    # get last email to this department
     for email in emails:
         if email.recipient == department:
             last_email = email
 
-#    if not last_email:
-#        continue
+    if not last_email
+        continue
 
     # include unanswered emails to this department
     # for each unanswered email include all emails with same user
