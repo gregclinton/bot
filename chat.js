@@ -45,8 +45,18 @@ const chat = {
     clear: () => {
         document.getElementById('chat').innerHTML = "";
         fetch('/company/messages/' + account, { method: 'DELETE' });
-        fetch('/company/messages/' + account, { method: 'GET' });
     }
 };
 
 chat.clear();
+
+setInterval(() => {
+    fetch('/company/messages/' + account, { method: 'GET' })
+        .then(response => {
+            return response.json();
+        })
+        .then(msgs => {
+            msgs.forEach(msg => {
+                console.log(msg.sender);
+            });
+        })}, 500);

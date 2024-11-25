@@ -13,9 +13,10 @@ async def get_prompt(req: Request, account: str):
     return Messages.load(calls, lambda msg: account in (msg.sender, msg.recipient))
 
 @app.post('/company/messages/{account}')
-async def post_prompt(req: Request):
-    return { "content": (await req.json())['prompt'] }
+async def post_prompt(req: Request, account: str):
+    prompt = (await req.json())['prompt']
+    return 'ok'
 
 @app.delete('/company/messages/{account}')
-async def delete_thread():
+async def delete_thread(account: str):
     return 'ok'
