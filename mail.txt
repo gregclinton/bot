@@ -16,7 +16,7 @@ Put whatever short message you need to send.
 If you need to write more than one message,
 separate them by a row of hyphens.
 
-When you see To: company, it's applies to you.
+When you see To: company, it applies to you.
 
 Never answer an message until you know the complete answer.
 First send messages to any department you need answers from.
