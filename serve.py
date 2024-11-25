@@ -4,10 +4,14 @@ from fastapi import FastAPI, Request
 
 app = FastAPI()
 
-@app.post('/company/prompts')
+@app.get('/company/messages')
+async def get_prompt(req: Request):
+    return { "content": (await req.json())['prompt'] }
+
+@app.post('/company/messages')
 async def post_prompt(req: Request):
     return { "content": (await req.json())['prompt'] }
 
-@app.delete('/company/thread/current')
+@app.delete('/company/messages')
 async def delete_thread():
     return 'ok'
