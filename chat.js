@@ -45,6 +45,7 @@ const chat = {
     clear: () => {
         document.getElementById('chat').innerHTML = "";
         fetch('/company/messages/' + account, { method: 'DELETE' });
+        fetch('/company/messages/' + account, { method: 'GET' });
     }
 };
 
