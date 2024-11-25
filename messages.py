@@ -52,8 +52,10 @@ class Messages:
 
     @staticmethod
     def load(path, keep = lambda msg: True):
-        with open(path, 'r') as file:
-            return Messages.from_string(file.read(), keep)
+        if os.path.exists(path):
+            with open(path, 'r') as file:
+                return Messages.from_string(file.read(), keep)
+        return []
 
     @staticmethod
     def recipients(path, keep = lambda msg: True):
