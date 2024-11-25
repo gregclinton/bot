@@ -27,8 +27,8 @@ for department in ["Sales"]:
         return (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us())
 
     instruction = f"You are a worker in {department}. "
-    instruction += "Take care of msgs to you only if they require a reply. "
-    instruction += "The msgs are shown in chronological order. "
+    instruction += "Take care of messages to you only if they require a reply. "
+    instruction += "The messages are shown in chronological order. "
 
     msgs = Messages.load("mail.txt") + Messages.load(path, condition) + xxx
     completion = llm.invoke(instruction, Messages.to_string(msgs))
