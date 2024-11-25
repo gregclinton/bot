@@ -3,7 +3,6 @@
 import llm
 from messages import Messages
 import os
-from time import sleep
 
 company = "sephora"
 mgmt = f"{company}.txt"
