@@ -1,7 +1,5 @@
 import re
 
-perforation = "----------------------------------------------------------------------\n"
-
 class Message:
     def __init__(self, sender, recipient, body, user):
         self.sender = sender
@@ -32,17 +30,23 @@ class Message:
         return Message(sender, recipient, body, user)
 
 class Messages:
+    perforation = "----------------------------------------------------------------------\n"
+
     @staticmethod
-    def save(msgs, condition = None):
+    def to_string(msgs):
+        return Messages.perforation.join(map(lambda msg: msg.to_string(), msgs))
+
+    @staticmethod
+    def save(msgs):
         with open(msgs, 'w') as file:
-            file.write(perforation.join(map(lambda msg: msg.to_string(), msgs)))
+            file.write(Messages.to_string(msgs))
 
     @staticmethod
     def load(path, condition = None):
         msgs = []
 
         with open(path, 'r') as file:
-            for cut in file.read().split(perforation):
+            for cut in file.read().split(Messages.perforation):
                 msg = Message.from_string(cut)
                 if not condition or condition(msg):
                     msgs.append(msg)

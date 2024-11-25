@@ -1,7 +1,7 @@
 # sudo docker run -v `pwd`:/root -w /root company:latest python3 company.py
 
 import llm
-from messages import Messages, perforation
+from messages import Messages
 
 company = "sephora"
 path = company + ".txt"
@@ -32,7 +32,7 @@ for department in ["Sales"]:
     instruction += "Take care of msgs to you only if they require a reply. "
     instruction += "The msgs are shown in chronological order. "
 
-    prompt = perforation.join(map(lambda msg: msg.to_string(), msgs))
+    prompt = Messages.to_string(msgs)
     print(prompt)
     exit()
     print(llm.invoke(instruction, prompt))
