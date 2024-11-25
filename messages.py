@@ -71,6 +71,6 @@ class Messages:
         if len(path) > 0:
             file_empty = not os.path.exists(path)
             with open(path, "a") as file:
-                if file_empty:
+                if not file_empty:
                     file.write(Messages.perforation)
                 file.write(text.rstrip() + "\n")

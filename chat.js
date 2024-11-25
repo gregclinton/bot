@@ -28,7 +28,7 @@ setInterval(() => {
             chat.innerHTML = '';
 
             msgs.forEach(msg => {
-                const name = chat.children.length % 2 ? 'ai' : 'me';
+                const name = msg.sender === account ? 'me' : 'ai';
                 const title = document.createElement('span');
     
                 title.innerHTML = name
