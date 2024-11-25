@@ -1,3 +1,5 @@
+const account = 'account-375491'
+
 const chat = {
     prompt: async prompt => {
         chat.waiting = true;
@@ -26,7 +28,7 @@ const chat = {
 
         post(prompt);
 
-        await fetch('/company/messages', {
+        await fetch('/company/messages/' + account, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -42,7 +44,7 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = "";
-        fetch('/company/messages', { method: 'DELETE' });
+        fetch('/company/messages/' + account, { method: 'DELETE' });
     }
 };
 
