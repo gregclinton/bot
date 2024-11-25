@@ -13,7 +13,6 @@ departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 def run():
     max_iterations = 10
     n_iterations = 0
-    answer = None
 
     while n_iterations < max_iterations:
         n_iterations += 1
@@ -33,9 +32,9 @@ def run():
                 instruction += "The messages are shown in chronological order. "
 
                 completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
+                Messages.append_string_to_file(calls, completion)
                 last_msg = Message.from_string(completion)
                 if last_msg.recipient == account:
-                    answer = last_msg.body
-                Messages.append_string_to_file(calls, completion)
+                    return { "content" : last_msg.body }
 
-    return { "content" : answer if answer else "I don't know." }
+    return { "content" : "I don't know." }
