@@ -1,7 +1,7 @@
 import re
 import cuts
 
-class Email:
+class Message:
     def __init__(self, sender, recipient, body, user):
         self.sender = sender
         self.recipient = recipient
@@ -29,15 +29,16 @@ class Email:
                 sender = value()
             else:
                 body += line + "\n"
-        return Email(sender, recipient, body, user)
+        return Message(sender, recipient, body, user)
 
+class Messages:
     @staticmethod
     def load(path):
-        emails = []
+        msgs = []
 
         with open(path, 'r') as file:
             for cut in cuts.split(file.read()):
-                email = Email.from_string(cut)
-                emails.append(email)
+                msg = Message.from_string(cut)
+                msgs.append(msg)
 
-        return emails
+        return msgs
