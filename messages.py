@@ -1,5 +1,6 @@
 import re
-import cuts
+
+perforation = "----------------------------------------------------------------------\n"
 
 class Message:
     def __init__(self, sender, recipient, body, user):
@@ -13,7 +14,6 @@ class Message:
     def to_string(self):
         text = "To: " + self.recipient + "\nFrom: " + self.sender + "\n"
         text += self.body.rstrip() + "\n"
-        text += "--------------------------------------------------------------------------------\n"
         return text
 
     @staticmethod
@@ -37,7 +37,7 @@ class Messages:
         msgs = []
 
         with open(path, 'r') as file:
-            for cut in cuts.split(file.read()):
+            for cut in file.read().split(perforation):
                 msg = Message.from_string(cut)
                 if not condition or condition(msg):
                     msgs.append(msg)
