@@ -4,20 +4,22 @@ import llm
 from messages import Messages
 
 company = "sephora"
-path = company + ".txt"
-departments = Messages.recipients(path, lambda msg: msg.recipient != "company")
+mgmt = f"{company}.txt"
+calls = f"{company}.calls.txt"
+
+departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
 for department in ["Sales"]:
     account = None
 
-    for msg in Messages.load("xxx.txt", lambda msg: msg.recipient == department):
+    for msg in Messages.load(calls, lambda msg: msg.recipient == department):
         account = msg.account
 
     if not account:
         continue
 
-    msgs = Messages.load(path, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
-    msgs += Messages.load("xxx.txt", lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
+    msgs = Messages.load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
+    msgs += Messages.load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
     instruction = f"You are a worker in {department}. "
     instruction += "Take care of messages to you only if they require a reply. "
