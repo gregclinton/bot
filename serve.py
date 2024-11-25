@@ -3,6 +3,7 @@
 from fastapi import FastAPI, Request
 from messages import Messages, Message
 import os
+import company
 
 company = "sephora"
 calls = f"{company}.calls.txt"
@@ -17,6 +18,7 @@ async def get_messages(req: Request, account: str):
 async def post_message(req: Request, account: str):
     prompt = (await req.json())['prompt']
     Messages.append_string_to_file(calls, Message(account, "Sales", prompt).to_string())
+    company.run()
     return 'ok'
 
 @app.delete('/company/messages/{account}')

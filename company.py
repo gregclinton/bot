@@ -11,8 +11,8 @@ calls = f"{company}.calls.txt"
 
 departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
-while True:
-    for department in ["Sales"]:
+def run()
+    for department in [departments]:
         account = None
 
         for msg in Messages.load(calls, lambda msg: msg.recipient == department):
@@ -30,5 +30,3 @@ while True:
 
         completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
         Messages.append_string_to_file(calls, completion)
-    sleep(0.5)
-    break
