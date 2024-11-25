@@ -1,7 +1,7 @@
 # sudo docker run -v `pwd`:/root -w /root company:latest python3 company.py
 
 import llm
-from messages import Messages
+from messages import Messages, Message
 import os
 
 company = "sephora"
@@ -11,19 +11,27 @@ calls = f"{company}.calls.txt"
 departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
 def run():
-    for department in departments:
-        account = None
+    max_iterations = 10
+    n_iterations = 0
+    got_answer = False
 
-        for msg in Messages.load(calls, lambda msg: msg.recipient == department):
-            account = msg.account
+    while (n_iterations < max_iterations) and not got_answer:
+        n_iterations += 1
 
-        if account:
-            msgs = Messages.load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
-            msgs += Messages.load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
+        for department in departments:
+            account = None
 
-            instruction = f"You are a worker in {department}. "
-            instruction += "Take care of messages to you only if they require a reply. "
-            instruction += "The messages are shown in chronological order. "
+            for msg in Messages.load(calls, lambda msg: msg.recipient == department):
+                account = msg.account
 
-            completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
-            Messages.append_string_to_file(calls, completion)
+            if account:
+                msgs = Messages.load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
+                msgs += Messages.load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
+
+                instruction = f"You are a worker in {department}. "
+                instruction += "Take care of messages to you only if they require a reply. "
+                instruction += "The messages are shown in chronological order. "
+
+                completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
+                got_answer = Message.from_string(completion).recipient == account
+                Messages.append_string_to_file(calls, completion)
