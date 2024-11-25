@@ -69,7 +69,8 @@ class Messages:
     @staticmethod
     def append_string_to_file(path, text):
         if len(path) > 0:
+            file_empty = not os.path.exists(path)
             with open(path, "a") as file:
-                if os.path.exists(path):
+                if file_empty:
                     file.write(Messages.perforation)
                 file.write(text.rstrip() + "\n")
