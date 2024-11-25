@@ -32,9 +32,6 @@ class Email:
                 body += line + "\n"
         return Email(sender, recipient, body, user)
 
-departments = set()
-emails = []
-
 def split_cuts(text):
     cuts = []
     cut = ""
@@ -52,11 +49,17 @@ def split_cuts(text):
 
     return cuts
 
+departments = set()
+emails = []
+
 with open('mail.txt', 'r') as file:
     for cut in split_cuts(file.read()):
-        emails.append(Email.from_string(cut))
+        email = Email.from_string(cut)
+        if email.sender == "Management" and email.recipient != "company":
+            departments.add(email.recipient)
+        emails.append(email)
 
-for department in ["Sales"]:
+for department in departments:
     instruction = f"You are an AI worker in {department}. "
     instruction += "Take care of emails to you only if they require a reply. "
 
