@@ -6,40 +6,32 @@ from messages import Messages
 company = "sephora"
 path = company + ".txt"
 departments = Messages.recipients(path, lambda msg: msg.recipient != "company")
-msgs = Messages.load(path)
-
-print (departments)
-exit()
-for msg in msgs:
-    if msg.sender == "Management" and msg.recipient != "company":
-        departments.add(msg.recipient)
 
 for department in ["Sales"]:
     account = None
+    xxx = Messages.load("xxx.txt")
 
-    for msg in msgs:
+    for msg in xxx:
         if msg.recipient == department:
             account = msg.account
 
     if not account:
         continue
 
-    prompt = ""
-
-    for msg in Messages.load("mail.txt") + msgs:
+    def condition(msg):
         come_from_above = lambda: msg.sender in ["Management"]
         visible_to_us = lambda: msg.recipient in [department, "company"]
         to_or_from_us = lambda: msg.recipient == department or msg.sender == department
         re_the_account = lambda: msg.account == account
 
-        if (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us()):
-            prompt += msg.to_string()
-        break
+        return (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us())
+
+    msgs = Messages.load("mail.txt") + Messages.load(path, condition) + xxx
 
     instruction = f"You are an worker in {department}. "
     instruction += "Take care of msgs to you only if they require a reply. "
     instruction += "The msgs are shown in chronological order. "
 
+    prompt = list(map(lambda msg: msg.to_string(), msgs))
     print(prompt)
-
     print(llm.invoke(instruction, prompt))

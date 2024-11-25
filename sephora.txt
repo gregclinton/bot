@@ -18,8 +18,3 @@ This department is under construction.
 So in the mean time, make answers up.
 We're still in bleeding edge development.
 This is not a real product yet.
-----------------------------------------------------------------
-To: Sales
-From: account-375491
-
-Hello.
