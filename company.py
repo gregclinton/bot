@@ -19,9 +19,9 @@ for department in ["Sales"]:
         continue
 
     def condition(msg):
-        come_from_above = lambda: msg.sender in ["Management"]
-        visible_to_us = lambda: msg.recipient in [department, "company"]
-        to_or_from_us = lambda: msg.recipient == department or msg.sender == department
+        come_from_above = lambda: msg.sender in ("Management")
+        visible_to_us = lambda: msg.recipient in (department, "company")
+        to_or_from_us = lambda: department in (msg.sender, msg.recipient)
         re_the_account = lambda: msg.account == account
 
         return (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us())
