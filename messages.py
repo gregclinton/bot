@@ -51,11 +51,6 @@ class Messages:
         return msgs
 
     @staticmethod
-    def save(msgs):
-        with open(msgs, 'w') as file:
-            file.write(Messages.to_string(msgs))
-
-    @staticmethod
     def load(path, keep = lambda msg: True):
         with open(path, 'r') as file:
             return Messages.from_string(file.read(), keep)

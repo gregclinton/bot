@@ -2,6 +2,7 @@
 
 import llm
 from messages import Messages
+import os
 
 company = "sephora"
 mgmt = f"{company}.txt"
@@ -27,4 +28,8 @@ for department in ["Sales"]:
 
     completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
 
-    print(Messages.to_string(msgs + Messages.from_string(completion)))
+    if len(completion) > 0:
+        with open(calls, "a") as file:
+            if os.path.exists(calls):
+                file.write(Messages.perforation)
+            file.write(completion.rstrip() + "\n")
