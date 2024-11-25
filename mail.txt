@@ -33,6 +33,7 @@ When communicating with company departments.
 dispense with politeness. Keep emails very short.
 
 Never send email to Management.
+If From: field contains an email address, it is a human user.
 Only Sales can email users.
 ----------------------------------------------------------------
 To: Sales
