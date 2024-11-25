@@ -9,19 +9,18 @@ class Email:
 
     def to_string(self):
         text = "--------------------------------------------------------------------------------\n"
-        text += ("To: " + self.recipient + "\nFrom: " + self.sender + "\n")
+        text += "To: " + self.recipient + "\nFrom: " + self.sender + "\n"
         if self.user:
-            text += ("Re: " + self.user + "\n")
+            text += "Re: " + self.user + "\n"
         text += self.body
         return text
 
     @staticmethod
     def from_string(text):
-        body = ""
+        recipient, sender, user, body = ("", "", "", "")
 
         for line in text.split("\n"):
             value = lambda: line.rstrip().split(" ")[1]
-            recipient, sender, user, body = ("", "", "", "")
 
             if line.startswith("To: "):
                 recipient = value()
