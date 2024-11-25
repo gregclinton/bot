@@ -30,7 +30,11 @@ class Message:
         return Message(sender, recipient, body, user)
 
 class Messages:
-    perforation = "----------------------------------------------------------------------\n"
+    perforation = "------------------------------------------------------------\n"
+
+    @staticmethod
+    def fix_perforations(s):
+        return re.sub(r"^-{10,}$", "-" * 60, s, flags=re.MULTILINE)
 
     @staticmethod
     def to_string(msgs):
@@ -40,9 +44,7 @@ class Messages:
     def from_string(text, condition = None):
         msgs = []
 
-        # replace hyphens in text to match perforation
-
-        for cut in text.split(Messages.perforation):
+        for cut in Messages.fix_perforations(text).split(Messages.perforation):
             msg = Message.from_string(cut)
             if not condition or condition(msg):
                 msgs.append(msg)
