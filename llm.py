@@ -1,5 +1,3 @@
-# sudo docker run -v `pwd`:/root -w /root company:latest python3 mail.py
-
 import requests
 from dotenv import load_dotenv
 import os

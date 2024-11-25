@@ -1,4 +1,5 @@
 import re
+import cuts
 
 class Email:
     def __init__(self, sender, recipient, body, user):
@@ -29,3 +30,14 @@ class Email:
             else:
                 body += line + "\n"
         return Email(sender, recipient, body, user)
+
+    @staticmethod
+    def load(path):
+        emails = []
+
+        with open(path, 'r') as file:
+            for cut in cuts.split(file.read()):
+                email = Email.from_string(cut)
+                emails.append(email)
+
+        return emails
