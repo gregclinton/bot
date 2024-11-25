@@ -1,4 +1,4 @@
-import re
+import re, os
 
 class Message:
     def __init__(self, sender, recipient, body, user):
@@ -63,3 +63,11 @@ class Messages:
             recipients.add(msg.recipient)
 
         return list(recipients)
+
+    @staticmethod
+    def append_string_to_file(path, text):
+        if len(path) > 0:
+            with open(path, "a") as file:
+                if os.path.exists(path):
+                    file.write(Messages.perforation)
+                file.write(text.rstrip() + "\n")

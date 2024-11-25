@@ -27,9 +27,4 @@ for department in ["Sales"]:
     instruction += "The messages are shown in chronological order. "
 
     completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
-
-    if len(completion) > 0:
-        with open(calls, "a") as file:
-            if os.path.exists(calls):
-                file.write(Messages.perforation)
-            file.write(completion.rstrip() + "\n")
+    Messages.append_string_to_file(calls, completion)
