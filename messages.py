@@ -33,6 +33,11 @@ class Message:
 
 class Messages:
     @staticmethod
+    def save(msgs, condition = None):
+        with open(msgs, 'w') as file:
+            file.write(perforation.join(map(lambda msg: msg.to_string(), msgs)))
+
+    @staticmethod
     def load(path, condition = None):
         msgs = []
 
