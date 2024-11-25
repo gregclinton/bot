@@ -26,7 +26,7 @@ for department in ["Sales"]:
 
         return (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us())
 
-    msgs = Messages.load("mail.txt") + Messages.load(path, condition) + xxx
+    msgs = Messages.load("mail.txt") + Messages.load(path) + xxx
 
     instruction = f"You are an worker in {department}. "
     instruction += "Take care of msgs to you only if they require a reply. "

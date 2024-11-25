@@ -4,12 +4,12 @@ From: Management
 Be polite, friendly and helpful.
 User messages use speech-to-text. So words can get jumbled.
 Use context and common sense to correct for this.
-----------------------------------------------------------------
+----------------------------------------------------------------------
 To: company
 From: Management
 
 Any billing questions can be directed To: Billing
-----------------------------------------------------------------
+----------------------------------------------------------------------
 To: Billing
 From: Management
 
