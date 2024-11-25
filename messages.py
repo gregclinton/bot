@@ -4,7 +4,7 @@ class Message:
     def __init__(self, sender, recipient, body):
         self.sender = sender
         self.recipient = recipient
-        self.body = body
+        self.body = "\n" + body.lstrip()
 
         match = re.search(r'account-\d{6}', self.to_string())
         self.account = match.group() if match else None
