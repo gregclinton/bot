@@ -33,9 +33,8 @@ const chat = {
                 document.getElementById('chat').appendChild(post);
 
                 post.scrollIntoView({ behavior: 'smooth' });
-            }
-        )}
-    )
+            })
+        })
     },
 
     clear: () => {
