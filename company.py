@@ -16,19 +16,13 @@ for department in ["Sales"]:
     if not account:
         continue
 
-    def keep(msg):
-        come_from_above = lambda: msg.sender in ("Management")
-        visible_to_us = lambda: msg.recipient in (department, "company")
-        to_or_from_us = lambda: department in (msg.sender, msg.recipient)
-        re_the_account = lambda: msg.account == account
-
-        return (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us())
+    msgs = Messages.load(path, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
+    msgs += Messages.load("xxx.txt", lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
     instruction = f"You are a worker in {department}. "
     instruction += "Take care of messages to you only if they require a reply. "
     instruction += "The messages are shown in chronological order. "
 
-    msgs = Messages.load(path, keep) + Messages.load("xxx.txt", keep)
     completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
 
     print(Messages.to_string(msgs + Messages.from_string(completion)))
