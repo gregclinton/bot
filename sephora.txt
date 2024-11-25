@@ -13,7 +13,7 @@ Any billing questions can be directed To: Billing
 To: Billing
 From: Management
 
-You are the workers that handle billing questions and payments.
+You handle billing questions and payments.
 This department is under construction.
 So in the mean time, make answers up.
 We're still in bleeding edge development.
