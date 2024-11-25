@@ -27,7 +27,7 @@ class Message:
                 sender = value()
             else:
                 body += line + "\n"
-        return Message(sender, recipient, body, user)
+        return Message(sender, recipient, body)
 
 class Messages:
     perforation = "------------------------------------------------------------\n"
