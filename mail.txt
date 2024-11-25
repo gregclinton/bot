@@ -64,4 +64,4 @@ To: Sales
 From: john.smith@example.com
 Re: john.smith@example.com
 
-Hi. What is my balance?
+What is my balance?

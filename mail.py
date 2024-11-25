@@ -13,7 +13,7 @@ class Email:
         if self.user:
             text += "Re: " + self.user + "\n"
         text += self.body
-        return text.rstrip()
+        return text.rstrip() + "\n"
 
     @staticmethod
     def from_string(text):
@@ -53,7 +53,8 @@ departments = set()
 emails = []
 
 with open('mail.txt', 'r') as file:
-    for cut in split_cuts(file.read()):
+    all_mail = file.read()
+    for cut in split_cuts(all_mail):
         email = Email.from_string(cut)
         if email.sender == "Management" and email.recipient != "company":
             departments.add(email.recipient)
@@ -85,4 +86,7 @@ for department in departments:
 
     with open('mail.txt', 'r') as file:
         for cut in split_cuts(llm.invoke(instruction, prompt)):
-            print(Email.from_string(cut).to_string())
+            all_mail += Email.from_string(cut).to_string()
+
+with open('mail.txt', 'w') as file:
+    file.write(all_mail)
