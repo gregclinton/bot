@@ -2,6 +2,7 @@
 
 from fastapi import FastAPI, Request
 from messages import Messages
+import os
 
 company = "sephora"
 calls = f"{company}.calls.txt"
@@ -9,14 +10,15 @@ calls = f"{company}.calls.txt"
 app = FastAPI()
 
 @app.get('/company/messages/{account}')
-async def get_prompt(req: Request, account: str):
+async def get_messages(req: Request, account: str):
     return Messages.load(calls, lambda msg: account in (msg.sender, msg.recipient))
 
 @app.post('/company/messages/{account}')
-async def post_prompt(req: Request, account: str):
+async def post_message(req: Request, account: str):
     prompt = (await req.json())['prompt']
     return 'ok'
 
 @app.delete('/company/messages/{account}')
-async def delete_thread(account: str):
+async def delete_message(account: str):
+    os.remove(calls)
     return 'ok'
