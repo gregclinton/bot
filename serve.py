@@ -20,7 +20,7 @@ async def post_message(req: Request, account: str):
     return 'ok'
 
 @app.delete('/company/messages/{account}')
-async def delete_message(account: str):
+async def delete_messages(account: str):
     if os.path.exists(calls):
         os.remove(calls)
     return 'ok'
