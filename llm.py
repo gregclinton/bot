@@ -14,7 +14,7 @@ def invoke(instuction, prompt):
             'Content-Type': 'application/json',
         },
         json = {
-            "model": "gpt-4o-mini",
+            "model": "gpt-4o",
             "temperature": 0,
             "messages": [
                 {"role": "system", "content": instuction},
