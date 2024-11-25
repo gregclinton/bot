@@ -40,6 +40,8 @@ class Messages:
     def from_string(text, condition = None):
         msgs = []
 
+        # replace hyphens in text to match perforation
+
         for cut in text.split(Messages.perforation):
             msg = Message.from_string(cut)
             if not condition or condition(msg):
