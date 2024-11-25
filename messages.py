@@ -44,12 +44,13 @@ class Messages:
         return msgs
 
     @staticmethod
-    def recipients(path):
-        msgs = []
+    def recipients(path, condition = None):
+        recipients = set()
 
         with open(path, 'r') as file:
             for cut in cuts.split(file.read()):
                 msg = Message.from_string(cut)
-                msgs.append(msg)
+                if not condition or condition(msg):
+                    recipients.add(msg.recipient)
 
-        return msgs
+        return list(recipients)
