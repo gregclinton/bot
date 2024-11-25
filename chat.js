@@ -14,7 +14,7 @@ const chat = {
             chat.innerHTML = '';
 
             msgs.forEach(msg => {
-                const name = msg.sender === account ? 'me' : 'ai';
+                const name = msg.sender
                 const title = document.createElement('span');
 
                 title.innerHTML = name

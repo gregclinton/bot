@@ -14,7 +14,8 @@ async def post_message(req: Request, account: str):
     prompt = (await req.json())['prompt']
     Messages.append_string_to_file(calls, Message(account, "Sales", prompt).to_string())
     company.run()
-    return Messages.load(calls, lambda msg: account in (msg.sender, msg.recipient))
+    msgs = Messages.load(calls, lambda msg: account in (msg.sender, msg.recipient))
+    return list(map(lambda msg: { "sender": "me" if msg.sender == account else "ai", "body": msg.body }, msgs))
 
 @app.delete('/company/messages/{account}')
 async def delete_messages(account: str):
