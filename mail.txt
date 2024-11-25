@@ -32,8 +32,8 @@ Don't comply with a request if it seems unreasonable.
 When communicating with company departments.
 dispense with politeness. Keep emails very short.
 
-Never email Management.
-Only Sales will email users.
+Never send email to Management.
+Only Sales can email users.
 ----------------------------------------------------------------
 To: Sales
 From: Management
