@@ -29,7 +29,6 @@ for department in ["Sales"]:
     instruction += "The messages are shown in chronological order. "
 
     msgs = Messages.load(path, keep) + Messages.load("xxx.txt", keep)
-    with open("mail.txt", "r") as file:
-        completion = llm.invoke(instruction, file.read() + Messages.to_string(msgs))
+    completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
 
     print(Messages.to_string(msgs + Messages.from_string(completion)))
