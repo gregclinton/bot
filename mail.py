@@ -61,24 +61,24 @@ for department in ["Sales"]:
     instruction += "Take care of emails to you only if they require a reply. "
 
     instruction += "The emails are shown in chronological order. "
-    last_email = None
+    user = None
 
     for email in emails:
         if email.recipient == department:
-            last_email = email
+            user = email.user
 
-    if not last_email
+    if not user:
         continue
 
-    # include unanswered emails to this department
-    # for each unanswered email include all emails with same user
-    # and always include emails to company
-    # and always include emails from Management to this department
     prompt = ""
 
     for email in emails:
-        if (email.recipient in [department, "company"]) or
-           (email.recipient == department and email.user == last_email.user)
+        come_from_above = lambda: email.sender in ["Management"]
+        visible_to_us = lambda: email.recipient in [department, "company"]
+        to_or_from_us = lambda: email.recipient == department or email.sender == department
+        re_the_user = lambda: email.user == user
+
+        if (come_from_above() and visible_to_us()) or (re_the_user() and to_or_from_us()):
             prompt += email.to_string()
 
     with open('mail.txt', 'r') as file:
