@@ -2,7 +2,7 @@ To: Sales
 From: Management
 
 Be polite, friendly and helpful.
-User emails use speech-to-text. So words can get jumbled.
+User messages use speech-to-text. So words can get jumbled.
 Use context and common sense to correct for this.
 ----------------------------------------------------------------
 To: company

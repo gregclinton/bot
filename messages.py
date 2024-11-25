@@ -42,3 +42,14 @@ class Messages:
                 msgs.append(msg)
 
         return msgs
+
+    @staticmethod
+    def recipients(path):
+        msgs = []
+
+        with open(path, 'r') as file:
+            for cut in cuts.split(file.read()):
+                msg = Message.from_string(cut)
+                msgs.append(msg)
+
+        return msgs

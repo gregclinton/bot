@@ -11,9 +11,6 @@ for msg in msgs:
         departments.add(msg.recipient)
 
 for department in departments:
-    instruction = f"You are an worker in {department}. "
-    instruction += "Take care of msgs to you only if they require a reply. "
-    instruction += "The msgs are shown in chronological order. "
     account = None
 
     for msg in msgs:
@@ -33,5 +30,9 @@ for department in departments:
 
         if (come_from_above() and visible_to_us()) or (re_the_account() and to_or_from_us()):
             prompt += msg.to_string()
+
+    instruction = f"You are an worker in {department}. "
+    instruction += "Take care of msgs to you only if they require a reply. "
+    instruction += "The msgs are shown in chronological order. "
 
     print(llm.invoke(instruction, prompt))
