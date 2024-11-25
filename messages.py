@@ -1,7 +1,7 @@
 import re, os
 
 class Message:
-    def __init__(self, sender, recipient, body, user):
+    def __init__(self, sender, recipient, body):
         self.sender = sender
         self.recipient = recipient
         self.body = body
