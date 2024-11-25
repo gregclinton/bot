@@ -31,29 +31,3 @@ dispense with politeness. Keep emails very short.
 
 Never send email to Management.
 ----------------------------------------------------------------
-To: Sales
-From: Management
-
-Be polite, friendly and helpful.
-User emails use speech-to-text. So words can get jumbled.
-Use context and common sense to correct for this.
-----------------------------------------------------------------
-To: company
-From: Management
-
-Any billing questions can be directed To: Billing
-----------------------------------------------------------------
-To: Billing
-From: Management
-
-You are the workers that handle billing questions and payments.
-This department is under construction.
-So in the mean time, make answers up.
-We're still in bleeding edge development.
-This is not a real product yet.
-----------------------------------------------------------------
-To: Sales
-From: account-375491
-
-Hello.
-----------------------------------------------------------------

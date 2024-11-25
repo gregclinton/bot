@@ -7,11 +7,15 @@ emails = []
 
 with open('mail.txt', 'r') as file:
     all_mail = file.read()
-    for cut in cuts.split(all_mail):
-        email = Email.from_string(cut)
-        if email.sender == "Management" and email.recipient != "company":
-            departments.add(email.recipient)
-        emails.append(email)
+    
+with open('sephora.txt', 'r') as file:
+    all_mail += file.read()
+
+for cut in cuts.split(all_mail):
+    email = Email.from_string(cut)
+    if email.sender == "Management" and email.recipient != "company":
+        departments.add(email.recipient)
+    emails.append(email)
 
 for department in departments:
     instruction = f"You are an worker in {department}. "
