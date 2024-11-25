@@ -18,7 +18,7 @@ for department in ["Sales"]:
     if not account:
         continue
 
-    def condition(msg):
+    def keep(msg):
         come_from_above = lambda: msg.sender in ("Management")
         visible_to_us = lambda: msg.recipient in (department, "company")
         to_or_from_us = lambda: department in (msg.sender, msg.recipient)
@@ -30,6 +30,6 @@ for department in ["Sales"]:
     instruction += "Take care of messages to you only if they require a reply. "
     instruction += "The messages are shown in chronological order. "
 
-    msgs = Messages.load("mail.txt") + Messages.load(path, condition) + xxx
+    msgs = Messages.load("mail.txt") + Messages.load(path, keep) + xxx
     completion = llm.invoke(instruction, Messages.to_string(msgs))
     print(Messages.to_string(msgs + Messages.from_string(completion)))

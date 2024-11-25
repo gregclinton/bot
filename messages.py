@@ -41,12 +41,12 @@ class Messages:
         return Messages.perforation.join(map(lambda msg: msg.to_string(), msgs))
 
     @staticmethod
-    def from_string(text, condition = None):
+    def from_string(text, keep = lambda msg: True):
         msgs = []
 
         for cut in Messages.fix_perforations(text).split(Messages.perforation):
             msg = Message.from_string(cut)
-            if not condition or condition(msg):
+            if not keep or keep(msg):
                 msgs.append(msg)
         return msgs
 
@@ -56,15 +56,15 @@ class Messages:
             file.write(Messages.to_string(msgs))
 
     @staticmethod
-    def load(path, condition = None):
+    def load(path, keep = lambda msg: True):
         with open(path, 'r') as file:
-            return Messages.from_string(file.read(), condition)
+            return Messages.from_string(file.read(), keep)
 
     @staticmethod
-    def recipients(path, condition = None):
+    def recipients(path, keep = lambda msg: True):
         recipients = set()
 
-        for msg in Messages.load(path, condition):
+        for msg in Messages.load(path, keep):
             recipients.add(msg.recipient)
 
         return list(recipients)
