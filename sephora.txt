@@ -7,7 +7,6 @@ Use context and common sense to correct for this.
 
 Never reply to a message until you know the complete answer.
 Just send messages to any department you need answers from.
-
 ----------------------------------------------------------------------
 To: company
 From: Management
