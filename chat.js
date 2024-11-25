@@ -7,17 +7,6 @@ const chat = {
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt })
         })
-    },
-
-    clear: () => {
-        fetch('/company/messages/' + account, { method: 'DELETE' });
-    }
-};
-
-chat.clear();
-
-setInterval(() => {
-    fetch('/company/messages/' + account, { method: 'GET' })
         .then(res => res.json())
         .then(msgs => {
             const chat = document.getElementById('chat');
@@ -44,5 +33,14 @@ setInterval(() => {
                 document.getElementById('chat').appendChild(post);
 
                 post.scrollIntoView({ behavior: 'smooth' });
-            });
-        })}, 500);
+            }
+        )}
+    )
+    },
+
+    clear: () => {
+        fetch('/company/messages/' + account, { method: 'DELETE' });
+    }
+};
+
+chat.clear();

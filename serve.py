@@ -9,16 +9,12 @@ calls = "sephora.calls.txt"
 
 app = FastAPI()
 
-@app.get('/company/messages/{account}')
-async def get_messages(req: Request, account: str):
-    return Messages.load(calls, lambda msg: account in (msg.sender, msg.recipient))
-
 @app.post('/company/messages/{account}')
 async def post_message(req: Request, account: str):
     prompt = (await req.json())['prompt']
     Messages.append_string_to_file(calls, Message(account, "Sales", prompt).to_string())
     company.run()
-    return 'ok'
+    return Messages.load(calls, lambda msg: account in (msg.sender, msg.recipient))
 
 @app.delete('/company/messages/{account}')
 async def delete_messages(account: str):
