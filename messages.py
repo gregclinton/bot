@@ -4,14 +4,14 @@ class Message:
     def __init__(self, sender, recipient, body):
         self.sender = sender
         self.recipient = recipient
-        self.body = "\n" + body.lstrip()
+        self.body = body.strip()
 
         match = re.search(r'account-\d{6}', self.to_string())
         self.account = match.group() if match else None
 
     def to_string(self):
         text = "To: " + self.recipient + "\nFrom: " + self.sender + "\n"
-        text += self.body.rstrip() + "\n"
+        text += self.body.strip()
         return text
 
     @staticmethod
@@ -30,7 +30,7 @@ class Message:
         return Message(sender, recipient, body)
 
 class Messages:
-    perforation = "------------------------------------------------------------\n"
+    perforation = "\n------------------------------------------------------------\n"
 
     @staticmethod
     def fix_perforations(s):
@@ -73,4 +73,4 @@ class Messages:
             with open(path, "a") as file:
                 if not file_empty:
                     file.write(Messages.perforation)
-                file.write(text.rstrip() + "\n")
+                file.write(text.rstrip())

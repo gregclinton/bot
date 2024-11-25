@@ -9,9 +9,8 @@ Your department name is in the To: field.
 
 For messages you send:
 Put the recipient's department name in the To: field.
-Put your department name in the From: field.
-Skip a line.
-Put whatever short message you need to send.
+On the next line put your department name in the From: field.
+On the next line put whatever short message you need to send.
 
 If you need to write more than one message,
 separate them by a row of hyphens.
