@@ -9,11 +9,9 @@ departments = Messages.recipients(path, lambda msg: msg.recipient != "company")
 
 for department in ["Sales"]:
     account = None
-    xxx = Messages.load("xxx.txt")
 
-    for msg in xxx:
-        if msg.recipient == department:
-            account = msg.account
+    for msg in Messages.load("xxx.txt", lambda msg: msg.recipient == department):
+        account = msg.account
 
     if not account:
         continue
@@ -30,6 +28,8 @@ for department in ["Sales"]:
     instruction += "Take care of messages to you only if they require a reply. "
     instruction += "The messages are shown in chronological order. "
 
-    msgs = Messages.load("mail.txt") + Messages.load(path, keep) + xxx
-    completion = llm.invoke(instruction, Messages.to_string(msgs))
+    msgs = Messages.load(path, keep) + Messages.load("xxx.txt", keep)
+    with open("mail.txt", "r") as file:
+        completion = llm.invoke(instruction, file.read() + Messages.to_string(msgs))
+
     print(Messages.to_string(msgs + Messages.from_string(completion)))
