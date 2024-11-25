@@ -10,10 +10,10 @@ class Email:
         self.account = match.group() if match else None
 
     def to_string(self):
-        text = "--------------------------------------------------------------------------------\n"
-        text += "To: " + self.recipient + "\nFrom: " + self.sender + "\n"
-        text += self.body
-        return text.rstrip() + "\n"
+        text = "To: " + self.recipient + "\nFrom: " + self.sender + "\n"
+        text += self.body.rstrip() + "\n"
+        text += "--------------------------------------------------------------------------------\n"
+        return text
 
     @staticmethod
     def from_string(text):

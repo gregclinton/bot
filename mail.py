@@ -14,7 +14,7 @@ with open('mail.txt', 'r') as file:
         emails.append(email)
 
 for department in departments:
-    instruction = f"You are an AI worker in {department}. "
+    instruction = f"You are an worker in {department}. "
     instruction += "Take care of emails to you only if they require a reply. "
     instruction += "The emails are shown in chronological order. "
     account = None

@@ -1,4 +1,3 @@
-----------------------------------------------------------------
 To: company
 From: Management
 
@@ -10,12 +9,12 @@ The sender's department name is in the From: field.
 Your department name is in the To: field.
 
 For emails you send:
-First output a line of 80 hyphens.
 Put the recipient's department name in the To: field.
 Put your department name in the From: field.
 Skip a line.
 Put whatever short message you need to send.
 Insert line breaks if you approach 80 characters.
+First output a line of 80 hyphens.
 
 When you see To: company, it's applies to all of you.
 
@@ -57,3 +56,4 @@ To: Sales
 From: account-375491
 
 Hello.
+----------------------------------------------------------------
