@@ -77,7 +77,8 @@ for department in ["Sales"]:
     prompt = ""
 
     for email in emails:
-        if email.recipient in [department, "company"]:
+        if (email.recipient in [department, "company"]) or
+           (email.recipient == department and email.user == last_email.user)
             prompt += email.to_string()
 
     with open('mail.txt', 'r') as file:
