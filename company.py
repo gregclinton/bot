@@ -8,7 +8,7 @@ import os
 company = "sephora"
 mgmt = f"{company}.txt"
 calls = f"{company}.calls.txt"
-departments = list(messages.recipients(mgmt, lambda msg: msg.recipient != "company"))
+departments = messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
 def invoke(account, prompt):
     messages.append_to_file(calls, [Message(account, "Sales", prompt)])

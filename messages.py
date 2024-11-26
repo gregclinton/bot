@@ -55,7 +55,7 @@ def recipients(path, keep = lambda msg: True):
     for msg in load(path, keep):
         recipients.add(msg.recipient)
 
-    return recipients
+    return list(recipients)
 
 def append_to_file(path, msgs):
     file_empty = not os.path.exists(path)
