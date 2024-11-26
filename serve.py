@@ -1,5 +1,3 @@
-# sudo docker run -p 8123:8123 -v `pwd`:/root -w /root company:latest uvicorn serve:app --host 0.0.0.0 --port 8123 --reload
-
 from fastapi import FastAPI, Request
 import company
 

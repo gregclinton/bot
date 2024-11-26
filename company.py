@@ -1,5 +1,3 @@
-# sudo docker run -v `pwd`:/root -w /root company:latest python3 company.py
-
 import llm
 import messages
 from messages import Message, load
