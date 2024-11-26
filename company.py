@@ -42,7 +42,6 @@ def invoke(account, prompt):
 
         if len(msgs) == 1 and department == intake:
             msg = msgs[0]
-            process_tool(msg, departments)
             messages.append_to_file(calls, [msg])
             if msg.recipient == account:
                 return msg.body
@@ -50,7 +49,6 @@ def invoke(account, prompt):
                 departments.add(msg.recipient)
         elif msgs:
             for msg in msgs:
-                process_tool(msg, departments)
                 if msg.recipient != account:
                     messages.append_to_file(calls, [msg])
                     departments.add(msg.recipient)
