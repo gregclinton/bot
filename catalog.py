@@ -1,3 +1,12 @@
+import llm
+
+for product in ["men's hats"]:
+    print(llm.invoke(
+        "Yor are a creative catalog writer.", 
+        f"Invent a catlog description (about 200 words) and price for {product}. Pure text format, no markdown.")
+    )
+exit()
+
 import chromadb
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
