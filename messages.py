@@ -64,7 +64,7 @@ class Messages:
         for msg in Messages.load(path, keep):
             recipients.add(msg.recipient)
 
-        return list(recipients)
+        return recipients
 
     @staticmethod
     def append_string_to_file(path, text):

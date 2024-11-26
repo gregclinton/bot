@@ -8,16 +8,24 @@ company = "sephora"
 mgmt = f"{company}.txt"
 calls = f"{company}.calls.txt"
 
-departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
+no_company = lambda msg: msg.recipient != "company"
+recipients = lambda path: Messages.recipients(path, no_company)
+departments = list(recipients(mgmt) | recipients(calls))
 
 def invoke():
     max_iterations = 10
     n_iterations = 0
+    reply = "I don't know."
+
+    # todo: monitor tokens and other health and Management sends alerts to company
 
     while n_iterations < max_iterations:
         n_iterations += 1
+        i = 0
 
-        for department in departments:
+        while i < len(departments): # departments might grow during this loop
+            department = departments[i]
+            i += 1
             account = None
 
             for msg in Messages.load(calls, lambda msg: msg.recipient == department):
@@ -31,9 +39,15 @@ def invoke():
                     instructions = f"You are a worker in {department}. " + file.read()
 
                 completion = llm.invoke(instructions, Messages.to_string(msgs))
-                last_msg = Message.from_string(completion)
-                Messages.append_string_to_file(calls, last_msg.to_string())
-                if last_msg.recipient == account:
-                    return last_msg.body
+                sanity = lambda msg: msg.sender == department and msg.recipient != department
+                msgs = Messages.from_string(completion, sanity)
 
-    return "I don't know."
+                Messages.append_string_to_file(calls, Messages.to_string(msgs))
+
+                for msg in msgs:
+                    if msg.recipient == account:
+                        reply = msg.body
+                    elif msg.recipient not in departments:
+                        departments.append(msg.recipient)
+
+    return reply
