@@ -9,6 +9,7 @@ def call_tool(tool, text):
     return "???"
 
 def invoke(tool, msgs):
+    return messages.to_string([Message(tool, msgs[0].sender, "Sorry, it is not in our catalog.")])
     # First determine which tool msgs have not been answered.
     # Then for these, print out completion string consisting of tool answers with To: msg.sender From: tool and body answer
     unanswered = []
