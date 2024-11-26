@@ -5,7 +5,9 @@ from messages import Message
 
 def call_tool(tool, text):
     if tool == "Catalog":
-        return "Sorry, it is not in our catalog."
+        context = catalog.query(text)
+        return llm.invoke("Complete this.", f"Context: {context}\nQuestion: {text}\nAnswer: ")
+
     return "???"
 
 def invoke(tool, msgs):
