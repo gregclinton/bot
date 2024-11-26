@@ -27,6 +27,9 @@ def invoke(account, prompt):
         msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
         msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
+        for i, msg in enumerate(msgs):
+            msgs[i] = process_tool(msg)
+
         with open("instructions", "r") as file:
             instructions = file.read().replace("{department}", department)
 
@@ -40,7 +43,7 @@ def invoke(account, prompt):
         msgs = messages.from_string(completion, sanity)
 
         if len(msgs) == 1 and department == intake:
-            msg = process_tool(msgs[0])
+            msg = msgs[0]
             messages.append_to_file(calls, [msg])
             if msg.recipient == account:
                 return msg.body
@@ -48,7 +51,6 @@ def invoke(account, prompt):
                 departments.add(msg.recipient)
         elif msgs:
             for msg in msgs:
-                msg = process_tool(msg)
                 if msg.recipient != account:
                     messages.append_to_file(calls, [msg])
                     departments.add(msg.recipient)
@@ -57,5 +59,5 @@ def invoke(account, prompt):
     messages.append_to_file(calls, [msg])
     return msg.body
 
-# invoke("account-375491", "Do you sell men's shoes?")
-invoke("account-375491", "What's my balance?")
+invoke("account-375491", "Do you sell men's shoes?")
+# invoke("account-375491", "What's my balance?")
