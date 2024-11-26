@@ -34,9 +34,10 @@ def invoke(account, prompt):
         msgs = messages.from_string(completion, sanity)
 
         if len(msgs) == 1 and department == "Sales":
-            messages.append_to_file(calls, msgs)
-            if msgs[0].recipient == account:
-                return msgs[0].body
+            msg = msgs[0]
+            messages.append_to_file(calls, [msg])
+            if msg.recipient == account:
+                return msg.body
             else:
                 departments.add(msg.recipient)
         elif msgs:
