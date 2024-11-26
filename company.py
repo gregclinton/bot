@@ -1,14 +1,13 @@
 import llm
-import catalog
 import messages
 from messages import Message, load
+import tools
 
 def invoke(account, prompt):
     company = "sephora"
     intake = "Sales"
     mgmt = f"{company}.txt"
     calls = f"{company}.calls.txt"
-    tools = ["Catalog"]
 
     msg = Message(account, intake, prompt)
     messages.append_to_file(calls, [msg])
@@ -24,16 +23,11 @@ def invoke(account, prompt):
         msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
         msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
-        if department in tools:
-            n_llm_invokes += 1
-            print(llm.invoke("examine these messages and tell me how many messages To: Catalog without a corresponding answer From Catalog:\n", messages.to_string(msgs)))
-            continue
-
         with open("instructions", "r") as file:
             instructions = file.read().replace("{department}", department)
 
         n_llm_invokes += 1
-        completion = llm.invoke(instructions, messages.to_string(msgs))
+        completion = tools.invoke(department, msgs) if department == "Catalog" else llm.invoke(instructions, messages.to_string(msgs))
 
         print(completion)
         print("--------------------------------------------")
