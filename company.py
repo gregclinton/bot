@@ -26,16 +26,16 @@ def invoke(account, prompt):
 
             completion = llm.invoke(instructions, messages.to_string(msgs))
 
-            print(department)
             print(completion)
-            print()
+            print("--------------------------------------------")
 
             sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
             msgs = messages.from_string(completion, sanity)
 
             if len(msgs) == 1 and department == "Sales":
                 messages.append_to_file(calls, msgs)
-                return msgs[0].body
+                if msgs[0].recipient == account:
+                    return msgs[0].body
             elif len(msgs) > 0:
                 for msg in msgs:
                     if msg.recipient != account:
@@ -45,5 +45,4 @@ def invoke(account, prompt):
     messages.append_to_file(calls, [msg])
     return msg.body
 
-invoke("account-375491", "Hello.")
 invoke("account-375491", "I want to know my balance.")
