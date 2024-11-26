@@ -39,11 +39,4 @@ const chat = {
             chat.waiting = false;
         });
     },
-
-    clear: () => {
-        document.getElementById('chat').innerHTML = "";
-        // fetch('/company/messages/' + account, { method: 'DELETE' });
-    }
 };
-
-chat.clear();

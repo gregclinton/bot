@@ -11,7 +11,9 @@ calls = f"{company}.calls.txt"
 no_company = lambda msg: msg.recipient != "company"
 departments = list(Messages.recipients(mgmt, no_company))
 
-def invoke():
+def invoke(account, prompt):
+    Messages.append_string_to_file(msgs, Message(account, "Sales", prompt).to_string())
+    
     max_iterations = 10
     n_iterations = 0
     reply = "I don't know."
