@@ -14,6 +14,13 @@ From: Management
 Any billing questions can be directed To: Billing
 Any sales questions can be directed To: Sales
 ----------------------------------------------------------------------
+To: company
+From: Management
+
+Any product catalog questions can be directed To: Catalog
+The catalog department has information on all our products.
+Just ask them about the kind of product your interested in.
+----------------------------------------------------------------------
 To: Billing
 From: Management
 

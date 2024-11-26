@@ -1,6 +1,12 @@
 import llm
+import catalog
 import messages
 from messages import Message, load
+
+def process_tool(msg):
+    if msg.recipient == "Catalog":
+        return Message("Catalog", msg.sender, catalog.query(msg.body))
+    return msg
 
 def invoke(account, prompt):
     company = "sephora"
@@ -34,7 +40,7 @@ def invoke(account, prompt):
         msgs = messages.from_string(completion, sanity)
 
         if len(msgs) == 1 and department == intake:
-            msg = msgs[0]
+            msg = process_tool(msgs[0])
             messages.append_to_file(calls, [msg])
             if msg.recipient == account:
                 return msg.body
@@ -42,6 +48,7 @@ def invoke(account, prompt):
                 departments.add(msg.recipient)
         elif msgs:
             for msg in msgs:
+                msg = process_tool(msg)
                 if msg.recipient != account:
                     messages.append_to_file(calls, [msg])
                     departments.add(msg.recipient)
