@@ -13,7 +13,7 @@ no_company = lambda msg: msg.recipient != "company"
 departments = list(messages.recipients(mgmt, no_company))
 
 def invoke(account, prompt):
-    messages.append_string_to_file(calls, Message(account, "Sales", prompt).to_string())
+    messages.append_to_file(calls, [Message(account, "Sales", prompt)])
     
     max_iterations = 3
     n_iterations = 0
@@ -33,15 +33,15 @@ def invoke(account, prompt):
             msgs = messages.from_string(completion, sanity)
 
             if len(msgs) == 1 and department == "Sales":
-                messages.append_string_to_file(calls, messages.to_string(msgs))
+                messages.append_to_file(calls, msgs)
                 return msgs[0].body
             elif len(msgs) > 0:
                 for msg in msgs:
                     if msg.recipient != account:
-                        messages.append_string_to_file(calls, msg.to_string())
+                        messages.append_to_file(calls, [msg])
                         
     msg = Message("Sales", account, "Could you repeat that?")
-    messages.append_string_to_file(calls, msg.to_string())
+    messages.append_to_file(calls, [msg])
     return msg.body
 
 invoke("account-375491", "Hello.")
