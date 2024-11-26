@@ -17,7 +17,7 @@
                     document.getElementById(name).hidden = !show;
                 };
 
-                show('start', !recorder.recording);
+                show('start', !recorder.recording && !chat.waiting);
                 show('stop', recorder.recording);
                 show('send', recorder.recording);
             }, 200);

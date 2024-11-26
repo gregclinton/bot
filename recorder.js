@@ -21,6 +21,7 @@ const recorder = {
         recorder.device.stopRecording(() => {
             const blob = recorder.device.getBlob();
 
+            chat.waiting = true;
             recorder.close();
             recorder.stt(blob)
             .then(res => res.text())
