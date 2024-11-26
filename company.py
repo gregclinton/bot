@@ -22,29 +22,23 @@ def invoke(account, prompt):
         n_iterations += 1
 
         for department in departments:
-            account = None
+            msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
+            msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
-            for msg in load(calls, lambda msg: msg.recipient == department):
-                account = msg.account
+            with open("instructions", "r") as file:
+                instructions = file.read().replace("{department}", department)
 
-            if account:
-                msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
-                msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
+            completion = llm.invoke(instructions, messages.to_string(msgs))
+            sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
+            msgs = messages.from_string(completion, sanity)
 
-                with open("instructions", "r") as file:
-                    instructions = file.read().replace("{department}", department)
-
-                completion = llm.invoke(instructions, messages.to_string(msgs))
-                sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
-                msgs = messages.from_string(completion, sanity)
-
-                if len(msgs) == 1 and department == "Sales":
-                    messages.append_string_to_file(calls, messages.to_string(msgs))
-                    return msgs[0].body
-                elif len(msgs) > 0:
-                    for msg in msgs:
-                        if msg.recipient != account:
-                            messages.append_string_to_file(calls, msg.to_string())
+            if len(msgs) == 1 and department == "Sales":
+                messages.append_string_to_file(calls, messages.to_string(msgs))
+                return msgs[0].body
+            elif len(msgs) > 0:
+                for msg in msgs:
+                    if msg.recipient != account:
+                        messages.append_string_to_file(calls, msg.to_string())
                         
     msg = Message("Sales", account, "Could you repeat that?")
     messages.append_string_to_file(calls, msg.to_string())
