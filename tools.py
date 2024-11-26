@@ -13,6 +13,7 @@ def invoke(tool, msgs):
     # Then for these, print out completion string consisting of tool answers with To: msg.sender From: tool and body answer
     unanswered = []
     answers = []
+
     for msg in msgs:
         if msg.recipient == tool:
             unanswered.append(msg)
@@ -21,6 +22,5 @@ def invoke(tool, msgs):
     for msg in unanswered:
         answers.append(Message(tool, msg.sender, call_tool(tool, msg.body)))
 
-    return messages.to_string(answers)
-
+    return messages.to_string(answers) if answers else ""
 
