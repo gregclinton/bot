@@ -3,15 +3,9 @@ import catalog
 import messages
 from messages import Message, load
 
-company = "sephora"
-intake = "Sales"
-
-def process_tool(msg):
-    if msg.recipient == "Catalog" and msg.sender == intake:
-        return Message("Catalog", msg.sender, catalog.query(msg.body))
-    return msg
-
 def invoke(account, prompt):
+    company = "sephora"
+    intake = "Sales"
     mgmt = f"{company}.txt"
     calls = f"{company}.calls.txt"
     msg = Message(account, intake, prompt)
@@ -22,14 +16,17 @@ def invoke(account, prompt):
     max_llm_invokes = 10
     n_llm_invokes = 0
 
+    def process_tool(msg, departments):
+        if msg.recipient == "Catalog" and msg.sender == intake:
+            reply = Message("Catalog", msg.sender, catalog.query(msg.body))
+            messages.append_to_file(calls, [reply])
+            departments.add(reply.recipient)
+
     while n_llm_invokes < max_llm_invokes and departments:
         department = departments.pop()
 
         msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
         msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
-
-        for i, msg in enumerate(msgs):
-            msgs[i] = process_tool(msg)
 
         with open("instructions", "r") as file:
             instructions = file.read().replace("{department}", department)
@@ -45,6 +42,7 @@ def invoke(account, prompt):
 
         if len(msgs) == 1 and department == intake:
             msg = msgs[0]
+            process_tool(msg, departments)
             messages.append_to_file(calls, [msg])
             if msg.recipient == account:
                 return msg.body
@@ -52,6 +50,7 @@ def invoke(account, prompt):
                 departments.add(msg.recipient)
         elif msgs:
             for msg in msgs:
+                process_tool(msg, departments)
                 if msg.recipient != account:
                     messages.append_to_file(calls, [msg])
                     departments.add(msg.recipient)
