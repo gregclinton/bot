@@ -14,11 +14,21 @@ class Message:
         text += self.body.strip()
         return text
 
-    @staticmethod
-    def from_string(text):
+perforation = "\n------------------------------------------------------------\n"
+
+def fix_perforations(s):
+    return re.sub(r"^-{3,}$", "-" * 60, s, flags=re.MULTILINE)
+
+def to_string(msgs):
+    return perforation.join(map(lambda msg: msg.to_string(), msgs))
+
+def from_string(text, keep = lambda msg: True):
+    msgs = []
+
+    for cut in fix_perforations(text).split(perforation):
         recipient, sender, user, body = ("", "", "", "")
 
-        for line in text.split("\n"):
+        for line in cut.split("\n"):
             value = lambda: line.rstrip().split(" ")[1]
 
             if line.startswith("To: "):
@@ -27,50 +37,30 @@ class Message:
                 sender = value()
             else:
                 body += line + "\n"
-        return Message(sender, recipient, body)
+        msg = Message(sender, recipient, body)
 
-class Messages:
-    perforation = "\n------------------------------------------------------------\n"
+        if keep(msg):
+            msgs.append(msg)
+    return msgs
 
-    @staticmethod
-    def fix_perforations(s):
-        return re.sub(r"^-{3,}$", "-" * 60, s, flags=re.MULTILINE)
+def load(path, keep = lambda msg: True):
+    if os.path.exists(path):
+        with open(path, 'r') as file:
+            return from_string(file.read(), keep)
+    return []
 
-    @staticmethod
-    def to_string(msgs):
-        return Messages.perforation.join(map(lambda msg: msg.to_string(), msgs))
+def recipients(path, keep = lambda msg: True):
+    recipients = set()
 
-    @staticmethod
-    def from_string(text, keep = lambda msg: True):
-        msgs = []
+    for msg in load(path, keep):
+        recipients.add(msg.recipient)
 
-        for cut in Messages.fix_perforations(text).split(Messages.perforation):
-            msg = Message.from_string(cut)
-            if keep(msg):
-                msgs.append(msg)
-        return msgs
+    return recipients
 
-    @staticmethod
-    def load(path, keep = lambda msg: True):
-        if os.path.exists(path):
-            with open(path, 'r') as file:
-                return Messages.from_string(file.read(), keep)
-        return []
-
-    @staticmethod
-    def recipients(path, keep = lambda msg: True):
-        recipients = set()
-
-        for msg in Messages.load(path, keep):
-            recipients.add(msg.recipient)
-
-        return recipients
-
-    @staticmethod
-    def append_string_to_file(path, text):
-        if len(path) > 0:
-            file_empty = not os.path.exists(path)
-            with open(path, "a") as file:
-                if not file_empty:
-                    file.write(Messages.perforation)
-                file.write(text.rstrip())
+def append_string_to_file(path, text):
+    if len(path) > 0:
+        file_empty = not os.path.exists(path)
+        with open(path, "a") as file:
+            if not file_empty:
+                file.write(perforation)
+            file.write(text.rstrip())
