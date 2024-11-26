@@ -46,7 +46,7 @@ class Messages:
 
         for cut in Messages.fix_perforations(text).split(Messages.perforation):
             msg = Message.from_string(cut)
-            if not keep or keep(msg):
+            if keep(msg):
                 msgs.append(msg)
         return msgs
 
