@@ -7,16 +7,12 @@ import os
 load_dotenv("keys")
 
 def collection():
-    openai_ef = embedding_functions.OpenAIEmbeddingFunction(
-        api_key=os.environ["OPENAI_API_KEY"],
-        model_name="text-embedding-ada-002"
-    )
-
-    client = chromadb.Client()
-
-    collection = client.create_collection(
-        name = "catalog",
-        embedding_function = openai_ef
+    collection = chromadb.Client().create_collection(
+        name="catalog",
+        embedding_function=embedding_functions.OpenAIEmbeddingFunction(
+            api_key=os.environ["OPENAI_API_KEY"],
+            model_name="text-embedding-ada-002"
+        )
     )
 
 def create():
