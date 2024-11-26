@@ -4,7 +4,7 @@ import os
 
 load_dotenv("keys")
 
-def invoke(instuction, prompt):
+def invoke(instruction, prompt):
     return requests.post(
         "https://api.openai.com/v1/chat/completions", 
         headers = {
@@ -15,7 +15,7 @@ def invoke(instuction, prompt):
             "model": "gpt-4o",
             "temperature": 0,
             "messages": [
-                {"role": "system", "content": instuction},
+                {"role": "system", "content": instruction},
                 {"role": "user", "content": prompt}
             ],
         }
