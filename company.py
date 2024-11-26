@@ -1,7 +1,6 @@
 import llm
 import messages
 from messages import Message, load
-import os
 
 def invoke(account, prompt):
     company = "sephora"
