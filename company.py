@@ -10,7 +10,7 @@ calls = f"{company}.calls.txt"
 
 departments = Messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
-def run():
+def invoke():
     max_iterations = 10
     n_iterations = 0
 
@@ -35,6 +35,6 @@ def run():
                 last_msg = Message.from_string(completion)
                 Messages.append_string_to_file(calls, last_msg.to_string())
                 if last_msg.recipient == account:
-                    return { "content" : last_msg.body }
+                    return last_msg.body
 
-    return { "content" : "I don't know." }
+    return "I don't know."

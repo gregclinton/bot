@@ -13,7 +13,7 @@ app = FastAPI()
 async def post_message(req: Request, account: str):
     prompt = (await req.json())['prompt']
     Messages.append_string_to_file(calls, Message(account, "Sales", prompt).to_string())
-    return company.run()
+    return { "content": company.invoke() }
 
 @app.delete('/company/messages/{account}')
 async def delete_messages(account: str):
