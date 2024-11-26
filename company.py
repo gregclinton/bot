@@ -10,7 +10,7 @@ departments = messages.recipients(mgmt, lambda msg: msg.recipient != "company")
 
 def invoke(account, prompt):
     messages.append_to_file(calls, [Message(account, "Sales", prompt)])
-    
+
     max_iterations = 3
     n_iterations = 0
 
@@ -25,6 +25,11 @@ def invoke(account, prompt):
                 instructions = file.read().replace("{department}", department)
 
             completion = llm.invoke(instructions, messages.to_string(msgs))
+
+            print(department)
+            print(completion)
+            print()
+
             sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
             msgs = messages.from_string(completion, sanity)
 
@@ -35,9 +40,10 @@ def invoke(account, prompt):
                 for msg in msgs:
                     if msg.recipient != account:
                         messages.append_to_file(calls, [msg])
-                        
+
     msg = Message("Sales", account, "Could you repeat that?")
     messages.append_to_file(calls, [msg])
     return msg.body
 
 invoke("account-375491", "Hello.")
+invoke("account-375491", "I want to know my balance.")
