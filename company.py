@@ -27,11 +27,10 @@ def invoke():
                 msgs = Messages.load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
                 msgs += Messages.load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
-                instruction = f"You are a worker in {department}. "
-                instruction += "Take care of messages to you only if they require a reply. "
-                instruction += "The messages are shown in chronological order. "
+                with open("instructions", "r") as file:
+                    instructions = f"You are a worker in {department}. " + file.read()
 
-                completion = llm.invoke(instruction, Messages.to_string(Messages.load("mail.txt") + msgs))
+                completion = llm.invoke(instructions, msgs)
                 last_msg = Message.from_string(completion)
                 Messages.append_string_to_file(calls, last_msg.to_string())
                 if last_msg.recipient == account:
