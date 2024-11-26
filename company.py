@@ -17,10 +17,14 @@ def invoke(account, prompt):
     n_llm_invokes = 0
 
     def process_tool(msg, departments):
+        reply = None
         if msg.recipient == "Catalog" and msg.sender == intake:
-            reply = Message("Catalog", msg.sender, catalog.query(msg.body))
-            messages.append_to_file(calls, [reply])
-            departments.add(reply.recipient)
+            reply = catalog.query(msg.body)
+
+        if reply
+            msg = Message(msg.recipient, msg.sender, reply)
+            messages.append_to_file(calls, [msg])
+            departments.add(msg.recipient)
 
     while n_llm_invokes < max_llm_invokes and departments:
         department = departments.pop()
