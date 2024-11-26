@@ -16,3 +16,11 @@ collection = client.create_collection(
     name = "catalog",
     embedding_function = openai_ef
 )
+
+if False:
+    documents = ["Document 1 text", "Document 2 text"]
+    metadatas = [{"source": "source1"}, {"source": "source2"}]
+    ids = ["id1", "id2"]
+    collection.add(documents=documents, metadatas=metadatas, ids=ids)
+
+print(collection.query(query_texts=["Document 1"], n_results=1)["documents"][0])
