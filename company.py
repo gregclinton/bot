@@ -25,16 +25,8 @@ def invoke(account, prompt):
         msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
         if department in tools:
-            reply = None
-
-            for msg in load(calls):
-                if msg.recipient == "Catalog" and msg.sender == intake:
-                    reply = catalog.query(msg.body)
-
-                if reply:
-                    msg = Message(msg.recipient, msg.sender, reply)
-                    messages.append_to_file(calls, [msg])
-                    departments.add(msg.recipient)
+            n_llm_invokes += 1
+            print(llm.invoke("examine these messages and tell me how many messages To: Catalog without a corresponding answer From Catalog:\n", messages.to_string(msgs)))
             continue
 
         with open("instructions", "r") as file:
@@ -66,5 +58,5 @@ def invoke(account, prompt):
     messages.append_to_file(calls, [msg])
     return msg.body
 
-# invoke("account-375491", "Do you sell men's shoes?")
-invoke("account-375491", "What's my balance?")
+invoke("account-375491", "Do you sell men's shoes?")
+# invoke("account-375491", "What's my balance?")
