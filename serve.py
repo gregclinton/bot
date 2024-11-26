@@ -5,18 +5,18 @@ from messages import Messages, Message
 import os
 import company
 
-calls = "sephora.calls.txt"
+msgs = "sephora.calls.txt"
 
 app = FastAPI()
 
 @app.post('/company/messages/{account}')
 async def post_message(req: Request, account: str):
     prompt = (await req.json())['prompt']
-    Messages.append_string_to_file(calls, Message(account, "Sales", prompt).to_string())
+    Messages.append_string_to_file(msgs, Message(account, "Sales", prompt).to_string())
     return { "content": company.invoke() }
 
 @app.delete('/company/messages/{account}')
 async def delete_messages(account: str):
-    if os.path.exists(calls):
-        os.remove(calls)
+    if os.path.exists(msgs):
+        os.remove(msgs)
     return 'ok'
