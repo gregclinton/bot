@@ -7,7 +7,7 @@ import os
 load_dotenv("keys")
 
 def collection():
-    collection = chromadb.Client().create_collection(
+    return chromadb.Client().create_collection(
         name="catalog",
         embedding_function=embedding_functions.OpenAIEmbeddingFunction(
             api_key=os.environ["OPENAI_API_KEY"],
@@ -33,6 +33,6 @@ def create():
     collection().add(documents=documents, metadatas=metadatas, ids=ids)
 
 def query(query):
-    return collection().query(query_texts=[query], n_results=1)["documents"][0])
+    return collection().query(query_texts=[query], n_results=1)["documents"][0]
 
-print(query("I'm interested in a man's hat.")))
+print(query("I'm interested in a man's hat."))
