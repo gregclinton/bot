@@ -57,4 +57,4 @@ def invoke(account, prompt):
     messages.append_to_file(calls, [msg])
     return msg.body
 
-invoke("account-375491", "I want to know my balance.")
+invoke("account-375491", "Do you sell men's shoes?")

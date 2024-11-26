@@ -34,5 +34,3 @@ def create():
 
 def query(query):
     return collection().query(query_texts=[query], n_results=1)["documents"][0][0]
-
-print(query("I'm interested in a man's shoe."))
