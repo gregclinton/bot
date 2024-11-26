@@ -58,9 +58,8 @@ def recipients(path, keep = lambda msg: True):
     return recipients
 
 def append_to_file(path, msgs):
-    text = to_string(msgs)
     file_empty = not os.path.exists(path)
     with open(path, "a") as file:
         if not file_empty:
             file.write(perforation)
-        file.write(text)
+        file.write(to_string(msgs))
