@@ -3,14 +3,15 @@ import catalog
 import messages
 from messages import Message, load
 
+company = "sephora"
+intake = "Sales"
+
 def process_tool(msg):
-    if msg.recipient == "Catalog":
+    if msg.recipient == "Catalog" and msg.sender == intake:
         return Message("Catalog", msg.sender, catalog.query(msg.body))
     return msg
 
 def invoke(account, prompt):
-    company = "sephora"
-    intake = "Sales"
     mgmt = f"{company}.txt"
     calls = f"{company}.calls.txt"
     msg = Message(account, intake, prompt)
