@@ -30,7 +30,7 @@ def invoke():
                 with open("instructions", "r") as file:
                     instructions = f"You are a worker in {department}. " + file.read()
 
-                completion = llm.invoke(instructions, msgs)
+                completion = llm.invoke(instructions, Messages.to_string(msgs))
                 last_msg = Message.from_string(completion)
                 Messages.append_string_to_file(calls, last_msg.to_string())
                 if last_msg.recipient == account:
