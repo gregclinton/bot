@@ -8,6 +8,8 @@ def invoke(account, prompt):
     intake = "Sales"
     mgmt = f"{company}.txt"
     calls = f"{company}.calls.txt"
+    tools = ["Catalog"]
+
     msg = Message(account, intake, prompt)
     messages.append_to_file(calls, [msg])
     departments = set()
@@ -16,21 +18,24 @@ def invoke(account, prompt):
     max_llm_invokes = 10
     n_llm_invokes = 0
 
-    def process_tool(msg, departments):
-        reply = None
-        if msg.recipient == "Catalog" and msg.sender == intake:
-            reply = catalog.query(msg.body)
-
-        if reply
-            msg = Message(msg.recipient, msg.sender, reply)
-            messages.append_to_file(calls, [msg])
-            departments.add(msg.recipient)
-
     while n_llm_invokes < max_llm_invokes and departments:
         department = departments.pop()
 
         msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
         msgs += load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
+
+        if department in tools:
+            reply = None
+
+            for msg in msgs:
+                if msg.recipient == "Catalog" and msg.sender == intake:
+                    reply = catalog.query(msg.body)
+
+                if reply:
+                    msg = Message(msg.recipient, msg.sender, reply)
+                    messages.append_to_file(calls, [msg])
+                    departments.add(msg.recipient)
+            continue
 
         with open("instructions", "r") as file:
             instructions = file.read().replace("{department}", department)
