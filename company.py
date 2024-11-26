@@ -14,11 +14,9 @@ departments = list(Messages.recipients(mgmt, no_company))
 def invoke(account, prompt):
     Messages.append_string_to_file(msgs, Message(account, "Sales", prompt).to_string())
     
-    max_iterations = 10
+    max_iterations = 3
     n_iterations = 0
-    reply = "I don't know."
-
-    # todo: monitor tokens and other health and Management sends alerts to company
+    reply = "Could you repeat that?"
 
     while n_iterations < max_iterations:
         n_iterations += 1
@@ -34,14 +32,19 @@ def invoke(account, prompt):
                 msgs += Messages.load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
 
                 with open("instructions", "r") as file:
-                    instructions = f"You are a worker in {department}. " + file.read()
+                    instructions = file.read().replace("{department}", department)
 
                 completion = llm.invoke(instructions, Messages.to_string(msgs))
                 sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
                 msgs = Messages.from_string(completion, sanity)
-                Messages.append_string_to_file(calls, Messages.to_string(msgs))
 
-                for msg in msgs:
-                    if msg.recipient == account:
-                        reply = msg.body
+                if len(msgs) == 1 and department == "Sales":
+                    reply = msgs[0].body
+                elif len(msgs) > 0
+                    for msg in msgs:
+                        if msg.recipient != account:
+                            Messages.append_string_to_file(calls, msg.to_string())
+                        
+                            
+    Messages.append_string_to_file(msgs, Message("Sales", account, reply).to_string())
     return reply
