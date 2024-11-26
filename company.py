@@ -9,8 +9,7 @@ mgmt = f"{company}.txt"
 calls = f"{company}.calls.txt"
 
 no_company = lambda msg: msg.recipient != "company"
-recipients = lambda path: Messages.recipients(path, no_company)
-departments = list(recipients(mgmt) | recipients(calls))
+departments = list(Messages.recipients(mgmt, no_company))
 
 def invoke():
     max_iterations = 10
@@ -21,11 +20,8 @@ def invoke():
 
     while n_iterations < max_iterations:
         n_iterations += 1
-        i = 0
 
-        while i < len(departments): # departments might grow during this loop
-            department = departments[i]
-            i += 1
+        for department in departments:
             account = None
 
             for msg in Messages.load(calls, lambda msg: msg.recipient == department):
@@ -39,7 +35,7 @@ def invoke():
                     instructions = f"You are a worker in {department}. " + file.read()
 
                 completion = llm.invoke(instructions, Messages.to_string(msgs))
-                sanity = lambda msg: msg.sender == department and msg.recipient != department
+                sanity = lambda msg: msg.sender == department and msg.recipient != department and (msg.recipient != account or msg.sender == "Sales")
                 msgs = Messages.from_string(completion, sanity)
 
                 Messages.append_string_to_file(calls, Messages.to_string(msgs))
@@ -47,7 +43,4 @@ def invoke():
                 for msg in msgs:
                     if msg.recipient == account:
                         reply = msg.body
-                    elif msg.recipient not in departments:
-                        departments.append(msg.recipient)
-
     return reply
