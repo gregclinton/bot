@@ -35,7 +35,7 @@ def invoke():
                     instructions = f"You are a worker in {department}. " + file.read()
 
                 completion = llm.invoke(instructions, Messages.to_string(msgs))
-                sanity = lambda msg: msg.sender == department and msg.recipient != msg.sender and (msg.recipient != account or msg.sender == "Sales")
+                sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
                 msgs = Messages.from_string(completion, sanity)
                 Messages.append_string_to_file(calls, Messages.to_string(msgs))
 
