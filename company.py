@@ -27,7 +27,7 @@ def invoke(account, prompt):
         if department in tools:
             reply = None
 
-            for msg in msgs:
+            for msg in load(calls):
                 if msg.recipient == "Catalog" and msg.sender == intake:
                     reply = catalog.query(msg.body)
 
