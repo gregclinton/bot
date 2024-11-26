@@ -5,9 +5,10 @@ import os
 
 def invoke(account, prompt):
     company = "sephora"
+    intake = "Sales"
     mgmt = f"{company}.txt"
     calls = f"{company}.calls.txt"
-    msg = Message(account, "Sales", prompt)
+    msg = Message(account, intake, prompt)
     messages.append_to_file(calls, [msg])
     departments = set()
     departments.add(msg.recipient)
@@ -30,10 +31,10 @@ def invoke(account, prompt):
         print(completion)
         print("--------------------------------------------")
 
-        sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == "Sales")
+        sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == intake)
         msgs = messages.from_string(completion, sanity)
 
-        if len(msgs) == 1 and department == "Sales":
+        if len(msgs) == 1 and department == intake:
             msg = msgs[0]
             messages.append_to_file(calls, [msg])
             if msg.recipient == account:
@@ -46,7 +47,7 @@ def invoke(account, prompt):
                     messages.append_to_file(calls, [msg])
                     departments.add(msg.recipient)
 
-    msg = Message("Sales", account, "Could you repeat that?")
+    msg = Message(intake, account, "Could you repeat that?")
     messages.append_to_file(calls, [msg])
     return msg.body
 
