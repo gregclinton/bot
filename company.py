@@ -37,7 +37,6 @@ def invoke():
                 completion = llm.invoke(instructions, Messages.to_string(msgs))
                 sanity = lambda msg: msg.sender == department and msg.recipient != department and (msg.recipient != account or msg.sender == "Sales")
                 msgs = Messages.from_string(completion, sanity)
-
                 Messages.append_string_to_file(calls, Messages.to_string(msgs))
 
                 for msg in msgs:
