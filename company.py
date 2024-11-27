@@ -29,7 +29,7 @@ def invoke(caller, prompt):
             for msg in msgs:
                 if msg.recipient != caller:
                     agents.add(msg.recipient)
-                run += msgs
+            run += msgs
 
         if run[-1].recipient == caller:
             break
