@@ -4,7 +4,7 @@
 import llm
 import messages
 from messages import Message
-import tools
+import tool
 
 def invoke(company, caller, prompt):
     messages.company = company
@@ -18,8 +18,8 @@ def invoke(company, caller, prompt):
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
 
-        if agent in tools.bench:
-            msgs = tools.invoke(agent, run)
+        if agent in tool.bench:
+            msgs = tool.invoke(agent, run)
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()
             instructions = read("All").replace("{agent}", agent) + read(agent)
