@@ -10,15 +10,15 @@ def invoke(tool, msgs):
     count = 0
 
     for msg in msgs:
-        if msg.sender == tool:
+        if msg.from_ == tool:
             count += 1
 
     answers = []
     fn = bench[tool]
     for msg in msgs:
-        if msg.recipient == tool:
+        if msg.to_ == tool:
             if count == 0:
-                answers.append(Message(tool, msg.sender, fn(msg.body)))
+                answers.append(Message(tool, msg.from_, fn(msg.body)))
             else:
                 count -= 1
 

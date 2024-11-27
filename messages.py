@@ -1,16 +1,16 @@
 import re, os
 
 class Message:
-    def __init__(self, sender, recipient, body):
-        self.sender = sender
-        self.recipient = recipient
+    def __init__(self, from_, to_, body):
+        self.from_ = from_
+        self.to_ = to_
         self.body = body.strip()
 
         match = re.search(r'account-\d{6}', self.to_string())
         self.caller = match.group() if match else None
 
     def to_string(self):
-        text = "To: " + self.recipient + "\nFrom: " + self.sender + "\n"
+        text = "To: " + self.to_ + "\nFrom: " + self.from_ + "\n"
         text += self.body.strip()
         return text
 
@@ -26,18 +26,18 @@ def from_string(text, keep = lambda msg: True):
     msgs = []
 
     for cut in fix_perforations(text).split(perforation):
-        recipient, sender, user, body = ("", "", "", "")
+        to_, from_, user, body = ("", "", "", "")
 
         for line in cut.split("\n"):
             value = lambda: line.rstrip().split(" ")[1]
 
             if line.startswith("To: "):
-                recipient = value()
+                to_ = value()
             elif line.startswith("From: "):
-                sender = value()
+                from_ = value()
             else:
                 body += line + "\n"
-        msg = Message(sender, recipient, body)
+        msg = Message(from_, to_, body)
 
         if keep(msg):
             msgs.append(msg)

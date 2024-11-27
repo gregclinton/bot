@@ -22,9 +22,9 @@ def invoke(caller, prompt):
         if agent in tools.bench:
             msgs = messages.from_string(tools.invoke(agent, run))
         else:
-            msgs = list(filter(lambda msg: agent in (msg.sender, msg.recipient), history)) + run
+            msgs = list(filter(lambda msg: agent in (msg.from_, msg.recipient), history)) + run
             completion = llm.invoke(instructions, messages.to_string(msgs))
-            sanity = lambda msg: msg.sender == agent and msg.recipient != msg.sender and (msg.recipient != caller or msg.sender == intake)
+            sanity = lambda msg: msg.from_ == agent and msg.recipient != msg.from_ and (msg.recipient != caller or msg.from_ == intake)
             msgs = messages.from_string(completion, sanity)
 
         run += msgs
