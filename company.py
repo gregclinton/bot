@@ -1,12 +1,12 @@
-# sh company run sephora "Do you sell men's shoes?"
-# sh company run sephora "What's my balance?"
+# sh company run acme "Do you sell men's shoes?"
+# sh company run acme "What's my balance?"
 
 import llm
 import messages
 from messages import Message
 import tools
 
-company = "sephora"
+company = ""
 
 def invoke(caller, prompt):
     messages.company = company
