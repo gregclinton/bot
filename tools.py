@@ -7,16 +7,18 @@ bench = {
 }
 
 def invoke(tool, msgs):
-    lookup = set()
-    unanswered = []
-    answers = []
-    fn = bench[tool]
+    count = 0
 
     for msg in msgs:
-        if msg.recipient == tool:
-            unanswered.append(msg)
+        if msg.sender == tool:
+            count += 1
 
-    for msg in unanswered:
-        answers.append(Message(tool, msg.sender, fn(msg.body)))
+    answers = []
+    for msg in msgs:
+        if msg.recipient == tool:
+            if count == 0:
+                answers.append(Message(tool, msg.sender, fn(msg.body)))
+             else:
+                count -= 1
 
     return messages.to_string(answers) if answers else ""
