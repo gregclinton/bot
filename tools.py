@@ -1,16 +1,6 @@
-import llm
 import catalog
 import messages
 from messages import Message
-
-def call_tool(tool, text):
-    if tool == "Catalog":
-        context = "A search of our product catalog yielded: \n" + catalog.query(text)
-        instructions = "Provide the answer to the question given the context."
-        prompt = f"Context: {context}\nQuestion: {question}\nAnswer: "
-        return llm.invoke(instructions, prompt)
-    else:
-        return ""
 
 def invoke(tool, msgs):
     lookup = set()
@@ -22,7 +12,8 @@ def invoke(tool, msgs):
             unanswered.append(msg)
 
     for msg in unanswered:
-        answers.append(Message(tool, msg.sender, call_tool(tool, msg.body)))
+        fn = catalog.invoke if tool == "Catalog" else lambda x: ""
+        answers.append(Message(tool, msg.sender, fn(msg.body)))
+    exit()
 
     return messages.to_string(answers) if answers else ""
-
