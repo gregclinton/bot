@@ -23,7 +23,7 @@ def invoke(company, caller, prompt):
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()
             instructions = read("All").replace("{agent}", agent) + read(agent)
-            msgs = list(msg for msg in history if agent in (msg.from_, msg.to_)) + run
+            msgs = list(msg for msg in history + run if agent in (msg.from_, msg.to_))
             completion = llm.invoke(instructions, messages.to_string(msgs))
             sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
             msgs = messages.from_string(completion, sanity)
