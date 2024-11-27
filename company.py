@@ -15,11 +15,11 @@ def invoke(company, caller, prompt):
     run = [Message(caller, intake, prompt)]
     history = messages.load(lambda msg: msg.caller == caller)
 
-    while llm.counter < max_llm_invokes and agents:
+    while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
 
         if agent in tools.bench:
-            run += messages.from_string(tools.invoke(agent, run))
+            run += tools.invoke(agent, run)
             agents.add(run[-1].to_)
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()

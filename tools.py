@@ -22,4 +22,4 @@ def invoke(tool, msgs):
             else:
                 count -= 1
 
-    return messages.to_string(answers) if answers else ""
+    return answers
