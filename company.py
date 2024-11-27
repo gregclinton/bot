@@ -1,6 +1,6 @@
 import llm
 import messages
-from messages import Message, load
+from messages import Message
 import tools
 
 def invoke(caller, prompt):
@@ -10,7 +10,7 @@ def invoke(caller, prompt):
     max_llm_invokes = 10
     llm.reset_counter()
     run = [Message(caller, intake, prompt)]
-    history = load(lambda msg: msg.caller == caller)
+    history = messages.load(lambda msg: msg.caller == caller)
 
     agents.add(intake)
 
