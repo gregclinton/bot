@@ -19,8 +19,7 @@ def invoke(company, caller, prompt):
         agent = agents.pop()
 
         if agent in tools.bench:
-            run += tools.invoke(agent, run)
-            agents.add(run[-1].to_)
+            msgs = tools.invoke(agent, run)
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()
             instructions = read("All").replace("{agent}", agent) + read(agent)
@@ -28,8 +27,9 @@ def invoke(company, caller, prompt):
             completion = llm.invoke(instructions, messages.to_string(msgs))
             sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
             msgs = messages.from_string(completion, sanity)
-            agents.update(msg.to_ for msg in msgs if msg.to_ != caller)
-            run += msgs
+
+        agents.update(msg.to_ for msg in msgs if msg.to_ != caller)
+        run += msgs
 
         if run[-1].to_ == caller:
             break
