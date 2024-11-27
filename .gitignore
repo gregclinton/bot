@@ -1,6 +1,6 @@
 keys
 __pycache__
 nginx.conf
-*.calls.txt
+messages.txt
 .cache
 chroma_data
