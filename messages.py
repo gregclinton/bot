@@ -43,13 +43,15 @@ def from_string(text, keep = lambda msg: True):
             msgs.append(msg)
     return msgs
 
-def load(path, keep = lambda msg: True):
+path = "messages.txt"
+
+def load(keep = lambda msg: True):
     if os.path.exists(path):
         with open(path, 'r') as file:
             return from_string(file.read(), keep)
     return []
 
-def append_to_file(path, msgs):
+def save(msgs):
     file_empty = not os.path.exists(path)
     with open(path, "a") as file:
         if not file_empty:

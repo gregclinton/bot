@@ -6,45 +6,47 @@ import tools
 def invoke(account, prompt):
     company = "sephora"
     intake = "Intake"
-    calls = "messages.txt"
-    departments = set()
+    agents = set()
     max_llm_invokes = 10
     llm.reset_counter()
+    run = [Message(account, intake, prompt)]
+    history = load(lambda msg: msg.account == account)
 
-    msg = Message(account, intake, prompt)
-    messages.append_to_file(calls, [msg])
-    departments.add(msg.recipient)
+    agents.add(intake)
 
-    while llm.counter < max_llm_invokes and departments:
-        department = departments.pop()
-
+    while llm.counter < max_llm_invokes and agents:
+        agent = agents.pop()
         read = lambda path: open(f"ar/{company}/{path}", "r").read()
-        instructions = read("All").replace("{department}", department) + read(department)
+        instructions = read("All").replace("{agent}", agent) + read(agent)
 
-        msgs = load(calls, lambda msg: msg.account == account and department in (msg.sender, msg.recipient))
+        if agent in tools.bench:
+            msgs = messages.from_string(tools.invoke(agent, run))
+        else:
+            msgs = list(filter(lambda msg: agent in (msg.sender, msg.recipient), history)) + run
+            completion = llm.invoke(instructions, messages.to_string(msgs))
+            sanity = lambda msg: msg.sender == agent and msg.recipient not in (msg.sender) and (msg.recipient != account or msg.sender == intake)
+            msgs = messages.from_string(completion, sanity)
 
-        completion = tools.invoke(department, load(calls)) if department in tools.bench else llm.invoke(instructions, messages.to_string(msgs))
-        sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender) and (msg.recipient != account or msg.sender == intake)
-        msgs = messages.from_string(completion, sanity)
+        run += msgs
 
         print(messages.to_string(msgs))
         print("--------------------------------------------")
 
-        if len(msgs) == 1 and department == intake:
+        if len(msgs) == 1 and agent == intake:
             msg = msgs[0]
-            messages.append_to_file(calls, [msg])
             if msg.recipient == account:
+                messages.save(run)
                 return msg.body
             else:
-                departments.add(msg.recipient)
+                agents.add(msg.recipient)
         elif msgs:
             for msg in msgs:
                 if msg.recipient != account:
-                    messages.append_to_file(calls, [msg])
-                    departments.add(msg.recipient)
+                    agents.add(msg.recipient)
 
     msg = Message(intake, account, "Could you repeat that?")
-    messages.append_to_file(calls, [msg])
+    run += [msg]
+    messages.save(run)
     return msg.body
 
 # invoke("account-375491", "Do you sell men's shoes?")
