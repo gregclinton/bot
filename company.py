@@ -26,12 +26,11 @@ def invoke(account, prompt):
             instructions = file.read().replace("{department}", department)
 
         completion = tools.invoke(department, load(calls)) if department in tools.bench else llm.invoke(instructions, messages.to_string(msgs))
-
-        print(completion)
-        print("--------------------------------------------")
-
         sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == intake)
         msgs = messages.from_string(completion, sanity)
+
+        print(messages.to_string(msgs))
+        print("--------------------------------------------")
 
         if len(msgs) == 1 and department == intake:
             msg = msgs[0]
