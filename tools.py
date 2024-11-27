@@ -2,7 +2,7 @@ import catalog
 import messages
 from messages import Message
 
-tools = {
+bench = {
     "Catalog": catalog.invoke
 }
 
@@ -16,7 +16,7 @@ def invoke(tool, msgs):
             unanswered.append(msg)
 
     for msg in unanswered:
-        if tool in tools:
-            answers.append(Message(tool, msg.sender, tools[tool](msg.body)))
+        if tool in bench:
+            answers.append(Message(tool, msg.sender, bench[tool](msg.body)))
 
     return messages.to_string(answers) if answers else ""
