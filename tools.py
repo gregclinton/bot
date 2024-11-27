@@ -14,11 +14,12 @@ def invoke(tool, msgs):
             count += 1
 
     answers = []
+    fn = bench[tool]
     for msg in msgs:
         if msg.recipient == tool:
             if count == 0:
                 answers.append(Message(tool, msg.sender, fn(msg.body)))
-             else:
+            else:
                 count -= 1
 
     return messages.to_string(answers) if answers else ""

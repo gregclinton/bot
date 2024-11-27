@@ -4,7 +4,7 @@ import os
 
 load_dotenv("keys")
 
-def reset_counter()
+def reset_counter():
     global counter
     counter = 0
 
