@@ -1,4 +1,5 @@
-const account = 'account-375491'
+const caller = 'account-375491'
+const company = 'sephora'
 
 const chat = {
     prompt: async prompt => {
@@ -28,7 +29,7 @@ const chat = {
 
         post(prompt);
 
-        await fetch('/company/messages/' + account, {
+        await fetch('/company/' + company + '/messages/' + caller, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt })

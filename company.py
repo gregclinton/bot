@@ -6,9 +6,7 @@ import messages
 from messages import Message
 import tools
 
-company = ""
-
-def invoke(caller, prompt):
+def invoke(company, caller, prompt):
     messages.company = company
     intake = "Intake"
     agents = set([intake])
@@ -48,4 +46,4 @@ import sys
 if __name__ == "__main__":
     company = sys.argv[2]
     prompt = sys.argv[3]
-    invoke("account-375491", prompt)
+    invoke(company, "account-375491", prompt)

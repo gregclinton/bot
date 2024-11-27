@@ -3,6 +3,6 @@ import company
 
 app = FastAPI()
 
-@app.post('/company/messages/{account}')
-async def post_message(req: Request, account: str):
-    return { "content": company.invoke(account, (await req.json())['prompt']) }
+    @app.post('/company/{company}/messages/{caller}')
+async def post_message(req: Request, company:str, caller: str):
+    return { "content": company.invoke(company, caller, (await req.json())['prompt']) }
