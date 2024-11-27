@@ -32,9 +32,7 @@ def invoke(caller, prompt):
             completion = llm.invoke(instructions, messages.to_string(msgs))
             sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
             msgs = messages.from_string(completion, sanity)
-            for msg in msgs:
-                if msg.to_ != caller:
-                    agents.add(msg.to_)
+            agents.update(msg.to_ for msg in msgs if msg.to_ != caller)
             run += msgs
 
         if run[-1].to_ == caller:
