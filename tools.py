@@ -10,11 +10,9 @@ def call_tool(tool, text):
         prompt = f"Context: {context}\nQuestion: {question}\nAnswer: "
         return llm.invoke(instructions, prompt)
     else:
-        return "???"
+        return ""
 
 def invoke(tool, msgs):
-    print(messages.to_string(msgs))
-
     lookup = set()
     unanswered = []
     answers = []
