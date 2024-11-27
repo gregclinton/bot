@@ -21,6 +21,7 @@ def invoke(caller, prompt):
 
         if agent in tools.bench:
             run += messages.from_string(tools.invoke(agent, run))
+            agents.add(run[-1].to_)
         else:
             msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history)) + run
             completion = llm.invoke(instructions, messages.to_string(msgs))
