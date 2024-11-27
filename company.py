@@ -1,5 +1,4 @@
-# sh company run acme "Do you sell men's shoes?"
-# sh company run acme "What's my balance?"
+# sh company run acme "What is my balance? And do you sell men's shoes?"
 
 import llm
 import messages
