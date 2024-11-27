@@ -10,13 +10,13 @@ def invoke(account, prompt):
     calls = f"{company}.calls.txt"
     departments = set()
     max_llm_invokes = 10
-    n_llm_invokes = 0
+    llm.reset_counter()
 
     msg = Message(account, intake, prompt)
     messages.append_to_file(calls, [msg])
     departments.add(msg.recipient)
 
-    while n_llm_invokes < max_llm_invokes and departments:
+    while llm.counter < max_llm_invokes and departments:
         department = departments.pop()
 
         msgs = load(mgmt, lambda msg: msg.sender in ("Management") and msg.recipient in (department, "company"))
@@ -25,7 +25,6 @@ def invoke(account, prompt):
         with open("instructions", "r") as file:
             instructions = file.read().replace("{department}", department)
 
-        n_llm_invokes += 1
         completion = tools.invoke(department, load(calls)) if department in tools.bench else llm.invoke(instructions, messages.to_string(msgs))
 
         print(completion)

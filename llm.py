@@ -4,7 +4,14 @@ import os
 
 load_dotenv("keys")
 
+def reset_counter()
+    global counter
+    counter = 0
+
 def invoke(instruction, prompt):
+    global counter
+
+    counter += 1
     return requests.post(
         "https://api.openai.com/v1/chat/completions", 
         headers = {
