@@ -22,19 +22,19 @@ def invoke(caller, prompt):
         if agent in tools.bench:
             run += messages.from_string(tools.invoke(agent, run))
         else:
-            msgs = list(filter(lambda msg: agent in (msg.from_, msg.recipient), history)) + run
+            msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history)) + run
             completion = llm.invoke(instructions, messages.to_string(msgs))
-            sanity = lambda msg: msg.from_ == agent and msg.recipient != msg.from_ and (msg.recipient != caller or msg.from_ == intake)
+            sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
             msgs = messages.from_string(completion, sanity)
             for msg in msgs:
-                if msg.recipient != caller:
-                    agents.add(msg.recipient)
+                if msg.to_ != caller:
+                    agents.add(msg.to_)
             run += msgs
 
-        if run[-1].recipient == caller:
+        if run[-1].to_ == caller:
             break
 
-    if run[-1].recipient != caller:
+    if run[-1].to_ != caller:
         run += [Message(intake, caller, "Could you repeat that?")]
 
     print(messages.to_string(run))
