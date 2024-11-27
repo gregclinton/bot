@@ -8,14 +8,13 @@ def invoke(account, prompt):
     intake = "Sales"
     mgmt = f"{company}.txt"
     calls = f"{company}.calls.txt"
+    departments = set()
+    max_llm_invokes = 10
+    n_llm_invokes = 0
 
     msg = Message(account, intake, prompt)
     messages.append_to_file(calls, [msg])
-    departments = set()
     departments.add(msg.recipient)
-
-    max_llm_invokes = 10
-    n_llm_invokes = 0
 
     while n_llm_invokes < max_llm_invokes and departments:
         department = departments.pop()
@@ -27,7 +26,7 @@ def invoke(account, prompt):
             instructions = file.read().replace("{department}", department)
 
         n_llm_invokes += 1
-        completion = tools.invoke(department, msgs) if department == "Catalog" else llm.invoke(instructions, messages.to_string(msgs))
+        completion = tools.invoke(department, load(calls)) if department == "Catalog" else llm.invoke(instructions, messages.to_string(msgs))
 
         print(completion)
         print("--------------------------------------------")

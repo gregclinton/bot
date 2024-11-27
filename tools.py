@@ -12,6 +12,8 @@ def call_tool(tool, text):
     return "???"
 
 def invoke(tool, msgs):
+    print(messages.to_string(msgs))
+    exit()
     global counter
     if counter > 0 or msgs[0].sender != "Sales":
         return ""
