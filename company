@@ -4,6 +4,6 @@ case "$1" in
         ;;
     run)
         rm -f sephora.calls.txt
-        sudo docker run -v `pwd`:/root -w /root company:latest python3 company.py
+        sudo docker run -v `pwd`:/root -w /root company:latest python3 company.py "$@"
         ;;
 esac

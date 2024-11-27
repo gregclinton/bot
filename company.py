@@ -1,10 +1,12 @@
+# sh company run sephora "Do you sell men's shoes?"
+# sh company run sephora "What's my balance?"
+
 import llm
 import messages
 from messages import Message
 import tools
 
 def invoke(caller, prompt):
-    company = "sephora"
     intake = "Intake"
     agents = set()
     max_llm_invokes = 10
@@ -42,5 +44,9 @@ def invoke(caller, prompt):
     messages.save(run)
     return run[-1].body
 
-invoke("account-375491", "Do you sell men's shoes?")
-# invoke("account-375491", "What's my balance?")
+import sys
+
+if __name__ == "__main__":
+    company = sys.argv[2]
+    prompt = sys.argv[3]
+    invoke("account-375491", prompt)
