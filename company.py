@@ -11,13 +11,11 @@ company = "sephora"
 def invoke(caller, prompt):
     messages.company = company
     intake = "Intake"
-    agents = set()
+    agents = set([intake])
     max_llm_invokes = 10
     llm.reset_counter()
     run = [Message(caller, intake, prompt)]
     history = messages.load(lambda msg: msg.caller == caller)
-
-    agents.add(intake)
 
     while llm.counter < max_llm_invokes and agents:
         agent = agents.pop()
