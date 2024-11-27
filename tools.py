@@ -18,6 +18,5 @@ def invoke(tool, msgs):
     for msg in unanswered:
         if tool in tools:
             answers.append(Message(tool, msg.sender, tools[tool](msg.body)))
-    exit()
 
     return messages.to_string(answers) if answers else ""
