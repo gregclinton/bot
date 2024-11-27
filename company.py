@@ -26,10 +26,10 @@ def invoke(account, prompt):
             instructions = file.read().replace("{department}", department)
 
         n_llm_invokes += 1
-        completion = tools.invoke(department, load(calls)) if department == "Catalog" else llm.invoke(instructions, messages.to_string(msgs))
+        completion = tools.invoke(department, load(calls)) if department in ["Catalog"] else llm.invoke(instructions, messages.to_string(msgs))
 
-        print(completion)
-        print("--------------------------------------------")
+        # print(completion)
+        # print("--------------------------------------------")
 
         sanity = lambda msg: msg.sender == department and msg.recipient not in (msg.sender, "Management") and (msg.recipient != account or msg.sender == intake)
         msgs = messages.from_string(completion, sanity)
