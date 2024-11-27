@@ -43,7 +43,8 @@ def from_string(text, keep = lambda msg: True):
             msgs.append(msg)
     return msgs
 
-path = "messages.txt"
+company = "xxx"
+path = f"messages/{company}/messages.txt"
 
 def load(keep = lambda msg: True):
     if os.path.exists(path):

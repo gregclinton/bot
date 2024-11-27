@@ -6,7 +6,10 @@ import messages
 from messages import Message
 import tools
 
+company = "sephora"
+
 def invoke(caller, prompt):
+    messages.company = company
     intake = "Intake"
     agents = set()
     max_llm_invokes = 10
