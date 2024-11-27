@@ -41,5 +41,5 @@ def invoke(caller, prompt):
     messages.save(run)
     return run[-1].body
 
-# invoke("account-375491", "Do you sell men's shoes?")
-invoke("account-375491", "What's my balance?")
+invoke("account-375491", "Do you sell men's shoes?")
+# invoke("account-375491", "What's my balance?")
