@@ -5,7 +5,7 @@ import messages
 from messages import Message
 import tool
 
-name = "sephora"
+name = "Sephora"
 
 def invoke(caller, prompt):
     company = name
@@ -39,7 +39,9 @@ def invoke(caller, prompt):
 
     print(messages.to_string(run))
     messages.save(company, caller, run)
-    return run[-1].body
+    return {
+
+        run[-1].body
 
 import sys
 
