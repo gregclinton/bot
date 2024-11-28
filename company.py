@@ -20,7 +20,6 @@ def invoke(company, caller, prompt):
 
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
-
         read = lambda path: open(f"ar/{company}/{path}", "r").read()
         instructions = read("All").replace("{agent}", agent) + read(agent)
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
