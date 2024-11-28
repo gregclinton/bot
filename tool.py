@@ -1,5 +1,7 @@
 import catalog
+import switchboard
 
 bench = {
-    "Catalog": catalog.invoke
+    "Catalog": catalog.invoke,
+    "Switchboard": switchboard.invoke,
 }

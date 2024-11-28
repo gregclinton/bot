@@ -5,6 +5,8 @@ import messages
 from messages import Message
 import tool
 
+name = "sephora"
+
 def invoke(company, caller, prompt):
     intake = "Intake"
     agents = set([intake])
