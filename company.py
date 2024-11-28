@@ -39,9 +39,11 @@ def invoke(caller, prompt):
 
     print(messages.to_string(run))
     messages.save(company, caller, run)
-    return {
 
-        run[-1].body
+    return {
+        company: name,
+        content: run[-1].body
+    }
 
 import sys
 

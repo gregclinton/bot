@@ -4,8 +4,8 @@ const chat = {
     prompt: async prompt => {
         chat.waiting = true;
 
-        function post(text) {
-            const name = document.getElementById('chat').children.length % 2 ? 'ai' : 'me';
+        function post(data) {
+            const name = data.company ? data.company : 'me';
             const title = document.createElement('span');
 
             title.innerHTML = name
@@ -16,7 +16,7 @@ const chat = {
             top.append(title);
 
             const bottom = document.createElement('div');
-            bottom.innerHTML = text;
+            bottom.innerHTML = data.content;
 
             const post = document.createElement('div');
             post.append(top, bottom);
@@ -26,7 +26,7 @@ const chat = {
             post.scrollIntoView({ behavior: 'smooth' });
         }
 
-        post(prompt);
+        post({content: prompt});
 
         await fetch('/company/messages/' + caller, {
             method: 'POST',
@@ -34,8 +34,8 @@ const chat = {
             body: JSON.stringify({ prompt: prompt })
         })
         .then(response => response.json())
-        .then(o => {
-            post(o.content);
+        .then(data => {
+            post(data);
             chat.waiting = false;
         });
     },
