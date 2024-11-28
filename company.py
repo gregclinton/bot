@@ -21,24 +21,18 @@ def invoke(company, caller, prompt):
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
 
-        if agent in tools:
-            from_me = list(filter(lambda msg: agent == msg.from_, run))
-            to_me = list(filter(lambda msg: agent == msg.to_, run))
-            diff = len(to_me) - len(from_me)
-            if diff > 0:
-                msgs = [Message(agent, msg.from_, tools[agent](msg.body)) for msg in to_me[-diff:]]
-            else:
-                msgs = []
-        else:
-            read = lambda path: open(f"ar/{company}/{path}", "r").read()
-            instructions = read("All").replace("{agent}", agent) + read(agent)
-            msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
-            completion = llm.invoke(instructions, messages.to_string(msgs))
-            sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
-            msgs = messages.from_string(completion, sanity)
+        read = lambda path: open(f"ar/{company}/{path}", "r").read()
+        instructions = read("All").replace("{agent}", agent) + read(agent)
+        msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
+        completion = llm.invoke(instructions, messages.to_string(msgs))
+        sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
 
-        agents.update(msg.to_ for msg in msgs if msg.to_ != caller)
-        run += msgs
+        for msg in messages.from_string(completion, sanity):
+            run.append(msg)
+            if msg.to_ in tools:
+                run.append(Message(msg.to_, msg.from_, tools[msg.to_](msg.body)))
+            else:
+                agents.add(msg.to_)
 
         if run[-1].to_ == caller:
             break
