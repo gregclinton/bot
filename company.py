@@ -7,7 +7,8 @@ import tool
 
 name = "sephora"
 
-def invoke(company, caller, prompt):
+def invoke(caller, prompt):
+    company = name
     intake = "Intake"
     agents = set([intake])
     max_llm_invokes = 10
@@ -43,6 +44,6 @@ def invoke(company, caller, prompt):
 import sys
 
 if __name__ == "__main__":
-    company = sys.argv[2]
+    name = sys.argv[2]
     prompt = sys.argv[3]
-    invoke(company, "account-375491", prompt)
+    invoke("account-375491", prompt)
