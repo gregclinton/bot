@@ -19,7 +19,7 @@ def invoke(company, caller, prompt):
         mine = lambda msg: agent in (msg.from_, msg.to_)
 
         if agent in tool.bench:
-            msgs = tool.invoke(agent, run)
+            msgs = tool.invoke(agent, list(filter(mine, run)))
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()
             instructions = read("All").replace("{agent}", agent) + read(agent)
