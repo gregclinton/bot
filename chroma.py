@@ -1,6 +1,7 @@
 import chromadb
 from chromadb.utils import embedding_functions
 import llm
+import os
 
 input_instruction = """
 From the user prompt generate a proper search string for a Products vectorstore.
@@ -13,7 +14,7 @@ Generate an answer to the given question given the context.
 def invoke(query):
     search = llm.invoke(input_instruction, query)
 
-    entry = chroma.collection("catalog").query(query_texts=[search], n_results=1)["documents"][0][0]
+    entry = collection("catalog").query(query_texts=[search], n_results=1)["documents"][0][0]
 
     context = f"A search of our product catalog yielded: \n{entry}"
 
