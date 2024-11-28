@@ -27,6 +27,8 @@ def invoke(company, caller, prompt):
             diff = len(to_me) - len(from_me)
             if diff > 0:
                 msgs = [Message(agent, msg.from_, tools[agent](msg.body)) for msg in to_me[-diff:]]
+            else:
+                msgs = []
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()
             instructions = read("All").replace("{agent}", agent) + read(agent)
