@@ -6,9 +6,6 @@ class Message:
         self.to_ = to_
         self.body = body.strip()
 
-        match = re.search(r'account-\d{6}', self.to_string())
-        self.caller = match.group() if match else None
-
     def to_string(self):
         text = "To: " + self.to_ + "\nFrom: " + self.from_ + "\n"
         text += self.body.strip()
