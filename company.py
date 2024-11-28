@@ -3,11 +3,7 @@
 import llm
 import messages
 from messages import Message
-import catalog
-
-tools = {
-    "Catalog": catalog.invoke
-}
+import tool
 
 def invoke(company, caller, prompt):
     messages.company = company
@@ -28,8 +24,8 @@ def invoke(company, caller, prompt):
 
         for msg in messages.from_string(completion, sanity):
             run.append(msg)
-            if msg.to_ in tools:
-                run.append(Message(msg.to_, msg.from_, tools[msg.to_](msg.body)))
+            if msg.to_ in tool.bench:
+                run.append(Message(msg.to_, msg.from_, tool.bench[msg.to_](msg.body)))
             else:
                 agents.add(msg.to_)
 
