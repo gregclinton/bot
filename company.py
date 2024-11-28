@@ -31,6 +31,7 @@ def invoke(caller, prompt):
             run.append(msg)
             if msg.to_ in tool.bench:
                 run.append(Message(msg.to_, msg.from_, tool.bench[msg.to_](msg.body)))
+                agents.add(msg.from_)
             else:
                 agents.add(msg.to_)
 
@@ -44,7 +45,7 @@ def invoke(caller, prompt):
     messages.save(company, caller, run)
 
     return {
-        "company": name,
+        "company": next or name,
         "content": run[-1].body
     }
 
