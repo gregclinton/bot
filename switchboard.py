@@ -4,16 +4,11 @@ import json
 
 input_instruction = """
 Glean from the prompt a company and output JSON object
-with company field set to one of sephora, cox or wendys.
+with company field set to one of Sephora, Cox or Wendy's.
 
 Output raw JSON string without markdown.
 """
 
-output_instruction = """
-Generate an answer to the given question given the context.
-"""
-
 def invoke(query):
     company.name = json.loads(llm.invoke(input_instruction, query))["company"]
-    prompt = f"Context: {company.name}\nQuestion: {query}\nAnswer: "
-    return llm.invoke(output_instruction, prompt)
+    return f"Success. Switched to {company.name}"
