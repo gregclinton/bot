@@ -19,7 +19,7 @@ def invoke(instruction, prompt):
             'Content-Type': 'application/json',
         },
         json = {
-            "model": "gpt-4o",
+            "model": "gpt-4o-mini",
             "temperature": 0,
             "messages": [
                 {"role": "system", "content": instruction},
