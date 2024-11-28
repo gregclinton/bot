@@ -43,18 +43,17 @@ def from_string(text, keep = lambda msg: True):
             msgs.append(msg)
     return msgs
 
-company = ""
-path = lambda: f"messages/{company}/messages.txt"
+path = lambda company, caller: f"messages/{company}/{caller}/messages.txt"
 
-def load(keep = lambda msg: True):
-    if os.path.exists(path()):
-        with open(path(), 'r') as file:
+def load(company, caller, keep = lambda msg: True):
+    if os.path.exists(path(company, caller)):
+        with open(path(company, caller), 'r') as file:
             return from_string(file.read(), keep)
     return []
 
-def save(msgs):
-    file_empty = not os.path.exists(path())
-    with open(path(), "a") as file:
+def save(company, caller, msgs):
+    file_empty = not os.path.exists(path(company, caller))
+    with open(path(company, caller), "a") as file:
         if not file_empty:
             file.write(perforation)
         file.write(to_string(msgs))

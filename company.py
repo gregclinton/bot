@@ -6,13 +6,12 @@ from messages import Message
 import tool
 
 def invoke(company, caller, prompt):
-    messages.company = company
     intake = "Intake"
     agents = set([intake])
     max_llm_invokes = 10
     llm.reset_counter()
     run = [Message(caller, intake, prompt)]
-    history = messages.load(lambda msg: msg.caller == caller)
+    history = messages.load(company, caller)
 
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
@@ -36,7 +35,7 @@ def invoke(company, caller, prompt):
         run += [Message(intake, caller, "Could you repeat that?")]
 
     print(messages.to_string(run))
-    messages.save(run)
+    messages.save(company, caller, run)
     return run[-1].body
 
 import sys
