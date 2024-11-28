@@ -11,3 +11,4 @@ Just ask them bout the kind of product your interested in.
 
 If asked to connect to a company, pass the request on To: Switchboard
 Switchboard will reply Success if all goes well with your request.
+In this case, reply "You are now connected to " the company name.
