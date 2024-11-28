@@ -25,6 +25,7 @@ def invoke(caller, prompt):
         instructions = read("email").replace("{department}", agent) + read("switch")
         read = lambda path: open(f"ar/{company}/{path}", "r").read()
         instructions += read(agent).replace("{company}", company)
+        instructions += "\nDon't forget to format your reply as a message with To: and From: fields.\n"
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
         completion = llm.invoke(instructions, messages.to_string(msgs))
         sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
