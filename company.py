@@ -26,9 +26,8 @@ def invoke(caller, prompt):
         instructions += "\nDon't forget to format your reply as a message with To: and From: fields.\n"
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
         completion = llm.invoke(instructions, messages.to_string(msgs))
-        sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
 
-        for msg in messages.from_string(completion, sanity):
+        for msg in messages.from_string(completion):
             run.append(msg)
             if msg.to_ in tool.bench:
                 run.append(Message(msg.to_, msg.from_, tool.bench[msg.to_](msg.body)))
