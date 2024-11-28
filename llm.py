@@ -12,8 +12,8 @@ def invoke(instruction, prompt):
     global counter
 
     counter += 1
-    return requests.post(
-        "https://api.openai.com/v1/chat/completions", 
+    completion = requests.post(
+        "https://api.openai.com/v1/chat/completions",
         headers = {
             'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
             'Content-Type': 'application/json',
@@ -27,3 +27,10 @@ def invoke(instruction, prompt):
             ],
         }
     ).json()["choices"][0]["message"]["content"]
+
+    if False:
+        print(f"Instruction: \n{instruction}")
+        print(f"Prompt: \n{prompt}")
+        print(f"Completion: \n{completion}")
+
+    return completion
