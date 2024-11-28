@@ -41,8 +41,8 @@ def invoke(caller, prompt):
     messages.save(company, caller, run)
 
     return {
-        company: name,
-        content: run[-1].body
+        "company": name,
+        "content": run[-1].body
     }
 
 import sys
