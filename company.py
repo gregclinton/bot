@@ -25,7 +25,6 @@ def invoke(caller, prompt):
         instructions = read("email").replace("{department}", agent) + read("switch")
         read = lambda path: open(f"ar/{company}/{path}", "r").read()
         instructions += read(agent).replace("{company}", company)
-        print(instructions)
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
         completion = llm.invoke(instructions, messages.to_string(msgs))
         sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
@@ -44,7 +43,7 @@ def invoke(caller, prompt):
     if run[-1].to_ != caller:
         run += [Message(intake, caller, "Could you repeat that?")]
 
-    # print(messages.to_string(run))
+    print(messages.to_string(run))
     messages.save(company, caller, run)
 
     return {
