@@ -21,8 +21,10 @@ def invoke(caller, prompt):
 
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
+        read = lambda path: open(path, "r").read()
+        instructions = read("email").replace("{agent}", agent) + read("switch")
         read = lambda path: open(f"ar/{company}/{path}", "r").read()
-        instructions = read("All").replace("{agent}", agent) + read(agent).replace("{company}", company)
+        instructions += read(agent).replace("{company}", company)
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
         completion = llm.invoke(instructions, messages.to_string(msgs))
         sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)

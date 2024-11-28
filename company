@@ -3,7 +3,7 @@ case "$1" in
         sudo docker run -p 8123:8123 -v `pwd`:/root -w /root company:latest uvicorn serve:app --host 0.0.0.0 --port 8123 --reload
         ;;
     run)
-        rm -f messages/$2/account-375491/messages.txt
+        sudo rm -rf messages
         sudo docker run -v `pwd`:/root -w /root company:latest python3 company.py "$@"
         ;;
 esac
