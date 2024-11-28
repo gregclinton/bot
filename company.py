@@ -21,10 +21,8 @@ def invoke(caller, prompt):
 
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
-        read = lambda path: open(path, "r").read()
-        instructions = read("email").replace("{department}", agent) + read("switch")
-        read = lambda path: open(f"ar/{company}/{path}", "r").read()
-        instructions += read(agent).replace("{company}", company)
+        instructions = open("instructions", "r").read() + open(f"ar/{company}/{agent}", "r").read()
+        instructions = instructions.replace("{department}", agent).replace("{company}", company)
         instructions += "\nDon't forget to format your reply as a message with To: and From: fields.\n"
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
         completion = llm.invoke(instructions, messages.to_string(msgs))

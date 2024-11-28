@@ -20,3 +20,11 @@ To: DeltaTwo
 From: {department}
 Send assurances to account-999999 regarding his taxes.
 
+If asked to connect to a company, pass the request on To: Switchboard
+Switchboard will reply Success if all goes well with your request.
+In this case, reply "Welcome to " the company name.
+
+User messages use speech-to-text. So words can get jumbled.
+Use context and common sense to correct for this.
+
+
