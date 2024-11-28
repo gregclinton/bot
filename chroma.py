@@ -1,9 +1,25 @@
 import chromadb
 from chromadb.utils import embedding_functions
-from dotenv import load_dotenv
-import os
+import llm
 
-load_dotenv("keys")
+input_instruction = """
+From the user prompt generate a proper search string for a Products vectorstore.
+"""
+
+output_instruction = """
+Generate an answer to the given question given the context.
+"""
+
+def invoke(query):
+    search = llm.invoke(input_instruction, query)
+
+    entry = chroma.collection("catalog").query(query_texts=[search], n_results=1)["documents"][0][0]
+
+    context = f"A search of our product catalog yielded: \n{entry}"
+
+    prompt = f"Context: {context}\nQuestion: {query}\nAnswer: "
+    return llm.invoke(output_instruction, prompt)
+
 
 def collection(name):
     return chromadb.PersistentClient(path="./chroma_data").get_or_create_collection(
@@ -15,8 +31,6 @@ def collection(name):
     )
 
 if False:
-    import llm
-
     documents = []
     metadatas = []
     ids = []

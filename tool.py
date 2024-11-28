@@ -1,7 +1,7 @@
-import catalog
+import chroma
 import switchboard
 
 bench = {
-    "Catalog": catalog.invoke,
+    "ChromaDb": chroma.invoke,
     "Switchboard": switchboard.invoke,
 }
