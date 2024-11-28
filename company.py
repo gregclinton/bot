@@ -3,7 +3,11 @@
 import llm
 import messages
 from messages import Message
-import tool
+import catalog
+
+tools = {
+    "Catalog": catalog.invoke
+}
 
 def invoke(company, caller, prompt):
     messages.company = company
@@ -16,13 +20,17 @@ def invoke(company, caller, prompt):
 
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
-        mine = lambda msg: agent in (msg.from_, msg.to_)
 
-        if agent in tool.bench:
-            msgs = tool.invoke(agent, list(filter(mine, run)))
+        if agent in tools:
+            from_me = list(filter(lambda msg: agent == msg.from_, run))
+            to_me = list(filter(lambda msg: agent == msg.to_, run))
+            diff = len(to_me) - len(from_me)
+            if diff > 0:
+                msgs = [Message(agent, msg.from_, tools[agent](msg.body)) for msg in to_me[-diff:]]
         else:
             read = lambda path: open(f"ar/{company}/{path}", "r").read()
             instructions = read("All").replace("{agent}", agent) + read(agent)
+            mine = lambda msg: agent in (msg.from_, msg.to_)
             msgs = list(filter(mine, history + run))
             completion = llm.invoke(instructions, messages.to_string(msgs))
             sanity = lambda msg: msg.from_ == agent and msg.to_ != msg.from_ and (msg.to_ != caller or msg.from_ == intake)
