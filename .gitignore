@@ -3,4 +3,4 @@ __pycache__
 nginx.conf
 messages
 .cache
-chroma_data
+chroma

@@ -4,6 +4,8 @@ import os
 
 load_dotenv("keys")
 
+counter = 0
+
 def reset_counter():
     global counter
     counter = 0
@@ -28,7 +30,7 @@ def invoke(instruction, prompt):
         }
     ).json()["choices"][0]["message"]["content"]
 
-    if True:
+    if False:
         print(f"Instruction: \n{instruction}\n")
         print(f"Prompt: \n{prompt}\n")
         print(f"Completion: \n{completion}\n")

@@ -4,28 +4,8 @@ import llm
 import os
 import json
 
-input_instruction = """
-Currently we have the following databases: {collections}
-
-From the user prompt generate the most appropriate database and search to use.
-
-Output object with database and search fields as raw JSON string without markdown.
-"""
-
-output_instruction = """
-Generate an answer to the given question given the context.
-"""
-
-client = chromadb.PersistentClient(path="./chroma_data")
-
-def invoke(query):
-    collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
-    o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
-    entry = collection(o["database"]).query(query_texts=[o["search"]], n_results=1)["documents"][0][0]
-    context = f"A database search yielded: \n{entry}"
-    prompt = f"Context: {context}\nQuestion: {query}\nAnswer: "
-    return llm.invoke(output_instruction, prompt)
-
+client = chromadb.PersistentClient(path="./chroma/Sephora")
+# client.delete_collection("product_catalog"); exit()
 
 def collection(name):
     return client.get_or_create_collection(
@@ -35,6 +15,21 @@ def collection(name):
             model_name="text-embedding-ada-002"
         )
     )
+
+input_instruction = """
+Currently we have the following databases: {collections}
+
+From the user prompt generate the most appropriate database and search to use.
+
+Output JSON object with database and search fields as raw JSON string without markdown.
+"""
+
+def invoke(query):
+    collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
+    o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
+    return collection(o["database"]).query(query_texts=[o["search"]], n_results=1)["documents"][0][0]
+
+print(invoke("do you sell men's hats"))
 
 if False:
     documents = []
