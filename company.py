@@ -5,7 +5,7 @@ import messages
 from messages import Message
 import tool
 
-name = "Switchboard"
+name = "Sephora"
 next = ""
 
 def invoke(caller, prompt):
