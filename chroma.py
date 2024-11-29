@@ -24,6 +24,8 @@ Output JSON object with database and search fields as raw JSON string without ma
 
 def invoke(company, query):
     collections = ", ".join(map(lambda collection:  collection.name, client(company).list_collections()))
+    if not collections:
+        return "As of yet, we have no databases."
     o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
     collection_name = o["database"]
     search = o["search"]["category"]
