@@ -7,11 +7,7 @@ import json
 input_instruction = """
 From the user prompt generate the most appropriate collection and search to use with our ChromaDb vectorstore.
 
-Currently we have the following collections:
-
-* income: gives income data
-* population: demographic data
-* catalog: product data
+Currently we have the following collections: {collections}
 
 Output object with collection and search fields as raw JSON string without markdown.
 """
@@ -20,19 +16,23 @@ output_instruction = """
 Generate an answer to the given question given the context.
 """
 
+client = chromadb.PersistentClient(path="./chroma_data")
+
 def invoke(query):
-    o = json.loads(llm.invoke(input_instruction, query))
+    collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
+
+    o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
 
     entry = collection(o["collection"]).query(query_texts=[o["search"]], n_results=1)["documents"][0][0]
 
-    context = f"A search of our product catalog yielded: \n{entry}"
+    context = f"A database search yielded: \n{entry}"
 
     prompt = f"Context: {context}\nQuestion: {query}\nAnswer: "
     return llm.invoke(output_instruction, prompt)
 
 
 def collection(name):
-    return chromadb.PersistentClient(path="./chroma_data").get_or_create_collection(
+    return client.get_or_create_collection(
         name=name,
         embedding_function=embedding_functions.OpenAIEmbeddingFunction(
             api_key=os.environ["OPENAI_API_KEY"],
