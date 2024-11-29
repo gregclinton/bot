@@ -20,14 +20,9 @@ client = chromadb.PersistentClient(path="./chroma_data")
 
 def invoke(query):
     collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
-
     o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
-    o["database"] = "catalog"
-
     entry = collection(o["database"]).query(query_texts=[o["search"]], n_results=1)["documents"][0][0]
-
     context = f"A database search yielded: \n{entry}"
-
     prompt = f"Context: {context}\nQuestion: {query}\nAnswer: "
     return llm.invoke(output_instruction, prompt)
 
