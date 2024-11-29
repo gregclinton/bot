@@ -5,7 +5,7 @@ import messages
 from messages import Message
 import tool
 
-name = "Sephora"
+name = "The Mall"
 next = ""
 
 def invoke(caller, prompt):
