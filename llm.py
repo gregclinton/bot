@@ -28,7 +28,7 @@ def invoke(instruction, prompt):
         }
     ).json()["choices"][0]["message"]["content"]
 
-    if False:
+    if True:
         print(f"Instruction: \n{instruction}\n")
         print(f"Prompt: \n{prompt}\n")
         print(f"Completion: \n{completion}\n")
