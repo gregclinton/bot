@@ -5,11 +5,11 @@ import os
 import json
 
 input_instruction = """
-From the user prompt generate the most appropriate collection and search to use with our ChromaDb vectorstore.
+Currently we have the following databases: {collections}
 
-Currently we have the following collections: {collections}
+From the user prompt generate the most appropriate database and search to use.
 
-Output object with collection and search fields as raw JSON string without markdown.
+Output object with database and search fields as raw JSON string without markdown.
 """
 
 output_instruction = """
@@ -23,7 +23,7 @@ def invoke(query):
 
     o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
 
-    entry = collection(o["collection"]).query(query_texts=[o["search"]], n_results=1)["documents"][0][0]
+    entry = collection(o["database"]).query(query_texts=[o["search"]], n_results=1)["documents"][0][0]
 
     context = f"A database search yielded: \n{entry}"
 
