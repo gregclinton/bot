@@ -1,7 +1,9 @@
 import chroma
+import shell
 import switchboard
 
 bench = {
-    "ChromaDb": chroma.invoke,
+    "Database": chroma.invoke,
+    "Shell": shell.invoke,
     "Switchboard": switchboard.invoke,
 }
