@@ -18,9 +18,7 @@ def collection(company, name):
 
 input_instruction = """
 Currently we have the following databases: {collections}
-
 From the user prompt generate the most appropriate database and search to use.
-
 Output JSON object with database and search fields as raw JSON string without markdown.
 """
 
