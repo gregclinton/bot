@@ -9,5 +9,8 @@ Output the raw command -- no markdown.
 
 def invoke(query):
     command = llm.invoke(input_instruction, query)
+    print(query)
 
-    return subprocess.run(command, shell=True, capture_output=True, text=True)
+    output = subprocess.run(command, shell=True, capture_output=True, text=True)
+    print(output)
+    return output
