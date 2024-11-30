@@ -53,7 +53,13 @@ def create_collection_of_documents(company, name, documents):
     collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
 
 def create_answers_collection(company):
-    create_collection_from_huge_text(company, "answers", open(f"answers/{company}/answers.txt").read())
+    folder_path = f"answers/{company}/"
+    text = ""
+
+    for file in [os.path.join(folder_path, file) for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
+         text += open(file, "r").read()
+
+    create_collection_from_huge_text(company, "answers", text)
 
 if False:
     documents = []
