@@ -19,7 +19,8 @@ def collection(company, name):
 input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.
-Output JSON object with database and search fields as raw JSON string without markdown.
+Output JSON object with fields database, a string, and search, a string.
+Output the raw JSON without markdown.
 """
 
 def invoke(company, query):
@@ -28,7 +29,7 @@ def invoke(company, query):
         return "As of yet, we have no databases."
     o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
     collection_name = o["database"]
-    search = o["search"]["category"]
+    search = o["search"]
     results = collection(company, collection_name).query(query_texts=[search], n_results=2)["documents"][0][0]
     return f"Our search of the {collection_name} database yielded the following result: \n{results}"
 
@@ -62,4 +63,5 @@ if False:
     print(documents[0])
     collection("Social Security", "faq").add(documents=documents, metadatas=metadatas, ids=ids)
 
-# client.delete_collection("product_catalog"); exit()
+# client.delete_collection("product_catalog")
+# print(invoke("Social Security", "When can I start to collect?"))
