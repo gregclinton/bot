@@ -16,12 +16,16 @@ const chat = {
             top.append(title);
 
             const bottom = document.createElement('div');
+
             bottom.innerHTML = data.content;
 
             const post = document.createElement('div');
             post.append(top, bottom);
             post.classList.add('post');
             document.getElementById('chat').appendChild(post);
+
+            Prism.highlightAll();
+            MathJax.typesetPromise();
 
             post.scrollIntoView({ behavior: 'smooth' });
         }
@@ -35,6 +39,10 @@ const chat = {
         })
         .then(response => response.json())
         .then(data => {
+
+            data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
+            data.content = mared.parse(data.content)
+
             post(data);
             chat.waiting = false;
         });

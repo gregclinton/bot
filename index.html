@@ -8,6 +8,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <script async src="https://cdnjs.cloudflare.com/ajax/libs/RecordRTC/5.6.1/RecordRTC.min.js"></script>
+        <script async src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>
+            MathJax = {
+                tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+                chtml: { scale: 1.0 }
+            };
+        </script>
+
         <script async src="recorder.js"></script>
         <script async src="chat.js"></script>
 
@@ -26,7 +35,7 @@
         <link rel="stylesheet" href="main.css"/>
         <link rel="icon" href="data:,"/>
 
-        <title>company</title>       
+        <title>company</title>
     </head>
 
     <body id="main">
@@ -45,5 +54,10 @@
                 </span>
             </span>
         </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     </body>
 </html>
