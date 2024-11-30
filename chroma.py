@@ -53,10 +53,10 @@ def create_collection_of_documents(company, name, documents):
     collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
 
 def create_answers_collection(company):
-    folder_path = f"answers/{company}/"
+    path = f"answers/{company}/"
     text = ""
 
-    for file in [os.path.join(folder_path, file) for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]:
+    for file in filter(os.path.isfile, map(lambda f: os.path.join(path, f), os.listdir(path))):
          text += open(file, "r").read()
 
     create_collection_from_huge_text(company, "answers", text)
@@ -71,5 +71,3 @@ if False:
             documents.append(llm.invoke(instruction, prompt))
 
     create_collection_of_documents("Sephora", "catalog", documents)
-
-# create_answers_collection("Cox Cable")
