@@ -44,8 +44,10 @@ def create_collection_from_huge_text(company, name, text):
     ids = [str(i) for i in chunking]
     collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
 
-def create_company_faq(company, for_whom):
-    text = llm.invoke("You are a FAQ writer. Output pure text with no markdown.", f"Write a 20 page {company} FAQ for {for_whom}.")
+def create_fake_company_faq(company, for_whom):
+    instruction = "You are a FAQ writer. Output pure text with no markdown."
+    prompt = f"Write a 20 page {company} FAQ for {for_whom}."
+    text = llm.invoke(instruction, prompt)
     create_collection_from_huge_text(company, "faq")
 
 def create_collection_of_documents(company, name, documents):
