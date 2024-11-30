@@ -6,7 +6,7 @@ import os
 companies = ','.join(next(os.walk("ar"))[1])
 
 input_instruction = f"""
-Glean from the prompt a company and output JSON object
+Glean from the prompt a company and output JSON object with a company key.
 
 Here is the list of available companies: {companies}
 

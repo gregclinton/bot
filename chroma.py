@@ -23,7 +23,7 @@ def invoke(company, query):
     input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.
-Output JSON object with fields database, a string, and search, a string.
+Output JSON object with database key, a string, and search key, also a string.
 Output the raw JSON without markdown.
 """
     collections = ", ".join(map(lambda collection:  collection.name, client(company).list_collections()))
