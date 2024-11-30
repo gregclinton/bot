@@ -10,7 +10,7 @@ next = ""
 
 def invoke(caller, prompt):
     global name
-    name = next or name
+    name = next or name 
     company = name
     intake = "Intake"
     agents = set([intake])
