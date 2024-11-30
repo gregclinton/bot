@@ -3,9 +3,10 @@ from chromadb.utils import embedding_functions
 import llm
 import os
 import json
+import subprocess
 
 def client(company):
-    return chromadb.PersistentClient(path=f"./chroma/{company}")
+    return chromadb.PersistentClient(path=f"chroma/{company}")
 
 def collection(company, name):
     return client(company).get_or_create_collection(
@@ -27,8 +28,10 @@ Output JSON object with database key, a string, and search key, also a string.
 Output the raw JSON without markdown.
 """
     collections = ", ".join(map(lambda collection:  collection.name, client(company).list_collections()))
+
     if not collections:
         return "As of yet, we have no databases."
+
     o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
     collection_name = o["database"]
     search = o["search"]
@@ -44,16 +47,13 @@ def create_collection_from_huge_text(company, name, text):
     ids = [str(i) for i in chunking]
     collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
 
-def create_fake_company_faq(company, for_whom):
-    instruction = "You are a FAQ writer. Output pure text with no markdown."
-    prompt = f"Write a 20 page {company} FAQ for {for_whom}."
-    text = llm.invoke(instruction, prompt)
-    create_collection_from_huge_text(company, "faq")
-
 def create_collection_of_documents(company, name, documents):
     metadatas = [{"id": i} for i in len(documents)]
     ids = [str(i) for i in len(documents)]
     collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
+
+def create_answers_collection(company):
+    create_collection_from_huge_text(company, "answers", open(f"answers/{company}/answers.txt").read())
 
 if False:
     documents = []
