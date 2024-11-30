@@ -50,7 +50,7 @@ if False:
 
     collection("Sephora", "catalog").add(documents=documents, metadatas=metadatas, ids=ids)
 
-if True:
+if False:
     # text = "abcde " * 2000
     text = llm.invoke("You are a FAQ writer. Output pure text with no markdown.", "Write a 20 page Social Security FAQ for seniors.")
     chunk_size = 3000
