@@ -41,7 +41,7 @@ const chat = {
         .then(data => {
 
             data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
-            data.content = mared.parse(data.content)
+            data.content = marked.parse(data.content)
 
             post(data);
             chat.waiting = false;
