@@ -16,14 +16,16 @@ def collection(company, name):
         )
     )
 
-input_instruction = """
+def delete_collection(company, name):
+    client(company).delete_collection(name)
+
+def invoke(company, query):
+    input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.
 Output JSON object with fields database, a string, and search, a string.
 Output the raw JSON without markdown.
 """
-
-def invoke(company, query):
     collections = ", ".join(map(lambda collection:  collection.name, client(company).list_collections()))
     if not collections:
         return "As of yet, we have no databases."
@@ -33,35 +35,31 @@ def invoke(company, query):
     results = " ".join(collection(company, collection_name).query(query_texts=[search], n_results=4)["documents"][0])
     return f"Our search of the {collection_name} database yielded the following result: \n{results}"
 
+def create_collection(company, name, text):
+    chunk_size = 2000
+    overlap = 100
+    chunking = range(0, len(text), chunk_size - overlap)
+    documents = [text[i : i + chunk_size] for i in chunking]
+    metadatas = [{"id": i} for i in chunking]
+    ids = [str(i) for i in chunking]
+    collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
+
+def create_company_faq(company, for_whom):
+    text = llm.invoke("You are a FAQ writer. Output pure text with no markdown.", f"Write a 20 page {company} FAQ for {for_whom}.")
+    create_collection(company, "faq")
+
+def create_collection_of_documents(company, name, documents):
+    metadatas = [{"id": i} for i in len(documents)]
+    ids = [str(i) for i in len(documents)]
+    collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
+
 if False:
     documents = []
-    metadatas = []
-    ids = []
-    id = 10000
 
     for shoppers in ["men", "women"]:
         instruction = "Yor are a creative catalog writer."
         for product in ["hats", "shirts", "pants", "shoes"]:
             prompt = f"Invent a catlog description (about 200 words) and price for {shoppers}'s {product}. Pure text format, no markdown."
-            print(f"{shoppers} {product}", flush=True)
             documents.append(llm.invoke(instruction, prompt))
-            metadatas.append({"section": f"{shoppers}'s {product}"})
-            ids.append(f"id-{id}")
-            id += 1
 
-    collection("Sephora", "catalog").add(documents=documents, metadatas=metadatas, ids=ids)
-
-if False:
-    # text = "abcde " * 2000
-    text = llm.invoke("You are a FAQ writer. Output pure text with no markdown.", "Write a 20 page Social Security FAQ for seniors.")
-    chunk_size = 3000
-    overlap = chunk_size // 10
-    chunking = range(0, len(text), chunk_size - overlap)
-    documents = [text[i : i + chunk_size] for i in chunking]
-    metadatas = [{"id": i} for i in chunking]
-    ids = [str(i) for i in chunking]
-    print(documents[0])
-    collection("Social Security", "faq").add(documents=documents, metadatas=metadatas, ids=ids)
-
-# client.delete_collection("product_catalog")
-# print(invoke("Social Security", "When can I start to collect?"))
+    create_collection_of_documents("Sephora", "catalog", documents)
