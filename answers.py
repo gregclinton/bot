@@ -2,14 +2,14 @@ import llm
 import json
 import chroma
 
-input_instruction = f"""
+input_instruction = """
 You are going to help us to create a ChromaDb vectorstore for providing information to the public about {company}.
 Generate 20 questions about {company}.
 For each question, think of a unique one-word filename for that question.
 Output a raw JSON list of objects with filename key and question key -- no markdown.
 """
 
-def invoke(company, query):
+def invoke(company, _):
     input_instruction = input_instruction.replace("{company}", company)
     items = json.loads(llm.invoke(input_instruction, f"Generate the JSON."))
 
