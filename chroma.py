@@ -29,14 +29,14 @@ Output the raw JSON without markdown.
 """
     collections = ", ".join(map(lambda collection:  collection.name, client(company).list_collections()))
 
-    if not collections:
+    if collections:
+        o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
+        collection_name = o["database"]
+        search = o["search"]
+        results = " ".join(collection(company, collection_name).query(query_texts=[search], n_results=4)["documents"][0])
+        return f"Our search of the {collection_name} database yielded the following result: \n{results}"
+    else:
         return "As of yet, we have no databases."
-
-    o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
-    collection_name = o["database"]
-    search = o["search"]
-    results = " ".join(collection(company, collection_name).query(query_texts=[search], n_results=4)["documents"][0])
-    return f"Our search of the {collection_name} database yielded the following result: \n{results}"
 
 def create_collection_from_huge_text(company, name, text):
     chunk_size = 2000
