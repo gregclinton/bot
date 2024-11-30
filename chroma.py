@@ -35,7 +35,7 @@ Output the raw JSON without markdown.
     results = " ".join(collection(company, collection_name).query(query_texts=[search], n_results=4)["documents"][0])
     return f"Our search of the {collection_name} database yielded the following result: \n{results}"
 
-def create_collection(company, name, text):
+def create_collection_from_huge_text(company, name, text):
     chunk_size = 2000
     overlap = 100
     chunking = range(0, len(text), chunk_size - overlap)
@@ -46,7 +46,7 @@ def create_collection(company, name, text):
 
 def create_company_faq(company, for_whom):
     text = llm.invoke("You are a FAQ writer. Output pure text with no markdown.", f"Write a 20 page {company} FAQ for {for_whom}.")
-    create_collection(company, "faq")
+    create_collection_from_huge_text(company, "faq")
 
 def create_collection_of_documents(company, name, documents):
     metadatas = [{"id": i} for i in len(documents)]
