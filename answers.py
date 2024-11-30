@@ -11,7 +11,7 @@ Output raw JSON string without markdown.
 """
 
 def invoke(company, query):
-    items = json.loads(llm.invoke(input_instruction, query))
+    items = json.loads(llm.invoke(input_instruction, f"Questions about {company}"))
 
     for item in items:
         instruction = "Give a 1000-word answer to the question. Give the answer in raw text. No headers. No markdown."
