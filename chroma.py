@@ -65,3 +65,5 @@ if False:
             documents.append(llm.invoke(instruction, prompt))
 
     create_collection_of_documents("Sephora", "catalog", documents)
+
+# create_answers_collection("Social Security")
