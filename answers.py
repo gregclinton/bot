@@ -10,8 +10,7 @@ Output a raw JSON list of objects with filename key and question key -- no markd
 """
 
 def invoke(company, _):
-    input_instruction = input_instruction.replace("{company}", company)
-    items = json.loads(llm.invoke(input_instruction, f"Generate the JSON."))
+    items = json.loads(llm.invoke(input_instruction.replace("{company}", company), f"Generate the JSON."))
 
     for item in items:
         instruction = "Give a 1000-word answer to the question. Give the answer in raw text. No headers. No markdown."
