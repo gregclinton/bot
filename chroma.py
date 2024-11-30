@@ -30,7 +30,7 @@ def invoke(company, query):
     o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), query))
     collection_name = o["database"]
     search = o["search"]
-    results = collection(company, collection_name).query(query_texts=[search], n_results=2)["documents"][0][0]
+    results = " ".join(collection(company, collection_name).query(query_texts=[search], n_results=4)["documents"][0])
     return f"Our search of the {collection_name} database yielded the following result: \n{results}"
 
 if False:
