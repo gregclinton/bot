@@ -56,7 +56,7 @@ def create_answers_collection(company):
     folder_path = f"answers/{company}/"
     text = ""
 
-    for file in [os.path.join(folder_path, file) for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]
+    for file in [os.path.join(folder_path, file) for file in os.listdir(folder_path) if os.path.isfile(os.path.join(folder_path, file))]:
          text += open(file, "r").read()
 
     create_collection_from_huge_text(company, "answers", text)

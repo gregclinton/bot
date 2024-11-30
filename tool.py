@@ -1,6 +1,7 @@
 import chroma
 import shell
 import switchboard
+import answers
 
 bench = {
     "Database": chroma.invoke,
