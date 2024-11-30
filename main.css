@@ -12,6 +12,11 @@ body, html
     font-family: sans-serif;
 }
 
+#chat p
+{
+    margin-block-start: 0
+}
+
 #chat .post .name
 {
     color: darkcyan;
