@@ -1,9 +1,6 @@
 import llm
 import json
 import chroma
-import os
-
-companies = ','.join(next(os.walk("ar"))[1])
 
 input_instruction = f"""
 You are going to help us to create a ChromaDb vectorstore for providing information to the public.
@@ -14,6 +11,12 @@ Output raw JSON string without markdown.
 """
 
 def invoke(company, query):
-    questions = json.loads(llm.invoke(input_instruction, query))
-    # chroma.create_answers_collection(company)
-    return questions
+    items = json.loads(llm.invoke(input_instruction, query))
+
+    for item in items:
+        instruction = "Give a 1000-word answer to the question. Give the answer in raw text. No headers. No markdown."
+        with open(item.filename, "w") as file:
+            file.write(llm.invoke(instruction, item.question))
+
+    chroma.create_answers_collection(company)
+    return "Success."
