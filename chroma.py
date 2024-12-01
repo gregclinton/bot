@@ -47,27 +47,18 @@ def create_collection_from_huge_text(company, name, text):
     ids = [str(i) for i in chunking]
     collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
 
-def create_collection_of_documents(company, name, documents):
-    metadatas = [{"id": i} for i in len(documents)]
-    ids = [str(i) for i in len(documents)]
-    collection(company, name).add(documents=documents, metadatas=metadatas, ids=ids)
-
 def create_answers_collection(company):
+    documents = []
+    metadatas = []
+    ids = []
+
+    i = 100000
     path = f"answers/{company}/"
-    text = ""
 
     for file in filter(os.path.isfile, map(lambda f: os.path.join(path, f), os.listdir(path))):
-         text += open(file, "r").read()
+         documents.append(open(file, "r").read())
+         metadatas.append(os.path.basename(file))
+         ids.append(str(i))
+         i += 1
 
-    create_collection_from_huge_text(company, "answers", text)
-
-if False:
-    documents = []
-
-    for shoppers in ["men", "women"]:
-        instruction = "Yor are a creative catalog writer."
-        for product in ["hats", "shirts", "pants", "shoes"]:
-            prompt = f"Invent a catlog description (about 200 words) and price for {shoppers}'s {product}. Pure text format, no markdown."
-            documents.append(llm.invoke(instruction, prompt))
-
-    create_collection_of_documents("Sephora", "catalog", documents)
+    collection(company, "answers").add(documents=documents, metadatas=metadatas, ids=ids)
