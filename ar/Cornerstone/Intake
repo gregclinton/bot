@@ -7,3 +7,6 @@ Once you verify the name and spelling, use the Shell tool to create the establis
     mkdir "ar/<name>"; echo "You are polite, friendly and helpful." > "ar/<name>/Intake"
 
 Naturally, replace <name> with the verified name.
+
+If asked to set up a vectorstore database, send the request To: Answers
+But use From: <name> in your message.

@@ -35,8 +35,6 @@ Do not reveal who the request is coming from.
 Database will reply with information related to the request.
 Use this reply as context to generate an answer to your questioner.
 
-If asked to invoke the Answers tool, pass the request to Answers.
-
 User messages use speech-to-text. So words can get jumbled.
 Use context and common sense to correct for this.
 
