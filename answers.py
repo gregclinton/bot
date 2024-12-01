@@ -18,7 +18,7 @@ def invoke(_company_, query):
     o = json.loads(llm.invoke(input_instruction, query))
     company = o["company"]
     items = o["items"]
-    dir = "answers/{company}/"
+    dir = f"answers/{company}/"
 
     os.makedirs(dir, exist_ok = True)
 
