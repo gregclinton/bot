@@ -1,19 +1,26 @@
 import llm
 import json
 import chroma
+import os
 
 input_instruction = """
-You are going to help us to create a vectorstore database for providing information to the public about {company}.
-Generate 20 questions about {company}.
-They should be questions that customers or those serviced by {company} would ask on a help line.
+Glean the company name from the prompt.
+You are going to help us to create a vectorstore database for providing information to the public about a company.
+Generate 20 questions about the company.
+They should be questions that customers or those serviced by company would ask on a help line.
 Nothing about the history, stock price, the organization, etc.
 Should be blue-collar not suit kind of questions.
 For each question, think of a unique one-word filename for that question.
-Output a raw JSON list of objects with filename key and question key -- no markdown.
+Output raw JSON: {"company": "xxx", "items": [{"filename": "xxx", "question": "xxx"}]} -- no markdown.
 """
 
-def invoke(company, _):
-    items = json.loads(llm.invoke(input_instruction.replace("{company}", company), f"Generate the JSON."))
+def invoke(_company_, query):
+    o = json.loads(llm.invoke(input_instruction, query))
+    company = o["company"]
+    items = o["items"]
+    dir = "answers/{company}/"
+
+    os.makedirs(dir, exist_ok = True)
 
     for item in items:
         instruction = """
@@ -23,7 +30,7 @@ The answer should be dense with facts.
 Don't use headings. Don't use markdown.
 This answer will be added to a vectorstore database to be used by a call center.
 """
-        with open(f"answers/{company}/" + item["filename"] + ".txt", "w") as file:
+        with open(dir + item["filename"] + ".txt", "w") as file:
             file.write(llm.invoke(instruction, item["question"]))
 
     chroma.create_answers_collection(company)
