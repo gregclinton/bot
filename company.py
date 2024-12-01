@@ -21,7 +21,6 @@ def invoke(caller, prompt):
 
     while agents and llm.counter < max_llm_invokes:
         agent = agents.pop()
-        print(f"ar/{company}/{agent}")
         instructions = open("instructions", "r").read() + open(f"ar/{company}/{agent}", "r").read()
         instructions = instructions.replace("{department}", agent).replace("{company}", company)
         instructions += "\nDon't forget to format your reply as a message with To: and From: fields.\n"
