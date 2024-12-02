@@ -27,6 +27,7 @@ const chat = {
             Prism.highlightAll();
             MathJax.typesetPromise();
 
+            document.title = data.company;
             post.scrollIntoView({ behavior: 'smooth' });
         }
 
