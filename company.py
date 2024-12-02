@@ -23,12 +23,10 @@ def invoke(caller, prompt):
         agent = agents.pop()
         instructions = open("instructions", "r").read() + open(f"ar/{company}/{agent}", "r").read()
         instructions = instructions.replace("{department}", agent).replace("{company}", company).replace("{caller}", caller)
-        # print(f"Instructions:\n{instructions}\n", flush=True)
 
         msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
         prompt = "Complete the email thread:\n" + messages.to_string(msgs) + messages.perforation
         completion = llm.invoke(instructions, prompt)
-        # print(f"Completion:\n{completion}\n", flush=True)
 
         for msg in messages.from_string(completion):
             run.append(msg)

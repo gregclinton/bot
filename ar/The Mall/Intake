@@ -13,4 +13,4 @@ To: Shell
 From: {department}
 ls ar
 
-Remove "The Mall" from the list and present it as a bulleted list.
+Remove "The Mall" from the list and send a bulleted list To: {caller}
