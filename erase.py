@@ -1,5 +1,5 @@
 import messages
 
 def invoke(company, agent, caller, command):
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    return result.stdout + result.stderr
+    messages.delete_caller(company, agent, caller)
+    return f"{caller} history has been deleted for {agent} at {company}."
