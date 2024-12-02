@@ -47,7 +47,7 @@ def invoke(caller, prompt):
     messages.save(company, caller, run)
 
     return {
-        "company": next or name,
+        "company": name,
         "content": run[-1].body
     }
 
