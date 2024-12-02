@@ -14,10 +14,8 @@ To: Shell
 From: {department}
 mkdir "ar/<name>"; echo "You are polite, friendly and helpful." > "ar/<name>/Intake"
 
-Naturally, replace <name> with the verified name.
-
 If asked to set up a vectorstore database, send a message
 
 To: Answers
 From: {department}
-The company name is:  <name>
+The company name is: <name>
