@@ -60,3 +60,6 @@ def save(company, caller, msgs):
         if not file_empty:
             file.write(perforation)
         file.write(to_string(msgs))
+
+def delete_caller(company, agent, caller):
+    pass

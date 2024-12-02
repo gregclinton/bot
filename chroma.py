@@ -20,7 +20,7 @@ def collection(company, name):
 def delete_collection(company, name):
     client(company).delete_collection(name)
 
-def invoke(company, query):
+def invoke(company, agent, caller, query):
     input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.

@@ -14,3 +14,10 @@ From: {department}
 ls -l
 
 Shell will reply to you with the output of the shell command.
+
+If I ask you to erase me or forget me or remove me or something similar,
+send this message:
+
+To: Erase
+From: {department}
+Erase the caller.

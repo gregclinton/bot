@@ -30,7 +30,7 @@ def invoke(caller, prompt):
         for msg in messages.from_string(completion):
             run.append(msg)
             if msg.to_ in tool.bench:
-                body = tool.bench[msg.to_](company, msg.body) if (lambda: True)() else str(e)
+                body = tool.bench[msg.to_](company, agent, caller, msg.body) if (lambda: True)() else str(e)
                 run.append(Message(msg.to_, msg.from_, body))
                 agents.add(msg.from_)
             else:

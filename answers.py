@@ -14,7 +14,7 @@ For each question, think of a unique one-word filename for that question.
 Output raw JSON: {"company": "xxx", "items": [{"filename": "xxx", "question": "xxx"}]} -- no markdown.
 """
 
-def invoke(_company_, query):
+def invoke(_company_, agent, caller, query):
     o = json.loads(llm.invoke(input_instruction, query))
     company = o["company"]
     items = o["items"]
