@@ -30,4 +30,8 @@ To: Switchboard
 From: {department}
 Take me back to The Mall.
 
-You can then report to me that I am back at The Mall.
+Send me a message of the result.
+To: {caller} 
+From: {department}
+You are back at The Mall.
+
