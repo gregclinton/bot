@@ -50,6 +50,7 @@ def load(company, caller, keep = lambda msg: True):
         with open(file_path, 'r') as file:
             return from_string(file.read(), keep)
     else:
+        # create a small list of messages so llm get's the idea
         intake = "Intake"
         return [
             Message(caller, intake, "Where am I?"),
