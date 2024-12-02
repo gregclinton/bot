@@ -20,10 +20,10 @@ To: DeltaTwo
 From: {department}
 Send assurances to account-999999 regarding his taxes.
 
-If asked to connect to a another company, pass the request on To: Switchboard
-Do not reveal who the request is coming from.
-Switchboard will reply Success if all goes well with your request.
-In this case, reply "Welcome to " the company name.
+If I request to leave, exit, etc. or I bid farewell then send 
+To: Switchboard
+From: {department}
+Take me back to The Mall.
 
 If asked to access files or issue command-line type commands,
 you can form a standard Linux command-line shell command and send it To: Shell
