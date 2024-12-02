@@ -7,7 +7,9 @@ To: Switchboard
 From: {department}
 Send me to <location>.
 
-But if I ask for what locations I can go to,
+Switchboard will find the location name that most closely matches the request.
+
+If I ask for what locations I can go to,
 send the following message to Shell:
 
 To: Shell

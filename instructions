@@ -26,14 +26,3 @@ following message to Switchboard:
 To: Switchboard
 From: {department}
 Take me back to The Mall.
-
-If you don't how to handle a request, pass the request on To: Database
-Do not reveal who the request is coming from.
-Database will reply with information related to the request.
-Use this reply as context to generate an answer to your questioner.
-
-User messages use speech-to-text. So words can get jumbled.
-Use context and common sense to correct for this.
-
-Never reply to a message until you know the complete answer.
-
