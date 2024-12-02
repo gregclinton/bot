@@ -49,7 +49,12 @@ def load(company, caller, keep = lambda msg: True):
     if os.path.exists(file_path):
         with open(file_path, 'r') as file:
             return from_string(file.read(), keep)
-    return []
+    else:
+        intake = "Intake"
+        return [
+            Message(caller, intake, "Where am I?"),
+            Message(intake, caller, f"This is {company}"),
+        ]
 
 def save(company, caller, msgs):
     file_path =path(company, caller)
