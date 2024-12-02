@@ -62,4 +62,7 @@ def save(company, caller, msgs):
         file.write(to_string(msgs))
 
 def delete_caller(company, caller):
-    os.remove(path(company, caller))
+    file_path =path(company, caller)
+
+    if os.path.exists(file_path):
+        os.remove(file_path)
