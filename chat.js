@@ -34,10 +34,12 @@ const chat = {
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
-    prompt: async prompt => {
+    prompt: async (prompt, hide) => {
         chat.waiting = true;
 
-        chat.post({content: prompt});
+        if (!hide) {
+            chat.post({content: prompt});
+        }
 
         await chat.fetch(prompt)
         .then(response => response.json())
@@ -53,7 +55,5 @@ const chat = {
 };
 
 window.onload = () => {
-    chat.post({company: "The Mall", content: "Welcome to The Mall. Where would you like to go?"})
+    chat.prompt("Where am I?", true);
 };
-
-window.addEventListener("unload", () => fetch('Good-bye'));
