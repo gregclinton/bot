@@ -50,4 +50,4 @@ const chat = {
     },
 };
 
-chat.post({company: "The Mall", content: "Welcome to The Mall."})
+chat.post({company: "The Mall", content: "Welcome to The Mall. Where would you like to go?"})
