@@ -7,15 +7,7 @@ To: Switchboard
 From: {department}
 Send me to <location>.
 
-Switchboard will find the location name that most closely matches the request.
-Send me a message of the result.
-To: {caller} 
-From: {department}
-You are now at <location>
-
-
-If I ask for what locations I can go to,
-send the following message to Shell:
+If I ask for what locations I can go to, send the following message to Shell:
 
 To: Shell
 From: {department}
