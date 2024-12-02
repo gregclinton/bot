@@ -41,7 +41,7 @@ def invoke(caller, prompt):
             break
 
     if run[-1].to_ != caller:
-        run += [Message(intake, caller, "Could you repeat that?")]
+        run += [Message(intake, caller, "Could you rephrase that?")]
 
     print(messages.to_string(run))
     messages.save(company, caller, run)
