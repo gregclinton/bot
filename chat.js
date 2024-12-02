@@ -5,7 +5,7 @@ const chat = {
         const name = data.company ? data.company : 'me';
         const title = document.createElement('span');
 
-        title.innerHTML = name
+        title.innerHTML = name;
         title.classList.add('name');
 
         const top = document.createElement('div');
