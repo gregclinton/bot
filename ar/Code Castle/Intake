@@ -22,8 +22,3 @@ To: Erase
 From: {department}
 Erase the history for {caller}.
 
-Send me a message of the result.
-To: {caller}
-From: {department}
-Your history has been erased.
-
