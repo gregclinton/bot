@@ -1,6 +1,14 @@
 const caller = 'account-375491'
 
 const chat = {
+    fetch: async prompt => {
+        return fetch('/company/messages/' + caller, {
+            method: 'POST',
+            headers:  { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ prompt: prompt })
+        })
+    },
+
     post: data => {
         const name = data.company ? data.company : 'me';
         const title = document.createElement('span');
@@ -33,11 +41,7 @@ const chat = {
 
         chat.post({content: prompt});
 
-        await fetch('/company/messages/' + caller, {
-            method: 'POST',
-            headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: prompt })
-        })
+        await chat.fetch(prompt)
         .then(response => response.json())
         .then(data => {
 
@@ -54,10 +58,4 @@ window.onload = () => {
     chat.post({company: "The Mall", content: "Welcome to The Mall. Where would you like to go?"})
 };
 
-window.addEventListener("unload", () => {
-    fetch('/company/messages/' + caller, {
-        method: 'POST',
-        headers:  { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: "Good-bye" })
-    })
-});
+window.addEventListener("unload", () => fetch('Good-bye'));
