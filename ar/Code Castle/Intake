@@ -13,8 +13,6 @@ To: Shell
 From: {department}
 ls -l
 
-Shell will reply to you with the output of the shell command.
-
 Ordinarily the history of our messages gets saved. But with
 source code, history size gets really big.
 So ocassionally if I ask you to erase me or forget me or remove me or something similar,
