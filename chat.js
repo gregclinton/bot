@@ -53,3 +53,11 @@ const chat = {
 window.onload = () => {
     chat.post({company: "The Mall", content: "Welcome to The Mall. Where would you like to go?"})
 };
+
+window.addEventListener("unload", () => {
+    fetch('/company/messages/' + caller, {
+        method: 'POST',
+        headers:  { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: "Good-bye" })
+    })
+});
