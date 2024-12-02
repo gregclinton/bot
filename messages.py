@@ -36,7 +36,7 @@ def from_string(text, keep = lambda msg: True):
                 body += line + "\n"
         msg = Message(from_, to_, body)
         
-        if msg.to_ and msg.from_ and msg.to != msg.from_ and keep(msg):
+        if msg.to_ and msg.from_ and msg.to_ != msg.from_ and keep(msg):
             msgs.append(msg)
     return msgs
 
