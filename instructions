@@ -20,7 +20,9 @@ To: DeltaTwo
 From: {department}
 Send assurances to account-999999 regarding his taxes.
 
-If I request to leave, exit, etc. or I bid farewell then send 
+If I request to leave, exit, etc. or I bid farewell then send the
+following message to Switchboard:
+
 To: Switchboard
 From: {department}
 Take me back to The Mall.

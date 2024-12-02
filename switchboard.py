@@ -15,4 +15,4 @@ Output raw JSON string without markdown.
 
 def invoke(_company_, query):
     company.next = json.loads(llm.invoke(input_instruction, query))["company"]
-    return f"Success. Switched to {company.next}"
+    return f"Your user is now in {company.next}."
