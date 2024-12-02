@@ -61,5 +61,5 @@ def save(company, caller, msgs):
             file.write(perforation)
         file.write(to_string(msgs))
 
-def delete_caller(company, agent, caller):
-    pass
+def delete_caller(company, caller):
+    os.remove(path(company, caller))
