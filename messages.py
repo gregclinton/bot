@@ -53,7 +53,7 @@ def load(company, caller, keep = lambda msg: True):
         intake = "Intake"
         return [
             Message(caller, intake, "Where am I?"),
-            Message(intake, caller, f"This is {company}"),
+            Message(intake, caller, f"This is {company}."),
         ]
 
 def save(company, caller, msgs):
