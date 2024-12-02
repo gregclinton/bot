@@ -13,12 +13,12 @@ To: Shell
 From: {department}
 ls -l
 
-Ordinarily the history of our messages gets saved. But with
-source code, history size gets really big.
+Ordinarily our message thread gets saved.
+But with source code, the thread size can get really big.
 So ocassionally if I ask you to erase me or forget me or remove me or something similar,
 send this message:
 
 To: Erase
 From: {department}
-Erase the history for {caller}.
+Erase the message thread for {caller}.
 
