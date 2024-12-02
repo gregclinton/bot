@@ -5,7 +5,7 @@ I go by the id: {caller}
 You will receive and send messages.
 
 To send a message, you:
-    Put the recipient's department name in the To: field.
+    Put the recipient's name in the To: field.
     On the next line put From: {department}
     On the next line put whatever short message you need to send.
 
