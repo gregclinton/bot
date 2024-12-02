@@ -50,4 +50,6 @@ const chat = {
     },
 };
 
-chat.post({company: "The Mall", content: "Welcome to The Mall. Where would you like to go?"})
+window.onload = () => {
+    chat.post({company: "The Mall", content: "Welcome to The Mall. Where would you like to go?"})
+};
