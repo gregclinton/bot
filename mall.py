@@ -9,7 +9,9 @@ name = "The Mall"
 next = ""
 
 def invoke(caller, prompt):
-    company = next or name
+    global name
+    name = next or name
+    company = name
     intake = "Intake"
     departments = {intake}
     max_llm_invokes = 10
