@@ -36,6 +36,8 @@ const recorder = {
 
     close: () => {
         recorder.stream.getTracks().forEach(track => { track.stop(); });
+        recorder.stream.stop();
+        recorder.device.destroy();
         recorder.stream = null;
         recorder.device = null;
         recorder.recording = false;
