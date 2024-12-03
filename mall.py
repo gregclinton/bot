@@ -5,15 +5,12 @@ import messages
 from messages import Message
 import tool
 
-name = "The Mall"
 next = ""
 
 def invoke(caller, prompt):
-    global name
-    name = next or name
-    company = name
+    company = next or "The Mall"
     intake = "Intake"
-    departments = set([intake])
+    departments = {intake}
     max_llm_invokes = 10
     llm.reset_counter()
     run = [Message(caller, intake, prompt)]
@@ -21,7 +18,7 @@ def invoke(caller, prompt):
 
     while departments and llm.counter < max_llm_invokes:
         department = departments.pop()
-        instructions = open("instructions", "r").read() + open(f"ar/{company}/{department}", "r").read()
+        instructions = "".join(open(f, "r").read() for f in ["instructions", f"ar/{company}/{department}"])
         instructions = instructions.format_map({"company": company, "department": department, "caller": caller})
 
         msgs = list(filter(lambda msg: department in (msg.from_, msg.to_), history + run))
