@@ -4,7 +4,7 @@ const recorder = {
         navigator.mediaDevices.getUserMedia({ audio: true })
         .then(stream => {
             recorder.stream = stream;
-            recorder.device = new RecordRTC(recorder.stream, {
+            recorder.device = new RecordRTC(stream, {
                 mimeType: 'audio/webm',
                 timeSlice: 1000,
                 recorderType: RecordRTC.StereoAudioRecorder,
@@ -12,7 +12,7 @@ const recorder = {
                 audioBitsPerSecond: 128000
             });
             recorder.device.startRecording();
-        })
+        });
     },
 
     stop: () => recorder.device.stopRecording(recorder.close),
@@ -52,6 +52,6 @@ const recorder = {
         return fetch('/openai/v1/audio/transcriptions', {
             method: 'POST',
             body: data
-        })
+        });
     }
 }
