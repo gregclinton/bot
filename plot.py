@@ -24,7 +24,7 @@ svg_content = buffer.getvalue()
 buffer.close()
 """
 
-def invoke(company, department, caller, command):
+def invoke(company, department, caller, code):
     context = {}
     exec(code + footer, context)
     return " ".join(context["svg_content"].split("\n")[3:])
