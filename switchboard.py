@@ -13,6 +13,6 @@ Here is the list of available companies: {companies}
 Output raw JSON string without markdown.
 """
 
-def invoke(_company_, agent, caller, query):
+def invoke(_company_, department, caller, query):
     mall.next = json.loads(llm.invoke(input_instruction, query))["company"]
     return f"{caller} is now at {mall.next}."
