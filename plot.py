@@ -27,5 +27,5 @@ buffer.close()
 def invoke(company, department, caller, command):
     context = {}
     exec(code + footer, context)
-    return context["svg_content"]
+    return " ".join(context["svg_content"].split("\n")[3:])
 
