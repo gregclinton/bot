@@ -5,5 +5,3 @@ messages
 .cache
 chroma
 answers
-plot.*
-*.svg
