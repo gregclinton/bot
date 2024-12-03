@@ -13,29 +13,29 @@ def invoke(caller, prompt):
     name = next or name
     company = name
     intake = "Intake"
-    agents = set([intake])
+    departments = set([intake])
     max_llm_invokes = 10
     llm.reset_counter()
     run = [Message(caller, intake, prompt)]
     history = messages.load(company, caller)
 
-    while agents and llm.counter < max_llm_invokes:
-        agent = agents.pop()
-        instructions = open("instructions", "r").read() + open(f"ar/{company}/{agent}", "r").read()
-        instructions = instructions.replace("{department}", agent).replace("{company}", company).replace("{caller}", caller)
+    while departments and llm.counter < max_llm_invokes:
+        department = departments.pop()
+        instructions = open("instructions", "r").read() + open(f"ar/{company}/{department}", "r").read()
+        instructions = instructions.format_map({"company": company, "department": department, "caller": caller})
 
-        msgs = list(filter(lambda msg: agent in (msg.from_, msg.to_), history + run))
+        msgs = list(filter(lambda msg: department in (msg.from_, msg.to_), history + run))
         prompt = "Complete the email thread:\n" + messages.to_string(msgs) + messages.perforation
         completion = llm.invoke(instructions, prompt)
 
         for msg in messages.from_string(completion):
             run.append(msg)
             if msg.to_ in tool.bench:
-                body = tool.bench[msg.to_](company, agent, caller, msg.body) if (lambda: True)() else str(e)
+                body = tool.bench[msg.to_](company, department, caller, msg.body) if (lambda: True)() else str(e)
                 run.append(Message(msg.to_, msg.from_, body))
-                agents.add(msg.from_)
+                departments.add(msg.from_)
             else:
-                agents.add(msg.to_)
+                departments.add(msg.to_)
 
         if run[-1].to_ == caller:
             break
