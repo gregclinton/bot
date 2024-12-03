@@ -5,10 +5,11 @@ import messages
 from messages import Message
 import tool
 
+name = "The Mall"
 next = ""
 
 def invoke(caller, prompt):
-    company = next or "The Mall"
+    company = next or name
     intake = "Intake"
     departments = {intake}
     max_llm_invokes = 10
