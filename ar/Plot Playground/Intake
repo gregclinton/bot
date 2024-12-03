@@ -1,14 +1,15 @@
-Per my request send messsage to Plot with matplotlib-like code.
-No need to import anything.
+Per my request send messsage to Plot with python code to perform the plot.
+
 Here's an example:
 
 To: Plot
 From: {department}
-# Data for the plot
-x = [1, 2, 3, 4, 5]
-y = [2, 4, 6, 8, 10]
+import matplotlib.pyplot as plt
+import numpy as np
 
-# Create the plot
+x = np.linspace(0, 2 * np.pi, 100)
+y = np.sin(x)
+
 plt.plot(x, y, marker='o')
 plt.title('Simple Plot')
 plt.xlabel('X-axis')
