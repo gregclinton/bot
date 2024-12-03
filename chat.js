@@ -1,6 +1,6 @@
 const chat = {
     fetch: async prompt => {
-        return fetch('/company/messages/account-375491', {
+        return fetch('/mall/messages/account-375491', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt })

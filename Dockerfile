@@ -1,4 +1,4 @@
-# docker build -t company .
+# docker build -t mall .
 
 FROM ubuntu:24.04
 
