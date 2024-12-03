@@ -1,0 +1,15 @@
+Per my request send messsage to Plot with matplotlib-like code.
+No need to import anything.
+Here's an example:
+
+To: Plot
+From: {department}
+# Data for the plot
+x = [1, 2, 3, 4, 5]
+y = [2, 4, 6, 8, 10]
+
+# Create the plot
+plt.plot(x, y, marker='o')
+plt.title('Simple Plot')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
