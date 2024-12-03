@@ -25,6 +25,7 @@ buffer.close()
 """
 
 def invoke(company, department, caller, command):
-    exec(code + footer)
-    return svg_content
+    context = {}
+    exec(code + footer, context)
+    return context["svg_content"]
 
