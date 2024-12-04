@@ -27,9 +27,9 @@ def invoke(entity, thread, prompt):
         sleep(0.2) # in case this loop runs away
         if llm.counter > max_llm_invokes:
             response = content("Could you please rephrase that?")
-        elif "path" in response:
+        elif "url" in response:
             thread = str(random.randint(111111, 999999))
-            response = invoke(response["path"], thread, response["prompt"])
+            response = post(response["url"] + f"/{thread}", response["prompt"])
         elif "tool" in response:
             tool = response["tool"]
             prompt = response["prompt"]
