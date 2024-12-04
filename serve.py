@@ -1,11 +1,13 @@
 from fastapi import FastAPI, Request
 import llm
 import tool
+from time import sleep
 
 app = FastAPI()
 entities = {}
 
 def invoke(entity, thread, prompt):
+    sleep(0.2)
     instructions = open(f"ar/{entity}/Intake").read()
     messages = entities.setdefault(entity, {}).setdefault(thread, [])
     messages.append({"role": "user", "content": prompt})
