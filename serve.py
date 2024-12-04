@@ -2,6 +2,7 @@ from fastapi import FastAPI, Request
 import llm
 from tool import bench
 from time import sleep
+import random
 
 entities = {}
 max_llm_invokes = 10
@@ -25,7 +26,8 @@ def invoke(entity, thread, prompt):
         if llm.counter > max_llm_invokes:
             response = { "content": "Could you please rephrase that?" }
         elif "path" in response:
-            response = invoke(response["path"], "111222", response["prompt"])
+            thread = str(random.randint(111111, 999999))
+            response = invoke(response["path"], thread, response["prompt"])
         elif "tool" in response:
             tool = response["tool"]
             prompt = response["prompt"]
