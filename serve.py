@@ -34,7 +34,7 @@ def invoke(entity, thread, prompt):
             messages.append(assistant(f"tool: {tool}, prompt: {prompt}"))
             if tool in bench:
                 try:
-                    output = bench[tool]("", "", "", prompt)
+                    output = bench[tool](prompt)
                     messages.append(assistant(f"tool response: {output}"))
                     response = llm.invoke([system(instructions)] + messages)
                 except Exception as e:
