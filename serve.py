@@ -28,11 +28,11 @@ def invoke(entity, thread, prompt):
             response = { "content": "I made a mistake with a tool called " + response["tool"] + ". Apparently, there is no such tool." }
 
     messages.append({"role": "assistant", "content": response["content"]})
-    for msg in messages: print(msg)
+    #for msg in messages: print(msg)
     return response
 
 @app.post('/mall/{entity}/messages/{thread}')
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-invoke("Code Castle", "12345", "Do you see chat.js?")
+# invoke("Code Castle", "12345", "Do you see chat.js? If so, display it.")
