@@ -35,7 +35,7 @@ def invoke(caller, prompt):
             run.append(msg)
             if msg.to_ in tool.bench:
                 try:
-                    body = tool.bench[msg.to_](company, department, caller, msg.body) if (lambda: True)() else str(e)
+                    body = tool.bench[msg.to_](company, department, caller, msg.body)
                     if len(body) > 2000:
                         bulk = body
                         body = "<bulk>"
