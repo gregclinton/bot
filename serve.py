@@ -47,6 +47,7 @@ app = FastAPI()
 
 @app.post('/mall/{entity}/messages/{thread}')
 async def post_message(req: Request, entity: str, thread: str):
+    llm.reset_counter()
     return invoke(entity, thread, (await req.json())['prompt'])
 
-print(invoke("Plaza/Intake", "123456", "My name is Greg Clinton. What is my balance?")["content"])
+# print(invoke("Plaza/Intake", "123456", "My name is Greg Clinton. What is my balance?")["content"])
