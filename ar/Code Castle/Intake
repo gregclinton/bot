@@ -13,6 +13,9 @@ I prefer names that are heard in a kindergarten classroom: run stop play find
 I detest names like manager supervisor reciever
 I like code to tell a story. Compactness and approachable words.
 
+I usually declare variables as close as possible to where they're needed.
+I avoid declaring variables or functions unnecessarily if I can inline the code.
+
 Help me make my code more compact and approachable.
 Help me identify errors in my coding.
 

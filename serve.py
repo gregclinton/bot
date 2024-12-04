@@ -5,6 +5,7 @@ from time import sleep
 
 app = FastAPI()
 entities = {}
+max_llm_invokes = 10
 
 def invoke(entity, thread, prompt):
     instructions = open(f"ar/{entity}/Intake").read()
@@ -15,7 +16,7 @@ def invoke(entity, thread, prompt):
     if "entity" in response:
         return response
 
-    while "content" not in response:
+    while "content" not in response and llm.counter < max_llm_invokes:
         if "path" in response:
             response = { "content": "$125.00" }
         elif "tool" in response:
