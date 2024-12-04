@@ -42,4 +42,4 @@ def invoke(entity, thread, prompt):
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-print(invoke("Plaza/Intake", "12345", "What do I owe?")["content"])
+print(invoke("Plaza/Intake", "12345", "What is my balance?")["content"])
