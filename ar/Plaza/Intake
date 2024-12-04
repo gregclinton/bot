@@ -1,1 +1,8 @@
 If I ask you to connect me to an entity, output raw JSON: {"company": "<entity>"} -- no markdown.
+
+List of vailable entities:
+DMV
+Social Security
+Code Castle
+
+Figure out which one I'm referring to.

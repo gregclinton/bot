@@ -10,7 +10,7 @@ def reset_counter():
     global counter
     counter = 0
 
-def invoke(instruction, prompt):
+def invoke(messages):
     global counter
 
     counter += 1
@@ -23,16 +23,8 @@ def invoke(instruction, prompt):
         json = {
             "model": "gpt-4o",
             "temperature": 0,
-            "messages": [
-                {"role": "system", "content": instruction},
-                {"role": "user", "content": prompt}
-            ],
+            "messages": messages,
         }
     ).json()["choices"][0]["message"]["content"]
-
-    if False:
-        print(f"Instruction: \n{instruction}\n")
-        print(f"Prompt: \n{prompt}\n")
-        print(f"Completion: \n{completion}\n")
 
     return completion

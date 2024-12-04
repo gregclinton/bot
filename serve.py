@@ -3,10 +3,14 @@ import llm
 import json
 
 app = FastAPI()
+entities = {}
 
-@app.post('/mall/{company}/messages/{thread}')
-async def post_message(req: Request, company: str, thread: str):
-    instructions = open(f"ar/{company}/Intake").read()
+@app.post('/mall/{entity}/messages/{thread}')
+async def post_message(req: Request, entity: str, thread: str):
+    instructions = open(f"ar/{entity}/Intake").read()
     prompt = (await req.json())['prompt']
-    completion = llm.invoke(instructions, prompt)
+    messages = entities.setdefault(entity, {}).setdefault(thread, [])
+    messages.append({"role": "user", "content": prompt})
+    completion = llm.invoke([{"role": "system", "content": instructions}] + messages)
+    messages.append({"role": "assistant", "content": completion})
     return json.loads(completion) if completion.startswith("{") else { "content": completion }
