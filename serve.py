@@ -30,5 +30,4 @@ def invoke(entity, thread, prompt):
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-print(invoke("Plaza", "12345", "My name is Greg.")["content"])
-print(invoke("Plaza", "12345", "What is my name?")["content"])
+print(invoke("Code Castle", "12345", "Do you like to code?")["content"])
