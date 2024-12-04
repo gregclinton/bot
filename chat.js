@@ -47,12 +47,15 @@ const chat = {
         await chat.fetch(prompt)
         .then(response => response.json())
         .then(data => {
-
-            data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
-            data.content = marked.parse(data.content)
-
+            if (data.company) {
+                chat.company = data.company
+                data.content = 'You are now connected with ' + data.company + '.';
+            } else {
+                data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
+                data.content = marked.parse(data.content)
+            }
             chat.post(data);
             chat.waiting = false;
-        });
+    });
     },
 };
