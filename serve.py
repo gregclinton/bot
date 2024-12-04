@@ -45,7 +45,7 @@ def invoke(entity, thread, prompt):
                 except Exception as e:
                     response = content(str(e))
             else:
-                response = content("I made a mistake with a tool called " + response["tool"] + ". Apparently, there is no such tool.")
+                response = content(response["tool"] + " tool does not exist.")
 
     messages.append(assistant(response["content"]))
     return content(bulk) if bulk else response
