@@ -1,6 +1,9 @@
 const chat = {
+    company: "Plaza",
+    thread: "375491",
+
     fetch: async prompt => {
-        return fetch('/mall/messages/account-375491', {
+        return fetch('/mall/' + chat.company + '/messages/' + chat.thread, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt })
@@ -8,7 +11,7 @@ const chat = {
     },
 
     post: data => {
-        const name = data.company ? data.company : 'me';
+        const name = document.getElementById('chat').children.length % 2 ? chat.company : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -30,7 +33,7 @@ const chat = {
         Prism.highlightAll();
         MathJax.typesetPromise();
 
-        document.title = data.company;
+        document.title = chat.company;
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
@@ -52,8 +55,4 @@ const chat = {
             chat.waiting = false;
         });
     },
-};
-
-window.onload = () => {
-    chat.prompt("Where am I?", true);
 };
