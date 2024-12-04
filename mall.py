@@ -31,7 +31,10 @@ def invoke(caller, prompt):
         for msg in messages.from_string(completion):
             run.append(msg)
             if msg.to_ in tool.bench:
-                body = tool.bench[msg.to_](company, department, caller, msg.body) if (lambda: True)() else str(e)
+                try:
+                    body = tool.bench[msg.to_](company, department, caller, msg.body) if (lambda: True)() else str(e)
+                except Exception as e:
+                    body = f"An error occurred: {e}"
 
                 if msg.to_ in ["Plot"]:
                     run.append(Message(msg.from_, caller, body))
