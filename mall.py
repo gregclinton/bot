@@ -18,6 +18,7 @@ def invoke(caller, prompt):
     llm.reset_counter()
     run = [Message(caller, intake, prompt)]
     history = messages.load(company, caller)
+    bulk = ""
 
     while departments and llm.counter < max_llm_invokes:
         department = departments.pop()
@@ -33,8 +34,11 @@ def invoke(caller, prompt):
             if msg.to_ in tool.bench:
                 try:
                     body = tool.bench[msg.to_](company, department, caller, msg.body) if (lambda: True)() else str(e)
+                    if len(body) > 2000:
+                        bulk = body
+                        body = "<bulk>"
                 except Exception as e:
-                    body = f"An error occurred: {e}"
+                    body = str(e)
 
                 if msg.to_ in ["Plot"]:
                     run.append(Message(msg.from_, caller, body))
@@ -56,7 +60,7 @@ def invoke(caller, prompt):
 
     return {
         "company": next or name,
-        "content": run[-1].body
+        "content": bulk or run[-1].body
     }
 
 import sys
