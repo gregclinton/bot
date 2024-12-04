@@ -1,5 +1,5 @@
 const chat = {
-    entity: "Plaza",
+    entity: "Plaza/Intake",
     thread: "375491",
 
     fetch: async prompt => {

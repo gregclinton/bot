@@ -8,7 +8,7 @@ entities = {}
 max_llm_invokes = 10
 
 def invoke(entity, thread, prompt):
-    instructions = open(f"ar/{entity}/Intake").read()
+    instructions = open(f"ar/{entity}").read()
     messages = entities.setdefault(entity, {}).setdefault(thread, [])
     messages.append({"role": "user", "content": prompt})
     response = llm.invoke([{"role": "system", "content": instructions}] + messages)
@@ -18,7 +18,7 @@ def invoke(entity, thread, prompt):
 
     while "content" not in response and llm.counter < max_llm_invokes:
         if "path" in response:
-            response = { "content": "$125.00" }
+            response = invoke(response["path"], "111222", response["prompt"])
         elif "tool" in response:
             sleep(0.2)
             tool = response["tool"]
@@ -42,4 +42,4 @@ def invoke(entity, thread, prompt):
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-#print(invoke("Code Castle", "12345", "Do you see chat.js? If so, display it.")["content"])
+print(invoke("Plaza/Intake", "12345", "What do I owe?")["content"])
