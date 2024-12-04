@@ -4,6 +4,7 @@ import llm
 import messages
 from messages import Message
 import tool
+from time import sleep
 
 name = "The Mall"
 next = ""
@@ -21,6 +22,7 @@ def invoke(caller, prompt):
     bulk = ""
 
     while departments and llm.counter < max_llm_invokes:
+        sleep(0.2)
         department = departments.pop()
         instructions = "".join(open(f, "r").read() for f in ["instructions", f"ar/{company}/{department}"])
         instructions = instructions.format_map({"company": company, "department": department, "caller": caller})
