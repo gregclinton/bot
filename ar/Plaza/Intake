@@ -1,1 +1,1 @@
-If I ask you to connect to Xyz, output raw JSON: {"company": "Xyz"} -- no markdown.
+If I ask you to connect me to an entity, output raw JSON: {"company": "<entity>"} -- no markdown.
