@@ -15,9 +15,9 @@ def invoke(entity, thread, prompt):
 
     if "tool" in response:
         if response["tool"] in tool.bench:
+            
             try:
                 response = { "content": tool.bench[response["tool"]]("", "", "", response["prompt"]) }
-                del response["tool"]
             except Exception as e:
                 response = { "content": str(e) }
         else:
@@ -30,4 +30,4 @@ def invoke(entity, thread, prompt):
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-print(invoke("Code Castle", "12345", "Do you like to code?")["content"])
+print(invoke("Code Castle", "12345", "List my python files.")["content"])
