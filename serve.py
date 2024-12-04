@@ -13,6 +13,8 @@ def invoke(entity, thread, prompt):
     system = lambda content: make_message("system", content)
     user = lambda content: make_message("user", content)
     assistant = lambda content: make_message("assistant", content)
+    content = lambda text: { "content": text }
+    bulk = ""
 
     messages = entities.setdefault(entity, {}).setdefault(thread, [])
     messages.append(user(prompt))
@@ -24,7 +26,7 @@ def invoke(entity, thread, prompt):
     while "content" not in response:
         sleep(0.2) # in case this loop runs away
         if llm.counter > max_llm_invokes:
-            response = { "content": "Could you please rephrase that?" }
+            response = content("Could you please rephrase that?")
         elif "path" in response:
             thread = str(random.randint(111111, 999999))
             response = invoke(response["path"], thread, response["prompt"])
@@ -35,15 +37,18 @@ def invoke(entity, thread, prompt):
             if tool in bench:
                 try:
                     output = bench[tool](prompt)
+                    if len(output) > 20000:
+                        bulk = output
+                        output = "<bulk>"
                     messages.append(assistant(f"tool response: {output}"))
                     response = llm.invoke([system(instructions)] + messages)
                 except Exception as e:
-                    response = { "content": str(e) }
+                    response = content(str(e))
             else:
-                response = { "content": "I made a mistake with a tool called " + response["tool"] + ". Apparently, there is no such tool." }
+                response = content("I made a mistake with a tool called " + response["tool"] + ". Apparently, there is no such tool.")
 
     messages.append(assistant(response["content"]))
-    return response
+    return content(bulk) if bulk else response
 
 app = FastAPI()
 
