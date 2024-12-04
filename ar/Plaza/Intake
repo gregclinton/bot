@@ -6,3 +6,6 @@ Social Security
 Code Castle
 
 Figure out which one I'm referring to.
+
+If I ask about my balance, refer the question to Billing.
+Just output raw JSON: {"path": "Billing", "prompt": "<supply a prompt for Billing>"} -- no markdown.

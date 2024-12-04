@@ -16,19 +16,22 @@ def invoke(entity, thread, prompt):
         return response
 
     while "content" not in response:
-        sleep(0.2)
-        tool = response["tool"]
-        prompt = response["prompt"]
-        messages.append({"role": "assistant", "content": f"tool: {tool}, prompt: {prompt}"})
-        if tool in bench:
-            try:
-                output = bench[tool]("", "", "", prompt)
-                messages.append({"role": "assistant", "content": f"tool response: {output}"})
-                response = llm.invoke([{"role": "system", "content": instructions}] + messages)
-            except Exception as e:
-                response = { "content": str(e) }
-        else:
-            response = { "content": "I made a mistake with a tool called " + response["tool"] + ". Apparently, there is no such tool." }
+        if "path" in response:
+            response = { "content": "$125.00" }
+        elif "tool" in response:
+            sleep(0.2)
+            tool = response["tool"]
+            prompt = response["prompt"]
+            messages.append({"role": "assistant", "content": f"tool: {tool}, prompt: {prompt}"})
+            if tool in bench:
+                try:
+                    output = bench[tool]("", "", "", prompt)
+                    messages.append({"role": "assistant", "content": f"tool response: {output}"})
+                    response = llm.invoke([{"role": "system", "content": instructions}] + messages)
+                except Exception as e:
+                    response = { "content": str(e) }
+            else:
+                response = { "content": "I made a mistake with a tool called " + response["tool"] + ". Apparently, there is no such tool." }
 
     messages.append({"role": "assistant", "content": response["content"]})
     #for msg in messages: print(msg)
