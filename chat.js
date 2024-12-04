@@ -11,7 +11,7 @@ const chat = {
     },
 
     post: data => {
-        const name = document.getElementById('chat').children.length % 2 ? chat.entity : 'me';
+        const name = document.getElementById('chat').children.length % 2 ? chat.entity.split('/')[0] : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
