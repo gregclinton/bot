@@ -29,4 +29,4 @@ def invoke(entity, thread, prompt):
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-print(invoke("Code Castle", "12345", "List my python files.")["content"])
+print(invoke("Code Castle", "12345", "Look at chat.js.")["content"])
