@@ -32,14 +32,13 @@ def invoke(caller, prompt):
             run.append(msg)
             if msg.to_ in tool.bench:
                 body = tool.bench[msg.to_](company, department, caller, msg.body) if (lambda: True)() else str(e)
-                run.append(Message(msg.to_, msg.from_, body))
 
                 if msg.to_ in ["Plot"]:
                     run.append(Message(msg.from_, caller, body))
+                    break
                 else:
                     run.append(Message(msg.to_, msg.from_, body))
-
-                departments.add(msg.from_)
+                    departments.add(msg.from_)
             else:
                 departments.add(msg.to_)
 
