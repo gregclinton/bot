@@ -1,4 +1,4 @@
-If I ask you to connect me to an entity, output raw JSON: {"company": "<entity>"} -- no markdown.
+If I ask you to connect me to an entity, output raw JSON: {"entity": "<entity>"} -- no markdown.
 
 List of vailable entities:
 DMV

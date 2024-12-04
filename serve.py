@@ -12,7 +12,10 @@ def invoke(entity, thread, prompt):
     messages.append({"role": "user", "content": prompt})
     response = llm.invoke([{"role": "system", "content": instructions}] + messages)
 
-    while "tool" in response:
+    if "entity" in response:
+        return response
+
+    while "content" not in response:
         sleep(0.2)
         tool = response["tool"]
         prompt = response["prompt"]
@@ -35,4 +38,4 @@ def invoke(entity, thread, prompt):
 async def post_message(req: Request, entity: str, thread: str):
     return invoke(entity, thread, (await req.json())['prompt'])
 
-# invoke("Code Castle", "12345", "Do you see chat.js? If so, display it.")
+#print(invoke("Code Castle", "12345", "Do you see chat.js? If so, display it.")["content"])
