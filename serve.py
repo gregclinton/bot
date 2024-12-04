@@ -14,8 +14,7 @@ def invoke(entity, thread, prompt):
     response = llm.invoke([{"role": "system", "content": instructions}] + messages)
 
     if "tool" in response:
-        if response["tool"] in tool.bench:
-            
+        if response["tool"] in tool.bench:         
             try:
                 response = { "content": tool.bench[response["tool"]]("", "", "", response["prompt"]) }
             except Exception as e:
