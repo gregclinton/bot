@@ -3,7 +3,7 @@ const chat = {
     thread: "375491",
 
     fetch: async prompt => {
-        return fetch('/mall/' + chat.entity + '/messages/' + chat.thread, {
+        return fetch(`/mall/${chat.entity}/messages/${chat.thread}`, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt })
@@ -49,7 +49,7 @@ const chat = {
         .then(data => {
             if (data.entity) {
                 chat.entity = data.entity
-                data.content = 'You are now connected with ' + data.entity + '.';
+                data.content = `You are now connected with ${data.entity}.`;
             } else {
                 data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
                 data.content = marked.parse(data.content)
