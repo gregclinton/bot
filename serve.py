@@ -16,19 +16,20 @@ def invoke(thread, prompt):
     make_message = lambda role, content: { "role": role, "content": content }
     instructions = [make_message("system", open("instructions").read())]
     assistant = lambda content: make_message("assistant", content)
-    content = lambda text: { "content": text }
-    bulk = ""
+    content = None
+    bulk = None
 
     messages = threads.setdefault(thread, [])
     messages.append(make_message("user", prompt))
     response = llm.invoke(instructions + messages)
 
-    while "content" not in response:
+    while not content:
         sleep(0.2) # in case this loop runs away
         if llm.counter > max_llm_invokes:
-            response = content("Could you please rephrase that?")
+            content = "Could you please rephrase that?"
         elif "url" in response:
             response = post_off_server(response["url"], response["prompt"])
+            content = response.get("content")
         elif "tool" in response:
             tool = response["tool"]
             messages.append(assistant(f"tool: {tool}"))
@@ -40,13 +41,14 @@ def invoke(thread, prompt):
                         output = "<bulk>"
                     messages.append(assistant(f"tool response: {output}"))
                     response = llm.invoke(instructions + messages)
+                    content = response.get("content")
                 except Exception as e:
-                    response = content(str(e))
+                    content = str(e)
             else:
-                response = content(response["tool"] + " tool does not exist.")
+                content = response["tool"] + " tool does not exist."
 
-    messages.append(assistant(response["content"]))
-    return content(bulk) if bulk else response
+    messages.append(assistant(content))
+    return { "content": bulk or content }
 
 app = FastAPI()
 
