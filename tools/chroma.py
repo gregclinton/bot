@@ -19,7 +19,7 @@ def collection(name):
 def delete_collection(name):
     client().delete_collection(name)
 
-def invoke(search):
+def invoke(question):
     input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.
@@ -31,10 +31,16 @@ Output the raw JSON without markdown.
     if collections:
         o = json.loads(llm.invoke([
             { "role": "system", "content": input_instruction.replace("{collections}", collections)},
-            { "role": "user", "content": search}
+            { "role": "user", "content": question}
         ])["content"])
         collection_name = o["database"]
-        results = " ".join(collection(collection_name).query(query_texts=[search], n_results=1)["documents"][0])
+
+        results = " ".join(collection(collection_name).query(query_texts=[question], n_results=1)["documents"][0])
+        results = llm.invoke([
+            { "role": "system", "content": "Given the context, answer the question." },
+            { "role": "user", "content": f"Context: {results}\n\nQuestion: {question}\n\nAnswer: "}
+        ])["content"]
+
         return f"Our search of the {collection_name} database yielded the following result: \n{results}"
     else:
         return "As of yet, we have no databases."

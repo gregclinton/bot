@@ -1,7 +1,7 @@
-You can probe our chromadb vectorstore with a search string
+You can probe our chromadb vectorstore with my question
 by invoking the chromadb tool as shown in the example below:
 
 tool: chromadb
-medicare eligibility
+What is the legal drinking age in California?
 
 Output the above two lines without markdown or comments.

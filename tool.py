@@ -3,7 +3,7 @@ import tools.shell
 import tools.plot
 import tools.install
 
-installed = {"brevity", "install"}
+installed = {"brevity", "chromadb"}
 
 bench = {
     "install": tools.install.invoke,

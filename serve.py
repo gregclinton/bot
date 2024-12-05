@@ -36,6 +36,7 @@ def invoke(thread_id, prompt):
             if tool in bench:
                 try:
                     output = bench[tool](response["text"])
+                    print(output, flush=True)
                     if len(output) > 20000:
                         bulk = output
                         output = "success"
