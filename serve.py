@@ -15,11 +15,10 @@ def post_off_server(url, prompt):
 def invoke(thread_id, prompt):
     thread = threads[thread_id]
     message = lambda role, content: { "role": role, "content": content }
-    bulk = None
-
     messages = thread["messages"]
     messages.append(message("user", prompt))
     content = None
+    bulk = None
 
     while not content:
         sleep(0.2) # in case this loop runs away
