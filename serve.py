@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request
 import llm
-from tool import bench, installed
+from tool import bench
 from time import sleep
 
 threads = {}
