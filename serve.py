@@ -73,4 +73,4 @@ async def post_thread(req: Request):
     thread_id += 1
     return { "id": thread_id }
 
-print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
+# print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
