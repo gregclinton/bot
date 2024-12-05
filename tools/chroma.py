@@ -34,7 +34,7 @@ Output the raw JSON without markdown.
             { "role": "user", "content": search}
         ])["content"])
         collection_name = o["database"]
-        results = " ".join(collection(collection_name).query(query_texts=[search], n_results=4)["documents"][0])
+        results = " ".join(collection(collection_name).query(query_texts=[search], n_results=1)["documents"][0])
         return f"Our search of the {collection_name} database yielded the following result: \n{results}"
     else:
         return "As of yet, we have no databases."
