@@ -60,7 +60,7 @@ async def delete_messages(req: Request, id: str):
     threads["id"].clear()
     return {}
 
-@app.delete('/mall/threadsl/{id}/messages/last')
+@app.delete('/mall/threads/{id}/messages/last')
 async def delete_last_message(req: Request, id: str):
     threads["id"].pop()
     return {}
