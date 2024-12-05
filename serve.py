@@ -15,7 +15,6 @@ def post_off_server(url, prompt):
 
 def invoke(thread_id, prompt):
     message = lambda role, content: { "role": role, "content": content }
-    how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in installed))]
     bulk = None
 
     messages = threads.setdefault(thread_id, [])
@@ -24,6 +23,7 @@ def invoke(thread_id, prompt):
 
     while not content:
         sleep(0.2) # in case this loop runs away
+        how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in installed))]
         response = llm.invoke(how + messages)
         content = response.get("content")
 
