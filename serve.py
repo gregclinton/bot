@@ -5,6 +5,7 @@ from time import sleep
 
 threads = {}
 max_llm_invokes = 10
+installed = {"brevity", "install"}
 
 def post_off_server(url, prompt):
     # here we would connect with another chatbot
@@ -14,7 +15,7 @@ def post_off_server(url, prompt):
 
 def invoke(thread_id, prompt):
     message = lambda role, content: { "role": role, "content": content }
-    how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in ["brevity"]))]
+    how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in installed))]
     bulk = None
 
     messages = threads.setdefault(thread_id, [])
