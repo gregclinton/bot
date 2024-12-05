@@ -55,4 +55,4 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
-print(invoke("123456", "Plot exponential from -3 to 3.")["content"])
+# print(invoke("123456", "Plot exponential from -3 to 3.")["content"])

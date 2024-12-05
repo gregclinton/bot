@@ -29,7 +29,7 @@ def invoke(messages):
 
     if completion.startswith("tool:"):
         return { 
-            "tool": completion.split(":")[1].strip().strip('"'), 
+            "tool": completion.split("tool:")[1].split()[0], 
             "text": completion.partition("\n")[2] 
         }
     else:
