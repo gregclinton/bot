@@ -57,10 +57,10 @@ def create_collection_from_files_in_answer_folder(name):
 
     for file in filter(os.path.isfile, map(lambda f: os.path.join(f"answers/{name}/", f), os.listdir(f"answers/{name}/"))):
          documents.append(open(file, "r").read())
-         metadatas.append(os.path.basename(file))
+         metadatas.append({ "source": os.path.basename(file) })
          ids.append(str(i))
          i += 1
 
     collection(name).add(documents=documents, metadatas=metadatas, ids=ids)
 
-create_collection_from_files_in_answer_folder("Medicare")
+# create_collection_from_files_in_answer_folder("Medicare")
