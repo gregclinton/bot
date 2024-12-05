@@ -22,7 +22,7 @@ def collection(name):
 def delete_collection(name):
     client().delete_collection(name)
 
-def invoke(question):
+def invoke(question, thread):
     input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.

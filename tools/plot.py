@@ -10,7 +10,7 @@ svg_content = buffer.getvalue()
 buffer.close()
 """
 
-def invoke(code):
+def invoke(code, thread):
     context = {}
     exec(code + footer, context)
     return " ".join(context["svg_content"].split("\n")[3:])

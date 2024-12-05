@@ -17,7 +17,7 @@ def invoke(thread_id, prompt):
     message = lambda role, content: { "role": role, "content": content }
     bulk = None
 
-    messages = thread["messages"])
+    messages = thread["messages"]
     messages.append(message("user", prompt))
     content = None
 
@@ -79,4 +79,5 @@ async def post_thread(req: Request):
     thread_reset(id)
     return { "id": id }
 
-# print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
+thread_reset("123456")
+print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
