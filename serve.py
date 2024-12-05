@@ -20,11 +20,13 @@ def invoke(thread, prompt):
 
     messages = threads.setdefault(thread, [])
     messages.append(make_message("user", prompt))
-    response = llm.invoke(how + messages)
-    content = response.get("content")
+    content = None
 
     while not content:
         sleep(0.2) # in case this loop runs away
+        response = llm.invoke(how + messages)
+        content = response.get("content")
+
         if llm.counter > max_llm_invokes:
             content = "Could you please rephrase that?"
         elif "url" in response:
@@ -32,16 +34,13 @@ def invoke(thread, prompt):
             content = response.get("content")
         elif "tool" in response:
             tool = response["tool"]
-            messages.append(assistant(f"tool: {tool}"))
             if tool in bench:
                 try:
-                    output = bench[tool](response)
+                    output = bench[tool](response["text"])
                     if len(output) > 20000:
                         bulk = output
                         output = "success"
-                    messages.append(make_message("tool", output))
-                    response = llm.invoke(how + messages)
-                    content = response.get("content")
+                    messages.append(make_message("user", output))
                 except Exception as e:
                     content = str(e)
             else:
