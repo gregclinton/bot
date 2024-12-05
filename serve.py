@@ -13,17 +13,15 @@ def post_off_server(url, prompt):
     return { "content": "Sorry, can't help you. "}
 
 def invoke(thread, prompt):
-    instructions = open("instructions").read()
     make_message = lambda role, content: { "role": role, "content": content }
-    system = lambda content: make_message("system", content)
-    user = lambda content: make_message("user", content)
+    instructions = [make_message("system", open("instructions").read())]
     assistant = lambda content: make_message("assistant", content)
     content = lambda text: { "content": text }
     bulk = ""
 
     messages = threads.setdefault(thread, [])
-    messages.append(user(prompt))
-    response = llm.invoke([system(instructions)] + messages)
+    messages.append(make_message("user", prompt))
+    response = llm.invoke(instructions + messages)
 
     while "content" not in response:
         sleep(0.2) # in case this loop runs away
@@ -41,7 +39,7 @@ def invoke(thread, prompt):
                         bulk = output
                         output = "<bulk>"
                     messages.append(assistant(f"tool response: {output}"))
-                    response = llm.invoke([system(instructions)] + messages)
+                    response = llm.invoke(instructions + messages)
                 except Exception as e:
                     response = content(str(e))
             else:
