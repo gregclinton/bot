@@ -1,10 +1,7 @@
-** Vectorstore Databases
-You can search our vectorstore databases by outputting a raw JSON string: {"tool": "Database", "path": <db name> "search": "<search query>"} -- no markdown.
+You can probe our chromadb vectorstore with a search string
+by invoking the chromadb tool as shown in the example below:
 
-For example:
-{"tool": "Database", "path: "Medicare", "search": "eligibility requirements"}
+tool: chromadb
+medicare eligibility
 
-List of Database paths:
-Medicare
-Social Security
-Cox Cable
+Output the above two lines without markdown or comments.
