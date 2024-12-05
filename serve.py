@@ -1,11 +1,10 @@
 from fastapi import FastAPI, Request
 import llm
-from tool import bench
+from tool import bench, installed
 from time import sleep
 
 threads = {}
 max_llm_invokes = 10
-installed = {"brevity", "install"}
 
 def post_off_server(url, prompt):
     # here we would connect with another chatbot
@@ -74,4 +73,4 @@ async def post_thread(req: Request):
     thread_id += 1
     return { "id": thread_id }
 
-# print(invoke("123456", "Hello.")["content"])
+print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
