@@ -14,7 +14,7 @@ def post_off_server(url, prompt):
 
 def invoke(thread, prompt):
     make_message = lambda role, content: { "role": role, "content": content }
-    how = [make_message("system", ("\n\n".join(open(f"how/{f}").read()) for f in ["code", "shell"]))]
+    how = [make_message("system", "\n\n".join(open(f"how/{f}").read() for f in ["code", "shell"]))]
     assistant = lambda content: make_message("assistant", content)
     bulk = None
 
