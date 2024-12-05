@@ -1,7 +1,6 @@
 import requests
 from dotenv import load_dotenv
 import os
-import json
 
 load_dotenv("keys")
 
@@ -27,5 +26,8 @@ def invoke(messages):
             "messages": messages,
         }
     ).json()["choices"][0]["message"]["content"]
-    
-    return json.loads(completion) if completion[0] in ["[", "{"] else { "content": completion }
+
+    if completion.startswith("tool:"):
+        return { "tool": "shell", "body": "ls -l" }
+    else:
+        return { "content": completion }

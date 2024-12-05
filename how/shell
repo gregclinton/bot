@@ -1,4 +1,7 @@
-You can access the Linux shell by outputting a raw JSON string: {"tool": "Shell", "command": "<shell command>"} -- no markdown.
+You can run Linux shell commands like ls, cat, echo, sed, etc 
+by invoking the shell tool as shown in the example below:
 
-For example:
-{"tool": "Shell", "command": "ls -l"}
+tool: shell
+ls -l
+
+Output the above two lines without markdown or comments.
