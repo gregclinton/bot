@@ -3,7 +3,7 @@ import llm
 from tool import bench
 from time import sleep
 
-entities = {}
+threads = {}
 max_llm_invokes = 10
 
 def post_off_server(url, prompt):
@@ -12,8 +12,8 @@ def post_off_server(url, prompt):
     # and chat until we got some answer
     return { "content": "Sorry, can't help you. "}
 
-def invoke(entity, thread, prompt):
-    instructions = open(f"entities/{entity}").read()
+def invoke(thread, prompt):
+    instructions = open("instructions").read()
     make_message = lambda role, content: { "role": role, "content": content }
     system = lambda content: make_message("system", content)
     user = lambda content: make_message("user", content)
@@ -21,12 +21,9 @@ def invoke(entity, thread, prompt):
     content = lambda text: { "content": text }
     bulk = ""
 
-    messages = entities.setdefault(entity, {}).setdefault(thread, [])
+    messages = threads.setdefault(thread, [])
     messages.append(user(prompt))
     response = llm.invoke([system(instructions)] + messages)
-
-    if "entity" in response:
-        return response
 
     while "content" not in response:
         sleep(0.2) # in case this loop runs away
@@ -56,9 +53,9 @@ def invoke(entity, thread, prompt):
 
 app = FastAPI()
 
-@app.post('/mall/{entity}/messages/{thread}')
-async def post_message(req: Request, entity: str, thread: str):
+@app.post('/mall/messages/{thread}')
+async def post_message(req: Request, thread: str):
     llm.reset_counter()
-    return invoke(entity, thread, (await req.json())['prompt'])
+    return invoke(thread, (await req.json())['prompt'])
 
-# print(invoke("Plaza/Intake", "123456", "My name is Greg Clinton. What is my balance?")["content"])
+print(invoke("123456", "Hello.")["content"])

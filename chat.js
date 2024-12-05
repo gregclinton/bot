@@ -1,9 +1,8 @@
 const chat = {
-    entity: "Plaza",
     thread: "375491",
 
     fetch: async prompt => {
-        return fetch(`/mall/${chat.entity}/messages/${chat.thread}`, {
+        return fetch(`/mall/messages/${chat.thread}`, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ prompt: prompt })
@@ -11,7 +10,7 @@ const chat = {
     },
 
     post: data => {
-        const name = document.getElementById('chat').children.length % 2 ? chat.entity : 'me';
+        const name = document.getElementById('chat').children.length % 2 ? "ai" : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -33,7 +32,7 @@ const chat = {
         Prism.highlightAll();
         MathJax.typesetPromise();
 
-        document.title = chat.entity;
+        document.title = "ai";
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
@@ -47,13 +46,8 @@ const chat = {
         await chat.fetch(prompt)
         .then(response => response.json())
         .then(data => {
-            if (data.entity) {
-                chat.entity = data.entity
-                data.content = `You are now connected with ${data.entity}.`;
-            } else {
-                data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
-                data.content = marked.parse(data.content)
-            }
+            data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
+            data.content = marked.parse(data.content)
             chat.post(data);
             chat.waiting = false;
     });
