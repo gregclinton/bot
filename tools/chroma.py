@@ -3,6 +3,9 @@ from chromadb.utils import embedding_functions
 import llm
 import os
 import json
+import logging
+
+logging.getLogger('chromadb').setLevel(logging.ERROR)
 
 def client():
     return chromadb.PersistentClient(path=f"chroma")
@@ -36,12 +39,12 @@ Output the raw JSON without markdown.
         collection_name = o["database"]
 
         results = " ".join(collection(collection_name).query(query_texts=[question], n_results=1)["documents"][0])
-        results = llm.invoke([
+        answer = llm.invoke([
             { "role": "system", "content": "Given the context, answer the question." },
             { "role": "user", "content": f"Context: {results}\n\nQuestion: {question}\n\nAnswer: "}
         ])["content"]
 
-        return f"Our search of the {collection_name} database yielded the following result: \n{results}"
+        return f"A search of the chromadb {collection_name} database yielded the following answer: \n{answer} Summarize this answer for me."
     else:
         return "As of yet, we have no databases."
 
