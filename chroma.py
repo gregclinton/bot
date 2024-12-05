@@ -3,7 +3,6 @@ from chromadb.utils import embedding_functions
 import llm
 import os
 import json
-import subprocess
 
 def client(company):
     return chromadb.PersistentClient(path=f"chroma/{company}")
@@ -20,7 +19,7 @@ def collection(company, name):
 def delete_collection(company, name):
     client(company).delete_collection(name)
 
-def invoke(company, department, caller, query):
+def invoke(company, query):
     input_instruction = """
 Currently we have the following databases: {collections}
 From the user prompt generate the most appropriate database and search to use.
