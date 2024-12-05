@@ -89,9 +89,13 @@ const chat = {
 };
 
 window.onload = () => {
-    chat.thread = fetch('/mall/threads', {
+    fetch('/mall/threads', {
         method: 'POST',
         headers:  { 'Content-Type': 'application/json' },
         body: '{}'
-    })['id']
+    })
+    .then(response => response.json())
+    .then(data => {
+        chat.thread = data['id'];
+    });
 };
