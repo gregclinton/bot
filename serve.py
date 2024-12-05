@@ -55,6 +55,14 @@ async def post_message(req: Request, id: str):
     llm.reset_counter()
     return invoke(id, (await req.json())['prompt'])
 
+@app.delete('/mall/threads/{id}/messages')
+async def delete_messages(req: Request, id: str):
+    return threads["id"].clear()
+
+@app.delete('/mall/threadsl/{id}/messages/last')
+async def delete_last_message(req: Request, id: str):
+    return threads["id"].pop()
+
 thread_id = 111111
 
 @app.post('/mall/threads')

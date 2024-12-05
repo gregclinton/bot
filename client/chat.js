@@ -53,7 +53,7 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = "";
-        fetch('/agent/thread/current', { method: 'DELETE' });
+        fetch(`/mall/threads/${chat.thread}/messages`, { method: 'DELETE' });
     },
 
     paste: () => {
@@ -82,10 +82,9 @@ const chat = {
         if (div.children.length > 1) {
             div.removeChild(div.lastChild);
             div.removeChild(div.lastChild);
-            fetch('/agent/prompts/last', { method: 'DELETE' });
+            fetch(`/mall/threads/${chat.thread}/messages/last`, { method: 'DELETE' });
         }
     }
-
 };
 
 window.onload = () => {
