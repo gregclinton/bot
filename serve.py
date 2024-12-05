@@ -16,12 +16,12 @@ def invoke(thread, prompt):
     make_message = lambda role, content: { "role": role, "content": content }
     instructions = [make_message("system", open("instructions").read())]
     assistant = lambda content: make_message("assistant", content)
-    content = None
     bulk = None
 
     messages = threads.setdefault(thread, [])
     messages.append(make_message("user", prompt))
     response = llm.invoke(instructions + messages)
+    content = response.get("content")
 
     while not content:
         sleep(0.2) # in case this loop runs away
@@ -57,4 +57,4 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
-print(invoke("123456", "Hello.")["content"])
+# print(invoke("123456", "Hello.")["content"])
