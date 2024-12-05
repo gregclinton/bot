@@ -1,9 +1,9 @@
-import chroma
-import shell
-import plot
+import tools.chroma
+import tools.shell
+import tools.plot
 
 bench = {
-    "Database": chroma.invoke,
-    "Shell": shell.invoke,
-    "Plot": plot.invoke,
+    "Database": tools.chroma.invoke,
+    "Shell": tools.shell.invoke,
+    "Plot": tools.plot.invoke,
 }

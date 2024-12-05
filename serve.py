@@ -14,13 +14,13 @@ def post_off_server(url, prompt):
 
 def invoke(thread, prompt):
     make_message = lambda role, content: { "role": role, "content": content }
-    instructions = [make_message("system", open("instructions").read())]
+    how = [make_message("system", ("\n\n".join(open(f"how/{f}").read()) for f in ["code", "shell"]))]
     assistant = lambda content: make_message("assistant", content)
     bulk = None
 
     messages = threads.setdefault(thread, [])
     messages.append(make_message("user", prompt))
-    response = llm.invoke(instructions + messages)
+    response = llm.invoke(how + messages)
     content = response.get("content")
 
     while not content:
@@ -38,9 +38,9 @@ def invoke(thread, prompt):
                     output = bench[tool](response)
                     if len(output) > 20000:
                         bulk = output
-                        output = "<bulk>"
-                    messages.append(assistant(f"tool response: {output}"))
-                    response = llm.invoke(instructions + messages)
+                        output = "success"
+                    messages.append(make_message("tool", output))
+                    response = llm.invoke(how + messages)
                     content = response.get("content")
                 except Exception as e:
                     content = str(e)
@@ -57,4 +57,4 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
-print(invoke("123456", "Can you search the Medicare database for eligibility requirements.")["content"])
+print(invoke("123456", "List my py files.")["content"])
