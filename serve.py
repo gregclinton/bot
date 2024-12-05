@@ -13,16 +13,17 @@ def post_off_server(url, prompt):
     return { "content": "Sorry, can't help you. "}
 
 def invoke(thread_id, prompt):
+    thread = threads[thread_id]
     message = lambda role, content: { "role": role, "content": content }
     bulk = None
 
-    messages = threads.setdefault(thread_id, [])
+    messages = thread["messages"])
     messages.append(message("user", prompt))
     content = None
 
     while not content:
         sleep(0.2) # in case this loop runs away
-        how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in installed))]
+        how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["installed"]))]
         response = llm.invoke(how + messages)
         content = response.get("content")
 
@@ -35,7 +36,7 @@ def invoke(thread_id, prompt):
             tool = response["tool"]
             if tool in bench:
                 try:
-                    output = bench[tool](response["text"])
+                    output = bench[tool](response["text"], thread)
                     if len(output) > 20000:
                         bulk = output
                         output = "success"
@@ -50,6 +51,9 @@ def invoke(thread_id, prompt):
 
 app = FastAPI()
 
+def thread_reset(id):
+    threads[id] = { "messages": [], "installed" : {"brevity", "install"} }
+
 @app.post('/mall/threads/{id}/messages')
 async def post_message(req: Request, id: str):
     llm.reset_counter()
@@ -57,12 +61,12 @@ async def post_message(req: Request, id: str):
 
 @app.delete('/mall/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
-    threads[id].clear()
+    thread_reset(id)
     return { "status": "success" }
 
 @app.delete('/mall/threads/{id}/messages/last')
 async def delete_last_message(req: Request, id: str):
-    threads[id].pop()
+    threads[id]["messages"].pop()
     return { "status": "success" }
 
 thread_id = 111111
@@ -71,6 +75,8 @@ thread_id = 111111
 async def post_thread(req: Request):
     global thread_id
     thread_id += 1
-    return { "id": thread_id }
+    id = str(thread_id)
+    thread_reset(id)
+    return { "id": id }
 
 # print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
