@@ -13,12 +13,12 @@ def post_off_server(url, prompt):
     return { "content": "Sorry, can't help you. "}
 
 def invoke(thread, prompt):
-    make_message = lambda role, content: { "role": role, "content": content }
-    how = [make_message("system", "\n\n".join(open(f"how/{f}").read() for f in ["code", "shell", "plot"]))]
+    message = lambda role, content: { "role": role, "content": content }
+    how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in ["plot"]))]
     bulk = None
 
     messages = threads.setdefault(thread, [])
-    messages.append(make_message("user", prompt))
+    messages.append(message("user", prompt))
     content = None
 
     while not content:
@@ -39,13 +39,13 @@ def invoke(thread, prompt):
                     if len(output) > 20000:
                         bulk = output
                         output = "success"
-                    messages.append(make_message("user", output))
+                    messages.append(message("user", output))
                 except Exception as e:
                     content = str(e)
             else:
                 content = response["tool"] + " tool does not exist."
 
-    messages.append(make_message("assistant", content))
+    messages.append(message("assistant", content))
     return { "content": bulk or content }
 
 app = FastAPI()
@@ -55,4 +55,4 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
-# print(invoke("123456", "List my py files.")["content"])
+print(invoke("123456", "Plot exponential from -3 to 3.")["content"])

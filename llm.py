@@ -28,6 +28,9 @@ def invoke(messages):
     ).json()["choices"][0]["message"]["content"]
 
     if completion.startswith("tool:"):
-        return { "tool": "shell", "text": completion.partition("\n")[2] }
+        return { 
+            "tool": completion.split(":")[1].strip().strip('"'), 
+            "text": completion.partition("\n")[2] 
+        }
     else:
         return { "content": completion }
