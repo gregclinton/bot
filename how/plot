@@ -1,12 +1,7 @@
-** Plotting
-Per my request send messsage to Plot with python code to perform the plot.
-I'm going to see this plot on my iPhone. So make sure it fits.
-The width should be 300 pt and the height will depend on how tall or short you want it.
-Do not call plt.show().
+You can plot graphs with python and matplotlib
+by invoking the plot tool as shown in the example below:
 
-Here's an example:
-
-To: Plot
+tool: plot
 From: {department}
 import matplotlib.pyplot as plt
 import numpy as np
@@ -18,3 +13,8 @@ plt.plot(x, y, marker='o')
 plt.title('Simple Plot')
 plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
+
+Output tool and code without markdown or comments.
+I'm going to see this plot on my iPhone. So make sure it fits. 
+The width should be 300 pt and the height will depend on how tall or short you want it.
+Do not call plt.show().
