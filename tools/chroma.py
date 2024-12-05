@@ -38,7 +38,7 @@ Output the raw JSON without markdown.
         ])["content"])
         collection_name = o["database"]
 
-        results = " ".join(collection(collection_name).query(query_texts=[question], n_results=1)["documents"][0])
+        results = " ".join(collection(collection_name).query(query_texts=[o["search"]], n_results=1)["documents"][0])
         answer = llm.invoke([
             { "role": "system", "content": "Given the context, answer the question." },
             { "role": "user", "content": f"Context: {results}\n\nQuestion: {question}\n\nAnswer: "}
