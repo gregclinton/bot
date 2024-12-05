@@ -14,7 +14,7 @@ def post_off_server(url, prompt):
 
 def invoke(thread, prompt):
     message = lambda role, content: { "role": role, "content": content }
-    how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in ["chromadb"]))]
+    how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in ["brevity"]))]
     bulk = None
 
     messages = threads.setdefault(thread, [])
@@ -55,4 +55,4 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
-print(invoke("123456", "Use chromadb tool to explain part A of Medicare.")["content"])
+# print(invoke("123456", "Hello.")["content"])
