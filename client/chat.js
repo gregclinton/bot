@@ -1,6 +1,4 @@
 const chat = {
-    thread: "375491",
-
     fetch: async prompt => {
         return fetch(`/mall/messages/${chat.thread}`, {
             method: 'POST',
@@ -52,7 +50,7 @@ const chat = {
             chat.waiting = false;
         });
     },
-    
+
     clear: () => {
         document.getElementById('chat').innerHTML = "";
         fetch('/agent/thread/current', { method: 'DELETE' });
@@ -88,4 +86,12 @@ const chat = {
         }
     }
 
+};
+
+window.onload = () => {
+    chat.thread = fetch('/mall/threads', {
+        method: 'POST',
+        headers:  { 'Content-Type': 'application/json' },
+        body: '{}'
+    })['id']
 };
