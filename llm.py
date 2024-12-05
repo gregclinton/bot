@@ -28,6 +28,6 @@ def invoke(messages):
     ).json()["choices"][0]["message"]["content"]
 
     if completion.startswith("tool:"):
-        return { "tool": "shell", "body": "ls -l" }
+        return { "tool": "shell", "text": "ls -l" }
     else:
         return { "content": completion }
