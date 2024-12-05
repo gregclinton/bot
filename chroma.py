@@ -32,7 +32,7 @@ Output the raw JSON without markdown.
         o = json.loads(llm.invoke([
             { "role": "system", "content": input_instruction.replace("{collections}", collections)},
             { "role": "user", "content": args["search"]}
-        ]))
+        ])["content"])
         collection_name = o["database"]
         search = o["search"]
         results = " ".join(collection(args["path"], collection_name).query(query_texts=[search], n_results=4)["documents"][0])
