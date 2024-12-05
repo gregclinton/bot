@@ -32,16 +32,17 @@ Output the raw JSON without markdown.
     collections = ", ".join(map(lambda collection:  collection.name, client().list_collections()))
 
     if collections:
+        message = lambda role, content: { "role": role, "content": content }
         o = json.loads(llm.invoke([
-            { "role": "system", "content": input_instruction.replace("{collections}", collections)},
-            { "role": "user", "content": question}
+            message("system", input_instruction.replace("{collections}", collections)),
+            message("user", question)
         ])["content"])
         collection_name = o["database"]
 
         results = " ".join(collection(collection_name).query(query_texts=[o["search"]], n_results=1)["documents"][0])
         answer = llm.invoke([
-            { "role": "system", "content": "Given the context, answer the question." },
-            { "role": "user", "content": f"Context: {results}\n\nQuestion: {question}\n\nAnswer: "}
+            message("system", "Given the context, answer the question."),
+            message("user", f"Context: {results}\n\nQuestion: {question}\n\nAnswer: ")
         ])["content"]
 
         return f"A search of the chromadb {collection_name} database yielded the following answer: \n{answer} Summarize this answer for me."
