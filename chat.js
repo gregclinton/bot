@@ -1,5 +1,5 @@
 const chat = {
-    entity: "Plaza/Intake",
+    entity: "Plaza",
     thread: "375491",
 
     fetch: async prompt => {
@@ -11,7 +11,7 @@ const chat = {
     },
 
     post: data => {
-        const name = document.getElementById('chat').children.length % 2 ? chat.entity.split('/')[0] : 'me';
+        const name = document.getElementById('chat').children.length % 2 ? chat.entity : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;

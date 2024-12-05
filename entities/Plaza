@@ -6,6 +6,3 @@ Social Security/Intake
 Code Castle/Intake
 
 Figure out which one I'm referring to.
-
-If I ask about my balance, ask Plaza/Billing like so:
-{"path": "Plaza/Billing", "prompt": "<supply a prompt for Billing>"} -- no markdown.

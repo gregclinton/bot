@@ -8,7 +8,7 @@ entities = {}
 max_llm_invokes = 10
 
 def invoke(entity, thread, prompt):
-    instructions = open(f"ar/{entity}").read()
+    instructions = open(f"entities/{entity}").read()
     make_message = lambda role, content: { "role": role, "content": content }
     system = lambda content: make_message("system", content)
     user = lambda content: make_message("user", content)
