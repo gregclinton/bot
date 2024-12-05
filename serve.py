@@ -33,11 +33,10 @@ def invoke(thread, prompt):
             response = post_off_server(response["url"], response["prompt"])
         elif "tool" in response:
             tool = response["tool"]
-            prompt = response["prompt"]
-            messages.append(assistant(f"tool: {tool}, prompt: {prompt}"))
+            messages.append(assistant(f"tool: {tool}"))
             if tool in bench:
                 try:
-                    output = bench[tool](prompt)
+                    output = bench[tool](response)
                     if len(output) > 20000:
                         bulk = output
                         output = "<bulk>"

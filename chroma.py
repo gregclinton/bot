@@ -29,7 +29,10 @@ Output the raw JSON without markdown.
     collections = ", ".join(map(lambda collection:  collection.name, client(args["path"]).list_collections()))
 
     if collections:
-        o = json.loads(llm.invoke(input_instruction.replace("{collections}", collections), args["search"]))
+        o = json.loads(llm.invoke([
+            { "role": "system", "content": input_instruction.replace("{collections}", collections)},
+            { "role": "user", "content": args["search"]}
+        ]))
         collection_name = o["database"]
         search = o["search"]
         results = " ".join(collection(args["path"], collection_name).query(query_texts=[search], n_results=4)["documents"][0])
