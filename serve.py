@@ -15,7 +15,6 @@ def post_off_server(url, prompt):
 def invoke(thread, prompt):
     make_message = lambda role, content: { "role": role, "content": content }
     how = [make_message("system", "\n\n".join(open(f"how/{f}").read() for f in ["code", "shell"]))]
-    assistant = lambda content: make_message("assistant", content)
     bulk = None
 
     messages = threads.setdefault(thread, [])
@@ -46,7 +45,7 @@ def invoke(thread, prompt):
             else:
                 content = response["tool"] + " tool does not exist."
 
-    messages.append(assistant(content))
+    messages.append(make_message("assistant", content))
     return { "content": bulk or content }
 
 app = FastAPI()
@@ -56,4 +55,4 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
-print(invoke("123456", "List my py files.")["content"])
+# print(invoke("123456", "List my py files.")["content"])
