@@ -12,12 +12,12 @@ def post_off_server(url, prompt):
     # and chat until we got some answer
     return { "content": "Sorry, can't help you. "}
 
-def invoke(thread, prompt):
+def invoke(thread_id, prompt):
     message = lambda role, content: { "role": role, "content": content }
     how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in ["brevity"]))]
     bulk = None
 
-    messages = threads.setdefault(thread, [])
+    messages = threads.setdefault(thread_id, [])
     messages.append(message("user", prompt))
     content = None
 
@@ -50,10 +50,10 @@ def invoke(thread, prompt):
 
 app = FastAPI()
 
-@app.post('/mall/messages/{thread}')
-async def post_message(req: Request, thread: str):
+@app.post('/mall/threads/{id}/messages')
+async def post_message(req: Request, id: str):
     llm.reset_counter()
-    return invoke(thread, (await req.json())['prompt'])
+    return invoke(id, (await req.json())['prompt'])
 
 thread_id = 111111
 
