@@ -1,7 +1,7 @@
 # sudo apt install -y nginx
 # chmod o+x /home/greg
 # sudo openssl req -x509 -newkey rsa:4096 -keyout /etc/ssl/private/key.pem -out /etc/ssl/certs/cert.pem -days 365 -nodes -subj "/CN=greg.com"
-# sudo nginx -c ~/mall/nginx.conf
+# sudo nginx -c ~/mall/client/nginx.conf
 # sudo nginx -s stop
 
 events{}
@@ -19,10 +19,10 @@ http {
         ssl_ciphers HIGH:!aNULL:!MD5;
         ssl_prefer_server_ciphers on;
 
-        root /home/greg/mall;
+        root /home/greg/mall/client;
 
         location / {
-            try_files $uri $uri/ /index.html;
+            try_files $uri $uri/ /client/index.html;
         }
 
         location ~* \.(js|css)$ {
