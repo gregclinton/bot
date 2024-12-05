@@ -1,8 +1,8 @@
 If I ask you to connect me to an entity, output raw JSON: {"entity": "<entity>"} -- no markdown.
 
 List of vailable entities:
-DMV/Intake
-Social Security/Intake
-Code Castle/Intake
+DMV
+Plotter
+Coder
 
 Figure out which one I'm referring to.
