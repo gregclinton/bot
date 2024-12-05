@@ -50,6 +50,42 @@ const chat = {
             data.content = marked.parse(data.content)
             chat.post(data);
             chat.waiting = false;
-    });
+        });
     },
+    
+    clear: () => {
+        document.getElementById('chat').innerHTML = "";
+        fetch('/agent/thread/current', { method: 'DELETE' });
+    },
+
+    paste: () => {
+        navigator.clipboard.readText()
+        .then(prompt => {
+            if (prompt !== '') {
+                chat.prompt(prompt);
+            }
+        })
+    },
+
+    redo: () => {
+        const div = document.getElementById('chat');
+
+        if (div.children.length > 1) {
+            const prompt = div.lastChild.previousSibling.lastChild.innerHTML;
+
+            chat.back();
+            chat.prompt(prompt);
+        }
+    },
+
+    back: () => {
+        const div = document.getElementById('chat');
+
+        if (div.children.length > 1) {
+            div.removeChild(div.lastChild);
+            div.removeChild(div.lastChild);
+            fetch('/agent/prompts/last', { method: 'DELETE' });
+        }
+    }
+
 };
