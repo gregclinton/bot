@@ -2,10 +2,15 @@ from fastapi import FastAPI, Request
 import llm
 from tool import bench
 from time import sleep
-import random
 
 entities = {}
 max_llm_invokes = 10
+
+def post_off_server(url, prompt):
+    # here we would connect with another chatbot
+    # set up a thread
+    # and chat until we got some answer
+    return { "content": "Sorry, can't help you. "}
 
 def invoke(entity, thread, prompt):
     instructions = open(f"entities/{entity}").read()
@@ -28,8 +33,7 @@ def invoke(entity, thread, prompt):
         if llm.counter > max_llm_invokes:
             response = content("Could you please rephrase that?")
         elif "url" in response:
-            thread = str(random.randint(111111, 999999))
-            response = post(response["url"] + f"/{thread}", response["prompt"])
+            response = post_off_server(response["url"], response["prompt"])
         elif "tool" in response:
             tool = response["tool"]
             prompt = response["prompt"]
