@@ -98,3 +98,7 @@ window.onload = () => {
         chat.thread = data['id'];
     });
 };
+
+window.addEventListener("unload", () => {
+    chat.clear();
+});
