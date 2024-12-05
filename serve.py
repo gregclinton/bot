@@ -55,8 +55,12 @@ async def post_message(req: Request, thread: str):
     llm.reset_counter()
     return invoke(thread, (await req.json())['prompt'])
 
+thread_id = 111111
+
 @app.post('/mall/threads')
 async def post_thread(req: Request):
-    return { "id": "123456" }
+    global thread_id
+    thread_id += 1
+    return { "id": thread_id }
 
 # print(invoke("123456", "Hello.")["content"])
