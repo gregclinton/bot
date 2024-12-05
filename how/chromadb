@@ -1,0 +1,10 @@
+** Vectorstore Databases
+You can search our vectorstore databases by outputting a raw JSON string: {"tool": "Database", "path": <db name> "search": "<search query>"} -- no markdown.
+
+For example:
+{"tool": "Database", "path: "Medicare", "search": "eligibility requirements"}
+
+List of Database paths:
+Medicare
+Social Security
+Cox Cable

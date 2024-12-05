@@ -1,0 +1,4 @@
+You can access the Linux shell by outputting a raw JSON string: {"tool": "Shell", "command": "<shell command>"} -- no markdown.
+
+For example:
+{"tool": "Shell", "command": "ls -l"}

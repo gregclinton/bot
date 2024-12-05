@@ -1,0 +1,20 @@
+** Plotting
+Per my request send messsage to Plot with python code to perform the plot.
+I'm going to see this plot on my iPhone. So make sure it fits.
+The width should be 300 pt and the height will depend on how tall or short you want it.
+Do not call plt.show().
+
+Here's an example:
+
+To: Plot
+From: {department}
+import matplotlib.pyplot as plt
+import numpy as np
+
+x = np.linspace(0, 2 * np.pi, 100)
+y = np.sin(x)
+
+plt.plot(x, y, marker='o')
+plt.title('Simple Plot')
+plt.xlabel('X-axis')
+plt.ylabel('Y-axis')
