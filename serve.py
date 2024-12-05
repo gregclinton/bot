@@ -57,11 +57,13 @@ async def post_message(req: Request, id: str):
 
 @app.delete('/mall/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
-    return threads["id"].clear()
+    threads["id"].clear()
+    return {}
 
 @app.delete('/mall/threadsl/{id}/messages/last')
 async def delete_last_message(req: Request, id: str):
-    return threads["id"].pop()
+    threads["id"].pop()
+    return {}
 
 thread_id = 111111
 
