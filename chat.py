@@ -45,4 +45,6 @@ def run(thread, prompt):
     return { "content": bulk or content }
 
 thread = {"messages": [], "installed": {"brevity", "install"}, "bots": set()}
-run(thread, "First install chromadb tool. Then answer: What is Medicare part A all about.")
+prompt = "First install chromadb tool. Then answer: What is Medicare part A all about."
+prompt = "I want to test the chatbot tool. Install it. Then try to connect to http://localhost:8123 and say Hello to it."
+run(thread, prompt)

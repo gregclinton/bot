@@ -5,7 +5,7 @@ def invoke(tools, thread):
     output = ""
     for tool in tools.split(","):
         tool =  tool.strip()
-        if import_module(tool):
+        if import_module(f"tools.{tool}"):
             thread["installed"].add(tool)
             output += f"The {tool} tool was successfully installed. You can now use it to answer my above request.\n"
         else:
