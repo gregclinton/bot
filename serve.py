@@ -52,6 +52,7 @@ app = FastAPI()
 
 def clear(id):
     threads[id] = { "messages": [], "installed" : {"brevity", "install"} }
+    return id
 
 @app.post('/mall/threads/{id}/messages')
 async def post_message(req: Request, id: str):
@@ -74,9 +75,6 @@ thread_id = 111111
 async def post_thread(req: Request):
     global thread_id
     thread_id += 1
-    id = str(thread_id)
-    clear(id)
-    return { "id": id }
+    return { "id": clear(str(thread_id)) }
 
-clear("123456")
-# print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
+# print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
