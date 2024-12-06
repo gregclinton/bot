@@ -2,8 +2,8 @@ import requests
 
 def invoke(text, thread):
     url, prompt = text.split("\n")
-    headers = { "Content-Type": "application/json" }
-    post = lambda path, data = {}: requests.post(f"{url}/{path}", json = data, headers = headers).json()
+    headers = { "Content-Type": "text/plain" }
+    post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).body()
 
     url = url.strip()
     if url not in thread["bots"]:
@@ -11,7 +11,4 @@ def invoke(text, thread):
     else:
         id = thread["bots"][url]
 
-    return post(f"threads/{id}/messages", {
-        "role": "user",
-        "content": prompt
-    })["content"]
+    return post(f"threads/{id}/messages", prompt)

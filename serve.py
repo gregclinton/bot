@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Response
 import logging
 import chat
 
@@ -16,24 +16,26 @@ threads = {}
 def clear(id):
     if id in threads:
         for url, id in enumerate(threads[id]["bots"]):
-            requests.delete(f'{url}/threads/{id}/messages', headers = { 'Content-Type': 'application/json' })
+            requests.delete(f'{url}/threads/{id}/messages', headers = { 'Content-Type': 'text/plain' })
 
     threads[id] = { "messages": [], "installed" : ["brevity", "plot"], "bots": {} }
     return id
 
+plain_text = lambda text: Response(text, media_type="text/plain")
+
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    return chat.run(threads[id], (await req.json())['prompt'])
+    return plain_text(chat.run(threads[id], (await req.body()).decode("utf-8")))
 
 @app.delete('/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
     clear(id)
-    return { "status": "success" }
+    return plain_text("success")
 
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(req: Request, id: str):
     threads[id]["messages"].pop()
-    return { "status": "success" }
+    return plain_text("success")
 
 id = 111111
 
@@ -41,4 +43,4 @@ id = 111111
 async def post_thread(req: Request):
     global id
     id += 1
-    return { "id": clear(str(id)) }
+    return plain_text(clear(str(id)))

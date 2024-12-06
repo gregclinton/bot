@@ -2,12 +2,12 @@ const chat = {
     fetch: async prompt => {
         return fetch(`/mall/threads/${chat.thread}/messages`, {
             method: 'POST',
-            headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt })
+            headers:  { 'Content-Type': 'text/plain' },
+            body: prompt
         })
     },
 
-    post: data => {
+    post: text => {
         const name = document.getElementById('chat').children.length % 2 ? "ai" : 'me';
         const title = document.createElement('span');
 
@@ -20,7 +20,7 @@ const chat = {
 
         const bottom = document.createElement('div');
 
-        bottom.innerHTML = data.content;
+        bottom.innerHTML = text;
 
         const post = document.createElement('div');
         post.append(top, bottom);
@@ -42,11 +42,11 @@ const chat = {
         }
 
         await chat.fetch(prompt)
-        .then(response => response.json())
-        .then(data => {
-            data.content = data.content.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
-            data.content = marked.parse(data.content)
-            chat.post(data);
+        .then(response => response.text())
+        .then(text => {
+            text = text.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
+            text = marked.parse(text)
+            chat.post(text);
             chat.waiting = false;
         });
     },
@@ -90,12 +90,12 @@ const chat = {
 window.onload = () => {
     fetch('/mall/threads', {
         method: 'POST',
-        headers:  { 'Content-Type': 'application/json' },
-        body: '{}'
+        headers:  { 'Content-Type': 'text/plain' },
+        body: ''
     })
-    .then(response => response.json())
-    .then(data => {
-        chat.thread = data['id'];
+    .then(response => response.text())
+    .then(id => {
+        chat.thread = id;
     });
 };
 

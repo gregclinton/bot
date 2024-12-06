@@ -37,7 +37,7 @@ def run(thread, prompt):
             content = completion
 
     assistant(content)
-    return { "content": content }
+    return content
 
 thread = {"messages": [], "installed": ["brevity", "install"], "bots": set()}
 prompt = "I want to test the chatbot tool. Install it. Then try to connect to http://localhost:8123 and say Hello to it."
