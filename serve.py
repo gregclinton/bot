@@ -42,10 +42,11 @@ def invoke(thread_id, prompt):
 app = FastAPI()
 
 def clear(id):
-    for url, id in enumerate(threads[id]["bots"]):
-        requests.delete(f'{url}/threads/{id}/messages', headers = { 'Content-Type': 'application/json' })
+    if id in threads:
+        for url, id in enumerate(threads[id]["bots"]):
+            requests.delete(f'{url}/threads/{id}/messages', headers = { 'Content-Type': 'application/json' })
 
-    threads[id] = { "messages": [], "installed" : {"brevity", "install"}, "bots": = {} }
+    threads[id] = { "messages": [], "installed" : {"brevity", "install"}, "bots": {} }
     return id
 
 @app.post('/mall/threads/{id}/messages')
@@ -71,4 +72,4 @@ async def post_thread(req: Request):
     thread_id += 1
     return { "id": clear(str(thread_id)) }
 
-# print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
+print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
