@@ -18,7 +18,7 @@ def clear(id):
         for url, id in enumerate(threads[id]["bots"]):
             requests.delete(f'{url}/threads/{id}/messages', headers = { 'Content-Type': 'application/json' })
 
-    threads[id] = { "messages": [], "installed" : {"brevity", "shell"}, "bots": {} }
+    threads[id] = { "messages": [], "installed" : {"brevity", "install"}, "bots": {} }
     return id
 
 @app.post('/threads/{id}/messages')
