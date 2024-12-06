@@ -26,7 +26,7 @@ def run(thread, prompt):
             tool = None
             content = completion
 
-        if count > 4:
+        if count > 10:
             content = "Could you please rephrase that?"
         elif tool:
             messages.append(message("assistant", completion))
