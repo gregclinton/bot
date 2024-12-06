@@ -5,7 +5,7 @@ def run(thread, prompt):
     def message(role, content):
         if role != "system":
             print(f"{role}:")
-            print(f"{content}")
+            print(f"{content}\n")
         return { "role": role, "content": content }
 
     messages = thread["messages"]
@@ -43,4 +43,4 @@ def run(thread, prompt):
     return { "content": bulk or content }
 
 thread = {"messages": [], "installed": {"brevity", "install"}, "bots": set()}
-#print(run(thread, "Look up Medicare part A in chromadb database.")["content"])
+run(thread, "Look up Medicare part A in chromadb database.")
