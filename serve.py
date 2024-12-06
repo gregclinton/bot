@@ -50,7 +50,7 @@ def invoke(thread_id, prompt):
 
 app = FastAPI()
 
-def thread_reset(id):
+def clear(id):
     threads[id] = { "messages": [], "installed" : {"brevity", "install"} }
 
 @app.post('/mall/threads/{id}/messages')
@@ -60,7 +60,7 @@ async def post_message(req: Request, id: str):
 
 @app.delete('/mall/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
-    thread_reset(id)
+    clear(id)
     return { "status": "success" }
 
 @app.delete('/mall/threads/{id}/messages/last')
@@ -75,7 +75,7 @@ async def post_thread(req: Request):
     global thread_id
     thread_id += 1
     id = str(thread_id)
-    thread_reset(id)
+    clear(id)
     return { "id": id }
 
 thread_reset("123456")
