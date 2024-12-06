@@ -7,11 +7,10 @@ import logging
 
 logging.getLogger('chromadb').setLevel(logging.ERROR)
 
-def client():
-    return chromadb.PersistentClient(path=f"chroma")
+client = chromadb.PersistentClient(path=f"chroma")
 
 def collection(name):
-    return client().get_or_create_collection(
+    return client.get_or_create_collection(
         name=name,
         embedding_function=embedding_functions.OpenAIEmbeddingFunction(
             api_key=os.environ["OPENAI_API_KEY"],
@@ -20,7 +19,7 @@ def collection(name):
     )
 
 def delete_collection(name):
-    client().delete_collection(name)
+    client.delete_collection(name)
 
 def invoke(question, thread):
     input_instruction = """
@@ -29,7 +28,7 @@ From the user prompt generate the most appropriate database and search to use.
 Output JSON object with database key, a string, and search key, also a string.
 Output the raw JSON without markdown.
 """
-    collections = ", ".join(map(lambda collection:  collection.name, client().list_collections()))
+    collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
 
     if collections:
         message = lambda role, content: { "role": role, "content": content }
