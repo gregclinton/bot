@@ -49,24 +49,24 @@ def clear(id):
     threads[id] = { "messages": [], "installed" : {"brevity", "install"}, "bots": {} }
     return id
 
-@app.post('/mall/threads/{id}/messages')
+@app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
     llm.reset_counter()
     return invoke(id, (await req.json())['prompt'])
 
-@app.delete('/mall/threads/{id}/messages')
+@app.delete('/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
     clear(id)
     return { "status": "success" }
 
-@app.delete('/mall/threads/{id}/messages/last')
+@app.delete('/threads/{id}/messages/last')
 async def delete_last_message(req: Request, id: str):
     threads[id]["messages"].pop()
     return { "status": "success" }
 
 thread_id = 111111
 
-@app.post('/mall/threads')
+@app.post('/threads')
 async def post_thread(req: Request):
     global thread_id
     thread_id += 1
