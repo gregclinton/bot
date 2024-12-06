@@ -3,7 +3,7 @@ const chat = {
         return fetch(`/mall/threads/${chat.thread}/messages`, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ prompt: prompt })
+            body: JSON.stringify({ prompt })
         })
     },
 
