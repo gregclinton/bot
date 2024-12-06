@@ -37,8 +37,7 @@ http {
         }
 
         location /mall/ {
-            rewrite ^/mall(/.*)$ $1 break;
-            proxy_pass http://127.0.0.1:8123;
+            proxy_pass http://127.0.0.1:8123/;
         }
     }
 }
