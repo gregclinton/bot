@@ -4,9 +4,10 @@ import chat
 
 app = FastAPI()
 
-logging.getLogger("uvicorn.access").disabled = True
-logging.getLogger("uvicorn.error").disabled = True
-logging.getLogger("fastapi").disabled = True
+if True:
+    logging.getLogger("uvicorn.access").disabled = True
+    logging.getLogger("uvicorn.error").disabled = True
+    logging.getLogger("fastapi").disabled = True
 
 print("I'm up.", flush=True)
 
@@ -22,7 +23,7 @@ def clear(id):
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    return chat.rum(threads[id], (await req.json())['prompt'])
+    return chat.run(threads[id], (await req.json())['prompt'])
 
 @app.delete('/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
