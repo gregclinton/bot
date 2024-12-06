@@ -4,8 +4,7 @@ from importlib import import_module
 def run(thread, prompt):
     def message(role, content):
         if role != "system":
-            print(f"{role}:")
-            print(f"{content}\n", flush=True)
+            print(f"{role}:\n{content}\n", flush=True)
         return { "role": role, "content": content }
 
     messages = thread["messages"]
