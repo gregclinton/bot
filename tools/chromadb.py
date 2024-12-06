@@ -12,20 +12,19 @@ def invoke(question, thread):
         msg = lambda role, content: { "role": role, "content": content }
         ask = lambda instruction, prompt: llm.invoke([msg("system", instruction), msg("user", prompt)])
 
-    input_instruction = """
-Currently we have the following databases: {collections}
-From the user prompt generate the most appropriate database and search to use.
-Output JSON object with database key, a string, and search key, also a string.
+        o = json.loads(ask("""
+Currently our chromadb installation has the following collections: {collections}
+From the user prompt generate the most appropriate collection and search to use.
+Output JSON object with collection key, a string, and search key, also a string.
 Output the raw JSON without markdown.
-"""
-        o = json.loads(ask(input_instruction.replace("{collections}", collections), question))
-        collection_name = o["database"]
-        results = " ".join(collection(collection_name).query(query_texts=[o["search"]], n_results=1)["documents"][0])
+""".replace("{collections}", collections), question))
+
+        results = " ".join(collection(o["collection"]).query(query_texts=[o["search"]], n_results=1)["documents"][0])
         answer = ask("Given the context, answer the question.", f"Context: {results}\n\nQuestion: {question}\n\nAnswer: ")
 
-        return f"chromadb yielded the following answer: \n{answer}\n\nSummarize this answer for me."
+        return f"chromadb yielded this response:\n{answer}\n\nSummarize this answer for me."
     else:
-        return "As of yet, we have no databases."
+        return "No databases available."
 
 logging.getLogger('chromadb').setLevel(logging.ERROR)
 
