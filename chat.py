@@ -19,7 +19,6 @@ def run(thread, prompt):
     while not content:
         count += 1
         how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["installed"]))]
-        how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["installed"]))]
         completion = llm.invoke(how + messages)
 
         if completion.startswith("tool:"):
@@ -40,7 +39,7 @@ def run(thread, prompt):
     assistant(content)
     return { "content": bulk or content }
 
-thread = {"messages": [], "installed": {"brevity", "install"}, "bots": set()}
+thread = {"messages": [], "installed": ["brevity", "install"], "bots": set()}
 prompt = "I want to test the chatbot tool. Install it. Then try to connect to http://localhost:8123 and say Hello to it."
 prompt = "First install chromadb tool. Then answer: What is Medicare part A all about."
 # run(thread, prompt)
