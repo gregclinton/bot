@@ -9,7 +9,9 @@ def run(thread, prompt):
         return { "role": role, "content": content }
 
     messages = thread["messages"]
-    messages.append(message("user", prompt))
+    assistant = lambda prompt: messages.append(message("assistant", prompt))
+    user = lambda prompt: messages.append(message("user", prompt))
+    user(prompt)
     content = None
     bulk = None
     count = 0
@@ -29,17 +31,17 @@ def run(thread, prompt):
         if count > 10:
             content = "Could you please rephrase that?"
         elif tool:
-            messages.append(message("assistant", completion))
+            assistant(completion)
             try:
                 output = import_module(f"tools.{tool}").invoke(text, thread)
                 if len(output) > 20000:
                     bulk = output
                     output = "success"
-                messages.append(message("user", output))
+                user(output)
             except Exception as e:
-                messages.append(message("user", str(e)))
+                user(str(e))
 
-    messages.append(message("assistant", content))
+    assistant(content)
     return { "content": bulk or content }
 
 thread = {"messages": [], "installed": {"brevity", "install"}, "bots": set()}
