@@ -78,5 +78,5 @@ async def post_thread(req: Request):
     clear(id)
     return { "id": id }
 
-thread_reset("123456")
+clear("123456")
 # print(invoke("123456", "Look up Medicare part A in chromadb database.")["content"])
