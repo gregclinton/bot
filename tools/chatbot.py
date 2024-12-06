@@ -1,13 +1,16 @@
 import requests
 
 def invoke(text, thread):
-    base_url, prompt = text.split("\n")
-    post = lambda path, data = {}: requests.post(f'{base_url}/{path}', json = data, headers = headers).json(),
-    nix = lambda path: requests.delete(f'{base_url}/{path}', headers = headers)
-    thread_id = post('threads')['id']
-    response = post(f'threads/{thread_id}/messages', {
-        'role': 'user',
-        'content': prompt
+    url, prompt = text.split("\n")
+    headers = { "Content-Type": "application/json" }
+    post = lambda path, data = {}: requests.post(f"{url}/{path}", json = data, headers = headers).json()
+
+    if url not in thread["bots"]:
+        thread["bots"][url] = id = post("threads")["id"]
+    else:
+        id = thread["bots"][url]
+
+    return post(f"threads/{id}/messages", {
+        "role": "user",
+        "content": prompt
     })["content"]
-    nix(f'threads/{thread_id}/messages')
-    return response
