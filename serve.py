@@ -20,11 +20,11 @@ def invoke(thread_id, prompt):
         how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["installed"]))]
         response = llm.invoke(how + messages)
         content = response.get("content")
+        tool = response.get("tool")
 
         if llm.counter > max_llm_invokes:
             content = "Could you please rephrase that?"
-        elif "tool" in response:
-            tool = response["tool"]
+        elif tool
             if tool in bench:
                 try:
                     output = bench[tool](response["text"], thread)
