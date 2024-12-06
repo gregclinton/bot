@@ -12,7 +12,6 @@ def run(thread, prompt):
     user = lambda prompt: messages.append(message("user", prompt))
     user(prompt)
     content = None
-    bulk = None
     count = 0
 
     while not content:
@@ -29,16 +28,16 @@ def run(thread, prompt):
             try:
                 output = import_module(f"tools.{tool}").invoke(text, thread)
                 if len(output) > 20000:
-                    bulk = output
-                    output = "success"
-                user(output)
+                    content = output # for big plots mainly
+                else:
+                    user(output)
             except Exception as e:
                 user(e)
         else:
             content = completion
 
     assistant(content)
-    return { "content": bulk or content }
+    return { "content": content }
 
 thread = {"messages": [], "installed": ["brevity", "install"], "bots": set()}
 prompt = "I want to test the chatbot tool. Install it. Then try to connect to http://localhost:8123 and say Hello to it."
