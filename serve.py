@@ -7,6 +7,7 @@ threads = {}
 max_llm_invokes = 10
 
 def invoke(thread_id, prompt):
+    llm.reset_counter()
     thread = threads[thread_id]
     messages = thread["messages"]
     message = lambda role, content: { "role": role, "content": content }
@@ -51,7 +52,6 @@ def clear(id):
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    llm.reset_counter()
     return invoke(id, (await req.json())['prompt'])
 
 @app.delete('/threads/{id}/messages')
