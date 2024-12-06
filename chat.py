@@ -18,7 +18,6 @@ def run(thread, prompt):
         count += 1
         how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["installed"]))]
         completion = llm.invoke(how + messages)
-        messages.append(message("assistant", completion))
 
         if completion.startswith("tool:"):
             tool = completion.split("tool:")[1].split()[0]
@@ -27,9 +26,10 @@ def run(thread, prompt):
             tool = None
             content = completion
 
-        if count > 10:
+        if count > 4:
             content = "Could you please rephrase that?"
         elif tool:
+            messages.append(message("assistant", completion))
             try:
                 output = import_module(f"tools.{tool}").invoke(text, thread)
                 if len(output) > 20000:
@@ -37,7 +37,7 @@ def run(thread, prompt):
                     output = "success"
                 messages.append(message("user", output))
             except Exception as e:
-                content = str(e)
+                messages.append(message("user", str(e)))
 
     messages.append(message("assistant", content))
     return { "content": bulk or content }
