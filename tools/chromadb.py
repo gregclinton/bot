@@ -35,14 +35,14 @@ Output the raw JSON without markdown.
         o = json.loads(llm.invoke([
             message("system", input_instruction.replace("{collections}", collections)),
             message("user", question)
-        ])["content"])
+        ]))
         collection_name = o["database"]
 
         results = " ".join(collection(collection_name).query(query_texts=[o["search"]], n_results=1)["documents"][0])
         answer = llm.invoke([
             message("system", "Given the context, answer the question."),
             message("user", f"Context: {results}\n\nQuestion: {question}\n\nAnswer: ")
-        ])["content"]
+        ])
 
         return f"A search of the chromadb {collection_name} database yielded the following answer: \n{answer} Summarize this answer for me."
     else:
