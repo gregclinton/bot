@@ -43,4 +43,4 @@ def run(thread, prompt):
     return { "content": bulk or content }
 
 thread = {"messages": [], "installed": {"brevity", "install"}, "bots": set()}
-print(run(thread, "Look up Medicare part A in chromadb database.")["content"])
+#print(run(thread, "Look up Medicare part A in chromadb database.")["content"])

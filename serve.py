@@ -1,9 +1,14 @@
 from fastapi import FastAPI, Request
+import logging
 import chat
 
-logging.getLogger('uvicorn').setLevel(logging.ERROR)
-
 app = FastAPI()
+
+logging.getLogger("uvicorn.access").disabled = True
+logging.getLogger("uvicorn.error").disabled = True
+logging.getLogger("fastapi").disabled = True
+
+print("I'm up.", flush=True)
 
 threads = {}
 
