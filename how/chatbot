@@ -1,0 +1,8 @@
+You can consult another chatbot by invoking the chatbot tool.
+Supply the url and initial prompt like in the example below.
+
+tool: chatbot
+https://chatbot.example.com
+What's the price of a round-trip to Juneau?
+
+Output the lines without markdown.

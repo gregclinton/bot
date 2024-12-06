@@ -6,12 +6,6 @@ from time import sleep
 threads = {}
 max_llm_invokes = 10
 
-def post_off_server(url, prompt):
-    # here we would connect with another chatbot
-    # set up a thread
-    # and chat until we got some answer
-    return { "content": "Sorry, can't help you. "}
-
 def invoke(thread_id, prompt):
     thread = threads[thread_id]
     messages = thread["messages"]
@@ -28,9 +22,6 @@ def invoke(thread_id, prompt):
 
         if llm.counter > max_llm_invokes:
             content = "Could you please rephrase that?"
-        elif "url" in response:
-            response = post_off_server(response["url"], response["prompt"])
-            content = response.get("content")
         elif "tool" in response:
             tool = response["tool"]
             if tool in bench:
