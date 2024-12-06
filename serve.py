@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 import llm
-from tool import bench
 from time import sleep
+from importlib import import_module 
 
 threads = {}
 max_llm_invokes = 10
@@ -24,18 +24,15 @@ def invoke(thread_id, prompt):
 
         if llm.counter > max_llm_invokes:
             content = "Could you please rephrase that?"
-        elif tool
-            if tool in bench:
-                try:
-                    output = bench[tool](response["text"], thread)
-                    if len(output) > 20000:
-                        bulk = output
-                        output = "success"
-                    messages.append(message("user", output))
-                except Exception as e:
-                    content = str(e)
-            else:
-                content = response["tool"] + " tool does not exist."
+        elif tool:
+            try:
+                output = import_module(f"tools.{tool}").invoke(response["text"], thread)
+                if len(output) > 20000:
+                    bulk = output
+                    output = "success"
+                messages.append(message("user", output))
+            except Exception as e:
+                content = str(e)
 
     messages.append(message("assistant", content))
     return { "content": bulk or content }
@@ -72,4 +69,4 @@ async def post_thread(req: Request):
     thread_id += 1
     return { "id": clear(str(thread_id)) }
 
-# print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
+print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
