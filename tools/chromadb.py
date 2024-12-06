@@ -5,6 +5,28 @@ import os
 import json
 import logging
 
+def invoke(question, thread):
+    collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
+
+    if collections:
+        msg = lambda role, content: { "role": role, "content": content }
+        ask = lambda instruction, prompt: llm.invoke([msg("system", instruction), msg("user", prompt)])
+
+    input_instruction = """
+Currently we have the following databases: {collections}
+From the user prompt generate the most appropriate database and search to use.
+Output JSON object with database key, a string, and search key, also a string.
+Output the raw JSON without markdown.
+"""
+        o = json.loads(ask(input_instruction.replace("{collections}", collections), question))
+        collection_name = o["database"]
+        results = " ".join(collection(collection_name).query(query_texts=[o["search"]], n_results=1)["documents"][0])
+        answer = ask("Given the context, answer the question.", f"Context: {results}\n\nQuestion: {question}\n\nAnswer: ")
+
+        return f"chromadb yielded the following answer: \n{answer}\n\nSummarize this answer for me."
+    else:
+        return "As of yet, we have no databases."
+
 logging.getLogger('chromadb').setLevel(logging.ERROR)
 
 client = chromadb.PersistentClient(path=f"chroma")
@@ -20,33 +42,6 @@ def collection(name):
 
 def delete_collection(name):
     client.delete_collection(name)
-
-def invoke(question, thread):
-    input_instruction = """
-Currently we have the following databases: {collections}
-From the user prompt generate the most appropriate database and search to use.
-Output JSON object with database key, a string, and search key, also a string.
-Output the raw JSON without markdown.
-"""
-    collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
-
-    if collections:
-        message = lambda role, content: { "role": role, "content": content }
-        o = json.loads(llm.invoke([
-            message("system", input_instruction.replace("{collections}", collections)),
-            message("user", question)
-        ]))
-        collection_name = o["database"]
-
-        results = " ".join(collection(collection_name).query(query_texts=[o["search"]], n_results=1)["documents"][0])
-        answer = llm.invoke([
-            message("system", "Given the context, answer the question."),
-            message("user", f"Context: {results}\n\nQuestion: {question}\n\nAnswer: ")
-        ])
-
-        return f"A search of the chromadb {collection_name} database yielded the following answer: \n{answer} Summarize this answer for me."
-    else:
-        return "As of yet, we have no databases."
 
 def create_collection_from_huge_text(name, text):
     chunk_size = 2000
