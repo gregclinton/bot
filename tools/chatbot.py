@@ -5,6 +5,7 @@ def invoke(text, thread):
     headers = { "Content-Type": "application/json" }
     post = lambda path, data = {}: requests.post(f"{url}/{path}", json = data, headers = headers).json()
 
+    url = url.strip()
     if url not in thread["bots"]:
         thread["bots"][url] = id = post("threads")["id"]
     else:
