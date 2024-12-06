@@ -33,7 +33,7 @@ def run(thread, prompt):
                     output = "success"
                 user(output)
             except Exception as e:
-                user(str(e))
+                user(e)
         else:
             content = completion
 
