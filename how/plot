@@ -2,7 +2,6 @@ You can plot graphs with python and matplotlib
 by invoking the plot tool as shown in the example below:
 
 tool: plot
-From: {department}
 import matplotlib.pyplot as plt
 import numpy as np
 
