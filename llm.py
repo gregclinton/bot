@@ -4,17 +4,8 @@ import os
 
 load_dotenv("keys")
 
-counter = 0
-
-def reset_counter():
-    global counter
-    counter = 0
-
 def invoke(messages):
-    global counter
-
-    counter += 1
-    completion = requests.post(
+    return requests.post(
         "https://api.openai.com/v1/chat/completions",
         headers = {
             'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
@@ -26,11 +17,3 @@ def invoke(messages):
             "messages": messages,
         }
     ).json()["choices"][0]["message"]["content"]
-
-    if completion.startswith("tool:"):
-        return { 
-            "tool": completion.split("tool:")[1].split()[0], 
-            "text": completion.partition("\n")[2] 
-        }
-    else:
-        return { "content": completion }
