@@ -72,4 +72,4 @@ async def post_thread(req: Request):
     thread_id += 1
     return { "id": clear(str(thread_id)) }
 
-print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
+# print(invoke(clear("123456"), "Look up Medicare part A in chromadb database.")["content"])
