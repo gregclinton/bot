@@ -5,10 +5,11 @@ def invoke(tools, thread):
     output = ""
     for tool in tools.split(","):
         tool =  tool.strip()
+        output += f"The {tool} tool was "
         if import_module(f"tools.{tool}"):
             installed = thread["installed"]
             installed.append(tool) if tool not in installed else None
-            output += f"The {tool} tool was successfully installed. You can now use it to answer my above request.\n"
+            output += "successfully installed.\n"
         else:
-            output += f"The {tool} tool was not found.\n"
+            output += "not found.\n"
     return output
