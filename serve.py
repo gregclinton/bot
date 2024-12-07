@@ -23,7 +23,9 @@ def clear(id):
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    return chat.run((await req.body()).decode("utf-8"), threads[id])
+    thread = threads[id]
+    thread["bookmark"] = len(thread["messages"])
+    return chat.run((await req.body()).decode("utf-8"), thread)
 
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
@@ -37,7 +39,8 @@ async def delete_messages(id: str):
 
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(id: str):
-    threads[id]["messages"].pop()
+    thread = threads[id]
+    thread["messages"] = thread["messages"][:thread["bookmark"]]
     return "success"
 
 id = 111111
