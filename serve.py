@@ -40,7 +40,9 @@ async def delete_messages(id: str):
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(id: str):
     thread = threads[id]
-    thread["messages"] = thread["messages"][:thread["bookmark"]]
+    messages = thread["messages"]
+    del messages[thread["bookmark"]:]
+    thread["bookmark"] = len(messages)
     return "success"
 
 id = 111111
