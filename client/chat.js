@@ -90,9 +90,7 @@ const chat = {
 window.onload = () => {
     fetch('/bot/threads', { method: 'POST' })
     .then(response => response.text())
-    .then(id => {
-        chat.thread = id;
-    });
+    .then(id => { chat.thread = id; });
 };
 
 window.addEventListener("unload", () => {
