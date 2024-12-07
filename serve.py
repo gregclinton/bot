@@ -5,7 +5,7 @@ import chat
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
-if True:
+if False:
     logging.getLogger("uvicorn.access").disabled = True
     logging.getLogger("uvicorn.error").disabled = True
     logging.getLogger("fastapi").disabled = True

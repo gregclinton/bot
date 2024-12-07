@@ -6,6 +6,6 @@ gpt-4o,50
 
 Output the above two lines without markdown or comments.
 
-We know about gpt-4o, gpt-4o-mini gpt-o1-preview. We might try others.
+Model can be gpt-4o or gpt-4o-mini.
 
 When I ask for a model, bear in mink that speech-to-text might garble the name.

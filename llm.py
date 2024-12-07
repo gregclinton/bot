@@ -12,7 +12,7 @@ def invoke(messages, model=None, temperature=None):
             'Content-Type': 'application/json',
         },
         json = {
-            "model": model or "gpt-4o",
+            "model": model or "gpt-4o-mini",
             "temperature": temperature or 0,
             "messages": messages,
         }
