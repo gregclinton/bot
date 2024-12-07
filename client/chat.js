@@ -38,7 +38,7 @@ const chat = {
         chat.waiting = true;
 
         if (!hide) {
-            chat.post({content: prompt});
+            chat.post(prompt);
         }
 
         await chat.fetch(prompt)
