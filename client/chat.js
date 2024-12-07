@@ -100,5 +100,5 @@ window.onload = () => {
 };
 
 window.addEventListener("unload", () => {
-    chat.clear();
+    fetch(`/mall/threads/${chat.thread}`, { method: 'DELETE' });
 });

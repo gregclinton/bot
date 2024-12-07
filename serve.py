@@ -27,6 +27,11 @@ plain_text = lambda text: Response(text, media_type="text/plain")
 async def post_message(req: Request, id: str):
     return plain_text(chat.run(threads[id], (await req.body()).decode("utf-8")))
 
+@app.delete('/threads/{id}')
+async def delete_thread(req: Request, id: str):
+    threads.pop(id, None)
+    return plain_text("success")
+
 @app.delete('/threads/{id}/messages')
 async def delete_messages(req: Request, id: str):
     clear(id)
