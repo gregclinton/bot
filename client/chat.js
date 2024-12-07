@@ -1,6 +1,6 @@
 const chat = {
     fetch: async prompt => {
-        return fetch(`/mall/threads/${chat.thread}/messages`, {
+        return fetch(`/bot/threads/${chat.thread}/messages`, {
             method: 'POST',
             headers:  { 'Content-Type': 'text/plain' },
             body: prompt
@@ -53,7 +53,7 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = "";
-        fetch(`/mall/threads/${chat.thread}/messages`, { method: 'DELETE' });
+        fetch(`/bot/threads/${chat.thread}/messages`, { method: 'DELETE' });
     },
 
     paste: () => {
@@ -82,13 +82,13 @@ const chat = {
         if (div.children.length > 1) {
             div.removeChild(div.lastChild);
             div.removeChild(div.lastChild);
-            fetch(`/mall/threads/${chat.thread}/messages/last`, { method: 'DELETE' });
+            fetch(`/bot/threads/${chat.thread}/messages/last`, { method: 'DELETE' });
         }
     }
 };
 
 window.onload = () => {
-    fetch('/mall/threads', {
+    fetch('/bot/threads', {
         method: 'POST',
         headers:  { 'Content-Type': 'text/plain' },
         body: ''
@@ -100,5 +100,5 @@ window.onload = () => {
 };
 
 window.addEventListener("unload", () => {
-    fetch(`/mall/threads/${chat.thread}`, { method: 'DELETE' });
+    fetch(`/bot/threads/${chat.thread}`, { method: 'DELETE' });
 });
