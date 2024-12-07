@@ -26,7 +26,7 @@ def run(prompt, thread):
             tool = completion.split("tool:")[1].split()[0]
             text = completion.partition("\n")[2]
             try:
-                output = import_module(f"tools.{tool}").invoke(text, thread)
+                output = import_module(f"tools.{tool}").run(text, thread)
                 if len(output) > 20000:
                     content = output # for big plots mainly
                 else:
