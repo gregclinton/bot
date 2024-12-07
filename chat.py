@@ -17,7 +17,7 @@ def run(thread, prompt):
     while not content:
         count += 1
         how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["installed"]))]
-        completion = llm.invoke(how + messages)
+        completion = llm.invoke(how + messages, thread.get("model"), thread.get("temperature"))
 
         if count > 10:
             content = "Could you please rephrase that?"

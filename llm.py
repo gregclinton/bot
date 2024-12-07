@@ -4,7 +4,7 @@ import os
 
 load_dotenv("keys")
 
-def invoke(messages):
+def invoke(messages, model=None, temperature=None):
     return requests.post(
         "https://api.openai.com/v1/chat/completions",
         headers = {
@@ -12,8 +12,8 @@ def invoke(messages):
             'Content-Type': 'application/json',
         },
         json = {
-            "model": "gpt-4o",
-            "temperature": 0,
+            "model": model or "gpt-4o",
+            "temperature": temperature or 0,
             "messages": messages,
         }
     ).json()["choices"][0]["message"]["content"]

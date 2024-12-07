@@ -6,7 +6,7 @@ shell
 
 Output the above two lines without markdown.
 
-Other tools include chromadb, plot, chatbot and code.
+Other tools include chromadb, plot, chatbot, code and model.
 
 You can install multiple tools using a comma separated list, for example:
 

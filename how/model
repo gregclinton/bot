@@ -1,0 +1,11 @@
+You can specify an LLM,temperature for our use.
+by invoking the model tool as shown in the example below:
+
+tool: model
+gpt-4o,50
+
+Output the above two lines without markdown or comments.
+
+We know about gpt-4o, gpt-4o-mini gpt-o1-preview. We might try others.
+
+When I ask for a model, bear in mink that speech-to-text might garble the name.
