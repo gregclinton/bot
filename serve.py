@@ -16,7 +16,7 @@ threads = {}
 def clear(id):
     if id in threads:
         for url, id in enumerate(threads[id]["bots"]):
-            requests.delete(f'{url}/threads/{id}/messages', headers = { 'Content-Type': 'text/plain' })
+            requests.delete(f'{url}/threads/{id}', headers = { 'Content-Type': 'text/plain' })
 
     threads[id] = { "messages": [], "installed" : ["brevity", "plot"], "bots": {} }
     return id
