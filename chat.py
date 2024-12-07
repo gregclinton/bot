@@ -30,7 +30,7 @@ def run(thread, prompt):
                 if len(output) > 20000:
                     content = output # for big plots mainly
                 else:
-                    user(output)
+                    user(f"From {tool}:\n{output}")
             except Exception as e:
                 user(e)
         else:

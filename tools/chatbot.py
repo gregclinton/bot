@@ -11,4 +11,4 @@ def invoke(text, thread):
     else:
         id = thread["bots"][url]
 
-    return f"From {url}:\n" + post(f"threads/{id}/messages", prompt)
+    return post(f"threads/{id}/messages", prompt)

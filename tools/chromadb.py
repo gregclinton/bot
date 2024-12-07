@@ -22,7 +22,7 @@ Output the raw JSON without markdown.
         results = " ".join(collection(o["collection"]).query(query_texts=[o["search"]], n_results=1)["documents"][0])
         answer = ask("Given the context, answer the question.", f"Context: {results}\n\nQuestion: {question}\n\nAnswer: ")
 
-        return f"chromadb yielded this response:\n\n{answer}\n\nSummarize this answer for me."
+        return answer
     else:
         return "No databases available."
 
