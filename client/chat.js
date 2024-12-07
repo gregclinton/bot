@@ -88,11 +88,7 @@ const chat = {
 };
 
 window.onload = () => {
-    fetch('/bot/threads', {
-        method: 'POST',
-        headers:  { 'Content-Type': 'text/plain' },
-        body: ''
-    })
+    fetch('/bot/threads', { method: 'POST' })
     .then(response => response.text())
     .then(id => {
         chat.thread = id;
