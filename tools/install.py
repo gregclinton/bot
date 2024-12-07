@@ -1,6 +1,6 @@
 import os
 
-def invoke(tools, thread):
+def run(tools, thread):
     tools = tools.split("\n")[0].strip()
     output = ""
     for tool in tools.split(","):

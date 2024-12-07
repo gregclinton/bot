@@ -1,7 +1,7 @@
 import llm
 from importlib import import_module
 
-def run(thread, prompt):
+def run(prompt, thread):
     def message(role, content):
         if role != "system":
             print(f"{role}:\n{content}\n", flush=True)

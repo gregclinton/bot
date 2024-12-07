@@ -23,7 +23,7 @@ def clear(id):
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    return chat.run(threads[id], (await req.body()).decode("utf-8"))
+    return chat.run((await req.body()).decode("utf-8"), threads[id])
 
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):

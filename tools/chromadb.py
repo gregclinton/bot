@@ -5,7 +5,7 @@ import os
 import json
 import logging
 
-def invoke(question, thread):
+def run(question, thread):
     collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
 
     if collections:
