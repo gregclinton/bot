@@ -5,4 +5,4 @@ tool: chatbot
 https://chatbot.example.com
 What's the price of a round-trip to Juneau?
 
-Output the lines without markdown.
+Output the above three lines without markdown or comments.

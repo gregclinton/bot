@@ -1,4 +1,4 @@
-You can probe our chromadb vectorstore with my question
+You can probe our chromadb vectorstore with any question
 by invoking the chromadb tool as shown in the example below:
 
 tool: chromadb

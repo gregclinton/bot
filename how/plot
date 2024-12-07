@@ -13,7 +13,8 @@ plt.title('Simple Plot')
 plt.xlabel('X-axis')
 plt.ylabel('Y-axis')
 
-Output tool and code without markdown or comments.
+Output the above lines without markdown or comments.
+
 I'm going to see this plot on my iPhone. So make sure it fits. 
 The width should be 300 pt and the height will depend on how tall or short you want it.
 Do not call plt.show().
