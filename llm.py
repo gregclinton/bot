@@ -4,7 +4,7 @@ import os
 
 load_dotenv("keys")
 
-def invoke(messages, thread):
+def invoke(messages, thread={}):
     return requests.post(
         "https://api.openai.com/v1/chat/completions",
         headers = {
