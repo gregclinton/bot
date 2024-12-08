@@ -41,8 +41,7 @@ async def delete_messages(id: str):
 async def delete_last_message(id: str):
     if id in threads:
         thread = threads[id]
-        messages = thread["messages"]
-        del messages[thread["runs"].pop():]
+        del thread["messages"][thread["runs"].pop():]
     return "success"
 
 id = 111111
