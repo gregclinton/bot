@@ -18,7 +18,7 @@ def clear(id):
     for url, bot_id in threads.get(id, {}).get("bots", {}).items():
         requests.delete(f'{url}/threads/{bot_id}', headers={ 'Content-Type': 'text/plain' })
 
-    threads.setdefault(id, { "messages": [], "installed": ["brevity", "install"], "bots": {}, "bookmark": 0 })
+    threads[id] = { "messages": [], "installed": ["brevity", "install"], "bots": {}, "bookmark": 0 }
     return id
 
 @app.post('/threads/{id}/messages')
@@ -39,10 +39,11 @@ async def delete_messages(id: str):
 
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(id: str):
-    thread = threads[id]
-    messages = thread["messages"]
-    del messages[thread["bookmark"]:]
-    thread["bookmark"] = len(messages)
+    if id in threads:
+        thread = threads[id]
+        messages = thread["messages"]
+        del messages[thread["bookmark"]:]
+        thread["bookmark"] = len(messages)
     return "success"
 
 id = 111111
