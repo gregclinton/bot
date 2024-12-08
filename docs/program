@@ -1,5 +1,6 @@
-You can compile a python program and see its output
-by invoking the shell tool as shown in the example below:
+You can write and run a program and see its output
+by invoking the shell tool and using a here-document 
+as shown in the example below:
 
 tool: shell
 echo python3 <<EOF
