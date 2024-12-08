@@ -6,12 +6,10 @@ shell
 
 Output the above two lines without markdown.
 
-Other docs include chromadb, chatbot, code, html and model.
-
 You can read multiple docs using a comma separated list, for example:
 
 tool: docs
 shell,chromadb
 
-Reading a doc really means having added to your system message.
+Reading a doc really means adding it to your system message.
 This meams you are now instucted on what the doc contains.
