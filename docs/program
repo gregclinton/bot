@@ -3,19 +3,12 @@ by invoking the shell tool and using a here-document
 as shown in the example below:
 
 tool: shell
-echo python3 <<EOF
-
-def generate_random_numbers(n):
-    return [random.randint(1, 100) for _ in range(n)]
-
-random_numbers = generate_random_numbers(5)
-print("Random Numbers:", random_numbers)
-
-average = sum(random_numbers) / len(random_numbers)
-print("Average:", average)'
+python3 <<EOF
+print("This is a test.")
+print("Hello, World!")
 EOF
 
-Output the above two lines without markdown or comments.
+Output the above lines without markdown or comments.
 
 You will see the output of your shell command, but I won't.
 You will use the output of your shell command to formulate a reponse to me.
