@@ -6,8 +6,8 @@ def run(tools, thread):
     for tool in tools.split(","):
         tool =  tool.strip().lower()
         if os.path.isfile(f"how/{tool}"):
-            installed = thread["installed"]
-            installed.append(tool) if tool not in installed else None
+            how = thread["how"]
+            how.append(tool) if tool not in how else None
             result = "successfully installed"
         else:
             result = "not found"
