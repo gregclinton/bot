@@ -1,15 +1,15 @@
-You can read docs by invoking the docs tool.
-For example if you need access to shell commands, read the shell doc as follows:
+If I ask you to read a doc,
+you can do so by invoking the docs tool ash shown in the example below:
 
 tool: docs
-shell
+anydoc
 
 Output the above two lines without markdown.
 
 You can read multiple docs using a comma separated list, for example:
 
 tool: docs
-shell,chromadb
+anydoc1,anydoc2
 
 Reading a doc really means adding it to your system message.
 This meams you are now instucted on what the doc contains.
