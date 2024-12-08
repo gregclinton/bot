@@ -1,0 +1,20 @@
+You can compile a python program and see its output
+by invoking the shell tool as shown in the example below:
+
+tool: shell
+echo python3 <<EOF
+
+def generate_random_numbers(n):
+    return [random.randint(1, 100) for _ in range(n)]
+
+random_numbers = generate_random_numbers(5)
+print("Random Numbers:", random_numbers)
+
+average = sum(random_numbers) / len(random_numbers)
+print("Average:", average)'
+EOF
+
+Output the above two lines without markdown or comments.
+
+You will see the output of your shell command, but I won't.
+You will use the output of your shell command to formulate a reponse to me.
