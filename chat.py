@@ -16,8 +16,8 @@ def run(prompt, thread):
 
     while not content:
         count += 1
-        how = [message("system", "\n\n".join(open(f"how/{f}").read() for f in thread["how"]))]
-        completion = llm.invoke(how + messages, thread)
+        docs = [message("system", "\n\n".join(open(f"docs/{f}").read() for f in thread["docs"]))]
+        completion = llm.invoke(docs + messages, thread)
 
         if count > 10:
             content = "Could you please rephrase that?"
@@ -39,7 +39,7 @@ def run(prompt, thread):
     assistant(content)
     return content
 
-thread = {"messages": [], "how": ["brevity", "install"], "bots": set()}
+thread = {"messages": [], "docs": ["brevity", "docs"], "bots": set()}
 prompt = "I want to test the chatbot tool. Install it. Then try to connect to http://localhost:8123 and say Hello to it."
 prompt = "First install chromadb tool. Then answer: What is Medicare part A all about."
 # run(thread, prompt)

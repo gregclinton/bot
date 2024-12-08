@@ -1,0 +1,17 @@
+You can read docs by invoking the docs tool.
+For example if you need access to shell commands, read the shell doc as follows:
+
+tool: docs
+shell
+
+Output the above two lines without markdown.
+
+Other docs include chromadb, chatbot, code, html and model.
+
+You can read multiple docs using a comma separated list, for example:
+
+tool: docs
+shell,chromadb
+
+Reading a doc really means having added to your system message.
+This meams you are now instucted on what the doc contains.
