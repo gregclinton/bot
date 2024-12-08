@@ -1,5 +1,5 @@
 If I ask you to read a doc,
-you can do so by invoking the docs tool ash shown in the example below:
+you can do so by invoking the docs tool as shown in the example below:
 
 tool: docs
 anydoc
