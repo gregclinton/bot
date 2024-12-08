@@ -5,3 +5,6 @@ tool: shell
 ls -l
 
 Output the above two lines without markdown or comments.
+
+You will see the output of your shell command, but I won't.
+You will use the output of your shell command to formulate a reponse to me.
