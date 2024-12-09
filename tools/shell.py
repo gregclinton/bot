@@ -1,17 +1,23 @@
 import subprocess
 
-chat.tools.append(
-  { 
+def create(tools):
+    tools.append({ 
         "type": "function",
         "function": {
             "name": "shell",
             "description": "Run Linux shell commands like ls, cat, echo, sed, curl, python3, etc.",
             "parameters": {
-                "type": "string"
+                "type": "object",
+                "properties": {
+                "text": {
+                    "type": "string",
+                    "description": "The shell command to be executed."
+                }
+                },
+                "required": ["command"]
             }
         }
-    }
-)
+    })
 
 def run(command, thread):
     result = subprocess.run(command, shell=True, capture_output=True, text=True)
