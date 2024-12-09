@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from importlib import import_module
 import os
 import json
+from pprint import pprint
 
 load_dotenv("keys")
 
@@ -18,7 +19,7 @@ def invoke(messages, thread={}):
             meta = import_module(f"tools.{tool}").meta()
             params = meta["parameters"]
             params["type"] = "object"
-            tools.append({ 
+            tools.append({
                 "type": "function",
                 "function": {
                     "name": tool,
@@ -51,12 +52,18 @@ def invoke(messages, thread={}):
             for call in message.get("tool_calls", []):
                 try:
                     fn = call["function"]
+                    tool = fn["name"]
+                    args = json.loads(fn["arguments"])
+                    content = import_module(f"tools.{tool}").run(args, thread)
+                    print(f"tool {tool}:\n")
+                    pprint(args)
+                    print(f"{content}\n")
 
                     messages.append({
                         "role": "tool",
                         "tool_call_id": call["id"],
-                        "name": fn["name"],
-                        "content": import_module("tools." + fn["name"]).run(json.loads(fn["arguments"]), thread)
+                        "name": tool,
+                        "content": content
                     })
                 except Exception as e:
                     return str(e)
