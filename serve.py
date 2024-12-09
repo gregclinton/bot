@@ -10,7 +10,7 @@ def clear(id):
     for url, bot_id in threads.get(id, {}).get("bots", {}).items():
         requests.delete(f'{url}/threads/{bot_id}', headers={ 'Content-Type': 'text/plain' })
 
-    threads[id] = { "messages": [], "docs": ["brevity", "tools", "docs"], "bots": {}, "runs": [] }
+    threads[id] = { "messages": [], "docs": ["brevity", "tools", "docs", "shell"], "bots": {}, "runs": [] }
     return id
 
 @app.post('/threads/{id}/messages')
