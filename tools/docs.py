@@ -1,5 +1,8 @@
 import os
 
+def create(tools):
+    pass
+
 def run(docs, thread):
     docs = docs.split("\n")[0].strip()
     output = ""

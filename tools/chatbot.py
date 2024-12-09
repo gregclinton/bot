@@ -1,5 +1,8 @@
 import requests
 
+def create(tools):
+    pass
+
 def run(text, thread):
     url, prompt = text.split("\n")
     headers = { "Content-Type": "text/plain" }

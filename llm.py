@@ -7,7 +7,9 @@ import json
 load_dotenv("keys")
 
 tools = []
-import_module("tools.shell").create(tools)
+
+for tool in os.listdir("tools"):
+    import_module(f"tools.{tool}").create(tools)
 
 def invoke(messages, thread={}):
     message = requests.post(
@@ -25,13 +27,17 @@ def invoke(messages, thread={}):
         }).json()["choices"][0]["message"]
 
     for call in message.get("tool_calls", []):
-        id = call["id"]
-        fn = call["function"]
-
         try:
-            print(import_module("tools." + fn["name"]).run(json.loads(fn["arguments"])["text"], thread), flush=True)
+            fn = call["function"]
+
+            messages.append({
+                "role":"tool",
+                "tool_call_id": call["id"],
+                "name": fn["name"],
+                "content": import_module("tools." + fn["name"]).run(json.loads(fn["arguments"])["text"], thread)
+            })
         except Exception as e:
-            print(e, flush=True)
+            return str(e)
 
         return "tool call"
 

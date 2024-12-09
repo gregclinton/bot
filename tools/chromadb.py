@@ -5,6 +5,9 @@ import os
 import json
 import logging
 
+def create(tools):
+    pass
+
 def run(question, thread):
     collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
 
