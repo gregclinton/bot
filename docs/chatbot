@@ -1,6 +1,0 @@
-Use the chatbot tool to talk with another chatbot.
-Supply the url and prompt.
-
-tool: chatbot
-https://chatbot.example.com
-What's the price of a round-trip to Juneau?

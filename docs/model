@@ -1,7 +1,0 @@
-Use the model tool to specify the llm model and temperature.
-
-tool: model
-gpt-4o,50
-
-Model can be gpt-4o or gpt-4o-mini.
-Temperature is from 0 to 100.

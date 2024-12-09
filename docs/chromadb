@@ -1,4 +1,0 @@
-Use the chromadb tool to probe a vectorstore with a question.
-
-tool: chromadb
-What is the legal drinking age in California?

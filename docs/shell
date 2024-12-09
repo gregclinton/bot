@@ -1,4 +1,0 @@
-Use the shell tool to run Linux shell commands like ls, cat, echo, sed, curl, python3, etc.
-
-tool: shell
-ls -l
