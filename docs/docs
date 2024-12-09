@@ -1,4 +1,6 @@
 Use the doc tool to learn about other tools.
+If I ask you to read the sometool doc,
+this is how you do it:
 
 tool: docs
 sometool
