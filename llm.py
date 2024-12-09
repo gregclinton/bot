@@ -6,16 +6,15 @@ import json
 
 load_dotenv("keys")
 
-tools = []
-
-for file in os.listdir("tools"):
-    if file.endswith(".py"):
-        import_module("tools." + file[:-3]).create(tools)
-
 def invoke(messages, thread={}):
     count = 0
     max_count = 10
     content = None
+    tools = []
+
+    for file in os.listdir("tools"):
+        if file.endswith(".py"):
+            import_module("tools." + file[:-3]).create(tools)
 
     while not content and count < 10:
         count += 1
@@ -35,17 +34,20 @@ def invoke(messages, thread={}):
 
         content = message.get("content")
 
-        for call in message.get("tool_calls", []):
-            try:
-                fn = call["function"]
+        if not content:
+            messages.append(message)
 
-                messages.append({
-                    "role":"tool",
-                    "tool_call_id": call["id"],
-                    "name": fn["name"],
-                    "content": import_module("tools." + fn["name"]).run(json.loads(fn["arguments"])["text"], thread)
-                })
-            except Exception as e:
-                return str(e)
+            for call in message.get("tool_calls", []):
+                try:
+                    fn = call["function"]
+
+                    messages.append({
+                        "role": "tool",
+                        "tool_call_id": call["id"],
+                        "name": fn["name"],
+                        "content": import_module("tools." + fn["name"]).run(json.loads(fn["arguments"])["text"], thread)
+                    })
+                except Exception as e:
+                    return str(e)
 
     return content or "Could you rephrase that, please?"
