@@ -13,7 +13,7 @@ def invoke(messages, thread={}):
     tools = []
 
     for file in os.listdir("tools"):
-        if file == "shell.py" and file.endswith(".py"):
+        if file.endswith(".py"):
             tool = file[:-3]
             meta = import_module(f"tools.{tool}").meta()
             params = meta["parameters"]
