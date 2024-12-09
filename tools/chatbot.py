@@ -1,7 +1,10 @@
 import requests
 
-def create(tools):
-    pass
+def descriptions():
+    return (
+        "Talk with another chatbot.",
+        "url and prompt each on separate lines"
+    )
 
 def run(text, thread):
     url, prompt = text.split("\n")

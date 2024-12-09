@@ -5,8 +5,11 @@ import os
 import json
 import logging
 
-def create(tools):
-    pass
+def descriptions():
+    return (
+        "Probe a chromedb database.",
+        "query"
+    )
 
 def run(question, thread):
     collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))

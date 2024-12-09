@@ -1,8 +1,10 @@
 import os
 
-def create(tools):
-    pass
-
+def descriptions():
+    return (
+        "Read a doc.",
+        "doc name"
+    )
 def run(docs, thread):
     docs = docs.split("\n")[0].strip()
     output = ""

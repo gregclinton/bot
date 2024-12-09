@@ -14,7 +14,24 @@ def invoke(messages, thread={}):
 
     for file in os.listdir("tools"):
         if file.endswith(".py"):
-            import_module("tools." + file[:-3]).create(tools)
+            fn, text = import_module("tools." + file[:-3]).descriptions()
+            tools.append({ 
+                "type": "function",
+                "function": {
+                    "name": "shell",
+                    "description": fn,
+                    "parameters": {
+                        "type": "object",
+                        "properties": {
+                        "text": {
+                            "type": "string",
+                            "description": text
+                        }
+                        },
+                        "required": ["text"]
+                    }
+                }
+            })
 
     while not content and count < 10:
         count += 1
