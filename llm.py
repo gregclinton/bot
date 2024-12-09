@@ -2,6 +2,7 @@ import requests
 from dotenv import load_dotenv
 from importlib import import_module
 import os
+import json
 
 load_dotenv("keys")
 
@@ -23,9 +24,15 @@ def invoke(messages, thread={}):
             "tool_choice": "auto"
         }).json()["choices"][0]["message"]
 
-    calls = message.get("tool_calls")
+    for call in message.get("tool_calls", []):
+        id = call["id"]
+        fn = call["function"]
 
-    if calls:
+        try:
+            print(import_module("tools." + fn["name"]).run(json.loads(fn["arguments"])["text"], thread), flush=True)
+        except Exception as e:
+            print(e, flush=True)
+
         return "tool call"
 
     return message["content"]

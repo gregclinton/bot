@@ -14,7 +14,7 @@ def create(tools):
                     "description": "The shell command to be executed."
                 }
                 },
-                "required": ["command"]
+                "required": ["text"]
             }
         }
     })
