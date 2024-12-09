@@ -1,11 +1,7 @@
-You can specify an LLM,temperature for our use.
-by invoking the model tool as shown in the example below:
+Use the model tool to specify the llm model and temperature.
 
 tool: model
 gpt-4o,50
 
-Output the above two lines without markdown or comments.
-
 Model can be gpt-4o or gpt-4o-mini.
-
-When I ask for a model, bear in mink that speech-to-text might garble the name.
+Temperature is from 0 to 100.

@@ -1,5 +1,5 @@
 You can write and run a program and see its output
-by invoking the shell tool and using a here-document 
+by using the shell tool and using a here-document 
 as shown in the example below:
 
 tool: shell
@@ -7,9 +7,3 @@ python3 <<EOF
 print("This is a test.")
 print("Hello, World!")
 EOF
-
-Output the above lines without markdown or comments.
-
-You will see the output of your shell command,
-but I won't until you relay it to me.
-You may need to reformulate it to respond to my question or request.

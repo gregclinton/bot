@@ -1,11 +1,4 @@
-You can run Linux shell commands like ls, cat, echo, sed, curl, python3, etc 
-by invoking the shell tool as shown in the example below:
+Use the shell tool to run Linux shell commands like ls, cat, echo, sed, curl, python3, etc.
 
 tool: shell
 ls -l
-
-Output the above two lines without markdown or comments.
-
-You will see the output of your shell command,
-but I won't until you relay it to me.
-You may need to reformulate it to respond to my question or request.

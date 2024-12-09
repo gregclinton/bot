@@ -1,7 +1,4 @@
-You can probe our chromadb vectorstore with any question
-by invoking the chromadb tool as shown in the example below:
+Use the chromadb tool to probe a vectorstore with a question.
 
 tool: chromadb
 What is the legal drinking age in California?
-
-Output the above two lines without markdown or comments.

@@ -1,15 +1,12 @@
-If I ask you to read a doc,
-you can do so by invoking the docs tool as shown in the example below:
+Use the doc tool to learn about other tools.
 
 tool: docs
-anydoc
+sometool
 
-Output the above two lines without markdown.
-
-You can read multiple docs using a comma separated list, for example:
+Read multiple docs using a comma separated list.
 
 tool: docs
-anydoc1,anydoc2
+tool1,tool2
 
 Reading a doc really means adding it to your system message.
 This meams you are now instucted on what the doc contains.
