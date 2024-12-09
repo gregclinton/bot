@@ -5,18 +5,26 @@ import os
 import json
 import logging
 
-def descriptions():
-    return (
-        "Probe a chromedb database.",
-        "query"
-    )
+def meta():
+    return {
+        "description": "Probe a chromedb database.",
+        "parameters": {
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "The query to be run."
+                }
+            },
+            "required": ["query"]
+        }
+    }
 
-def run(question, thread):
+def run(args, thread):
     collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
 
     if collections:
         msg = lambda role, content: { "role": role, "content": content }
-        ask = lambda instruction, prompt: llm.invoke([msg("system", instruction), msg("user", prompt)])
+        ask = lambda instruction, prompt: llm.invoke([msg("system", instruction), msg("user", args["query"])])
 
         o = json.loads(ask("""
 Currently our chromadb installation has the following collections: {collections}

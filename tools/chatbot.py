@@ -1,13 +1,25 @@
 import requests
 
-def descriptions():
-    return (
-        "Talk with another chatbot.",
-        "url and prompt each on separate lines"
-    )
+def meta():
+    return {
+        "description": "Talk with another chatbot.",
+        "parameters": {
+            "properties": {
+                "url": {
+                    "type": "string",
+                    "description": "The other chatbot's url."
+                },
+                "prompt": {
+                    "type": "string",
+                    "description": "Your prompt to the other chatbot."
+                }
+            },
+            "required": ["url", "prompt"]
+        }
+    }
 
-def run(text, thread):
-    url, prompt = text.split("\n")
+def run(args, thread):
+    url, prompt = (args["url"], args["prompt"])
     headers = { "Content-Type": "text/plain" }
     post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).text
 

@@ -1,20 +1,26 @@
 import os
 
-def descriptions():
-    return (
-        "Read a doc.",
-        "doc name"
-    )
-def run(docs, thread):
-    docs = docs.split("\n")[0].strip()
-    output = ""
-    for doc in docs.split(","):
-        doc =  doc.strip().lower()
-        if os.path.isfile(f"docs/{doc}"):
-            docs = thread["docs"]
-            docs.append(doc) if doc not in docs else None
-            result = "successfully added"
-        else:
-            result = "not found"
-        output += f"The {doc} doc was {result}.\n"
+def meta():
+    return {
+        "description": "Read a document.",
+        "parameters": {
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "description": "The document name."
+                }
+            },
+            "required": ["name"]
+        }
+    }
+
+def run(args, thread):
+    doc =  args["name"].strip().lower()
+    if os.path.isfile(f"docs/{doc}"):
+        docs = thread["docs"]
+        docs.append(doc) if doc not in docs else None
+        result = "successfully added"
+    else:
+        result = "not found"
+    output += f"The {doc} doc was {result}.\n"
     return output
