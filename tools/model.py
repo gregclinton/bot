@@ -19,9 +19,7 @@ def meta():
     }
 
 def run(args, thread):
-    if args.get("model"):
-        thread["model"] = args["model"]
-    
-    if args.get("temperature"):
-        thread["temperature"] = args["temperature"] / 100.0
+    thread["model"] = args.get("model", thread["model"])
+    if "temperature" in args:
+        thread["temperature"] = args["temperature"] / 100
     return "success"
