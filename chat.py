@@ -17,7 +17,8 @@ def run(prompt, thread):
     while not content:
         count += 1
         docs = [message("system", "\n\n".join(open(f"docs/{f}").read() for f in thread["docs"]))]
-        completion = llm.invoke(docs + messages, thread)
+        tools = []
+        completion = llm.invoke(docs + messages, tools, thread)
 
         if count > 10:
             content = "Could you please rephrase that?"
