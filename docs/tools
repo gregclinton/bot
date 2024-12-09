@@ -6,7 +6,7 @@ more text for the tool
 
 Output the above lines without markdown or comments.
 
-The tool will generate output in the form of the very next user message.
+The tool will generate output in the very next user message.
 This output is only seen by you, the assistant, and not by the actual user, me.
 You will use the output to answer the real user's question -- my question.
 
