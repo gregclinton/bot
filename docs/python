@@ -1,6 +1,6 @@
 Use the shell tool with a here-document to run a program and see its output.
+The command would look like this:
 
-tool: shell
 python3 <<EOF
 print("This is a test.")
 print("Hello, World!")
