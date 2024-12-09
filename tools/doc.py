@@ -16,7 +16,7 @@ def meta():
 
 def run(args, thread):
     output = ""
-    doc =  args["name"].strip().lower()
+    doc =  args["name"].lower()
     if os.path.isfile(f"docs/{doc}"):
         docs = thread["docs"]
         docs.append(doc) if doc not in docs else None
