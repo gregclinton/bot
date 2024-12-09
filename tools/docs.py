@@ -15,6 +15,7 @@ def meta():
     }
 
 def run(args, thread):
+    output = ""
     doc =  args["name"].strip().lower()
     if os.path.isfile(f"docs/{doc}"):
         docs = thread["docs"]
