@@ -10,21 +10,22 @@ def meta():
         "description": "Probe a chromedb database.",
         "parameters": {
             "properties": {
-                "query": {
+                "question": {
                     "type": "string",
                     "description": "The query to be run."
                 }
             },
-            "required": ["query"]
+            "required": ["question"]
         }
     }
 
 def run(args, thread):
+    question = args["question"]
     collections = ", ".join(map(lambda collection:  collection.name, client.list_collections()))
 
     if collections:
         msg = lambda role, content: { "role": role, "content": content }
-        ask = lambda instruction, prompt: llm.invoke([msg("system", instruction), msg("user", args["query"])])
+        ask = lambda instruction, prompt: llm.invoke([msg("system", instruction), msg("user", prompt)])
 
         o = json.loads(ask("""
 Currently our chromadb installation has the following collections: {collections}
