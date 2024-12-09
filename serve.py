@@ -1,16 +1,8 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
-import logging
 import chat
 
 app = FastAPI(default_response_class=PlainTextResponse)
-
-if True:
-    logging.getLogger("uvicorn.access").disabled = True
-    logging.getLogger("uvicorn.error").disabled = True
-    logging.getLogger("fastapi").disabled = True
-
-print("I'm up.", flush=True)
 
 threads = {}
 
