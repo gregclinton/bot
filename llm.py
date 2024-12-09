@@ -9,7 +9,8 @@ load_dotenv("keys")
 tools = []
 
 for file in os.listdir("tools"):
-    import_module("tools." + file[:-3]).create(tools)
+    if file.endswith(".py"):
+        import_module("tools." + file[:-3]).create(tools)
 
 def invoke(messages, thread={}):
     count = 0
@@ -32,7 +33,7 @@ def invoke(messages, thread={}):
                 "tool_choice": "auto"
             }).json()["choices"][0]["message"]
 
-        content = message.content
+        content = message.get("content")
 
         for call in message.get("tool_calls", []):
             try:
@@ -46,7 +47,5 @@ def invoke(messages, thread={}):
                 })
             except Exception as e:
                 return str(e)
-
-        return "tool call"
 
     return content or "Could you rephrase that, please?"
