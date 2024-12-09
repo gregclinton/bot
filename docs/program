@@ -1,6 +1,4 @@
-You can write and run a program and see its output
-by using the shell tool and using a here-document 
-as shown in the example below:
+Use the shell tool with a here-document to run a program and see its output.
 
 tool: shell
 python3 <<EOF
