@@ -56,7 +56,7 @@ def invoke(messages, thread={}):
                         "role": "tool",
                         "tool_call_id": call["id"],
                         "name": fn["name"],
-                        "content": import_module("tools." + fn["name"]).run(json.loads(fn["arguments"])["text"], thread)
+                        "content": import_module("tools." + fn["name"]).run(json.loads(fn["arguments"]), thread)
                     })
                 except Exception as e:
                     return str(e)
