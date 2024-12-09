@@ -55,9 +55,9 @@ def invoke(messages, thread={}):
                     tool = fn["name"]
                     args = json.loads(fn["arguments"])
                     content = import_module(f"tools.{tool}").run(args, thread)
-                    print(f"tool {tool}:\n")
+                    print(f"tool {tool}:")
                     pprint(args)
-                    print(f"{content}\n")
+                    print(content)
 
                     messages.append({
                         "role": "tool",
