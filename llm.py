@@ -27,7 +27,7 @@ def invoke(messages, thread={}):
                 }
             })
 
-    while not content and count < 10:
+    while not content and count < max_count:
         count += 1
         message = requests.post(
             "https://api.openai.com/v1/chat/completions",
