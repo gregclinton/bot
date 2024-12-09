@@ -1,6 +1,8 @@
 import llm
 from importlib import import_module
 
+tools = []
+
 def run(prompt, thread):
     def message(role, content):
         if role != "system":
@@ -17,7 +19,6 @@ def run(prompt, thread):
     while not content:
         count += 1
         docs = [message("system", "\n\n".join(open(f"docs/{f}").read() for f in thread["docs"]))]
-        tools = []
         completion = llm.invoke(docs + messages, tools, thread)
 
         if count > 10:
