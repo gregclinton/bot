@@ -13,23 +13,17 @@ def invoke(messages, thread={}):
     tools = []
 
     for file in os.listdir("tools"):
-        if file.endswith(".py"):
-            fn, text = import_module("tools." + file[:-3]).descriptions()
+        if file == "shell.py" and file.endswith(".py"):
+            tool = file[:-3]
+            meta = import_module(f"tools.{tool}").meta()
+            params = meta["parameters"]
+            params["type"] = "object"
             tools.append({ 
                 "type": "function",
                 "function": {
-                    "name": "shell",
-                    "description": fn,
-                    "parameters": {
-                        "type": "object",
-                        "properties": {
-                        "text": {
-                            "type": "string",
-                            "description": text
-                        }
-                        },
-                        "required": ["text"]
-                    }
+                    "name": tool,
+                    "description": meta["description"],
+                    "parameters": params
                 }
             })
 
