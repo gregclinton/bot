@@ -8,8 +8,8 @@ load_dotenv("keys")
 
 tools = []
 
-for tool in os.listdir("tools"):
-    import_module(f"tools.{tool}").create(tools)
+for file in os.listdir("tools"):
+    import_module("tools." + file[:-3]).create(tools)
 
 def invoke(messages, thread={}):
     count = 0
