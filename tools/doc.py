@@ -23,5 +23,5 @@ def run(args, thread):
         result = "successfully added"
     else:
         result = "not found"
-    output += f"The {doc} doc was {result}.\n"
+    output += f"The {doc} document was {result}.\n"
     return output
