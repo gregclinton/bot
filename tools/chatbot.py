@@ -19,7 +19,7 @@ def meta():
     }
 
 def run(args, thread):
-    url, prompt = (args["url"], args["prompt"])
+    url = (args["url"]
     headers = { "Content-Type": "text/plain" }
     post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).text
 
@@ -28,4 +28,4 @@ def run(args, thread):
     else:
         id = thread["bots"][url]
 
-    return post(f"threads/{id}/messages", prompt)
+    return post(f"threads/{id}/messages", args["prompt"])
