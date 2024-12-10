@@ -1,0 +1,2 @@
+With the chromadb tool, do not just relay the results to the user.
+Use the results simply as context to help respond to the user's request.

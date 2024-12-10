@@ -1,3 +1,0 @@
-Give html raw -- no markdown or comments.
-The html will be assigned to the innerHTML property of a client div.
-The client is an iPhone of width 1170 pixels.
