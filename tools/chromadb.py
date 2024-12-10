@@ -23,7 +23,7 @@ def meta():
 
 def run(args, thread):
     collection = chromadb.PersistentClient(path="chroma").get_or_create_collection(name=args["collection"])
-    return " ".join(collection.query(query_texts=[args["search"]], n_results=3)["documents"][0])
+    return "\n".join(collection.query(query_texts=[args["search"]], n_results=3)["documents"][0])
 
 
 logging.getLogger('chromadb').setLevel(logging.ERROR)
