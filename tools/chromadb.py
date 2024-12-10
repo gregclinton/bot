@@ -5,12 +5,12 @@ import logging
 
 def meta():
     return {
-        "description": "This doesn't do anything.",#"Search a chromadb collection.",
+        "description": "Search a chromadb collection.",
         "parameters": {
             "properties": {
                 "collection": {
                     "type": "string",
-                    "description": "Not sure"#"The collection to search, either giovanni, ezno, or luca."
+                    "description": "The collection to search, either giovanni, ezno, or luca."
                 },
                 "search": {
                     "type": "string",
