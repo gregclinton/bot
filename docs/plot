@@ -1,5 +1,0 @@
-For a plot, use svg polyline and give the raw svg element with no markdown or comments.
-Round numbers to the nearest tenth of a pixel.
-The svg will be assigned to the innerHTML property of a client div.
-The client is an iPhone of width 1170 pixels, scale svg to fill the width.
-Y coordinates should be negative of pixel direction.
