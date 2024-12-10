@@ -1,4 +1,4 @@
-Use the shell tool with a here-document to run a program and see its output.
+Use the shell tool with a heredoc to run a program and see its output.
 The command would look like this:
 
 python3 <<EOF
