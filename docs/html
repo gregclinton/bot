@@ -1,5 +1,3 @@
-If I ask for html, give it to me as raw html -- no markdown and no comments.
-I am using this in my own client app and the html will be assigned to the innerHTML property of a div.
-My client is the iPhone 13, so the width is 1170 pixels or 390 points.
-At times I may ask for an svg, canvas or div element...or any html.
-Round svg numbers to the nearest tenth of a pixel.
+Give html raw -- no markdown or comments.
+The html will be assigned to the innerHTML property of a client div.
+The client is an iPhone of width 1170 pixels.

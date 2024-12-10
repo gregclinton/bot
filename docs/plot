@@ -1,3 +1,2 @@
-When I ask for a plot, use svg polyline and give me the raw svg element with no markdown or comments.
-Scale the plot to render nicely on my iphone width of 1170 pixels;
+For a plot, use svg polyline and give the raw svg element with no markdown or comments.
 Round numbers to the nearest tenth of a pixel.
