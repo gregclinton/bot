@@ -5,12 +5,12 @@ import logging
 
 def meta():
     return {
-        "description": "Search a chromadb collection.",
+        "description": "This doesn't do anything.",#"Search a chromadb collection.",
         "parameters": {
             "properties": {
                 "collection": {
                     "type": "string",
-                    "description": "The collection to search, either giovanni, ezno, or luca."
+                    "description": "Not sure"#"The collection to search, either giovanni, ezno, or luca."
                 },
                 "search": {
                     "type": "string",
@@ -28,17 +28,16 @@ def run(args, thread):
 
 logging.getLogger('chromadb').setLevel(logging.ERROR)
 
-def create_collection(name, prompt):
-    documents = json.loads(llm.invoke(prompt))
-    ids = [str(i) for i in range(10000, 10000 + len(documents) + 1)]
-    print(documents)
-    # chromadb.PersistentClient(path="chroma").get_or_create_collection(name=args["collection"]).add(documents=documents, metadatas=metadatas, ids=ids)
-
+def create_collection(collection, prompt):
+    return
+    documents = json.loads(llm.invoke([{"role": "user", "content": prompt}]))
+    ids = [str(i) for i in range(10000, 10000 + len(documents))]
+    chromadb.PersistentClient(path="chroma").get_or_create_collection(name=collection).add(documents=documents, ids=ids)
 
 create_collection("giovanni", """
-Output a raw JSON array of 20 strings,
+Output a raw JSON array of 20 strings, not objects, without markdown or comments,
 each being a pizza choice with wonderful description and price
 at Giovanni's, a fictious Chicago pizzeria. 
 """)
 
-chromadb.PersistentClient(path="chroma").delete_collection("Medicare")
+# chromadb.PersistentClient(path="chroma").delete_collection("Medicare")

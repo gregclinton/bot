@@ -1,5 +1,4 @@
 import llm
-import tools.chromadb
 
 def run(prompt, thread):
     def message(role, content):
