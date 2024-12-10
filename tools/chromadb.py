@@ -5,7 +5,7 @@ import logging
 
 def meta():
     return {
-        "description": "Search a chromedb collection.",
+        "description": "Search a chromadb collection.",
         "parameters": {
             "properties": {
                 "collection": {
