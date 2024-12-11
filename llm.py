@@ -56,15 +56,19 @@ def invoke(messages, thread={}):
                     args = json.loads(fn["arguments"])
                     output = import_module(f"tools.{tool}").run(args, thread)
                     print(f"tool {tool}:")
-                    pprint(args)
-                    print(output)
 
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": call["id"],
-                        "name": tool,
-                        "content": output
-                    })
+                    if tool in ['json']:
+                        content = output
+                        break
+                    else:
+                        pprint(args)
+                        print(output)
+                        messages.append({
+                            "role": "tool",
+                            "tool_call_id": call["id"],
+                            "name": tool,
+                            "content": output
+                        })
                 except Exception as e:
                     return str(e)
 
