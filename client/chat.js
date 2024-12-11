@@ -21,7 +21,6 @@ const chat = {
         const bottom = document.createElement('div');
 
         bottom.id = 'id-' + (Math.floor(Math.random() * 1001) + 1000);
-        bottom.innerHTML = text;
 
         const post = document.createElement('div');
         post.append(top, bottom);
@@ -31,6 +30,7 @@ const chat = {
         if (text[0] === '{') {
             Plotly.newPlot(bottom.id, JSON.parse(text));
         } else {
+            bottom.innerHTML = text;
             Prism.highlightAll();
             MathJax.typesetPromise();
         }
