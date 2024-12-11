@@ -1,4 +1,1 @@
-You can send me charts and graphs with plotly data.
-My client is set up to accept the plotly JSON and render it.
-When sending me JSON, do not enclose it in markdown.
-When sending me JSON, do not include any comments.
+When sending me plotly JSON, SEND IT WITHOUT COMMENTS OR MARKDOWN.
