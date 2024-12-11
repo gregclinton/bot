@@ -8,7 +8,8 @@ const chat = {
     },
 
     post: text => {
-        const name = document.getElementById('chat').children.length % 2 ? "ai" : 'me';
+        const count = document.getElementById('chat').children.length;
+        const name =  count % 2 ? "ai" : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -20,7 +21,7 @@ const chat = {
 
         const bottom = document.createElement('div');
 
-        bottom.id = 'id-' + (Math.floor(Math.random() * 1001) + 1000);
+        bottom.id = 'id-' + (1000 + count);
 
         const post = document.createElement('div');
         post.append(top, bottom);
