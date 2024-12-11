@@ -29,10 +29,9 @@ const chat = {
         document.getElementById('chat').appendChild(post);
 
         if ('{['.includes(text[0])) {
-            data = JSON.parse(text);
-            delete data.layout;
-            layout = { margin: { l: 50, r: 50, t: 50, b: 50 }};
-            Plotly.newPlot(bottom.id, data, layout, { displayModeBar: false });
+            spec = JSON.parse(text);
+            spec.layout = { margin: { l: 50, r: 10, t: 10, b: 50 }};
+            Plotly.newPlot(bottom.id, spec, {}, { displayModeBar: false });
         } else {
             bottom.innerHTML = text;
             Prism.highlightAll();
