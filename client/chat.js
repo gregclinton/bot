@@ -1,3 +1,5 @@
+document.title = "hal";
+
 const chat = {
     fetch: async prompt => {
         return fetch(`/bot/threads/${chat.thread}/messages`, {
@@ -9,7 +11,7 @@ const chat = {
 
     post: text => {
         const count = document.getElementById('chat').children.length;
-        const name =  count % 2 ? "hal" : 'me';
+        const name =  count % 2 ? document.title : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -39,7 +41,6 @@ const chat = {
             MathJax.typesetPromise();
         }
 
-        document.title = "ai";
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
