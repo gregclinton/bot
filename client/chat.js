@@ -20,7 +20,12 @@ const chat = {
 
         const bottom = document.createElement('div');
 
-        bottom.innerHTML = text;
+        if (text[0] === '{') {
+            bottom.id = 'plot';
+            Plotly.newPlot(bottom.id, JSON.parse(text));
+        } else {
+            bottom.innerHTML = text;
+        }
 
         const post = document.createElement('div');
         post.append(top, bottom);
