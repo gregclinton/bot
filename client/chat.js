@@ -9,7 +9,7 @@ const chat = {
 
     post: text => {
         const count = document.getElementById('chat').children.length;
-        const name =  count % 2 ? "ai" : 'me';
+        const name =  count % 2 ? "hal" : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -28,7 +28,7 @@ const chat = {
         post.classList.add('post');
         document.getElementById('chat').appendChild(post);
 
-        if (text[0] === '{') {
+        if ('{['.includes(text[0])) {
             Plotly.newPlot(bottom.id, JSON.parse(text));
         } else {
             bottom.innerHTML = text;
@@ -50,7 +50,7 @@ const chat = {
         await chat.fetch(prompt)
         .then(response => response.text())
         .then(text => {
-            if (text[0] !== '{') {
+            if (!'{['.includes(text[0])) {
                 text = text.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
                 text = marked.parse(text)
             }
