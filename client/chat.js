@@ -20,12 +20,8 @@ const chat = {
 
         const bottom = document.createElement('div');
 
-        if (text[0] === '{') {
-            bottom.id = 'plot';
-            Plotly.newPlot(bottom.id, JSON.parse(text));
-        } else {
-            bottom.innerHTML = text;
-        }
+        bottom.id = 'id-' + (Math.floor(Math.random() * 1001) + 1000);
+        bottom.innerHTML = text;
 
         const post = document.createElement('div');
         post.append(top, bottom);
@@ -34,6 +30,10 @@ const chat = {
 
         Prism.highlightAll();
         MathJax.typesetPromise();
+
+        if (text[0] === '{') {
+            Plotly.newPlot(bottom.id, JSON.parse(text));
+        }
 
         document.title = "ai";
         post.scrollIntoView({ behavior: 'smooth' });
