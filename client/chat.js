@@ -28,11 +28,11 @@ const chat = {
         post.classList.add('post');
         document.getElementById('chat').appendChild(post);
 
-        Prism.highlightAll();
-        MathJax.typesetPromise();
-
         if (text[0] === '{') {
             Plotly.newPlot(bottom.id, JSON.parse(text));
+        } else {
+            Prism.highlightAll();
+            MathJax.typesetPromise();
         }
 
         document.title = "ai";
@@ -49,8 +49,10 @@ const chat = {
         await chat.fetch(prompt)
         .then(response => response.text())
         .then(text => {
-            text = text.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
-            text = marked.parse(text)
+            if (text[0] !== '{') {
+                text = text.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
+                text = marked.parse(text)
+            }
             chat.post(text);
             chat.waiting = false;
         });
