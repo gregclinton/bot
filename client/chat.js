@@ -30,8 +30,9 @@ const chat = {
 
         if ('{['.includes(text[0])) {
             spec = JSON.parse(text);
-            spec.layout = { margin: { l: 50, r: 10, t: 10, b: 50 }};
-            Plotly.newPlot(bottom.id, spec, {}, { displayModeBar: false });
+            spec.layout ??= {}
+            spec.layout.margin = { l: 50, r: 10, t: 10, b: 50 };
+            Plotly.newPlot(bottom.id, spec);
         } else {
             bottom.innerHTML = text;
             Prism.highlightAll();
