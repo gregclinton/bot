@@ -5,7 +5,7 @@ def restart(thread):
     thread["runs"] = []
     llm.restart(thread)
 
-def back(thread)
+def back(thread):
     del thread["messages"][thread["runs"].pop():]
 
 def run(prompt, thread):
