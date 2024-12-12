@@ -13,16 +13,14 @@ def restart(thread):
 def meta():
     return {
         "description": "Talk with another chatbot.",
-        "parameters": {
-            "properties": {
-                "url": {
-                    "type": "string",
-                    "description": "The other chatbot's url."
-                },
-                "prompt": {
-                    "type": "string",
-                    "description": "Your prompt to the other chatbot."
-                }
+        "params": {
+            "url": {
+                "type": "string",
+                "description": "The other chatbot's url."
+            },
+            "prompt": {
+                "type": "string",
+                "description": "Your prompt to the other chatbot."
             }
         }
     }

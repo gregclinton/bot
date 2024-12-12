@@ -6,16 +6,14 @@ import logging
 def meta():
     return {
         "description": "Search a chromadb collection.",
-        "parameters": {
-            "properties": {
-                "collection": {
-                    "type": "string",
-                    "description": "The collection to search, either giovanni, ezno, or luca."
-                },
-                "search": {
-                    "type": "string",
-                    "description": "Search related to user's question."
-                }
+        "params": {
+            "collection": {
+                "type": "string",
+                "description": "The collection to search, either giovanni, ezno, or luca."
+            },
+            "search": {
+                "type": "string",
+                "description": "Search related to user's question."
             }
         }
     }
@@ -36,7 +34,7 @@ def create_collection(collection, prompt):
 create_collection("giovanni", """
 Output a raw JSON array of 20 strings, not objects, without markdown or comments,
 each being a pizza choice with wonderful description and price
-at Giovanni's, a fictious Chicago pizzeria. 
+at Giovanni's, a fictious Chicago pizzeria.
 """)
 
 # chromadb.PersistentClient(path="chroma").delete_collection("Medicare")

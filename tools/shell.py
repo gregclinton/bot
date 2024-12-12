@@ -3,12 +3,10 @@ import subprocess
 def meta():
     return {
         "description": "Run Linux shell commands like ls, cat, echo, sed, curl, python3, etc.",
-        "parameters": {
-            "properties": {
-                "command": {
-                    "type": "string",
-                    "description": "The shell command to be executed."
-                }
+        "params": {
+            "command": {
+                "type": "string",
+                "description": "The shell command to be executed."
             }
         }
     }

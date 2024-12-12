@@ -30,17 +30,19 @@ def invoke(messages, thread={}):
 
     for module in modules():
         meta = module.meta()
-        params = meta["parameters"]
-        params["type"] = "object"
-        params["additionalProperties"] =  False
-        params["required"] = list(params["properties"].keys())
+        params = meta["params"]
         tools.append({
             "type": "function",
             "function": {
                 "name": module.__name__[6:], # strip "tools."
                 "description": meta["description"],
                 "strict": True,
-                "parameters": params
+                "parameters": {
+                    "type": "object",
+                    "properties": params,
+                    "additionalProperties": False,
+                    "required": list(params.keys())
+                }
             }
         })
 

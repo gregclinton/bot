@@ -3,17 +3,16 @@ import os
 def meta():
     return {
         "description": "Specify llm model and temperature.",
-        "parameters": {
-            "properties": {
-                "model": {
-                    "type": "string",
-                    "description": "gpt-4o or gpt-4o-mini."
-                },
-                "temperature": {
-                    "type": "integer",
-                    "description": "0 to 100"
-                }
-            }        }
+        "params": {
+            "model": {
+                "type": "string",
+                "description": "gpt-4o or gpt-4o-mini."
+            },
+            "temperature": {
+                "type": "integer",
+                "description": "0 to 100"
+            }
+        }
     }
 
 def run(args, thread):

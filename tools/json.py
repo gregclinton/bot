@@ -1,12 +1,10 @@
 def meta():
     return {
         "description": "Process json string.",
-        "parameters": {
-            "properties": {
-                "json": {
-                    "type": "string",
-                    "description": "The json string to be processed."
-                }
+        "params": {
+            "json": {
+                "type": "string",
+                "description": "The json string to be processed."
             }
         }
     }
