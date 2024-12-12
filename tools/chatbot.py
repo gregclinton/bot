@@ -5,6 +5,7 @@ def restart(thread):
     me["bots"] = bots = me.get("bots", {})
     for url, id in bots.items():
         requests.delete(f'{url}/threads/{id}', headers={ 'Content-Type': 'text/plain' })
+    bots.clear()
 
 def meta():
     return {
