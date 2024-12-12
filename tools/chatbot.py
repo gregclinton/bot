@@ -3,7 +3,8 @@ import requests
 tool = __name__[6:] # strip "tools."
 
 def restart(thread):
-    data = thread["tools"].get(tool, {})
+    tools = thread["tools"]
+    data = tools[tool] = tools.get(tool, {})
     data["bots"] = bots = data.get("bots", {})
     for url, id in bots.items():
         requests.delete(f'{url}/threads/{id}', headers={ 'Content-Type': 'text/plain' })
