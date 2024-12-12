@@ -4,10 +4,7 @@ import json
 import logging
 
 def run(collection: str, search: str, thread: dict):
-    """
-    Search the chromadb collection using the given search string.
-    The giovanni collection is the menu for a ficticious pizzeria.
-    """
+    "Search the chromadb collection, giovanni or luca, using the given search string."
     collection = chromadb.PersistentClient(path="chroma").get_or_create_collection(name=collection)
     return "\n".join(collection.query(query_texts=search, n_results=3)["documents"][0])
 
