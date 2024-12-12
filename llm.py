@@ -7,26 +7,38 @@ from pprint import pprint
 
 load_dotenv("keys")
 
-def invoke(messages, thread={}):
-    count = 0
-    max_count = 10
-    content = None
+def tools():
     tools = []
 
     for file in os.listdir("tools"):
         if file.endswith(".py"):
-            tool = file[:-3]
-            meta = import_module(f"tools.{tool}").meta()
-            params = meta["parameters"]
-            params["type"] = "object"
-            tools.append({
-                "type": "function",
-                "function": {
-                    "name": tool,
-                    "description": meta["description"],
-                    "parameters": params
-                }
-            })
+            tools.append(import_module("tools." + file[:-3]))
+    return tools
+
+def restart(thread):
+    for tool in tools():
+        if hasattr(tool, "restart"):
+            tool.restart(thread)
+
+def invoke(messages, thread={}):
+    count = 0
+    max_count = 10
+    content = None
+
+    for tool in tools():
+        meta = tool.meta()
+        params = meta["parameters"]
+        params["type"] = "object"
+        params["additionalProperties"] =  False
+        tools.append({
+            "type": "function",
+            "function": {
+                "name": tool,
+                "description": meta["description"],
+                "strict": True,
+                "parameters": params
+            }
+        })
 
     while not content and count < max_count:
         count += 1

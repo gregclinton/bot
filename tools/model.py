@@ -2,7 +2,7 @@ import os
 
 def meta():
     return {
-        "description": "Specify llm model and/or temperature.",
+        "description": "Specify llm model and temperature.",
         "parameters": {
             "properties": {
                 "model": {
@@ -14,7 +14,7 @@ def meta():
                     "description": "0 to 100"
                 }
             },
-            "required": []
+            "required": ["model", "temperature"]
         }
     }
 

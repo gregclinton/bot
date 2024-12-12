@@ -1,5 +1,10 @@
 import requests
 
+def restart(thread):
+    thread["bots"] = bots = thread.get("bots", {})
+    for url, id in bots.items():
+        requests.delete(f'{url}/threads/{id}', headers={ 'Content-Type': 'text/plain' })
+
 def meta():
     return {
         "description": "Talk with another chatbot.",
