@@ -34,9 +34,10 @@ def invoke(messages, thread={}):
 
         for param, details in inspect.signature(module.run).parameters.items():
             params[param] = {
-                "type": details.annotation
+                "type": str(details.annotation.__name__),
+                "description": param
             }
-
+        
         tools.append({
             "type": "function",
             "function": {
