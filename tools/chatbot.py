@@ -33,7 +33,7 @@ def run(args, thread):
     headers = { "Content-Type": "text/plain" }
     post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).text
 
-    if url not in bots
+    if url not in bots:
         bots[url] = id = post("threads")
     else:
         id = bots[url]
