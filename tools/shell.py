@@ -9,8 +9,7 @@ def meta():
                     "type": "string",
                     "description": "The shell command to be executed."
                 }
-            },
-            "required": ["command"]
+            }
         }
     }
 

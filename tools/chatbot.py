@@ -23,8 +23,7 @@ def meta():
                     "type": "string",
                     "description": "Your prompt to the other chatbot."
                 }
-            },
-            "required": ["url", "prompt"]
+            }
         }
     }
 

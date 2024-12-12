@@ -16,8 +16,7 @@ def meta():
                     "type": "string",
                     "description": "Search related to user's question."
                 }
-            },
-            "required": ["collection", "search"]
+            }
         }
     }
 

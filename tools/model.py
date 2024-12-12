@@ -13,9 +13,7 @@ def meta():
                     "type": "integer",
                     "description": "0 to 100"
                 }
-            },
-            "required": ["model", "temperature"]
-        }
+            }        }
     }
 
 def run(args, thread):

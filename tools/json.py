@@ -7,8 +7,7 @@ def meta():
                     "type": "string",
                     "description": "The json string to be processed."
                 }
-            },
-            "required": ["json"]
+            }
         }
     }
 

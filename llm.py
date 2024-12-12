@@ -33,6 +33,7 @@ def invoke(messages, thread={}):
         params = meta["parameters"]
         params["type"] = "object"
         params["additionalProperties"] =  False
+        params["required"] = params["properties"].keys()
         tools.append({
             "type": "function",
             "function": {
