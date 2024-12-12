@@ -81,7 +81,8 @@ def invoke(messages, thread={}):
                 try:
                     fn = call["function"]
                     tool = fn["name"]
-                    args = json.loads(fn["arguments"]) + [thread]
+                    args = json.loads(fn["arguments"])
+                    args["thread"] = thread
                     output = import_module(f"tools.{tool}").run(**args)
                     print(f"tool {tool}:")
 
