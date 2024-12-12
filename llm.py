@@ -7,7 +7,7 @@ from pprint import pprint
 
 load_dotenv("keys")
 
-def get_tools():
+def modules():
     tools = []
 
     for file in os.listdir("tools"):
@@ -16,7 +16,7 @@ def get_tools():
     return tools
 
 def restart(thread):
-    for tool in get_tools():
+    for tool in modules():
         if hasattr(tool, "restart"):
             tool.restart(thread)
 
@@ -26,15 +26,15 @@ def invoke(messages, thread={}):
     content = None
     tools = []
 
-    for tool in get_tools():
-        meta = tool.meta()
+    for module in modules():
+        meta = module.meta()
         params = meta["parameters"]
         params["type"] = "object"
         params["additionalProperties"] =  False
         tools.append({
             "type": "function",
             "function": {
-                "name": tool,
+                "name": module.__name__[6:], # strip "tools."
                 "description": meta["description"],
                 "strict": True,
                 "parameters": params
