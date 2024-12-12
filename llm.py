@@ -33,11 +33,14 @@ def invoke(messages, thread={}):
         params = {}
 
         for param, details in inspect.signature(module.run).parameters.items():
-            params[param] = {
-                "type": str(details.annotation.__name__),
-                "description": param
-            }
+            if param != "thread":
+                params[param] = {
+                    "type": {"int": "integer", "str": "string"}[details.annotation.__name__],
+                    "description": param
+                }
         
+        print(params, flush=True)
+
         tools.append({
             "type": "function",
             "function": {
