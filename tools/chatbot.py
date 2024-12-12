@@ -11,7 +11,7 @@ def restart(thread):
     bots.clear()
 
 def run(url: str, prompt: str, thread: dict):
-    "Talk with another chatbot at the given url with the given prompt."
+    "Talks with another chatbot at the given url and the given prompt."
     bots = thread["tools"][tool]["bots"]
     headers = { "Content-Type": "text/plain" }
     post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).text

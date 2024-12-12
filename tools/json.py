@@ -1,3 +1,3 @@
 def run(json: str, thread: dict):
-    "Process a json string."
+    "Processes the given json string."
     return json
