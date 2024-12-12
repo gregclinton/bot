@@ -2,4 +2,4 @@ def run(json: str, thread: dict):
     """
     Process a json string.
     """
-    return juson
+    return json
