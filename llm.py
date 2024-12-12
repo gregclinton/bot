@@ -9,12 +9,9 @@ import inspect
 load_dotenv("keys")
 
 def modules():
-    tools = []
-
     for file in os.listdir("tools"):
         if file.endswith(".py"):
-            tools.append(import_module("tools." + file[:-3]))
-    return tools
+            yield import_module("tools." + file[:-3])
 
 def restart(thread):
     thread["tools"] = {}
@@ -38,7 +35,7 @@ def invoke(messages, thread={}):
                     "type": {"int": "integer", "str": "string"}[details.annotation.__name__],
                     "description": param
                 }
-        
+
         tools.append({
             "type": "function",
             "function": {
