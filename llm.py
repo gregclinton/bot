@@ -88,6 +88,7 @@ def invoke(messages, thread={}):
                         content = output
                         break
                     else:
+                        del args["thread"]
                         pprint(args)
                         print(output)
                         messages.append({
