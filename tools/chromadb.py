@@ -3,22 +3,10 @@ import llm
 import json
 import logging
 
-def meta():
-    return {
-        "description": "Search a chromadb collection.",
-        "params": {
-            "collection": {
-                "type": "string",
-                "description": "The collection to search, either giovanni, ezno, or luca."
-            },
-            "search": {
-                "type": "string",
-                "description": "Search related to user's question."
-            }
-        }
-    }
-
-def run(args, thread):
+def run(collection: str, search: str, thread: dict):
+    """
+    Search the chromadb collection using the given search string.
+    """
     collection = chromadb.PersistentClient(path="chroma").get_or_create_collection(name=args["collection"])
     return "\n".join(collection.query(query_texts=[args["search"]], n_results=3)["documents"][0])
 

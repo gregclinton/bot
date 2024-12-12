@@ -4,6 +4,7 @@ from importlib import import_module
 import os
 import json
 from pprint import pprint
+import inspect
 
 load_dotenv("keys")
 
@@ -29,13 +30,18 @@ def invoke(messages, thread={}):
     tools = []
 
     for module in modules():
-        meta = module.meta()
-        params = meta["params"]
+        params = {}
+
+        for param, details in inspect.signature(module.run).parameters.items():
+            params[param] = {
+                "type": details.annotation
+            }
+
         tools.append({
             "type": "function",
             "function": {
                 "name": module.__name__[6:], # strip "tools."
-                "description": meta["description"],
+                "description": module.run.__doc__,
                 "strict": True,
                 "parameters": {
                     "type": "object",
@@ -71,8 +77,8 @@ def invoke(messages, thread={}):
                 try:
                     fn = call["function"]
                     tool = fn["name"]
-                    args = json.loads(fn["arguments"])
-                    output = import_module(f"tools.{tool}").run(args, thread)
+                    args = json.loads(fn["arguments"]) + [thread]
+                    output = import_module(f"tools.{tool}").run(**args)
                     print(f"tool {tool}:")
 
                     if tool in ['json']:

@@ -10,23 +10,10 @@ def restart(thread):
         requests.delete(f'{url}/threads/{id}', headers={ 'Content-Type': 'text/plain' })
     bots.clear()
 
-def meta():
-    return {
-        "description": "Talk with another chatbot.",
-        "params": {
-            "url": {
-                "type": "string",
-                "description": "The other chatbot's url."
-            },
-            "prompt": {
-                "type": "string",
-                "description": "Your prompt to the other chatbot."
-            }
-        }
-    }
-
-def run(args, thread):
-    url = args["url"]
+def run(url: str, prompt: str, thread: dict):
+    """
+    Talk with another chatbot at the given url with the given prompt.
+    """
     bots = thread["tools"][tool]["bots"]
     headers = { "Content-Type": "text/plain" }
     post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).text
@@ -36,4 +23,4 @@ def run(args, thread):
     else:
         id = bots[url]
 
-    return post(f"threads/{id}/messages", args["prompt"])
+    return post(f"threads/{id}/messages", prompt)
