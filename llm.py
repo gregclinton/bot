@@ -16,6 +16,8 @@ def modules():
     return tools
 
 def restart(thread):
+    thread["tools"] = {}
+
     for tool in modules():
         if hasattr(tool, "restart"):
             tool.restart(thread)
