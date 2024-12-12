@@ -39,8 +39,6 @@ def invoke(messages, thread={}):
                     "description": param
                 }
         
-        print(params, flush=True)
-
         tools.append({
             "type": "function",
             "function": {
