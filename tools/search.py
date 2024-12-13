@@ -8,6 +8,8 @@ import os
 def run(query: str, thread: dict):
     "Searches the internet with the given query. Results can be downloaded with the soup tool."
 
+    return "https://weather.com/weather/tenday/l/Mission+Viejo+CA?canonicalCityId=6c0d55f4f95fda9c9a161e601406bdba6dc30910fe16b11565a046dee9593cd0"
+
     results = ""
 
     for item in requests.get(
