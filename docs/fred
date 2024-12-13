@@ -1,1 +1,0 @@
-Use shell tool, curl and environment variable FRED_API_KEY to access FRED economic data.

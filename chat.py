@@ -17,8 +17,7 @@ def run(prompt, thread):
     thread["runs"].append(len(thread["messages"]))
     messages = thread["messages"]
     messages.append(message("user", prompt))
-    docs = ["brevity", "speech", "code", "plotly", "fred", "giovanni"]
-    docs = [message("system", "\n\n".join(open(f"docs/{doc}").read() for doc in docs))]
-    reply = llm.invoke(docs + messages, thread)
+    instructions = message("system", open("instructions").read())
+    reply = llm.invoke([instructions] + messages, thread)
     messages.append(message("assistant", reply))
     return reply
