@@ -4,6 +4,7 @@ import os
 import json
 from pprint import pprint
 import inspect
+import sys
 
 def modules():
     for file in os.listdir("tools"):
@@ -95,4 +96,5 @@ def invoke(messages, thread={}):
                 except Exception as e:
                     return str(e)
 
+    sys.modules.pop(m.__name__) for m in modules()
     return content or "Could you rephrase that, please?"
