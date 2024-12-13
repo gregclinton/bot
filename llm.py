@@ -1,3 +1,5 @@
+# https://platform.openai.com/docs/api-reference/chat
+
 import requests
 from importlib import import_module
 import os
