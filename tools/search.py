@@ -17,7 +17,7 @@ def run(query: str, thread: dict):
             "cx": os.environ["CUSTOM_SEARCH_CX"],
             "q": query,
             "num": 3
-        }
+        },
         headers = {
             "Content-Type": "application/json",
         }).json()["items"]:
