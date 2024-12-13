@@ -22,6 +22,7 @@ def run(query: str, thread: dict):
             "Content-Type": "application/json",
         }).json()["items"]:
 
-        results += "\n".join([item["formattedUrl"], item["title"], item["snippet"]]) + "\n\n"
+        print(item, flush=True)
+        results += "\n".join([item["link"], item["title"], item["snippet"]]) + "\n\n"
     
     return results
