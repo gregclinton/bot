@@ -65,8 +65,7 @@ def invoke(messages, thread={}):
                 "temperature": thread.get("temperature", 0),
                 "messages": messages,
                 "tools": tools,
-                "tool_choice": "auto",
-                "parallel_tool_calls": False
+                "tool_choice": "auto"
             }).json()["choices"][0]["message"]
 
         content = message.get("content")
