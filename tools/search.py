@@ -6,7 +6,7 @@ import requests
 import os
 
 def run(query: str, thread: dict):
-    "Searches the internet with the given query. Results can be downloaded with the soup tool."
+    "Searches the internet with the given query. Results can be downloaded with the boiler tool."
 
     results = ""
 
