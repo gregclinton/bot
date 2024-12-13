@@ -1,3 +1,6 @@
+# https://programmablesearchengine.google.com/controlpanel/all
+# https://console.cloud.google.com/apis/credentials?project=gen-lang-client-0620307586
+
 import requests
 from importlib import import_module
 import os
