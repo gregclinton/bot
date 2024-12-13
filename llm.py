@@ -19,6 +19,7 @@ def reset(thread):
     for tool in modules():
         if hasattr(tool, "reset"):
             tool.reset(thread)
+    return thread
 
 def invoke(messages, thread={}):
     count = 0

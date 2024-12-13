@@ -3,7 +3,7 @@ import llm
 def reset(thread):
     thread["messages"] = []
     thread["runs"] = []
-    llm.reset(thread)
+    return llm.reset(thread)
 
 def back(thread):
     del thread["messages"][thread["runs"].pop():]
