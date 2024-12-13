@@ -13,7 +13,6 @@ async def post_message(req: Request, id: str):
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
     chat.reset(threads[id])
-    threads.pop(id, None)
     return "success"
 
 @app.delete('/threads/{id}/messages')
