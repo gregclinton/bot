@@ -6,17 +6,22 @@ import requests
 import os
 
 def run(query: str, thread: dict):
-    "Searches the internet with the given query."
+    "Searches the internet with the given query. Results can be downloaded with the soup tool."
 
-    res = requests.get(
+    results = ""
+
+    for item in requests.get(
         "https://customsearch.googleapis.com/customsearch/v1",
         params = {
             "api_key": os.environ["CUSTOM_SEARCH_API_KEY"],
             "cx": os.environ["CUSTOM_SEARCH_CX"],
-            "q": query
+            "q": query,
+            "num": 3
         }
         headers = {
             "Content-Type": "application/json",
-        }).json()
+        }).json()["items"]:
 
-    return res
+        results += "\n".join([item["formattedUrl"], item["title"], item["snippet"]]) + "\n\n"
+    
+    return results
