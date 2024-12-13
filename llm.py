@@ -6,16 +6,20 @@ from pprint import pprint
 import inspect
 import sys
 
-def modules():
+def tool_module_names():
     for file in os.listdir("tools"):
         if file.endswith(".py"):
-            yield import_module("tools." + file[:-3])
+            yield "tools." + file[:-3]
+
+def tool_modules():
+    for name in tool_modules_names():
+        yield import_module(name)
 
 def reset(thread):
     thread["tools"] = {}
 
-    for tool in modules():
-        if hasattr(tool, "reset"):
+    for module in tool_modules():
+        if hasattr(module, "reset"):
             tool.reset(thread)
     return thread
 
@@ -25,7 +29,7 @@ def invoke(messages, thread={}):
     content = None
     tools = []
 
-    for module in modules():
+    for module in tool_modules():
         params = {}
 
         for param, details in inspect.signature(module.run).parameters.items():
@@ -96,5 +100,5 @@ def invoke(messages, thread={}):
                 except Exception as e:
                     return str(e)
 
-    sys.modules.pop(m.__name__) for m in modules()
+    [sys.modules.pop(name) for name in tool_module_names()]
     return content or "Could you rephrase that, please?"
