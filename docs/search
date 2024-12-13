@@ -1,2 +1,0 @@
-Use curl from shell and my CUSTOM_SEARCH_API_KEY and CUSTOM_SEARCH_CX in environment to do google searches.
-Always use --data-urlencode for secrets.
