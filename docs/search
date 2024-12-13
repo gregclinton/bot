@@ -1,1 +1,2 @@
 Use curl from shell and my GOOGLE_API_KEY and CSE_ID in environment to do google searches.
+Always use --data-urlencode for keys and ids.

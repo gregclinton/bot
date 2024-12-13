@@ -1,12 +1,9 @@
 import requests
-from dotenv import load_dotenv
 from importlib import import_module
 import os
 import json
 from pprint import pprint
 import inspect
-
-load_dotenv("keys")
 
 def modules():
     for file in os.listdir("tools"):
