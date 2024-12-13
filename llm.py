@@ -12,7 +12,7 @@ def tool_module_names():
             yield "tools." + file[:-3]
 
 def tool_modules():
-    for name in tool_modules_names():
+    for name in tool_module_names():
         yield import_module(name)
 
 def reset(thread):
@@ -20,7 +20,7 @@ def reset(thread):
 
     for module in tool_modules():
         if hasattr(module, "reset"):
-            tool.reset(thread)
+            module.reset(thread)
     return thread
 
 def invoke(messages, thread={}):
