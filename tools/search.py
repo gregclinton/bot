@@ -2,10 +2,21 @@
 # https://programmablesearchengine.google.com/controlpanel/all
 # https://console.cloud.google.com/apis/credentials?project=gen-lang-client-0620307586
 
-# Use curl from shell and my CUSTOM_SEARCH_API_KEY and CUSTOM_SEARCH_CX in environment to do google searches.
+import requests
+import os
 
 def run(query: str, thread: dict):
     "Searches the internet with the given query."
 
+    res = requests.get(
+        "https://customsearch.googleapis.com/customsearch/v1",
+        params = {
+            "api_key": os.environ["CUSTOM_SEARCH_API_KEY"],
+            "cx": os.environ["CUSTOM_SEARCH_CX"],
+            "q": query
+        }
+        headers = {
+            "Content-Type": "application/json",
+        }).json()
 
-    return "Nothing found."
+    return res
