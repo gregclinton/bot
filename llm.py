@@ -93,12 +93,17 @@ def invoke(messages, thread={}):
                         del args["thread"]
                         pprint(args)
                         print(output)
+
+                        if tool == "recap":
+                            messages.clear()
+
                         messages.append({
                             "role": "tool",
                             "tool_call_id": call["id"],
                             "name": tool,
                             "content": output
                         })
+
                 except Exception as e:
                     return str(e)
 
