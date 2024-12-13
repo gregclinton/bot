@@ -13,12 +13,12 @@ def modules():
         if file.endswith(".py"):
             yield import_module("tools." + file[:-3])
 
-def restart(thread):
+def reset(thread):
     thread["tools"] = {}
 
     for tool in modules():
-        if hasattr(tool, "restart"):
-            tool.restart(thread)
+        if hasattr(tool, "reset"):
+            tool.reset(thread)
 
 def invoke(messages, thread={}):
     count = 0

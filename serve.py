@@ -12,13 +12,13 @@ async def post_message(req: Request, id: str):
 
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
-    chat.restart(threads[id])
+    chat.reset(threads[id])
     threads.pop(id, None)
     return "success"
 
 @app.delete('/threads/{id}/messages')
 async def delete_messages(id: str):
-    chat.restart(threads[id])
+    chat.reset(threads[id])
     return "success"
 
 @app.delete('/threads/{id}/messages/last')
@@ -30,6 +30,6 @@ async def delete_last_message(id: str):
 async def post_thread():
     id = str(10000 + len(threads))
     thread = {}
-    chat.restart(thread)
+    chat.reset(thread)
     threads[id] = thread
     return id

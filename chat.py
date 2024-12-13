@@ -1,9 +1,9 @@
 import llm
 
-def restart(thread):
+def reset(thread):
     thread["messages"] = []
     thread["runs"] = []
-    llm.restart(thread)
+    llm.reset(thread)
 
 def back(thread):
     del thread["messages"][thread["runs"].pop():]

@@ -2,7 +2,7 @@ import requests
 
 tool = __name__[6:] # strip "tools."
 
-def restart(thread):
+def reset(thread):
     tools = thread["tools"]
     data = tools[tool] = tools.get(tool, {})
     data["bots"] = bots = data.get("bots", {})
