@@ -1,0 +1,3 @@
+When a chart, graph or plot is requested,
+generate plotly json
+and use the json tool to process the json string.

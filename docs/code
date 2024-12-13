@@ -1,0 +1,6 @@
+Code should be minimal, approachable and succinct.
+Code should contain no comments.
+Avoid variable names with compound words which require underscore in python and camel in javascript.
+Words heard in kindergarten are best: run, stop, play, find, etc.
+Declare variables close to where they are used.
+Do not declare variables or functions if the code can be inlined.
