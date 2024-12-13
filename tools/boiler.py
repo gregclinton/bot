@@ -1,4 +1,3 @@
-import requests
 from boilerpy3 import extractors
 
 def run(url: str, thread: dict):
