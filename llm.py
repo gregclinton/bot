@@ -92,7 +92,7 @@ def invoke(messages, thread={}):
                         del args["thread"]
 
                         [print(arg) for arg in args.values()]
-                        print(f"{output}\n")
+                        print(f"\n{output}\n")
 
                         if tool == "recap":
                             messages.clear()
