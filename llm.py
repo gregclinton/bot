@@ -1,59 +1,16 @@
 # https://platform.openai.com/docs/api-reference/chat
 
 import requests
-from importlib import import_module
 import os
 import json
-import inspect
-import sys
-
-def tool_module_names():
-    for file in os.listdir("tools"):
-        if file.endswith(".py"):
-            yield "tools." + file[:-3]
-
-def tool_modules():
-    for name in tool_module_names():
-        yield import_module(name)
+import tool
 
 def reset(thread):
-    thread["tools"] = {}
+    return tool.reset(thread)
 
-    for module in tool_modules():
-        if hasattr(module, "reset"):
-            module.reset(thread)
-    return thread
-
-def invoke(messages, thread={}):
-    tools = []
-
-    for module in tool_modules():
-        params = {}
-
-        for param, details in inspect.signature(module.run).parameters.items():
-            if param != "thread":
-                params[param] = {
-                    "type": {"int": "integer", "str": "string"}[details.annotation.__name__],
-                    "description": param
-                }
-
-        tools.append({
-            "type": "function",
-            "function": {
-                "name": module.__name__[6:], # strip "tools."
-                "description": module.run.__doc__,
-                "strict": True,
-                "parameters": {
-                    "type": "object",
-                    "properties": params,
-                    "additionalProperties": False,
-                    "required": list(params.keys())
-                }
-            }
-        })
-
-    count = 0
+def invoke(messages, thread):
     content = None
+    count = 0
 
     while not content and count < 10:
         count += 1
@@ -64,10 +21,10 @@ def invoke(messages, thread={}):
                 'Content-Type': 'application/json',
             },
             json = {
-                "model": thread.get("model", "gpt-4o"),
-                "temperature": thread.get("temperature", 0),
+                "model": thread["model"],
+                "temperature": thread["temperature"],
                 "messages": messages,
-                "tools": tools,
+                "tools": tool.bench(),
                 "tool_choice": "auto"
             }).json()["choices"][0]["message"]
 
@@ -79,13 +36,13 @@ def invoke(messages, thread={}):
             for call in message.get("tool_calls", []):
                 try:
                     fn = call["function"]
-                    tool = fn["name"]
+                    name = fn["name"]
                     args = json.loads(fn["arguments"])
                     args["thread"] = thread
-                    output = import_module(f"tools.{tool}").run(**args)
-                    print(f"{tool}:")
+                    output = tool.run(name, args)
+                    print(f"{name}:")
 
-                    if tool in ['json']:
+                    if name in ['json']:
                         content = output
                         break
                     else:
@@ -94,18 +51,18 @@ def invoke(messages, thread={}):
                         [print(arg) for arg in args.values()]
                         print(f"\n{output}\n")
 
-                        if tool == "recap":
+                        if name == "recap":
                             messages.clear()
 
                         messages.append({
                             "role": "tool",
                             "tool_call_id": call["id"],
-                            "name": tool,
+                            "name": name,
                             "content": output
                         })
 
                 except Exception as e:
                     return str(e)
 
-    [sys.modules.pop(name) for name in tool_module_names()]
+    tool.close()
     return content or "Could you rephrase that, please?"

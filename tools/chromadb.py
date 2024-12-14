@@ -1,5 +1,4 @@
 import chromadb
-import llm
 import json
 import logging
 
@@ -19,7 +18,16 @@ logging.getLogger('chromadb').setLevel(logging.ERROR)
 
 def create_collection(collection, prompt):
     return
-    documents = json.loads(llm.invoke([{"role": "user", "content": prompt}]))
+    documents = json.loads(requests.post("https://api.openai.com/v1/chat/completions",
+        headers = {
+            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
+            'Content-Type': 'application/json',
+        },
+        json = {
+            "model": "gpt-4o-mini",
+            "temperature": 0,
+            "messages": [{"role": "user", "content": prompt}]
+        }).json()["choices"][0]["message"]["content"])
     ids = [str(i) for i in range(10000, 10000 + len(documents))]
     chromadb.PersistentClient(path="chroma").get_or_create_collection(name=collection).add(documents=documents, ids=ids)
 
