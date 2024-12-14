@@ -5,11 +5,15 @@
 from boilerpy3 import extractors
 import requests
 import os
+from datetime import datetime
 
 def run(query: str, thread: dict):
     "Searches the internet with the given query."
 
-    text = "Mish-mash of google search results extracted by boilerpy3: \n\n\n"
+    today = datetime.now().strftime("%B %d, %Y")
+    text = f"Mish-mash of google search results from today, {today}, extracted by boilerpy3: \n\n\n"
+
+    extractor = extractors.KeepEverythingExtractor()
 
     for item in requests.get(
         "https://customsearch.googleapis.com/customsearch/v1",
@@ -19,7 +23,11 @@ def run(query: str, thread: dict):
             "q": query,
             "num": 3
         }).json()["items"]:
-        text += extractors.KeepEverythingExtractor().get_content_from_url(item["link"]).replace("\n", " ")
+
+        res = requests.get(item["link"], headers = {'User-Agent': 'Chrome/50.0.2661.102'})
+
+        if res.ok:
+            text += extractor.get_content(res.text).replace("\n", " ")
 
     return requests.post(
         "https://api.openai.com/v1/chat/completions",
