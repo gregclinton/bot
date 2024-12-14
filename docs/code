@@ -4,3 +4,6 @@ Avoid variable names with compound words which require underscore in python and 
 Words heard in kindergarten are best: run, stop, play, find, etc.
 Declare variables close to where they are used.
 Do not declare variables or functions if the code can be inlined.
+
+My source code for you, the assistant, can be found in the current working directory.
+You can access this code using the shell tool.
