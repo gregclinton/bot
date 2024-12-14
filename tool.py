@@ -45,8 +45,8 @@ def open():
         }
     } for module in modules()]
 
-def run(tool, args):
-    return import_module(f"tools.{tool}").run(**args)
+def run(name, args):
+    return import_module(f"tools.{name}").run(**args)
 
 def close():
     [sys.modules.pop(name) for name in module_names()]
