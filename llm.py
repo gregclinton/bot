@@ -25,9 +25,6 @@ def reset(thread):
     return thread
 
 def invoke(messages, thread={}):
-    count = 0
-    max_count = 10
-    content = None
     tools = []
 
     for module in tool_modules():
@@ -55,7 +52,10 @@ def invoke(messages, thread={}):
             }
         })
 
-    while not content and count < max_count:
+    count = 0
+    content = None
+
+    while not content and count < 10:
         count += 1
         message = requests.post(
             "https://api.openai.com/v1/chat/completions",
