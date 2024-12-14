@@ -36,35 +36,36 @@ def invoke(messages, thread):
             tool_messages.append(message)
 
             for call in message.get("tool_calls", []):
+                fn = call["function"]
+                name = fn["name"]
+                args = json.loads(fn["arguments"])
+                args["thread"] = thread
+
                 try:
-                    fn = call["function"]
-                    name = fn["name"]
-                    args = json.loads(fn["arguments"])
-                    args["thread"] = thread
                     output = tool.run(name, args)
-                    print(f"{name}:")
-
-                    if name in ['json']:
-                        content = output
-                        break
-                    else:
-                        del args["thread"]
-
-                        [print(arg) for arg in args.values()]
-                        print(f"\n{output}\n")
-
-                        if name == "recap":
-                            messages.clear()
-
-                        tool_messages.append({
-                            "role": "tool",
-                            "tool_call_id": call["id"],
-                            "name": name,
-                            "content": output
-                        })
-
                 except Exception as e:
-                    return str(e)
+                    output = str(e)
+
+                print(f"{name}:")
+
+                if name in ['json']:
+                    content = output
+                    break
+                else:
+                    del args["thread"]
+
+                    [print(arg) for arg in args.values()]
+                    print(f"\n{output}\n")
+
+                    if name == "recap":
+                        messages.clear()
+
+                    tool_messages.append({
+                        "role": "tool",
+                        "tool_call_id": call["id"],
+                        "name": name,
+                        "content": output
+                    })
 
     tool.close()
     return content or "Could you rephrase that, please?"
