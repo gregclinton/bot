@@ -48,4 +48,4 @@ async def speech_to_text(file: UploadFile):
     ).json()["text"]
 
 app.include_router(api)
-app.mount("/", StaticFiles(directory="client", html=True), name="static")
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
