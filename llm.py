@@ -83,14 +83,15 @@ def invoke(messages, thread={}):
                     args = json.loads(fn["arguments"])
                     args["thread"] = thread
                     output = import_module(f"tools.{tool}").run(**args)
-                    print(f"tool {tool}:")
+                    print(f"{tool}:")
 
                     if tool in ['json']:
                         content = output
                         break
                     else:
                         del args["thread"]
-                        print(args)
+
+                        [print(arg) for arg in args.values()]
                         print(output)
 
                         if tool == "recap":
