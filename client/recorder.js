@@ -51,7 +51,7 @@ const recorder = {
         data.append('language', 'en'); // optional but improves accuracy and latency
         data.append('response_format', 'text');
 
-        return fetch('/openai/v1/audio/transcriptions', {
+        return fetch('/bot/transcriptions', {
             method: 'POST',
             body: data
         });
