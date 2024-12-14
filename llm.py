@@ -12,6 +12,7 @@ def invoke(messages, thread):
     content = None
     count = 0
     bench = tool.open()
+    tool_messages = []
 
     while not content and count < 10:
         count += 1
@@ -24,7 +25,7 @@ def invoke(messages, thread):
             json = {
                 "model": thread["model"],
                 "temperature": thread["temperature"],
-                "messages": messages,
+                "messages": messages + tool_messages,
                 "tools": bench,
                 "tool_choice": "auto"
             }).json()["choices"][0]["message"]
@@ -32,7 +33,7 @@ def invoke(messages, thread):
         content = message.get("content")
 
         if not content:
-            messages.append(message)
+            tool_messages.append(message)
 
             for call in message.get("tool_calls", []):
                 try:
@@ -55,7 +56,7 @@ def invoke(messages, thread):
                         if name == "recap":
                             messages.clear()
 
-                        messages.append({
+                        tool_messages.append({
                             "role": "tool",
                             "tool_call_id": call["id"],
                             "name": name,
