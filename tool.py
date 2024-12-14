@@ -20,7 +20,7 @@ def reset(thread):
             module.reset(thread)
     return thread
 
-def bench():
+def open():
     return [{
         "type": "function",
         "function": {

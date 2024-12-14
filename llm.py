@@ -11,6 +11,7 @@ def reset(thread):
 def invoke(messages, thread):
     content = None
     count = 0
+    bench = tool.open()
 
     while not content and count < 10:
         count += 1
@@ -24,7 +25,7 @@ def invoke(messages, thread):
                 "model": thread["model"],
                 "temperature": thread["temperature"],
                 "messages": messages,
-                "tools": tool.bench(),
+                "tools": bench,
                 "tool_choice": "auto"
             }).json()["choices"][0]["message"]
 
