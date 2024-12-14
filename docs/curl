@@ -1,1 +1,1 @@
-When using curl, avoid quotes except for secrets, where you should use --data-urlencode.
+When using curl, put all of the command on one line -- no line breaks. Use --data-urlencode for secrets.
