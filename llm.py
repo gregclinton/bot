@@ -4,7 +4,6 @@ import requests
 from importlib import import_module
 import os
 import json
-from pprint import pprint
 import inspect
 import sys
 
@@ -91,7 +90,7 @@ def invoke(messages, thread={}):
                         break
                     else:
                         del args["thread"]
-                        pprint(args)
+                        print(args)
                         print(output)
 
                         if tool == "recap":
