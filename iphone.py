@@ -38,8 +38,8 @@ async def post_thread():
     threads[id] = chat.reset({})
     return id
 
-@api.post("/transcriptions")
-async def speech_to_text(file: UploadFile):
+@api.post("/openai/v1/audio/transcriptions")
+async def speech(file: UploadFile):
     return requests.post(
         "https://api.openai.com/v1/audio/transcriptions",
         headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
