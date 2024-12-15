@@ -5,7 +5,7 @@ import sys
 
 def module_names():
     for file in os.listdir("tools"):
-        if file.endswith(".py"):
+        if file.endswith(".py") and file != "chromadb.py":
             yield "tools." + file[:-3]
 
 def modules():
