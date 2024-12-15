@@ -9,7 +9,7 @@ def run(collection: str, search: str, thread: dict):
     collections = [collection.name for collection in client.list_collections()]
 
     if collection in collections:
-        collection = client.get_collection(name=collection)
+        collection = client.get_collection(collection)
 
         text = f"Mish-mash of chromadb search results:\n\n\n"
         text += " ".join(collection.query(query_texts=search, n_results=3)["documents"][0])
