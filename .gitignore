@@ -1,6 +1,9 @@
 keys
 __pycache__
-nginx.conf
 .cache
 chroma
-answers
+.config
+.local
+.bash*
+.gitconfig
+.netrc
