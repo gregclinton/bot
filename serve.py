@@ -34,6 +34,7 @@ async def delete_last_message(id: str):
 
 @api.post('/threads')
 async def post_thread():
+    threads.clear() # heroku workaround
     id = str(10000 + len(threads))
     threads[id] = chat.reset({})
     return id
