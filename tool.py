@@ -2,9 +2,11 @@ from importlib import import_module
 import inspect
 import os
 import sys
+import builtins
 
 def module_names():
-    return open("tools/use").read().split(",")
+    for name in builtins.open("tools/use").read().split(","):
+        yield(f"tools.{name}")
 
 def modules():
     for name in module_names():
