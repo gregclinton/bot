@@ -6,6 +6,7 @@ import json
 import tool
 
 endpoint = "https://api.openai.com/v1/chat/completions"
+
 def headers():
     return {
         'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
