@@ -62,7 +62,7 @@ def invoke(messages, thread):
                     [print(arg) for arg in args.values()]
                     print(f"\n{output}\n")
 
-                    if name == "recap":
+                    if name == "digest":
                         messages.clear()
 
                     tool_messages.append({
