@@ -3,9 +3,10 @@
 # https://console.cloud.google.com/apis/credentials?project=gen-lang-client-0620307586
 
 from boilerpy3 import extractors
-import requests
+import llm
 import os
 from datetime import datetime
+import requests
 
 def run(query: str, thread: dict):
     "Searches the internet with the given query."
@@ -29,15 +30,5 @@ def run(query: str, thread: dict):
         if res.ok:
             text += extractor.get_content(res.text).replace("\n", " ")
 
-    return requests.post(
-        "https://api.openai.com/v1/chat/completions",
-        headers = {
-            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
-            'Content-Type': 'application/json',
-        },
-        json = {
-            "model": "gpt-4o-mini",
-            "temperature": 0,
-            "messages": [{"role": "user", "content": text + f"\n\n\nQuery:\n{query}\nAnswer:\n"}]
-        }).json()["choices"][0]["message"]["content"]
+    return llm.mini(text + f"\n\n\nQuery:\n{query}\nAnswer:\n")
 

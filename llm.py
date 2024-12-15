@@ -5,6 +5,13 @@ import os
 import json
 import tool
 
+endpoint = "https://api.openai.com/v1/chat/completions"
+def headers():
+    return {
+        'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
+        'Content-Type': 'application/json',
+    }
+
 def reset(thread):
     return tool.reset(thread)
 
@@ -17,11 +24,8 @@ def invoke(messages, thread):
     while not content and count < 10:
         count += 1
         message = requests.post(
-            "https://api.openai.com/v1/chat/completions",
-            headers = {
-                'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
-                'Content-Type': 'application/json',
-            },
+            endpoint,
+            headers = headers(),
             json = {
                 "model": thread["model"],
                 "temperature": thread["temperature"],
@@ -69,3 +73,13 @@ def invoke(messages, thread):
 
     tool.close()
     return content or "Could you rephrase that, please?"
+
+def mini(query):
+    return requests.post(
+        endpoint,
+        headers = headers(),
+        json = {
+            "model": "gpt-4o-mini",
+            "temperature": 0,
+            "messages": [{"role": "user", "content": query}]
+        }).json()["choices"][0]["message"]["content"]
