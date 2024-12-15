@@ -1,3 +1,8 @@
+# sudo docker run -it -v `pwd`:/root -w /root heroku:latest bash
+# git config --global --add safe.directory /root
+# heroku git:remote -a hal-bot
+# git push heroku main
+
 from fastapi import FastAPI, Request, APIRouter, UploadFile
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
