@@ -1,9 +1,3 @@
-# sudo docker run -it -v `pwd`:/root -w /root heroku:latest bash
-# git config --global --add safe.directory /root
-# heroku git:remote -a hal-bot
-# git push heroku main
-# heroku config:set SECRET_KEY=your_secret API_TOKEN=your_token --app your-app-name
-
 from fastapi import FastAPI, Request, APIRouter, UploadFile
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
