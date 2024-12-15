@@ -1,9 +1,3 @@
 keys
 __pycache__
-.cache
 chroma
-.config
-.local
-.bash*
-.gitconfig
-.netrc
