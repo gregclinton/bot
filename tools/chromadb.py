@@ -34,4 +34,4 @@ each being a pizza choice with wonderful description and price
 at Giovanni's, a fictious Chicago pizzeria.
 """)
 
-# chromadb.PersistentClient(path="chroma").delete_collection("medicare")
+# chromadb.PersistentClient(path=path).delete_collection("medicare")
