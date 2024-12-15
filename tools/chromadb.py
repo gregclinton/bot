@@ -10,7 +10,6 @@ def run(collection: str, search: str, thread: dict):
 
     if collection in collections:
         collection = client.get_or_create_collection(name=collection)
-        today = datetime.now().strftime("%B %d, %Y")
 
         text = f"Mish-mash of chromadb search results:\n\n\n"
         text += " ".join(collection.query(query_texts=search, n_results=3)["documents"][0])
@@ -18,7 +17,6 @@ def run(collection: str, search: str, thread: dict):
         return llm.mini(text + f"\n\n\nQuery:\n{search}\nAnswer:\n")
     else:
         return f"The collection \"{collection}\" was not found. Our collections include: " + ", ".join(collections)
-
 
 logging.getLogger('chromadb').setLevel(logging.ERROR)
 
