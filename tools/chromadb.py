@@ -1,6 +1,7 @@
 import chromadb
 import json
 import logging
+import llm
 
 def run(collection: str, search: str, thread: dict):
     "Searches the given chromadb collection using the given search string."
@@ -18,16 +19,7 @@ logging.getLogger('chromadb').setLevel(logging.ERROR)
 
 def create_collection(collection, prompt):
     return
-    documents = json.loads(requests.post("https://api.openai.com/v1/chat/completions",
-        headers = {
-            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
-            'Content-Type': 'application/json',
-        },
-        json = {
-            "model": "gpt-4o-mini",
-            "temperature": 0,
-            "messages": [{"role": "user", "content": prompt}]
-        }).json()["choices"][0]["message"]["content"])
+    documents = json.loads(llm.mini(prompt))
     ids = [str(i) for i in range(10000, 10000 + len(documents))]
     chromadb.PersistentClient(path="chroma").get_or_create_collection(name=collection).add(documents=documents, ids=ids)
 
