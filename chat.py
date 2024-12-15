@@ -1,5 +1,6 @@
 import llm
 from dotenv import load_dotenv
+from datetime import datetime
 
 def reset(thread):
     thread["messages"] = []
@@ -20,7 +21,9 @@ def run(prompt, thread):
     messages = thread["messages"]
     messages.append(message("user", prompt))
     toc = open("docs/toc").read().split(",")
-    docs = [message("system", "\n\n".join(open(f"docs/{doc}").read() for doc in toc))]
+    docs = "\n\n".join(open(f"docs/{doc}").read() for doc in toc)
+    docs = docs.replace("{today}", datetime.now().strftime("%B %d, %Y"))
+    docs = [message("system", docs)]
     reply = llm.invoke(docs + messages, thread)
     messages.append(message("assistant", reply))
     return reply
