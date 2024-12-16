@@ -20,11 +20,11 @@ async def openai_transcriptions(file: UploadFile):
 url = lambda path: f"http://localhost:8123/{path}"
 
 @app.post("/bot/{path:path}")
-async def post_to_hal(request: Request, path: str):
+async def post_to_bot(request: Request, path: str):
     return requests.post(url(path), data = (await request.body())).text
 
 @app.delete("/bot/{path:path}")
-async def delete_from_hal(request: Request, path: str):
+async def delete_from_bot(request: Request, path: str):
     return requests.delete(url(path), data = (await request.body())).text
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
