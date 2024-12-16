@@ -12,7 +12,7 @@ load_dotenv("keys")
 app = FastAPI(default_response_class=PlainTextResponse)
 
 @app.post("/openai/v1/audio/transcriptions")
-async def speech(file: UploadFile):
+async def openai_transcriptions(file: UploadFile):
     return requests.post(
         "https://api.openai.com/v1/audio/transcriptions",
         headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
@@ -23,11 +23,11 @@ async def speech(file: UploadFile):
 url = lambda path: f"http://hal:8123/{path}"
 
 @app.post("/bot/{path:path}")
-async def proxy_bot(request: Request, path: str):
+async def post_to_hal(request: Request, path: str):
     return requests.post(url(path), data = (await request.body())).text
 
 @app.delete("/bot/{path:path}")
-async def proxy_bot(request: Request, path: str):
+async def delete_from_hal(request: Request, path: str):
     return requests.delete(url(path), data = (await request.body())).text
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
