@@ -1,3 +1,5 @@
+# uvicorn bot:app --host 0.0.0.0 --port 8123
+
 from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
 import chat
