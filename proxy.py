@@ -8,7 +8,7 @@ load_dotenv("keys")
 
 app = FastAPI()
 
-app.mount("/", StaticFiles(directory="/home/greg/hal/client", html=True), name="client")
+app.mount("/", StaticFiles(directory="client", html=True), name="client")
 
 @app.api_route("/openai/{path:path}", methods=["GET", "POST", "PUT", "DELETE"])
 async def proxy_openai(request: Request, path: str):
