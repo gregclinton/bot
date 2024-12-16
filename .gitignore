@@ -1,5 +1,4 @@
 keys
 __pycache__
 chroma
-nginx.conf
 *.pem
