@@ -1,7 +1,4 @@
-# poor man's nginx
-# export OPENAI_API_KEY=xxx
-# openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/CN=example.com"
-# uvicorn proxy:app --host 0.0.0.0 --port 443 --ssl-keyfile key.pem --ssl-certfile cert.pem
+# curl -k -X POST https://localhost/bot/threads
 
 from fastapi import FastAPI, Request, UploadFile
 from fastapi.responses import PlainTextResponse
@@ -20,7 +17,7 @@ async def openai_transcriptions(file: UploadFile):
         data = { "model": "whisper-1" }
     ).json()["text"]
 
-url = lambda path: f"http://hal:8123/{path}"
+url = lambda path: f"http://localhost:8123/{path}"
 
 @app.post("/bot/{path:path}")
 async def post_to_hal(request: Request, path: str):
