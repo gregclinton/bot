@@ -1,31 +1,33 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import FileResponse, JSONResponse
+# poor man's nginx
+
+from fastapi import FastAPI, Request, UploadFile
+from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 from dotenv import load_dotenv
-import httpx
+import os
+import requests
 
 load_dotenv("keys")
 
-app = FastAPI()
+app = FastAPI(default_response_class=PlainTextResponse)
+
+@app.post("/openai/v1/audio/transcriptions")
+async def speech(file: UploadFile):
+    return requests.post(
+        "https://api.openai.com/v1/audio/transcriptions",
+        headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
+        files = { "file": (file.filename, await file.read(), file.content_type) },
+        data = { "model": "whisper-1" }
+    ).json()["text"]
+
+url = lambda path: f"http://hal:8123/{path}"
+
+@app.post("/bot/{path:path}")
+async def proxy_bot(request: Request, path: str):
+    return requests.post(url(path), data = (await request.body())).text
+
+@app.delete("/bot/{path:path}")
+async def proxy_bot(request: Request, path: str):
+    return requests.delete(url(path), data = (await request.body())).text
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
-
-@app.api_route("/openai/{path:path}", methods = ["GET", "POST", "PUT", "DELETE"])
-async def proxy_openai(request: Request, path: str):
-    url = f"https://api.openai.com/{path}"
-    headers = dict(request.headers)
-    headers["Authorization"] = "Bearer " + os.environ["OPENAI_API_KEY"]
-    async with httpx.AsyncClient() as client:
-        response  =  await client.request(
-            request.method, url, headers = headers, content = await request.body()
-        )
-    return JSONResponse(content = response.json(), status_code = response.status_code)
-
-@app.api_route("/bot/{path:path}", methods = ["GET", "POST", "PUT", "DELETE"])
-async def proxy_bot(request: Request, path: str):
-    url  =  f"http://127.0.0.1:8123/{path}"
-    async with httpx.AsyncClient() as client:
-        response  =  await client.request(
-            request.method, url, headers = dict(request.headers), content = await request.body()
-        )
-    return JSONResponse(content = response.json(), status_code = response.status_code)
