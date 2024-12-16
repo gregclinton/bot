@@ -17,7 +17,7 @@ def reset(thread):
 def run(url: str, prompt: str, thread: dict):
     "Talks with another chatbot at the given url and the given prompt."
     bots = thread["tools"][name]["bots"]
-    post = lambda path, data = "": requests.post(f"{url}/{path}", verify =  False, data = data, headers = headers).text
+    post = lambda path, data = "": requests.post(f"{url}/{path}", verify = False, data = data, headers = headers).text
 
     if url not in bots:
         bots[url] = id = post("threads")
