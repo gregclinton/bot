@@ -1,4 +1,7 @@
 import requests
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 name = __name__[6:] # strip "tools."
 headers = { "Content-Type": "text/plain" }
@@ -14,7 +17,7 @@ def reset(thread):
 def run(url: str, prompt: str, thread: dict):
     "Talks with another chatbot at the given url and the given prompt."
     bots = thread["tools"][name]["bots"]
-    post = lambda path, data = "": requests.post(f"{url}/{path}", data = data, headers = headers).text
+    post = lambda path, data = "": requests.post(f"{url}/{path}", verify =  False, data = data, headers = headers).text
 
     if url not in bots:
         bots[url] = id = post("threads")
