@@ -9,3 +9,5 @@ COPY ./*.py /root
 COPY ./tools /root/tools
 COPY ./docs /root/docs
 COPY ./client /root/client
+COPY ./up /root
+RUN apt install -y nano
