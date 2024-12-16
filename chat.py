@@ -1,5 +1,4 @@
 import llm
-from dotenv import load_dotenv
 from datetime import datetime
 
 def reset(thread):
@@ -16,7 +15,6 @@ def run(prompt, thread):
             print(f"{role}:\n{content}\n", flush=True)
         return { "role": role, "content": content }
 
-    load_dotenv("keys")
     thread["runs"].append(len(thread["messages"]))
     messages = thread["messages"]
     messages.append(message("user", prompt))
