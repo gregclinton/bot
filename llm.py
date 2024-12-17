@@ -77,11 +77,14 @@ def invoke(thread):
     return content or "Could you rephrase that, please?"
 
 def mini(query):
-    return requests.post(
-        endpoint,
-        headers = headers(),
-        json = {
-            "model": "gpt-4o-mini",
-            "temperature": 0,
-            "messages": [{"role": "user", "content": query[:8000]}]
-        }).json()["choices"][0]["message"]["content"]
+    try:
+        return requests.post(
+            endpoint,
+            headers = headers(),
+            json = {
+                "model": "gpt-4o-mini",
+                "temperature": 0,
+                "messages": [{"role": "user", "content": query[:8000]}]
+            }).json()["choices"][0]["message"]["content"]
+    except:
+        return "Could you rephrase that, please?"
