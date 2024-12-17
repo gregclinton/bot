@@ -1,5 +1,5 @@
 # docker build -t bot .
-# sudo docker run -p 443:443 -d --network home --name hal bot:latest bash up
+# sudo docker run -p 443:443 -d --network home --name hal bot:latest sh up
 # docker exec hal echo -n ",model" >> tools/use
 # docker logs hal
 # curl -k https://localhost
@@ -18,6 +18,4 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -
 
 COPY . .
 
-RUN . ./secrets
-
-RUN rm secrets Dockerfile .gitignore
+RUN rm Dockerfile .gitignore
