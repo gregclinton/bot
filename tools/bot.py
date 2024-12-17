@@ -5,7 +5,7 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 headers = { "Content-Type": "text/plain" }
 
-name = module.__name__[6:] # strip "tools." 
+name = __name__[6:] # strip "tools." 
 
 def reset(thread):
     thread["tools"] = tools = thread.get("tools", {})
@@ -16,7 +16,7 @@ def reset(thread):
     bots.clear()
 
 def run(url: str, prompt: str, thread: dict):
-    "Talks with another bot at the given url and the given prompt."
+    "Talks with another bot at the given url and the given prompt.
     bots = thread["tools"][name]["bots"]
     post = lambda path, data = "": requests.post(f"{url}/{path}", verify = False, data = data, headers = headers).text
 

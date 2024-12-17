@@ -1,4 +1,4 @@
-name = module.__name__[6:] # strip "tools." 
+name = __name__[6:] # strip "tools." 
 
 def reset(thread):
     thread["tools"] = tools = thread.get("tools", {})
@@ -12,6 +12,3 @@ def run(model: str, temperature: int, thread: dict):
     tool["model"] = model
     tool["temperature"] = temperature / 100
     return "success"
-
-
-
