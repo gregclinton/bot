@@ -1,4 +1,5 @@
 . ./secrets
+rm secrets
 uvicorn proxy:app --host 0.0.0.0 --port 443 --ssl-keyfile key.pem --ssl-certfile cert.pem &
 uvicorn bot:app --host 0.0.0.0 --port 8123 &
 sleep infinity

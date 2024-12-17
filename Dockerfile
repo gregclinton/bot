@@ -1,5 +1,6 @@
 # docker build -t bot .
-# sudo docker run -p 443:443 -d --network home --name hal bot:latest sh up
+# sudo docker run --network home --name hal -d -p 443:443 bot sh up
+# sudo docker run --network home --name mal -d bot sh up
 # docker exec hal echo -n ",model" >> tools/use
 # docker logs hal
 # curl -k https://localhost
