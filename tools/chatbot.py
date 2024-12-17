@@ -5,7 +5,11 @@ urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 headers = { "Content-Type": "text/plain" }
 
-def reset(data):
+name = module.__name__[6:] # strip "tools." 
+
+def reset(thread):
+    thread["tools"] = tools = thread.get("tools", {})
+    tools[name] = data = tools.get(name, {})
     data["bots"] = bots = data.get("bots", {})
     for url, id in bots.items():
         requests.delete(f'{url}/threads/{id}', headers = headers)
@@ -13,7 +17,7 @@ def reset(data):
 
 def run(url: str, prompt: str, thread: dict):
     "Talks with another chatbot at the given url and the given prompt."
-    bots = thread["tools"]["chatbot"]["bots"]
+    bots = thread["tools"][name]["bots"]
     post = lambda path, data = "": requests.post(f"{url}/{path}", verify = False, data = data, headers = headers).text
 
     if url not in bots:

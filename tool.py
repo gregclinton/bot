@@ -13,13 +13,9 @@ def modules():
         yield import_module(name)
 
 def reset(thread):
-    thread["tools"] = tools = thread.get("tools", {})
-
     for module in modules():
         if hasattr(module, "reset"):
-            name = module.__name__[6:] # strip "tools." 
-            tools[name] = data = tools.get(name, {})
-            module.reset(data)
+            module.reset(thread)
     return thread
 
 def open():
