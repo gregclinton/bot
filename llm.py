@@ -6,6 +6,7 @@ import json
 import tool
 
 endpoint = "https://api.openai.com/v1/chat/completions"
+panic = "Could you rephrase that, please?"
 
 def headers():
     return {
@@ -25,18 +26,20 @@ def invoke(thread):
     while not content and count < 10:
         count += 1
         model = thread["tools"]["model"]
-        message = requests.post(
-            endpoint,
-            headers = headers(),
-            json = {
-                "model": model["model"],
-                "temperature": model["temperature"],
-                "messages": thread["messages"] + tool_messages,
-                "tools": bench,
-                "tool_choice": "auto"
-            }).json()["choices"][0]["message"]
-
-        content = message.get("content")
+        try:
+            message = requests.post(
+                endpoint,
+                headers = headers(),
+                json = {
+                    "model": model["model"],
+                    "temperature": model["temperature"],
+                    "messages": thread["messages"] + tool_messages,
+                    "tools": bench,
+                    "tool_choice": "auto"
+                }).json()["choices"][0]["message"]
+            content = message.get("content")
+        except:
+            content = panic
 
         if not content:
             tool_messages.append(message)
@@ -74,7 +77,7 @@ def invoke(thread):
                     })
 
     tool.close()
-    return content or "Could you rephrase that, please?"
+    return content or panic
 
 def mini(query):
     try:
@@ -87,4 +90,4 @@ def mini(query):
                 "messages": [{"role": "user", "content": query[:8000]}]
             }).json()["choices"][0]["message"]["content"]
     except:
-        return "Could you rephrase that, please?"
+        return panic
