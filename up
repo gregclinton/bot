@@ -1,5 +1,0 @@
-if [ ! -f "cert.pem" ]; then
-    openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/CN=example.com"
-fi
-uvicorn proxy:app --host 0.0.0.0 --port 443 --ssl-keyfile key.pem --ssl-certfile cert.pem &
-uvicorn bot:app --host 0.0.0.0 --port 8123 &

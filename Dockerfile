@@ -1,15 +1,14 @@
 # docker build -t bot .
-# docker rm hal
-# sudo docker run --network home --name hal -p 443:443 -d bot:latest
-# sudo docker exec hal echo abc
+# sudo docker run -p 443:443 -d --network home --name hal bot:latest sleep infinity
+# docker exec hal echo abc
+# docker logs -f hal
+# docker rm -f hal
 
 FROM python:3.11-slim
 
-RUN apt-get update && apt-get install -y curl nano openssh-server
+RUN apt-get update && apt-get install -y curl nano
 
 RUN pip install fastapi uvicorn requests boilerpy3 chromadb python-multipart
-
-RUN mkdir /var/run/sshd
 
 WORKDIR /root
 
@@ -24,3 +23,4 @@ RUN rm secrets Dockerfile .gitignore
 RUN uvicorn proxy:app --host 0.0.0.0 --port 443 --ssl-keyfile key.pem --ssl-certfile cert.pem &
 
 RUN uvicorn bot:app --host 0.0.0.0 --port 8123 &
+
