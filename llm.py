@@ -24,12 +24,13 @@ def invoke(messages, thread):
 
     while not content and count < 10:
         count += 1
+        model = thread["tools"]["model"]
         message = requests.post(
             endpoint,
             headers = headers(),
             json = {
-                "model": thread["model"],
-                "temperature": thread["temperature"],
+                "model": model["model"],
+                "temperature": model["temperature"],
                 "messages": messages + tool_messages,
                 "tools": bench,
                 "tool_choice": "auto"

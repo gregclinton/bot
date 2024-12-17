@@ -3,12 +3,9 @@ import urllib3
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-name = __name__[6:] # strip "tools."
 headers = { "Content-Type": "text/plain" }
 
-def reset(thread):
-    tools = thread["tools"]
-    data = tools[name] = tools.get(name, {})
+def reset(data):
     data["bots"] = bots = data.get("bots", {})
     for url, id in bots.items():
         requests.delete(f'{url}/threads/{id}', headers = headers)

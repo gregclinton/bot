@@ -13,11 +13,13 @@ def modules():
         yield import_module(name)
 
 def reset(thread):
-    thread["tools"] = {}
+    thread["tools"] = thread.get("tools", {})
 
     for module in modules():
         if hasattr(module, "reset"):
-            module.reset(thread)
+            name = module.__name__[6:] # strip "tools." 
+            tools[name] = data = tools.get(name, {})
+            module.reset(data)
     return thread
 
 def open():
