@@ -21,7 +21,6 @@ def run(prompt, thread):
     use = open("docs/use").read().split(",")
     docs = "\n\n".join(open(f"docs/{doc}").read() for doc in use)
     docs = docs.replace("{today}", datetime.now().strftime("%B %d, %Y"))
-    docs = [message("system", docs)]
-    reply = llm.invoke(docs + messages, thread)
+    reply = llm.invoke(docs, thread)
     messages.append(message("assistant", reply))
     return reply
