@@ -4,10 +4,12 @@
 # sudo docker run --network home --name mal -it bot:latest bash
 
 FROM python:3.11-slim
-RUN apt-get update && apt-get install -y curl nano
-RUN pip install fastapi uvicorn requests boilerpy3 chromadb python-multipart
-COPY ./*.py /root
-COPY ./tools /root/tools
-COPY ./docs /root/docs
-COPY ./client /root/client
-COPY ./up /root
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl nano && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir fastapi uvicorn requests boilerpy3 chromadb python-multipart
+
+COPY . /root
+WORKDIR /root
