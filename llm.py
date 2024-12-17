@@ -16,7 +16,7 @@ def headers():
 def reset(thread):
     return tool.reset(thread)
 
-def invoke(docs, thread):
+def invoke(thread):
     content = None
     count = 0
     bench = tool.open()
@@ -31,7 +31,7 @@ def invoke(docs, thread):
             json = {
                 "model": model["model"],
                 "temperature": model["temperature"],
-                "messages": [message("system", docs)] + thread["messages"] + tool_messages,
+                "messages": thread["messages"] + tool_messages,
                 "tools": bench,
                 "tool_choice": "auto"
             }).json()["choices"][0]["message"]

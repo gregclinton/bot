@@ -2,7 +2,7 @@ import llm
 from datetime import datetime
 
 def reset(thread):
-    thread["messages"] = []
+    thread["messages"] = [{ "role": "system", "content": "" }]
     thread["runs"] = []
     return llm.reset(thread)
 
@@ -20,7 +20,7 @@ def run(prompt, thread):
     messages.append(message("user", prompt))
     use = open("docs/use").read().split(",")
     docs = "\n\n".join(open(f"docs/{doc}").read() for doc in use)
-    docs = docs.replace("{today}", datetime.now().strftime("%B %d, %Y"))
-    reply = llm.invoke(docs, thread)
+    messages[0]["content"] = docs.replace("{today}", datetime.now().strftime("%B %d, %Y"))
+    reply = llm.invoke(thread)
     messages.append(message("assistant", reply))
     return reply
