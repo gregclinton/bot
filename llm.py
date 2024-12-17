@@ -83,5 +83,5 @@ def mini(query):
         json = {
             "model": "gpt-4o-mini",
             "temperature": 0,
-            "messages": [{"role": "user", "content": query}]
+            "messages": [{"role": "user", "content": query[:8000]}]
         }).json()["choices"][0]["message"]["content"]
