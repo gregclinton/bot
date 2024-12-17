@@ -1,5 +1,5 @@
 # docker build -t bot .
-# sudo docker run -p 443:443 -d --network home --name hal bot:latest sleep infinity
+# sudo docker run -p 443:443 -d --network home --name hal bot:latest sh up
 # docker exec hal echo abc
 # docker logs -f hal
 # docker rm -f hal
@@ -19,8 +19,3 @@ COPY . .
 RUN . ./secrets
 
 RUN rm secrets Dockerfile .gitignore
-
-RUN uvicorn proxy:app --host 0.0.0.0 --port 443 --ssl-keyfile key.pem --ssl-certfile cert.pem &
-
-RUN uvicorn bot:app --host 0.0.0.0 --port 8123 &
-
