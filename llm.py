@@ -5,17 +5,26 @@ import os
 import json
 import tool
 
-endpoint = "https://api.openai.com/v1/chat/completions"
 panic = "Could you rephrase that, please?"
-
-def headers():
-    return {
-        'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
-        'Content-Type': 'application/json',
-    }
 
 def reset(thread):
     return tool.reset(thread)
+
+def post(json) {
+    res = requests.post(
+        "https://api.openai.com/v1/chat/completions",
+        headers = {
+            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
+            'Content-Type': 'application/json'
+        },
+    json = json)
+
+    try:
+        res.raise_for_status()
+        reurn res
+    except Exception as e:
+        return str(e)
+}
 
 def invoke(thread):
     content = None
@@ -26,20 +35,19 @@ def invoke(thread):
     while not content and count < 10:
         count += 1
         model = thread["tools"]["model"]
-        try:
-            message = requests.post(
-                endpoint,
-                headers = headers(),
-                json = {
-                    "model": model["model"],
-                    "temperature": model["temperature"],
-                    "messages": thread["messages"] + tool_messages,
-                    "tools": bench,
-                    "tool_choice": "auto"
-                }).json()["choices"][0]["message"]
+        res = post({
+            "model": model["model"],
+            "temperature": model["temperature"],
+            "messages": thread["messages"] + tool_messages,
+            "tools": bench,
+            "tool_choice": "auto"
+        })
+
+        if isinstance(res, str):
+            content = res
+        else:
+            message = res.json()["choices"][0]["message"]
             content = message.get("content")
-        except:
-            content = panic
 
         if not content:
             tool_messages.append(message)
@@ -80,14 +88,10 @@ def invoke(thread):
     return content or panic
 
 def mini(query):
-    try:
-        return requests.post(
-            endpoint,
-            headers = headers(),
-            json = {
-                "model": "gpt-4o-mini",
-                "temperature": 0,
-                "messages": [{"role": "user", "content": query[:8000]}]
-            }).json()["choices"][0]["message"]["content"]
-    except:
-        return panic
+    res = post({
+        "model": "gpt-4o-mini",
+        "temperature": 0,
+        "messages": [{"role": "user", "content": query[:8000]}]
+    })
+
+    return res if isinstance(res, str) else res.json()["choices"][0]["message"]["content"]
