@@ -15,7 +15,7 @@ def post(json):
             'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
             'Content-Type': 'application/json'
         },
-    json = json)
+        json = json)
 
     try:
         res.raise_for_status()
