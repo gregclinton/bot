@@ -10,7 +10,7 @@ panic = "Could you rephrase that, please?"
 def reset(thread):
     return tool.reset(thread)
 
-def post(json) {
+def post(json):
     res = requests.post(
         "https://api.openai.com/v1/chat/completions",
         headers = {
@@ -21,10 +21,9 @@ def post(json) {
 
     try:
         res.raise_for_status()
-        reurn res
+        return res
     except Exception as e:
         return str(e)
-}
 
 def invoke(thread):
     content = None
