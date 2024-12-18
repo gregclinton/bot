@@ -10,4 +10,4 @@ RUN openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -
 
 COPY . .
 
-RUN rm Dockerfile .gitignore
+RUN rm Dockerfile .gitignore again
