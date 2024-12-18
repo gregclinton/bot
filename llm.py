@@ -27,7 +27,6 @@ def invoke(thread):
     content = None
     count = 0
     bench = tool.open()
-    tool_messages = []
 
     while not content and count < 10:
         count += 1
@@ -35,7 +34,7 @@ def invoke(thread):
         res = post({
             "model": model["model"],
             "temperature": model["temperature"],
-            "messages": thread["messages"] + tool_messages,
+            "messages": thread["messages"],
             "tools": bench,
             "tool_choice": "auto"
         })
@@ -47,7 +46,7 @@ def invoke(thread):
             content = message.get("content")
 
         if not content:
-            tool_messages.append(message)
+            messages.append(message)
 
             for call in message.get("tool_calls", []):
                 fn = call["function"]
@@ -71,10 +70,7 @@ def invoke(thread):
                     [print(arg) for arg in args.values()]
                     print(f"\n{output}\n")
 
-                    if name == "digest":
-                        tool_messages.clear()
-
-                    tool_messages.append({
+                    messages.append({
                         "role": "tool",
                         "tool_call_id": call["id"],
                         "name": name,

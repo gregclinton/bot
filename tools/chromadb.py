@@ -13,10 +13,12 @@ def run(collection: str, search: str, thread: dict):
     if collection in collections:
         collection = client.get_collection(collection)
 
-        text = f"Mish-mash of chromadb search results:\n\n\n"
-        text += " ".join(collection.query(query_texts=search, n_results=3)["documents"][0])
+        text = f"Chromadb search results:\n\n\n"
 
-        return llm.mini(text + f"\n\n\nQuery:\n{search}\nAnswer:\n")
+        for res in collection.query(query_texts=search, n_results=3)["documents"][0]:
+            text += llm.mini(text + f"\n\n\nQuery:\n{search}\nAnswer:\n") + "\n\n\n"
+
+        return llm.mini(text + f"Summarize the above various search results:\n")
     else:
         return f"The collection \"{collection}\" was not found. Our collections include: " + ", ".join(collections)
 

@@ -12,7 +12,7 @@ def run(query: str, thread: dict):
     "Searches the internet with the given query."
 
     today = datetime.now().strftime("%B %d, %Y")
-    text = f"Mish-mash of google search results from today, {today}, extracted by boilerpy3: \n\n\n"
+    text = f"Search result summaries from today, {today}: \n\n\n"
 
     extractor = extractors.KeepEverythingExtractor()
     count = 0
@@ -29,7 +29,8 @@ def run(query: str, thread: dict):
         try:
             res = requests.get(item["link"], headers = {'User-Agent': 'Chrome/50.0.2661.102'}, timeout = 5)
             if res.ok:
-                text += extractor.get_content(res.text).replace("\n", " ")
+                boiled = extractor.get_content(res.text).replace("\n", " ")
+                text += llm.mini(boiled + f"\n\n\nQuery:\n{query}\nAnswer:\n") + "\n\n\n"
                 count += 1
         except:
             pass
@@ -37,4 +38,4 @@ def run(query: str, thread: dict):
         if count == 3:
             break
 
-    return llm.mini(text + f"\n\n\nQuery:\n{query}\nAnswer:\n")
+    return llm.mini(text + f"Summarize the above various search results:\n")
