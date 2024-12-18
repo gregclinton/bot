@@ -30,7 +30,7 @@ def run(query: str, thread: dict):
             res = requests.get(item["link"], headers = {'User-Agent': 'Chrome/50.0.2661.102'}, timeout = 5)
             if res.ok:
                 boiled = extractor.get_content(res.text).replace("\n", " ")
-                text += llm.mini(boiled + f"\n\n\nQuery:\n{query}\nAnswer:\n") + "\n\n\n"
+                text += llm.mini(f"Context:\n{boiled}\n\n\nQuery:\n{query}\nAnswer:\n") + "\n\n\n"
                 count += 1
         except:
             pass

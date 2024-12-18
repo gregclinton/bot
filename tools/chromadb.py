@@ -8,15 +8,15 @@ path = "chroma"
 def run(collection: str, search: str, thread: dict):
     "Searches the given chromadb collection using the given search string."
     client = chromadb.PersistentClient(path=path)
-    collections = [collection.name for collection in client.list_collections()]
+    collections = [collection.name for collection in client.list_collections()
 
     if collection in collections:
         collection = client.get_collection(collection)
 
         text = f"Chromadb search results:\n\n\n"
 
-        for res in collection.query(query_texts=search, n_results=3)["documents"][0]:
-            text += llm.mini(text + f"\n\n\nQuery:\n{search}\nAnswer:\n") + "\n\n\n"
+        for doc in collection.query(query_texts=search, n_results=3)["documents"][0]:
+            text += llm.mini(f"Context:\n{doc}\n\n\nQuery:\n{search}\nAnswer:\n") + "\n\n\n"
 
         return llm.mini(text + f"Summarize the above various search results:\n")
     else:
