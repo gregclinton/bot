@@ -5,8 +5,6 @@ import os
 import json
 import tool
 
-panic = "Could you rephrase that, please?"
-
 def reset(thread):
     return tool.reset(thread)
 
@@ -84,7 +82,8 @@ def invoke(thread):
                     })
 
     tool.close()
-    return content or panic
+    return content or "Could you rephrase that, please?"
+
 
 def mini(query):
     res = post({
