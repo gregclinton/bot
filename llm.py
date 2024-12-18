@@ -9,14 +9,14 @@ import inspect
 def reset(thread):
     return tool.reset(thread)
 
-def post(json):
+def post(payload):
     res = requests.post(
         "https://api.openai.com/v1/chat/completions",
         headers = {
             'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
             'Content-Type': 'application/json'
         },
-        json = json)
+        json = payload)
 
     try:
         res.raise_for_status()

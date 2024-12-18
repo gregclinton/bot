@@ -1,13 +1,19 @@
-docker rm -f hal
-# docker rm -f dmv
 docker build -t bot .
 docker image prune -f
-sudo docker run --network home --name hal -d -p 443:443 bot sh up
-# sudo docker run --network home --name dmv -d bot sh up
+docker rm -f hal
+sudo docker run --name hal -d -p 443:443 bot sh up
 sleep 1
-# docker exec hal sh -c 'echo "For DMV questions talk to this bot: https://dmv/bot" >> docs/bots'
-# docker exec hal sh -c 'echo -n ",mytool" >> tools/use'
-# curl -k https://localhost
 curl -k -X POST https://localhost/bot/threads
 echo
 docker logs -f hal
+exit
+
+docker network create home
+docker network rm home
+docker rm -f hal
+sudo docker run --network home --name hal -d -p 443:443 bot sh up
+docker rm -f dmv
+sudo docker run --network home --name dmv -d bot sh up
+docker exec hal sh -c 'echo "For DMV questions talk to this bot: https://dmv/bot" > docs/dmv'
+docker exec hal sh -c 'echo -n ",dmv" >> docs/use'
+curl -k https://localhost
