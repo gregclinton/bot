@@ -35,7 +35,7 @@ def invoke(thread):
         res = post({
             "model": model["model"],
             "temperature": model["temperature"],
-            "messages": thread["messages"],
+            "messages": messages,
             "tools": bench,
             "tool_choice": "auto"
         })
