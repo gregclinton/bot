@@ -27,6 +27,7 @@ def invoke(thread):
     content = None
     count = 0
     bench = tool.open()
+    messages = thread["messages"]
 
     while not content and count < 10:
         count += 1
