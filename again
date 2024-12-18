@@ -1,7 +1,7 @@
 docker rm -f hal
 # docker rm -f dmv
 docker build -t bot .
-docker image prune
+docker image prune -f
 sudo docker run --network home --name hal -d -p 443:443 bot sh up
 # sudo docker run --network home --name dmv -d bot sh up
 sleep 1
