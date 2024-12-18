@@ -4,7 +4,6 @@ import requests
 import os
 import json
 import tool
-import inspect
 
 def reset(thread):
     return tool.reset(thread)
@@ -41,7 +40,7 @@ def invoke(thread):
             "tool_choice": "auto"
         })
 
-        if is_exception(res):
+        if isinstance(res, Exception):
             content = str(res)
         else:
             message = res.json()["choices"][0]["message"]
@@ -93,4 +92,4 @@ def mini(query):
         "messages": [{"role": "user", "content": query[:8000]}]
     })
 
-    return str(res) if is_exception(res) else res.json()["choices"][0]["message"]["content"]
+    return str(res) if isinstance(res, Exception) else res.json()["choices"][0]["message"]["content"]
