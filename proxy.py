@@ -3,6 +3,7 @@ from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import os
 import requests
+import httpx
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
@@ -15,14 +16,16 @@ async def openai_transcriptions(file: UploadFile, path: str):
         data = { "model": "whisper-1" }
     ).json()["text"]
 
-url = lambda path: f"http://localhost:8123/{path}"
-
-@app.post("/bot/{path:path}")
-async def post_to_bot(request: Request, path: str):
-    return requests.post(url(path), data = (await request.body())).text
-
-@app.delete("/bot/{path:path}")
-async def delete_from_bot(request: Request, path: str):
-    return requests.delete(url(path), data = (await request.body())).text
+@app.api_route("/bot/{path:path}", methods=["POST", "DELETE"])
+async def proxy(request: Request, path: str):
+    async with httpx.AsyncClient() as client:
+        resp = await client.request(
+            method=request.method,
+            url=f"http://localhost:8123/{path}",
+            headers=dict(request.headers),
+            params=request.query_params,
+            content=await request.body()
+        )
+    return resp.text
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
