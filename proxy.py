@@ -16,15 +16,15 @@ async def openai_transcriptions(file: UploadFile, path: str):
         data = { "model": "whisper-1" }
     ).json()["text"]
 
-@app.api_route("/bot/{path:path}", methods=["POST", "DELETE"])
+@app.api_route("/bot/{path:path}", methods = ["POST", "DELETE"])
 async def proxy(request: Request, path: str):
     async with httpx.AsyncClient() as client:
         resp = await client.request(
-            method=request.method,
-            url=f"http://localhost:8123/{path}",
-            headers=dict(request.headers),
-            params=request.query_params,
-            content=await request.body()
+            method = request.method,
+            url = f"http://localhost:8123/{path}",
+            headers = dict(request.headers),
+            params = request.query_params,
+            content = await request.body()
         )
     return resp.text
 
