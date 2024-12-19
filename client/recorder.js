@@ -47,11 +47,8 @@ const recorder = {
         const data = new FormData();
 
         data.append('file', blob, 'stt.webm');
-        data.append('model', 'whisper-1');
-        data.append('language', 'en'); // optional but improves accuracy and latency
-        data.append('response_format', 'text');
 
-        return fetch('/openai/v1/audio/transcriptions', {
+        return fetch('/transcription', {
             method: 'POST',
             body: data
         });
