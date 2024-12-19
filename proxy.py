@@ -1,5 +1,3 @@
-# curl -k -X POST https://localhost/bot/threads
-
 from fastapi import FastAPI, Request, UploadFile
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
@@ -8,10 +6,10 @@ import requests
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
-@app.post("/openai/v1/audio/transcriptions")
-async def openai_transcriptions(file: UploadFile):
+@app.post("/openai/{path:path}")
+async def openai_transcriptions(file: UploadFile, path: str):
     return requests.post(
-        "https://api.openai.com/v1/audio/transcriptions",
+        f"https://api.openai.com/{path}",
         headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
         files = { "file": (file.filename, await file.read(), file.content_type) },
         data = { "model": "whisper-1" }
