@@ -38,4 +38,4 @@ def run(query: str, thread: dict):
         if count == 3:
             break
 
-    return llm.mini(text + f"Summarize the above various search results:\n")
+    return llm.mini(f"{text}Summarize the above various search results:\n")

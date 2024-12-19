@@ -18,7 +18,7 @@ def run(collection: str, search: str, thread: dict):
         for doc in collection.query(query_texts=search, n_results=3)["documents"][0]:
             text += llm.mini(f"Context:\n{doc}\n\n\nQuery:\n{search}\nAnswer:\n") + "\n\n\n"
 
-        return llm.mini(text + f"Summarize the above various search results:\n")
+        return llm.mini(f"{text}Summarize the above various search results:\n")
     else:
         return f"The collection \"{collection}\" was not found. Our collections include: " + ", ".join(collections)
 
