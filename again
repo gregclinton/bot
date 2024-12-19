@@ -9,10 +9,11 @@ docker logs -f hal
 exit
 
 docker network create home
-docker network rm home
 docker rm -f hal
 sudo docker run --network home --name hal -d -p 443:443 bot sh up
 docker rm -f dmv
 sudo docker run --network home --name dmv -d bot sh up
 docker exec hal sh -c 'echo "For DMV questions talk to this bot: https://dmv/bot" > docs/dmv'
 docker exec hal sh -c 'echo -n ",dmv" >> docs/use'
+
+docker network rm home
