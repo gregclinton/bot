@@ -10,7 +10,7 @@ app = FastAPI(default_response_class=PlainTextResponse)
 async def openai_transcriptions(file: UploadFile, path: str):
     async with httpx.AsyncClient() as client:
         return (await client.post(
-            f"https://api.openai.com/{path}",
+            url = f"https://api.openai.com/{path}",
             headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
             files = { "file": (file.filename, await file.read(), file.content_type) },
             data = { "model": "whisper-1" }
