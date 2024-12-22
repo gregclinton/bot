@@ -36,19 +36,19 @@ def redirect(name):
     return f"{base_url(name)}/authorize?" + "&".join(f"{k}={v}" for k, v in params.items())
 
 async def callback(code, name):
+    data = {
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": f"https://192.168.1.13/oauth/{name}",
+        "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
+    }
+
+    code_verifier = os.environ.get(f"{name.upper()}_CODE_VERIFIER")
+
+    if code_verifier:
+        data["code_verifier"] = code_verifier
+
     async with httpx.AsyncClient() as client:
-        data = {
-            "grant_type": "authorization_code",
-            "code": code,
-            "redirect_uri": f"https://192.168.1.13/oauth/{name}",
-            "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
-        }
-
-        code_verifier = os.environ.get(f"{name.upper()}_CODE_VERIFIER")
-
-        if code_verifier:
-            data["code_verifier"] = code_verifier
-
         res = await client.post(f"{base_url(name)}/token", data = data)
         res.raise_for_status()
-        return res.json()["access_token"]
+        return "Success"
