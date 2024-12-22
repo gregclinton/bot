@@ -29,8 +29,6 @@ async def transcription(file: UploadFile):
         )).text
 
 # https://fhir.epic.com/Developer/Apps
-client_id = os.environ["EPIC_CLIENT_ID"]
-
 # https://open.epic.com/MyApps/endpoints
 base_url = "https://fhir.epic.com/interconnect-fhir-oauth" # sandbox
 base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212" # production
@@ -42,7 +40,7 @@ async def login():
     os.environ["EPIC_CODE_VERIFIER"] = code_verifier
     params = {
         "response_type": "code",
-        "client_id": client_id,
+        "client_id": os.environ["EPIC_CLIENT_ID"],
         "redirect_uri": redirect_uri,
         "scope": "patient/*.read",
         "code_challenge": code_challenge,
@@ -66,7 +64,7 @@ async def callback(request: Request):
                 "grant_type": "authorization_code",
                 "code": code,
                 "redirect_uri": redirect_uri,
-                "client_id": client_id,
+                "client_id": os.environ["EPIC_CLIENT_ID"],
                 "code_verifier": os.environ["EPIC_CODE_VERIFIER"]
             }
         )
