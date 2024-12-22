@@ -34,6 +34,6 @@ async def login(name: str):
 
 @app.get("/oauth/{name}")
 async def callback(req: Request, name: str):
-    return oauth.callback(req.query_params.get("code"), name)
+    return oauth.callback(req.query_params.get("code"), name, str(req.url).split("?")[0])
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
