@@ -1,7 +1,8 @@
 from fastapi import FastAPI, Request, UploadFile, HTTPException
 from fastapi.responses import PlainTextResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
-import os, base64, hashlib, secrets
+import os
+import pkce
 import httpx
 
 app = FastAPI(default_response_class=PlainTextResponse)
@@ -37,8 +38,8 @@ redirect_uri = "https://localhost/epic/callback"
 
 @app.get("/login")
 async def login():
-    os.environ["EPIC_CODE_VERIFIER"] = code_verifier = secrets.token_urlsafe(64)
-    code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode()).digest()).rstrip(b"=").decode()
+    code_verifier, code_challenge = pkce.generate()
+    os.environ["EPIC_CODE_VERIFIER"] = code_verifier
     params = {
         "response_type": "code",
         "client_id": client_id,
