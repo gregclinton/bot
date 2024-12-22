@@ -12,7 +12,7 @@ def redirect(name):
     os.environ[f"{name.upper()}_CODE_VERIFIER"] = code_verifier = secrets.token_urlsafe(64)
     code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode()).digest()).rstrip(b"=").decode()
 
-    params = {
+    return f"{base_url[name]}/oauth2/authorize?" + "&".join(f"{k}={v}" for k, v in {
         "response_type": "code",
         "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
         "redirect_uri": f"https://192.168.1.13/oauth/{name}",
@@ -21,9 +21,7 @@ def redirect(name):
         "code_challenge_method": "S256",
         "state": "random_state_string",
         "iss": f"{base_url[name]}/api/FHIR/R4"
-    }
-
-    return f"{base_url[name]}/oauth2/authorize?{ '&'.join(f'{k}={v}' for k, v in params.items()) }"
+    }.items())
 
 async def callback(code, name, url):
     async with httpx.AsyncClient() as client:
