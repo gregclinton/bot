@@ -32,16 +32,16 @@ async def transcription(file: UploadFile):
 # https://open.epic.com/MyApps/endpoints
 base_url = "https://fhir.epic.com/interconnect-fhir-oauth" # sandbox
 base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212" # production
-redirect_uri = "https://192.168.1.13/oauth/epic"
+base_redirect_uri = "https://192.168.1.13/oauth"
 
-@app.get("/oauth/epic/login")
-async def login():
+@app.get("/oauth/{name}/login")
+async def login(name: str):
     code_verifier, code_challenge = pkce.generate()
-    os.environ["EPIC_CODE_VERIFIER"] = code_verifier
+    os.environ[f"{name.upper()}_CODE_VERIFIER"] = code_verifier
     params = {
         "response_type": "code",
-        "client_id": os.environ["EPIC_CLIENT_ID"],
-        "redirect_uri": redirect_uri,
+        "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
+        "redirect_uri": f"{base_redirect_uri}/{name}",
         "scope": "patient/*.read",
         "code_challenge": code_challenge,
         "code_challenge_method": "S256",
@@ -50,8 +50,8 @@ async def login():
     }
     return RedirectResponse(f"{base_url}/oauth2/authorize?{ '&'.join(f'{k}={v}' for k, v in params.items()) }")
 
-@app.get("/oauth/epic")
-async def callback(request: Request):
+@app.get("/oauth/{name}")
+async def callback(request: Request, name: str):
     code = request.query_params.get("code")
 
     if not code:
@@ -63,9 +63,9 @@ async def callback(request: Request):
             data = {
                 "grant_type": "authorization_code",
                 "code": code,
-                "redirect_uri": redirect_uri,
-                "client_id": os.environ["EPIC_CLIENT_ID"],
-                "code_verifier": os.environ["EPIC_CODE_VERIFIER"]
+                "redirect_uri": f"{base_redirect_uri}/{name}",
+                "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
+                "code_verifier": os.environ[f"{name.upper()}_CODE_VERIFIER"]
             }
         )
         res.raise_for_status()
