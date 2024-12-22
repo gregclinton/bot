@@ -32,11 +32,11 @@ async def transcription(file: UploadFile):
 client_id = os.environ["EPIC_CLIENT_ID"]
 
 # https://open.epic.com/MyApps/endpoints
-base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212" # production
 base_url = "https://fhir.epic.com/interconnect-fhir-oauth" # sandbox
-redirect_uri = "https://localhost/epic/callback"
+base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212" # production
+redirect_uri = "https://192.168.1.13/oauth/epic"
 
-@app.get("/login")
+@app.get("/oauth/epic/login")
 async def login():
     code_verifier, code_challenge = pkce.generate()
     os.environ["EPIC_CODE_VERIFIER"] = code_verifier
@@ -52,7 +52,7 @@ async def login():
     }
     return RedirectResponse(f"{base_url}/oauth2/authorize?{ '&'.join(f'{k}={v}' for k, v in params.items()) }")
 
-@app.get("/epic/callback")
+@app.get("/oauth/epic")
 async def callback(request: Request):
     code = request.query_params.get("code")
 
