@@ -18,7 +18,7 @@ def redirect(name):
         "state": "nil",
     }
 
-    secret = os.environ[f"{name.upper()}_CLIENT_SECRET"]
+    secret = os.getenv(f"{name.upper()}_CLIENT_SECRET")
 
     if secret:
         params["client_secret"] = secret
@@ -43,7 +43,7 @@ async def callback(code, name):
         "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
     }
 
-    code_verifier = os.environ.get(f"{name.upper()}_CODE_VERIFIER")
+    code_verifier = os.getenv(f"{name.upper()}_CODE_VERIFIER")
 
     if code_verifier:
         data["code_verifier"] = code_verifier
