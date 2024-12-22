@@ -51,4 +51,4 @@ async def callback(code, name):
     async with httpx.AsyncClient() as client:
         res = await client.post(f"{base_url(name)}/token", data = data)
         res.raise_for_status()
-        return "Success"
+        return res.json()["access_token"]
