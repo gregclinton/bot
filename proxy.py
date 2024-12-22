@@ -33,7 +33,8 @@ app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
 client_id = os.environ["EPIC_CLIENT_ID"]
 
 # https://open.epic.com/MyApps/endpoints
-base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212"
+base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212" # production
+base_url = "https://fhir.epic.com/interconnect-fhir-oauth" # sandbox
 redirect_uri = "https://localhost/epic/callback"
 
 @app.get("/login")
