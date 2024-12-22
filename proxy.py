@@ -28,12 +28,12 @@ async def transcription(file: UploadFile):
             data = { "model": "whisper-1", "language": "en", "response_format": "text" }
         )).text
 
+@app.get("/oauth/{name}")
+async def callback(req: Request, name: str):
+    return await oauth.callback(req.query_params.get("code"), name)
+
 @app.get("/oauth/{name}/login")
 async def login(name: str):
     return RedirectResponse(oauth.redirect(name))
-
-@app.get("/oauth/{name}")
-async def callback(req: Request, name: str):
-    return oauth.callback(req.query_params.get("code"), name)
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")

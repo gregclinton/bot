@@ -6,7 +6,8 @@ import os, httpx, base64, hashlib, secrets
 
 def base_url(name):
     return {
-        "epic": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2",
+        "epic_sandbox": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2",
+        "epic": "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212/oauth",
         "github": "https://github.com/login/oauth"
     }[name]
 
@@ -44,11 +45,12 @@ async def callback(code, name):
     }
 
     code_verifier = os.getenv(f"{name.upper()}_CODE_VERIFIER")
-
+  
     if code_verifier:
         data["code_verifier"] = code_verifier
 
     async with httpx.AsyncClient() as client:
         res = await client.post(f"{base_url(name)}/token", data = data)
+        print(res.text)
         res.raise_for_status()
         return res.json()["access_token"]
