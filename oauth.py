@@ -9,6 +9,7 @@ def base_url(name):
     return {
         "epic_sandbox": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2",
         "epic": "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212/oauth",
+        "kaiser": "https://kpx-service-bus.kp.org/service/hp/mhpo/healthplanproviderv1rc/oauth"
     }[name]
 
 def redirect(name):
