@@ -1,0 +1,2 @@
+Url of github login: https://192.168.1.13/oauth/github/login
+When requested by user, the bot will redirect to this URL for authentication.

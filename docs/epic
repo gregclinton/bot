@@ -1,0 +1,2 @@
+Url of epic login: https://192.168.1.13/oauth/epic/login
+When requested by user, the bot will redirect to this URL for authentication.
