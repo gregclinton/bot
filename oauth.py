@@ -4,6 +4,8 @@ import os, httpx, base64, hashlib, secrets
 # https://open.epic.com/MyApps/endpoints
 # https://github.com/settings/applications/2819909
 
+tokens = {}
+
 def base_url(name):
     return {
         "epic_sandbox": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2",
@@ -51,6 +53,6 @@ async def callback(code, name):
 
     async with httpx.AsyncClient() as client:
         res = await client.post(f"{base_url(name)}/token", data = data)
-        print(res.text)
         res.raise_for_status()
-        return res.json()["access_token"]
+        tokens[name] = res.json()["access_token"]
+        return "You are now logged in. You can close this tab."
