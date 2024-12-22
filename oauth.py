@@ -2,8 +2,11 @@ import os, base64, hashlib, secrets, httpx
 
 # https://fhir.epic.com/Developer/Apps
 # https://open.epic.com/MyApps/endpoints
-base_url = "https://fhir.epic.com/interconnect-fhir-oauth" # sandbox
-base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212" # production
+
+base_url = {
+    # "eric": "https://fhir.epic.com/interconnect-fhir-oauth" # sandbox
+    "eric": "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212", # production
+}
 
 def redirect(name):
     os.environ[f"{name.upper()}_CODE_VERIFIER"] = code_verifier = secrets.token_urlsafe(64)
@@ -17,15 +20,15 @@ def redirect(name):
         "code_challenge": code_challenge,
         "code_challenge_method": "S256",
         "state": "random_state_string",
-        "iss": f"{base_url}/api/FHIR/R4"
+        "iss": f"{base_url[name]}/api/FHIR/R4"
     }
 
-    return f"{base_url}/oauth2/authorize?{ '&'.join(f'{k}={v}' for k, v in params.items()) }"
+    return f"{base_url[name]}/oauth2/authorize?{ '&'.join(f'{k}={v}' for k, v in params.items()) }"
 
 async def callback(code, name, url):
     async with httpx.AsyncClient() as client:
         res = await client.post(
-            f"{base_url}/oauth2/token",
+            f"{base_url[name]}/oauth2/token",
             data = {
                 "grant_type": "authorization_code",
                 "code": code,
