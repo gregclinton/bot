@@ -23,14 +23,14 @@ def redirect(name):
         "iss": f"{base_url[name]}/api/FHIR/R4"
     }.items())
 
-async def callback(code, name, url):
+async def callback(code, name):
     async with httpx.AsyncClient() as client:
         res = await client.post(
             f"{base_url[name]}/oauth2/token",
             data = {
                 "grant_type": "authorization_code",
                 "code": code,
-                "redirect_uri": url,
+                "redirect_uri": f"https://192.168.1.13/oauth/{name}",
                 "client_id": os.environ[f"{name.upper()}_CLIENT_ID"],
                 "code_verifier": os.environ[f"{name.upper()}_CODE_VERIFIER"]
             }
