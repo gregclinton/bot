@@ -27,8 +27,6 @@ async def transcription(file: UploadFile):
             data = { "model": "whisper-1", "language": "en", "response_format": "text" }
         )).text
 
-app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
-
 # https://fhir.epic.com/Developer/Apps
 client_id = os.environ["EPIC_CLIENT_ID"]
 
@@ -74,3 +72,4 @@ async def callback(request: Request):
         res.raise_for_status()
         return {"access_token": res.json()["access_token"]}
 
+app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
