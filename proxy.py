@@ -70,6 +70,6 @@ async def callback(request: Request):
             }
         )
         res.raise_for_status()
-        return {"access_token": res.json()["access_token"]}
+        return res.json()["access_token"]
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
