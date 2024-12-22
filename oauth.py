@@ -2,7 +2,6 @@ import os, httpx, base64, hashlib, secrets
 
 # https://fhir.epic.com/Developer/Apps
 # https://open.epic.com/MyApps/endpoints
-# https://github.com/settings/applications/2819909
 
 tokens = {}
 
@@ -10,7 +9,6 @@ def base_url(name):
     return {
         "epic_sandbox": "https://fhir.epic.com/interconnect-fhir-oauth/oauth2",
         "epic": "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212/oauth",
-        "github": "https://github.com/login/oauth"
     }[name]
 
 def redirect(name):
