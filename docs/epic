@@ -1,2 +1,15 @@
-Url of epic login: https://192.168.1.13/oauth/epic/login
+Urls of epic oauth login for Kaiser Permanente, Mission Providence and Dental:
+
+https://192.168.1.13/oauth/epic/kp/login
+https://192.168.1.13/oauth/epic/providence/login
+https://192.168.1.13/oauth/epic/smile/login
+
 When requested by user, output a clickable HTML link element that opens in another tab.
+
+Then, with the shell tool, you will find in the current directory:
+
+token.epic.kp
+token.epic.providence
+token.epic.smile
+
+Use these oauth2 tokens, curl and Smart on FHIR to answer any of my queries. 
