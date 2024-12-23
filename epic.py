@@ -48,6 +48,6 @@ def run(app):
                 "code_verifier": os.environ["EPIC_CODE_VERIFIER"],
             })
             res.raise_for_status()
-            with open(f"token.epic.{provider}", "w") as f:
-                f.write(res.json()["access_token"])
+            with open(f"auth.json.epic.{provider}", "w") as f:
+                f.write(res.json())
             return "You are now logged in. You can close this tab."

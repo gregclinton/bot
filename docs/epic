@@ -6,10 +6,11 @@ https://192.168.1.13/oauth/epic/smile/login
 
 When requested by user, output a clickable HTML link element that opens in another tab.
 
-Then, with the shell tool, you will find in the current directory:
+Then, with the shell tool, you will find respective oauth2 json results in the current directory for the associated provider url:
 
-token.epic.kp
-token.epic.providence
-token.epic.smile
+auth.json.epic.kp            https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212/api/FHIR/R4
+auth.json.epic.providence    https://haikuwa.providence.org/fhirproxy/api/FHIR/R4
+auth.json.epic.smile         https://epicproxy.et1079.epichosted.com/FHIRProxy/api/FHIR/R4
 
-Use these oauth2 tokens, curl and Smart on FHIR to answer any of my queries. 
+
+Use these oauth2 json results, urls, curl and Smart on FHIR to answer any of my queries. 
