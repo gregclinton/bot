@@ -2,6 +2,7 @@ import os, httpx, base64, hashlib, secrets
 
 # https://fhir.epic.com/Developer/Apps
 # https://open.epic.com/MyApps/endpoints
+# https://hl7.org/fhir/smart-app-launch/app-launch.html
 
 tokens = {}
 
