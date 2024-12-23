@@ -28,7 +28,7 @@ def redirect(name):
         code_challenge = base64.urlsafe_b64encode(hashlib.sha256(code_verifier.encode()).digest()).rstrip(b"=").decode()
 
         params.update({
-            "scope": "patient/*.read",
+            "scope": "patient.read",
             "code_challenge": code_challenge,
             "code_challenge_method": "S256",
             "iss": base_url(name)
