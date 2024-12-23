@@ -9,7 +9,7 @@ def run(app):
     base_url = "https://github.com/login/oauth"
 
     @app.get("/oauth/github/login")
-    async def login(name: str):
+    async def login():
         return RedirectResponse(f"{base_url}/authorize?" + "&".join(f"{k}={v}" for k, v in {
             "client_id": os.environ["GITHUB_CLIENT_ID"],
             "scope": "read:user",
