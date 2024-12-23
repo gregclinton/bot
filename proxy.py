@@ -9,7 +9,7 @@ app = FastAPI(default_response_class=PlainTextResponse)
 
 @app.api_route("/bot/{path:path}", methods = ["POST", "DELETE"])
 async def bot_proxy(request: Request, path: str):
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.request(
             method = request.method,
             url = f"http://localhost:8123/{path}",
@@ -20,7 +20,7 @@ async def bot_proxy(request: Request, path: str):
 
 @app.post("/transcription")
 async def transcription(file: UploadFile):
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.post(
             url = f"https://api.openai.com/v1/audio/transcriptions",
             headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
