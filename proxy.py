@@ -28,6 +28,6 @@ async def transcription(file: UploadFile):
             data = { "model": "whisper-1", "language": "en", "response_format": "text" }
         )).text
 
-epic.run(app)
+[ module.run(app) for module in (epic,) ]
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")

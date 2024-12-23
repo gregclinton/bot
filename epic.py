@@ -10,8 +10,8 @@ def run(app):
     # https://hl7.org/fhir/smart-app-launch/app-launch.html
 
     base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212"
-    base_url = "https://epicproxy.et1079.epichosted.com/FHIRProxy"
     base_url = "https://haikuwa.providence.org/fhirproxy"
+    base_url = "https://epicproxy.et1079.epichosted.com/FHIRProxy"
     redirect_uri = "https://192.168.1.13/oauth/epic"
 
     @app.get("/oauth/epic/login")
@@ -40,7 +40,6 @@ def run(app):
                 "client_id": os.environ["EPIC_CLIENT_ID"],
                 "code_verifier": os.environ["EPIC_CODE_VERIFIER"],
             })
-            print(res.text)
             res.raise_for_status()
             os.environ["EPIC_TOKEN"] = res.json()["access_token"]
             return "You are now logged in. You can close this tab."
