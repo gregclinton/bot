@@ -31,7 +31,7 @@ def run(app):
             "client_id": os.environ["EPIC_CLIENT_ID"],
             "redirect_uri": redirect_uri,
             "state": "iuy24oi524o5u2i45y5u254hehwfh4oh4h4lhf4dghsad3",
-            "scope": "patient/*.read appointment.read",
+            "scope": "patient/*.read",
             "code_challenge": code_challenge,
             "code_challenge_method": "S256",
             "iss": f"{base_url[provider]}/api/FHIR/R4",
