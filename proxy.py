@@ -33,6 +33,7 @@ async def transcription(file: UploadFile):
 # https://hl7.org/fhir/smart-app-launch/app-launch.html
 
 base_url = "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212"
+redirect_uri = "https://192.168.1.13/oauth/epic"
 
 @app.get("/oauth/epic/login")
 async def login():
@@ -42,7 +43,7 @@ async def login():
     return RedirectResponse(f"{base_url}/oauth2/authorize?" + "&".join(f"{k}={v}" for k, v in {
         "response_type": "code",
         "client_id": os.environ["EPIC_CLIENT_ID"],
-        "redirect_uri": f"https://192.168.1.13/oauth/epic",
+        "redirect_uri": redirect_uri,
         "state": "iuy24oi524o5u2i45y5u254hehwfh4oh4h4lhf4dghsad3",
         "scope": "patient.read",
         "code_challenge": code_challenge,
@@ -56,7 +57,7 @@ async def callback(req: Request):
         res = await client.post(f"{base_url}/oauth2/token", data = {
             "grant_type": "authorization_code",
             "code": req.query_params.get("code"),
-            "redirect_uri": f"https://192.168.1.13/oauth/epic",
+            "redirect_uri": redirect_uri,
             "client_id": os.environ["EPIC_CLIENT_ID"],
             "code_verifier": os.environ["EPIC_CODE_VERIFIER"],
         })
