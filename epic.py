@@ -49,5 +49,5 @@ def run(app):
             })
             res.raise_for_status()
             with open(f"auth.json.epic.{provider}", "w") as f:
-                f.write(res.json())
+                f.write(res.text)
             return "You are now logged in. You can close this tab."
