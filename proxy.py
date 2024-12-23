@@ -3,7 +3,7 @@ from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import os
 import httpx
-import epic
+from importlib import import_module
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
@@ -28,6 +28,8 @@ async def transcription(file: UploadFile):
             data = { "model": "whisper-1", "language": "en", "response_format": "text" }
         )).text
 
-[ module.run(app) for module in (epic,) ]
+for name in os.listdir("oauth"):
+    if name.endswith(".py"):
+        import_module(f"oauth.{name[:-3]}").run(app)
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
