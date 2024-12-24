@@ -10,6 +10,7 @@ def run(app):
     # https://fhir.epic.com/Developer/Apps
     # https://open.epic.com/MyApps/endpoints
     # https://hl7.org/fhir/smart-app-launch/app-launch.html
+    # https://hl7.org/fhir/smart-app-launch/1.0.0/scopes-and-launch-context/
 
     base_url = {
         "kp": "https://fhir.kp.org/service/ptnt_care/EpicEdiFhirRoutingSvc/v2014/esb-envlbl/212",
