@@ -4,12 +4,12 @@ import os
 import sys
 import builtins
 
-def module_names():
-    for name in builtins.open("tools/use").read().split(","):
+def module_names(thread):
+    for name in thread.get("tools") or builtins.open("tools/use").read().split(","):
         yield(f"tools.{name}")
 
-def modules():
-    for name in module_names():
+def modules(thread):
+    for name in module_names(thread):
         yield import_module(name)
 
 def reset(thread):
@@ -18,7 +18,7 @@ def reset(thread):
             module.reset(thread)
     return thread
 
-def open():
+def open(thread):
     return [{
         "type": "function",
         "function": {
@@ -41,10 +41,10 @@ def open():
                 ]
             }
         }
-    } for module in modules()]
+    } for module in modules(thread)]
 
 def run(name, args):
     return import_module(f"tools.{name}").run(**args)
 
-def close():
-    [sys.modules.pop(name) for name in module_names()]
+def close(thread):
+    [sys.modules.pop(name) for name in module_names(thread)]

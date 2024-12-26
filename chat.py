@@ -17,7 +17,7 @@ def run(prompt, thread):
 
     messages = thread["messages"]
 
-    use = open("docs/use").read().split(",")
+    use = thread.get("docs") or open("docs/use").read().split(",")
     docs = "\n\n".join(open(f"docs/{doc}").read() for doc in use)
     messages[0]["content"] = docs.replace("{today}", datetime.now().strftime("%B %d, %Y"))
 

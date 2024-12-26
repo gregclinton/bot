@@ -26,7 +26,7 @@ def post(payload):
 def invoke(thread):
     content = None
     count = 0
-    bench = tool.open()
+    bench = tool.open(thread)
     messages = thread["messages"]
 
     while not content and count < 10:
@@ -78,7 +78,7 @@ def invoke(thread):
                         "content": output
                     })
 
-    tool.close()
+    tool.close(thread)
     return content or "Could you rephrase that, please?"
 
 
