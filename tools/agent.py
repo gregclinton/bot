@@ -8,7 +8,7 @@ def reset(thread):
     data["agents"] = agents = data.get("agents", {})
     agents.clear()
 
-def run(name: str, tools: str, docs, prompt: str, thread: dict):
+def run(name: str, tools: str, docs: str, prompt: str, thread: dict):
     """
     Creates an agent, or uses an existing agent with a comma-delimeted set of tools
     and a comma-delimeted set of docs. The agent will respond to the prompt.
