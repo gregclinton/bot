@@ -13,7 +13,7 @@ def modules(thread):
         yield import_module(name)
 
 def reset(thread):
-    for module in modules():
+    for module in modules(thread):
         if hasattr(module, "reset"):
             module.reset(thread)
     return thread
