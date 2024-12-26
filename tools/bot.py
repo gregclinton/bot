@@ -16,7 +16,7 @@ def reset(thread):
     bots.clear()
 
 def run(url: str, prompt: str, thread: dict):
-    "Talks with another bot at the given url and the given prompt."
+    "Talks with another bot at the given url and the given prompt. When finished with the bot, sign off by saying 'bye'."
     bots = thread["tools"][name]["bots"]
     post = lambda path, data = "": requests.post(f"{url}/{path}", verify = False, data = data, headers = headers).text
 
