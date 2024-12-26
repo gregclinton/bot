@@ -17,7 +17,6 @@ def run(name: str, tools: str, docs, prompt: str, thread: dict):
     agents = thread["tools"][name]["agents"]
 
     if name not in agents:
-        get = lambda s: s.strip().lower().split(",") 
-        agents[name] = chat.reset({ "docs": get(docs), "tools": get(tools) })
+        agents[name] = chat.reset({ "use": { "docs": docs, "tools": tools } })
 
     return chat.run(prompt, agents[name]) 

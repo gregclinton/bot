@@ -5,7 +5,7 @@ import sys
 import builtins
 
 def module_names(thread):
-    for name in thread.get("tools") or builtins.open("tools/use").read().split(","):
+    for name in (thread["use"]["tools"] if thread.get("use") else builtins.open("tools/use").read()).split(","):
         yield(f"tools.{name}")
 
 def modules(thread):
