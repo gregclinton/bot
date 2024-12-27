@@ -4,8 +4,11 @@ import os
 import sys
 import builtins
 
+all_tools = set({})
+
 def module_names(thread):
     for name in (thread["use"]["tools"] if thread.get("use") else builtins.open("tools/use").read()).split(","):
+        all_tools.add(name)
         yield(f"tools.{name}")
 
 def modules(thread):
@@ -47,5 +50,6 @@ def run(name, args):
     return import_module(f"tools.{name}").run(**args)
 
 def close(thread):
-    pass
-    # [sys.modules.pop(name) for name in module_names(thread)]
+    if thread.get("human"):
+        [sys.modules.pop(f"tools.{name}") for name in all_tools]
+        all_tools.clear()
