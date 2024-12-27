@@ -3,6 +3,8 @@ import chat
 modeule_name = __name__[6:] # strip "tools." 
 
 def reset(thread):
+    thread["tools"] = tools = thread.get("tools", {})
+    tools[modeule_name] = data = tools.get(modeule_name, {})
     data["agents"] = agents = data.get("agents", {})
     agents.clear()
 
