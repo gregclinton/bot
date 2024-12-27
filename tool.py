@@ -47,4 +47,5 @@ def run(name, args):
     return import_module(f"tools.{name}").run(**args)
 
 def close(thread):
-    [sys.modules.pop(name) for name in module_names(thread)]
+    pass
+    # [sys.modules.pop(name) for name in module_names(thread)]
