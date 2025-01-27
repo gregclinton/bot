@@ -15,6 +15,7 @@ docker rm -f dmv
 sudo docker run --network home --name dmv -d bot sh up
 docker exec hal sh -c 'echo "For DMV questions talk to this bot: https://dmv/bot" > docs/dmv'
 docker exec hal sh -c 'echo -n ",dmv" >> docs/use'
+docker exec hal sh -c 'echo -n ",remote" >> tools/use'
 
 docker rm -f dmv
 docker network rm home
