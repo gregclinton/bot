@@ -10,19 +10,19 @@ name = __name__[6:] # strip "tools."
 def reset(thread):
     thread["tools"] = tools = thread.get("tools", {})
     tools[name] = data = tools.get(name, {})
-    data["bots"] = bots = data.get("bots", {})
-    for url, id in bots.items():
+    data["remotes"] = remotes = data.get("remotes", {})
+    for url, id in remotes.items():
         requests.delete(f'{url}/threads/{id}', headers = headers)
-    bots.clear()
+    remotes.clear()
 
 def run(url: str, prompt: str, thread: dict):
-    "Talks with another bot at the given url and the given prompt. When finished with the bot, sign off by saying 'bye'."
-    bots = thread["tools"][name]["bots"]
+    "Talks with remote bot at the given url and the given prompt. When finished with the remote bot, sign off by saying 'bye'."
+    remotes = thread["tools"][name]["remotes"]
     post = lambda path, data = "": requests.post(f"{url}/{path}", verify = False, data = data, headers = headers).text
 
-    if url not in bots:
-        bots[url] = id = post("threads")
+    if url not in remotes:
+        remotes[url] = id = post("threads")
     else:
-        id = bots[url]
+        id = remotes[url]
 
     return post(f"threads/{id}/messages", prompt)
