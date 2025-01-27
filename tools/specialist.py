@@ -10,8 +10,8 @@ def reset(thread):
 
 def run(specialist_name: str, tools: str, docs: str, prompt: str, thread: dict):
     """
-    Creates an specialist, or uses an existing specialist with a comma-delimeted set of tools
-    and a comma-delimeted set of docs. The specialist will respond to the prompt.
+    Creates a specialist, or uses an existing specialist with a comma-delimited set of tools
+    and a comma-delimited set of docs. The specialist will respond to the prompt.
     When finished with the specialist, sign off by saying 'bye'.
     """
     specialists = thread["tools"][modeule_name]["specialists"]
