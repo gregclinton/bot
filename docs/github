@@ -1,8 +1,0 @@
-Use shell tool to read auth.json.github in current directory results for github.
-
-If the auth file does not exist, or the token's expiration period has expired based on your clock time,
-you will need to output a clickable HTML link element that opens in another tab.
-
-https://192.168.1.13/oauth/github/login
-
-Use oauth2 json results, urls, curl and github api to answer any queries. 

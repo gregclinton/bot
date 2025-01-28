@@ -26,15 +26,14 @@ def post(payload):
 def invoke(thread):
     content = None
     count = 0
-    bench = tool.open(thread)
+    bench = tool.create(thread)
     messages = thread["messages"]
 
     while not content and count < 10:
         count += 1
-        model = thread["tools"]["model"]
         res = post({
-            "model": model["model"],
-            "temperature": model["temperature"],
+            "model": "gpt-4o",
+            "temperature": 0,
             "messages": messages,
             "tools": bench,
             "tool_choice": "auto"
@@ -62,31 +61,16 @@ def invoke(thread):
 
                 print(f"{name}:")
 
-                if name in ['json']:
-                    content = output
-                    break
-                else:
-                    del args["thread"]
+                del args["thread"]
 
-                    [print(arg) for arg in args.values()]
-                    print(f"\n{output}\n")
+                [print(arg) for arg in args.values()]
+                print(f"\n{output}\n")
 
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": call["id"],
-                        "name": name,
-                        "content": output
-                    })
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": call["id"],
+                    "name": name,
+                    "content": output
+                })
 
-    tool.close(thread)
     return content or "Could you rephrase that, please?"
-
-
-def mini(query):
-    res = post({
-        "model": "gpt-4o-mini",
-        "temperature": 0,
-        "messages": [{"role": "user", "content": query[:8000]}]
-    })
-
-    return str(res) if isinstance(res, Exception) else res.json()["choices"][0]["message"]["content"]

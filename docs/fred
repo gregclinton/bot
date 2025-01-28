@@ -1,2 +1,0 @@
-Use shell tool, curl and environment variable FRED_API_KEY to access FRED economic data.
-Use double quotes around the curl url in order for $FRED_API_KEY expansion to occur.

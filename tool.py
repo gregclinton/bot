@@ -1,19 +1,9 @@
 from importlib import import_module
 import inspect
-import os
-import sys
-import builtins
-
-all_tools = set({})
-
-def module_names(thread):
-    for name in (thread["use"]["tools"] if thread.get("use") else builtins.open("tools/use").read()).split(","):
-        all_tools.add(name)
-        yield(f"tools.{name}")
 
 def modules(thread):
-    for name in module_names(thread):
-        yield import_module(name)
+    for name in ["specialist", "shell", "clear", "instruct"]:
+        yield import_module(f"tools.{name}")
 
 def reset(thread):
     for module in modules(thread):
@@ -21,7 +11,7 @@ def reset(thread):
             module.reset(thread)
     return thread
 
-def open(thread):
+def create(thread):
     return [{
         "type": "function",
         "function": {
@@ -48,8 +38,3 @@ def open(thread):
 
 def run(name, args):
     return import_module(f"tools.{name}").run(**args)
-
-def close(thread):
-    if thread.get("human"):
-        [sys.modules.pop(f"tools.{name}") for name in all_tools]
-        all_tools.clear()

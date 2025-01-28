@@ -1,5 +1,4 @@
 import llm
-from datetime import datetime
 
 def reset(thread):
     thread["messages"] = [{ "role": "system", "content": "" }]
@@ -16,11 +15,7 @@ def run(prompt, thread):
         return { "role": role, "content": content }
 
     messages = thread["messages"]
-
-    use = (thread["use"]["docs"] if thread.get("use") else open("docs/use").read()).split(",")
-    docs = "\n\n".join(open(f"docs/{doc}").read() for doc in use)
-    messages[0]["content"] = docs.replace("{today}", datetime.now().strftime("%B %d, %Y"))
-
+    messages[0]["content"] = "You are a helpful asssistant."
     thread["runs"].append(len(thread["messages"]))
     messages.append(message("user", prompt))
     reply = llm.invoke(thread)

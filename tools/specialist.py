@@ -8,16 +8,17 @@ def reset(thread):
     data["specialists"] = specialists = data.get("specialists", {})
     specialists.clear()
 
-def run(specialist_name: str, tools: str, docs: str, prompt: str, thread: dict):
+def run(specialist_name: str, instructions: str, prompt: str, thread: dict):
     """
-    Creates a specialist, or uses an existing specialist with a comma-delimited set of tools
-    and a comma-delimited set of docs. The specialist will respond to the prompt.
+    Creates a specialist with the given system message instructions or uses an existing specialist.
+    The specialist will respond to the prompt.
     When finished with the specialist, sign off by saying 'bye'.
     """
     specialists = thread["tools"][modeule_name]["specialists"]
 
     if specialist_name not in specialists:
-        specialists[specialist_name] = chat.reset({})
-        specialists[specialist_name]["use"] = { "docs": docs, "tools": tools }
+        thread = chat.reset({})
+        thread["messages"][0]["content"] = instructions
+        specialists[specialist_name] = thread
 
     return chat.run(prompt, specialists[specialist_name]) 
