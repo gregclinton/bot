@@ -1,9 +1,10 @@
 from importlib import import_module
 import inspect
+import os
 
 def modules(thread):
-    for name in ["specialist", "shell", "clear", "instruct"]:
-        yield import_module(f"tools.{name}")
+    for name in os.listdir("tools"):
+        yield import_module(f"tools.{name[:-3]}")
 
 def reset(thread):
     for module in modules(thread):
