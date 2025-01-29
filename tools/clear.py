@@ -5,7 +5,7 @@ def run(thread: dict):
     if not thread.get("human"):
         thread["messages"] = thread["messages"][:1]
 
-        for thread in thread["specialists"].values():
+        for thread in thread["aides"].values():
             run(thread)
 
         return "Goodbye!"
