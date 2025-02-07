@@ -9,12 +9,17 @@ def reset(thread):
     return tool.reset(thread)
 
 def post(payload):
-    if payload["model"].startswith("gpt"):
+    model = payload["model"]
+
+    if model.startswith("gpt"):
         url_base = "https://api.openai.com"
         key = os.environ['OPENAI_API_KEY']
+    elif model.startswith("deepseek-ai"):
+        url_base = "https://api.together.xyz"
+        key = os.environ['TOGETHER_API_KEY']
     else:
-        url_base = f"https://api-inference.huggingface.co"
-        key = os.environ['HUGGINGFACE_API_KEY']
+        url_base = "https://novita.ai"
+        key = os.environ['NOVITA_API_KEY']
 
     res = requests.post(
         f"{url_base}/v1/chat/completions",
@@ -38,6 +43,7 @@ def invoke(thread):
     model = "gpt-4o"
     model = "Qwen/Qwen2.5-72B-Instruct"
     model = "deepseek/deepseek_v3"
+    model = "deepseek-ai/DeepSeek-V3"
 
     while not content and count < 10:
         count += 1
@@ -46,7 +52,7 @@ def invoke(thread):
             "temperature": 0,
             "messages": messages,
             "tools": bench,
-            "tool_choice": "auto"
+#            "tool_choice": "auto"
         })
 
         if isinstance(res, Exception):
