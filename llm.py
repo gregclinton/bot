@@ -9,10 +9,18 @@ def reset(thread):
     return tool.reset(thread)
 
 def post(payload):
+    if payload["model"].startswith("gpt"):
+        url = "https://api.openai.com/v1/chat/completions"
+        key = os.environ['OPENAI_API_KEY']
+    else:
+        url = f"https://api-inference.huggingface.co/models/{payload['model']}"
+        key = os.environ['HUGGINGFACE_API_KEY']
+        payload.pop("model")
+
     res = requests.post(
-        "https://api.openai.com/v1/chat/completions",
+        url,
         headers = {
-            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
+            'Authorization': 'Bearer ' + key,
             'Content-Type': 'application/json'
         },
         json = payload)
@@ -28,11 +36,13 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
+    model = "Qwen/Qwen2.5-72B-Instruct"
+    model = "gpt-4o"
 
     while not content and count < 10:
         count += 1
         res = post({
-            "model": "gpt-4o",
+            "model": model,
             "temperature": 0,
             "messages": messages,
             "tools": bench,
