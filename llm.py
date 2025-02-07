@@ -9,20 +9,10 @@ def reset(thread):
     return tool.reset(thread)
 
 def post(payload):
-    model = payload["model"]
-
-    if model.startswith("gpt"):
-        url = "https://api.openai.com/v1/chat/completions"
-        key = os.environ['OPENAI_API_KEY']
-    else:
-        # https://docs.together.ai/docs/function-calling#multi-turn-example
-        url = "https://api.together.xyz/v1/chat/completions"
-        key = os.environ['TOGETHER_API_KEY']
-
     res = requests.post(
-        url,
+        "https://api.openai.com/v1/chat/completions",
         headers = {
-            'Authorization': 'Bearer ' + key,
+            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY'],
             'Content-Type': 'application/json'
         },
         json = payload)
@@ -38,14 +28,11 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
-    model = "Qwen/Qwen2.5-72B-Instruct-Turbo"
-    model = "gpt-4o"
-    model = "gpt-4o-mini"
 
     while not content and count < 10:
         count += 1
         res = post({
-            "model": model,
+            "model": "gpt-4o-mini",
             "temperature": 0,
             "messages": messages,
             "tools": bench,
