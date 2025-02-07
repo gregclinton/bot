@@ -1,7 +1,7 @@
 import llm
 
 def reset(thread):
-    thread["messages"] = [{ "role": "system", "content": "" }]
+    thread["messages"] = []
     thread["runs"] = []
     return llm.reset(thread)
 
@@ -10,8 +10,7 @@ def back(thread):
 
 def run(prompt, thread):
     def message(role, content):
-        if role != "system":
-            print(f"{role}:\n{content}\n", flush=True)
+        print(f"{role}:\n{content}\n", flush=True)
         return { "role": role, "content": content }
 
     messages = thread["messages"]
