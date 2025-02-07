@@ -10,15 +10,14 @@ def reset(thread):
 
 def post(payload):
     if payload["model"].startswith("gpt"):
-        url = "https://api.openai.com/v1/chat/completions"
+        url_base = "https://api.openai.com"
         key = os.environ['OPENAI_API_KEY']
     else:
-        url = f"https://api-inference.huggingface.co/models/{payload['model']}"
+        url_base = f"https://api-inference.huggingface.co"
         key = os.environ['HUGGINGFACE_API_KEY']
-        payload.pop("model")
 
     res = requests.post(
-        url,
+        f"{url_base}/v1/chat/completions",
         headers = {
             'Authorization': 'Bearer ' + key,
             'Content-Type': 'application/json'
@@ -36,8 +35,9 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
-    model = "Qwen/Qwen2.5-72B-Instruct"
     model = "gpt-4o"
+    model = "Qwen/Qwen2.5-72B-Instruct"
+    model = "deepseek/deepseek_v3"
 
     while not content and count < 10:
         count += 1
