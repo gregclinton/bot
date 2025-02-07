@@ -15,6 +15,7 @@ def post(payload):
         url = "https://api.openai.com/v1/chat/completions"
         key = os.environ['OPENAI_API_KEY']
     else:
+        # https://docs.together.ai/docs/function-calling#multi-turn-example
         url = "https://api.together.xyz/v1/chat/completions"
         key = os.environ['TOGETHER_API_KEY']
 
