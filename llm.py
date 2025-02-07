@@ -38,8 +38,8 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
-    model = "gpt-4o"
     model = "Qwen/Qwen2.5-72B-Instruct-Turbo"
+    model = "gpt-4o"
     model = "gpt-4o-mini"
 
     while not content and count < 10:
