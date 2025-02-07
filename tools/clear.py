@@ -1,13 +1,11 @@
 import chat
 
 def run(thread: dict):
-    "Clears the current thread. Call this tool whenever the incoming prompt indicates farewell, thanks, understood, etc."
+    "Clears the current thread. Call this tool when you are dismissed."
     if not thread.get("human"):
-        thread["messages"] = thread["messages"][:1]
+        thread["messages"].clear()
 
         for thread in thread["workers"].values():
             run(thread)
 
-        return "Goodbye!"
-    else:
-        return "You're welcome!"
+    return "Success."

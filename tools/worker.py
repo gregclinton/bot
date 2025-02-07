@@ -7,7 +7,7 @@ def run(worker_name: str, prompt: str, thread: dict):
     """
     Prompts a worker with the given prompt.
     If the worker does not already exist it will be created.
-    When finished with the worker, sign off by saying 'bye'.
+    When finished with the worker, dismiss him.
     Use the instruct tool to keep track of your worker names and their purposes.
 
     With workers you can divvy up a large job into many smaller jobs.
