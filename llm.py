@@ -28,6 +28,7 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
+    messages[0]["content"] = open("notes").read()
 
     while not content and count < 10:
         count += 1
