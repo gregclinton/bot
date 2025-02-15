@@ -26,6 +26,9 @@ def run(worker_name: str, prompt: str, thread: dict):
     if worker_name not in workers:
         workers[worker_name] = chat.reset({})
 
+    if not os.path.exists(worker_name):
+        os.mkdir(worker_name)
+
     os.chdir(worker_name)
     reply = chat.run(prompt, workers[worker_name])
     os.chdir("..")

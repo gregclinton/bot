@@ -28,8 +28,15 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
-    messages[0]["content"] = open("notes").read()
 
+    if os.path.exists("notes")
+        messages[0]["content"] = open("notes").read()
+    else:
+        messages[0]["content"] = """
+Keep things you don't want to forget in the notes file in your current working directory.
+You can edit these notes with the shell tool.
+These notes will comprise your system message.
+"""
     while not content and count < 10:
         count += 1
         res = post({
