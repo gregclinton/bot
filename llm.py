@@ -29,7 +29,7 @@ def invoke(thread):
     bench = tool.create(thread)
     messages = thread["messages"]
 
-    if os.path.exists("notes")
+    if os.path.exists("notes"):
         messages[0]["content"] = open("notes").read()
     else:
         messages[0]["content"] = """
