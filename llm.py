@@ -29,9 +29,10 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
-    model = "llama-3.1-8b-instant"
-    model = "qwen-qwq-32b"
     model = "gpt-4o-mini"
+    model = "llama-3.3-70b-versatile"
+    model = "qwen-2.5-32b"
+    model = "gemma2-9b-it"
 
     if os.path.exists("notes"):
         messages[0]["content"] = open("notes").read()
