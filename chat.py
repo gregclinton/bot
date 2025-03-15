@@ -22,3 +22,7 @@ def run(prompt, thread):
     reply = llm.invoke(thread)
     messages.append(message("assistant", reply))
     return reply
+
+if __name__ == "__main__":
+    # . ./secrets
+    run("Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked.", reset({}))
