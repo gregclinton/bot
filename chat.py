@@ -15,8 +15,6 @@ def run(prompt, thread):
         return { "role": role, "content": content }
 
     messages = thread["messages"]
-    messages[:] = messages[:1] + messages[-100:]
-
     thread["runs"].append(len(thread["messages"]))
     messages.append(message("user", prompt))
     reply = llm.invoke(thread)
