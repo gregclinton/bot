@@ -3,17 +3,18 @@ import os
 import json
 import tool
 
-# with tools: llama-3.3-70b-versatile qwen-2.5-32b
+# with tools: llama-3.3-70b-versatile qwen-2.5-32b gpt-4o-mini
 # no tools: 8K: llama-3.2-3b-preview llama-3.2-1b-preview  128K: llama-3.1-8b-instant
 
 def reset(thread):
     return tool.reset(thread)
 
 def post(payload):
+    gpt = payload["model"].startswith("gpt")
     res = requests.post(
-        "https://api.groq.com/openai/v1/chat/completions",
+        f"https://api.{'openai.com' if gpt else 'groq.com/openai'}/v1/chat/completions",
         headers = {
-            'Authorization': 'Bearer ' + os.environ['GROQ_API_KEY'],
+            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY' if gpt else 'GROQ_API_KEY'],
             'Content-Type': 'application/json'
         },
         json = payload)
