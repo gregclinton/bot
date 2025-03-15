@@ -34,7 +34,7 @@ def invoke(thread):
     model = worker[0]
     messages[0]["content"] = "\n".join(worker[1:])
 
-    if model in ["qwen-2.5-32b", "llama-3.3-70b-versatile"]:
+    if model in ["qwen-2.5-32b", "llama-3.3-70b-versatile", "gpt-4o-mini"]:
         bench = tool.create(thread)
 
     while not content and count < 10:
