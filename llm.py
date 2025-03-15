@@ -9,11 +9,10 @@ def reset(thread):
     return tool.reset(thread)
 
 def post(payload):
-    gpt = payload["model"].startswith("gpt")
     res = requests.post(
-        f"https://api.{'openai.com' if gpt else 'groq.com/openai'}/v1/chat/completions",
+        "https://api.groq.com/openai/v1/chat/completions",
         headers = {
-            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY' if gpt else 'GROQ_API_KEY'],
+            'Authorization': 'Bearer ' + os.environ['GROQ_API_KEY'],
             'Content-Type': 'application/json'
         },
         json = payload)
@@ -29,7 +28,6 @@ def invoke(thread):
     count = 0
     bench = tool.create(thread)
     messages = thread["messages"]
-    model = "gpt-4o-mini"
     model = "llama-3.3-70b-versatile"
     model = "qwen-2.5-32b"
     model = "gemma2-9b-it"
@@ -37,11 +35,8 @@ def invoke(thread):
     if os.path.exists("notes"):
         messages[0]["content"] = open("notes").read()
     else:
-        messages[0]["content"] = """
-Keep things you don't want to forget in the notes file in your current working directory.
-You can edit these notes with the shell tool.
-These notes will comprise your system message.
-"""
+        messages[0]["content"] = ""
+
     while not content and count < 10:
         count += 1
         res = post({
