@@ -24,18 +24,18 @@ def post(payload):
 def invoke(thread):
     content = None
     count = 0
-    bench = [] #tool.create(thread)
+    bench = tool.create(thread)
     messages = thread["messages"]
 
     # with tools
     model = "llama-3.3-70b-versatile"
     model = "qwen-2.5-32b"
-    model = "gemma2-9b-it"
 
     # no tools
     model = "llama-3.2-3b-preview" #   8k context
     model = "llama-3.2-1b-preview" #   8k context
     model = "llama-3.1-8b-instant" # 128k context
+    bench = []
 
     if os.path.exists("notes"):
         messages[0]["content"] = open("notes").read()
