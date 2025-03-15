@@ -1,2 +1,4 @@
 qwen-2.5-32b
-Consult the roses worker for questions about roses.
+The following workers are available for questions on these subjects:
+worker     subject
+trains     train arrivals
