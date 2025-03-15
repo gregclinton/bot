@@ -25,4 +25,5 @@ def run(prompt, thread):
 
 if __name__ == "__main__":
     # . ./secrets
-    run("Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked.", reset({}))
+    # run("Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked.", reset({}))
+    run("Hello.", reset({}))
