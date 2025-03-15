@@ -3,6 +3,9 @@ import os
 import json
 import tool
 
+# with tools: llama-3.3-70b-versatile qwen-2.5-32b
+# no tools: 8K: llama-3.2-3b-preview llama-3.2-1b-preview  128K: llama-3.1-8b-instant
+
 def reset(thread):
     return tool.reset(thread)
 
@@ -24,23 +27,14 @@ def post(payload):
 def invoke(thread):
     content = None
     count = 0
-    bench = tool.create(thread)
-    messages = thread["messages"]
-
-    # with tools
-    model = "llama-3.3-70b-versatile"
-    model = "qwen-2.5-32b"
-
-    # no tools
-    model = "llama-3.2-3b-preview" #   8k context
-    model = "llama-3.2-1b-preview" #   8k context
-    model = "llama-3.1-8b-instant" # 128k context
     bench = []
+    messages = thread["messages"]
+    worker = open(f"workers/{thread['worker']}").read().split("\n")
+    model = worker[0]
+    messages[0]["content"] = "\n".join(worker[1:])
 
-    if os.path.exists("notes"):
-        messages[0]["content"] = open("notes").read()
-    else:
-        messages[0]["content"] = ""
+    if model in ["qwen-2.5-32b", "llama-3.3-70b-versatile"]:
+        bench = tool.create(thread)
 
     while not content and count < 10:
         count += 1
