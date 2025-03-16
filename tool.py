@@ -1,11 +1,9 @@
 from importlib import import_module
 import inspect
-import os
 
 def modules(thread):
-    for name in os.listdir("tools"):
-        if name.endswith(".py"):
-            yield import_module(f"tools.{name[:-3]}")
+    for name in thread["tools"]:
+        yield import_module(f"tools.{name}")
 
 def reset(thread):
     for module in modules(thread):

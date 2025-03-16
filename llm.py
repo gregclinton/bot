@@ -3,9 +3,6 @@ import os
 import json
 import tool
 
-# with tools: llama-3.3-70b-versatile qwen-2.5-32b gpt-4o-mini
-# no tools: 8K: llama-3.2-3b-preview llama-3.2-1b-preview  128K: llama-3.1-8b-instant
-
 def reset(thread):
     return tool.reset(thread)
 
@@ -28,11 +25,8 @@ def post(payload):
 def invoke(thread):
     content = None
     count = 0
-    bench = []
     messages = thread["messages"]
-
-    if thread["model"] in ["qwen-2.5-32b", "llama-3.3-70b-versatile", "gpt-4o-mini"]:
-        bench = tool.create(thread)
+    bench = tool.create(thread)
 
     while not content and count < 10:
         count += 1
