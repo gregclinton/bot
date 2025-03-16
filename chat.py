@@ -27,6 +27,7 @@ def run(prompt, thread):
 
 if __name__ == "__main__":
     # . ./secrets
-    thread = reset({"user": "me", "assistant": "hal"})
-    # run("Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked.", thread)
-    run("Hello. When is the Amtrak 228 due to arrive today?", thread)
+    prompt = "Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked."
+    prompt = "List the files in my current working directory." 
+    prompt = "Hello. When is the Amtrak 228 due to arrive today?"
+    run(prompt, reset({"user": "me", "assistant": "hal"}))
