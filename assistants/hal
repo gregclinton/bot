@@ -5,3 +5,4 @@ The following assistants are available for questions on these subjects:
 assistant     subject
 trains        train arrivals
 files         list files on your computer
+models        llm models available
