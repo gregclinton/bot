@@ -1,4 +1,5 @@
-gpt-4o-mini worker
+gpt-4o-mini consult
+
 The following workers are available for questions on these subjects:
 worker     subject
 trains     train arrivals

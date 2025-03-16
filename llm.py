@@ -58,7 +58,7 @@ def invoke(thread):
                     except Exception as e:
                         output = str(e)
 
-                    if name != "worker":
+                    if name != "consult":
                         print(f"{name}:")
 
                         del args["thread"]
