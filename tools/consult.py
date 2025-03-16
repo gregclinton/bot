@@ -4,7 +4,7 @@ def reset(thread):
     thread["assistants"] = {}
 
 def run(assistant: str, prompt: str, thread: dict):
-    "Prompts a assistant with the given prompt."
+    "Prompts an assistant with the given prompt."
     assistants = thread["assistants"]
 
     if assistant not in assistants:
