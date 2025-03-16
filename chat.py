@@ -1,13 +1,15 @@
 import llm
+import tool
 
 def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
     tokens = spec[0].split(' ')
+    tools = tokens[1:]
     thread["model"] = tokens[0]
-    thread["tools"] = tokens[1:]
+    thread["tools"] = tool.create(tools)
+    tool.reset(tools, thread)
     thread["messages"] = [{ "role": "system", "content": "\n".join(spec[1:]) }]
     thread["runs"] = []
-    return llm.reset(thread)
 
 def back(thread):
     del thread["messages"][thread["runs"].pop():]

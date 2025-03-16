@@ -1,17 +1,17 @@
 from importlib import import_module
 import inspect
 
-def modules(thread):
-    for name in thread["tools"]:
-        yield import_module(f"tools.{name}")
+def modules(tools):
+    for tool in tools:
+        yield import_module(f"tools.{tool}")
 
-def reset(thread):
-    for module in modules(thread):
+def reset(tools, thread):
+    for module in modules(tools):
         if hasattr(module, "reset"):
             module.reset(thread)
     return thread
 
-def create(thread):
+def create(tools):
     return [{
         "type": "function",
         "function": {
@@ -34,7 +34,7 @@ def create(thread):
                 ]
             }
         }
-    } for module in modules(thread)]
+    } for module in modules(tools)]
 
 def run(name, args):
     return import_module(f"tools.{name}").run(**args)

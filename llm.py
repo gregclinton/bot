@@ -1,10 +1,9 @@
 import requests
 import os
 import json
-import tool
 
 def reset(thread):
-    return tool.reset(thread)
+    return thread
 
 def post(payload):
     gpt = payload["model"].startswith("gpt")
@@ -26,7 +25,6 @@ def invoke(thread):
     content = None
     count = 0
     messages = thread["messages"]
-    bench = tool.create(thread)
 
     while not content and count < 10:
         count += 1
@@ -34,7 +32,7 @@ def invoke(thread):
             "model": thread["model"],
             "temperature": 0,
             "messages": messages,
-            "tools": bench,
+            "tools": thread["tools"],
             "tool_choice": "auto"
         })
 
