@@ -8,6 +8,6 @@ def run(worker_name: str, prompt: str, thread: dict):
     workers = thread["workers"]
 
     if worker_name not in workers:
-        workers[worker_name] = chat.reset({"worker": worker_name})
+        workers[worker_name] = chat.reset({"user": thread["worker"], "worker": worker_name})
 
     return chat.run(prompt, workers[worker_name])

@@ -28,5 +28,5 @@ async def delete_last_message(id: str):
 @app.post('/threads')
 async def post_thread():
     id = str(10000 + len(threads))
-    threads[id] = chat.reset({ "worker": "hal" })
+    threads[id] = chat.reset({ "user": "me", "worker": "hal" })
     return id

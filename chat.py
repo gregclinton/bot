@@ -11,8 +11,7 @@ def back(thread):
 def run(prompt, thread):
     def message(role, content):
         if role != "system":
-            who = thread["worker"] if role == "assistant" else "user"
-            print(f"{who}:\n{content}\n", flush=True)
+            print(f"{thread['worker' if role == 'assistant' else 'user']}:\n{content}\n", flush=True)
         return { "role": role, "content": content }
 
     messages = thread["messages"]
@@ -25,4 +24,4 @@ def run(prompt, thread):
 if __name__ == "__main__":
     # . ./secrets
     # run("Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked.", reset({}))
-    run("Hello. When is the Amtrak 228 due to arrive today?", reset({"worker": "hal"}))
+    run("Hello. When is the Amtrak 228 due to arrive today?", reset({"user": "me", "worker": "hal"}))
