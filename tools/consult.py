@@ -1,13 +1,13 @@
 import chat
 
 def reset(thread):
-    thread["workers"] = {}
+    thread["assistants"] = {}
 
-def run(worker: str, prompt: str, thread: dict):
-    "Prompts a worker with the given prompt."
-    workers = thread["workers"]
+def run(assistant: str, prompt: str, thread: dict):
+    "Prompts a assistant with the given prompt."
+    assistants = thread["assistants"]
 
-    if worker not in workers:
-        workers[worker] = chat.reset({"user": thread["worker"], "worker": worker})
+    if assistant not in assistants:
+        assistants[assistant] = chat.reset({"user": thread["assistant"], "assistant": assistant})
 
-    return chat.run(prompt, workers[worker])
+    return chat.run(prompt, assistants[assistant])
