@@ -9,7 +9,6 @@ def reset(tools, thread):
     for module in modules(tools):
         if hasattr(module, "reset"):
             module.reset(thread)
-    return thread
 
 def create(tools):
     return [{
