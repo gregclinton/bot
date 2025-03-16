@@ -11,7 +11,7 @@ def back(thread):
 def run(prompt, thread):
     def message(role, content):
         if role != "system":
-            print(f"{thread['worker' if role == 'assistant' else 'user']}:\n{content}\n", flush=True)
+            print(f"{role} ({thread['worker' if role == 'assistant' else 'user']}):\n{content}\n", flush=True)
         return { "role": role, "content": content }
 
     messages = thread["messages"]
