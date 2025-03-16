@@ -39,31 +39,30 @@ def invoke(thread):
             message = res.json()["choices"][0]["message"]
             content = message.get("content")
 
-            if "tool_calls" in message:
-                for call in message.get("tool_calls", []):
-                    fn = call["function"]
-                    name = fn["name"]
-                    args = json.loads(fn["arguments"])
-                    args["thread"] = thread
+            for call in message.get("tool_calls", []):
+                fn = call["function"]
+                name = fn["name"]
+                args = json.loads(fn["arguments"])
+                args["thread"] = thread
 
-                    try:
-                        output = tool.run(name, args)
-                    except Exception as e:
-                        output = str(e)
+                try:
+                    output = tool.run(name, args)
+                except Exception as e:
+                    output = str(e)
 
-                    if name != "consult":
-                        print(f"{name}:")
+                if name != "consult":
+                    print(f"{name}:")
 
-                        del args["thread"]
+                    del args["thread"]
 
-                        [print(arg) for arg in args.values()]
-                        print(f"\n{output}\n")
+                    [print(arg) for arg in args.values()]
+                    print(f"\n{output}\n")
 
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": call["id"],
-                        "name": name,
-                        "content": output
-                    })
+                messages.append({
+                    "role": "tool",
+                    "tool_call_id": call["id"],
+                    "name": name,
+                    "content": output
+                })
 
     return content or "Could you rephrase that, please?"
