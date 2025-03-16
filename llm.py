@@ -30,17 +30,14 @@ def invoke(thread):
     count = 0
     bench = []
     messages = thread["messages"]
-    worker = open(f"workers/{thread['worker']}").read().split("\n")
-    model = worker[0]
-    messages[0]["content"] = "\n".join(worker[1:])
 
-    if model in ["qwen-2.5-32b", "llama-3.3-70b-versatile", "gpt-4o-mini"]:
+    if thread["model"] in ["qwen-2.5-32b", "llama-3.3-70b-versatile", "gpt-4o-mini"]:
         bench = tool.create(thread)
 
     while not content and count < 10:
         count += 1
         res = post({
-            "model": model,
+            "model": thread["model"],
             "temperature": 0,
             "messages": messages,
             "tools": bench,

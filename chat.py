@@ -1,7 +1,9 @@
 import llm
 
 def reset(thread):
-    thread["messages"] = [{ "role": "system", "content": "" }]
+    worker = open(f"workers/{thread['worker']}").read().split("\n")
+    thread["model"] = worker[0]
+    thread["messages"] = [{ "role": "system", "content": "\n".join(worker[1:]) }]
     thread["runs"] = []
     return llm.reset(thread)
 
