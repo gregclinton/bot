@@ -67,12 +67,13 @@ def invoke(thread):
                     except Exception as e:
                         output = str(e)
 
-                    print(f"{name}:")
+                    if name != "worker":
+                        print(f"{name}:")
 
-                    del args["thread"]
+                        del args["thread"]
 
-                    [print(arg) for arg in args.values()]
-                    print(f"\n{output}\n")
+                        [print(arg) for arg in args.values()]
+                        print(f"\n{output}\n")
 
                     messages.append({
                         "role": "tool",
