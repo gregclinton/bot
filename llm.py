@@ -2,9 +2,6 @@ import requests
 import os
 import json
 
-def reset(thread):
-    return thread
-
 def post(payload):
     gpt = payload["model"].startswith("gpt")
     res = requests.post(

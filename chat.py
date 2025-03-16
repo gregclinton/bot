@@ -10,6 +10,7 @@ def reset(thread):
     tool.reset(tools, thread)
     thread["messages"] = [{ "role": "system", "content": "\n".join(spec[1:]) }]
     thread["runs"] = []
+    return thread
 
 def back(thread):
     del thread["messages"][thread["runs"].pop():]
