@@ -1,6 +1,7 @@
 import requests
 import os
 import json
+import tool
 
 def post(payload):
     gpt = payload["model"].startswith("gpt")
@@ -32,7 +33,6 @@ def invoke(thread):
             "tools": thread["tools"],
             "tool_choice": "auto"
         })
-
         if isinstance(res, Exception):
             content = str(res)
         else:
@@ -40,8 +40,6 @@ def invoke(thread):
             content = message.get("content")
 
             if "tool_calls" in message:
-                messages.append(message)
-
                 for call in message.get("tool_calls", []):
                     fn = call["function"]
                     name = fn["name"]
