@@ -1,11 +1,11 @@
 import llm
 
 def reset(thread):
-    assistant = open(f"assistants/{thread['assistant']}").read().split("\n")
-    tokens = assistant[0].split(' ')
+    spec = open(f"assistants/{thread['assistant']}").read().split("\n")
+    tokens = spec[0].split(' ')
     thread["model"] = tokens[0]
     thread["tools"] = tokens[1:]
-    thread["messages"] = [{ "role": "system", "content": "\n".join(assistant[1:]) }]
+    thread["messages"] = [{ "role": "system", "content": "\n".join(spec[1:]) }]
     thread["runs"] = []
     return llm.reset(thread)
 
