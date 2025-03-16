@@ -29,5 +29,6 @@ if __name__ == "__main__":
     # . ./secrets
     prompt = "Write a python program foo.py to output the name of a random fruit. Then run it and tell me what fruit it picked."
     prompt = "List the files in my current working directory." 
+    prompt = "Hello. When is the Amtrak 228 due to arrive today in San Diego?"
     prompt = "Hello. When is the Amtrak 228 due to arrive today?"
     run(prompt, reset({"user": "me", "assistant": "hal"}))
