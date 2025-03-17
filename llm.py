@@ -37,6 +37,7 @@ def invoke(thread):
             content = str(res)
         else:
             message = res.json()["choices"][0]["message"]
+            messages.append(message)
             content = message.get("content")
 
             for call in message.get("tool_calls", []):
