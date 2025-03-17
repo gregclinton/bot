@@ -39,11 +39,7 @@ def invoke(thread):
                 name = fn["name"]
                 args = json.loads(fn["arguments"])
                 args["thread"] = thread
-
-                try:
-                    output = tool.run(name, args)
-                except Exception as e:
-                    output = str(e)
+                output = tool.run(name, args)
 
                 if name != "consult":
                     print(f"{name}:")
@@ -60,6 +56,6 @@ def invoke(thread):
                     "content": output
                 })
         except Exception as e:
-            content = str(res)
+            content = str(e)
 
     return content or "Could you rephrase that, please?"
