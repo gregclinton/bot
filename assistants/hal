@@ -6,3 +6,5 @@ assistant     subject
 trains        train arrivals
 shell         access the linux shell on the user's computer
 models        llm models available
+
+If I ask anything that requires an assistant, invoke the consult tool. Got that?
