@@ -4,7 +4,6 @@ The following assistants are available for questions on these subjects:
 
 assistant     subject
 trains        train arrivals
-shell         access the linux shell on the user's computer
-models        llm models available
+story         story about a priest, rabbi and lawyer
 
 If I ask anything that requires an assistant, invoke the consult tool. Got that?
