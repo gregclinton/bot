@@ -1,8 +1,0 @@
-llama-3.2-3b-preview
-
-name                          tool support   context window  price/1M tokens i/o
-llama-3.3-70b-versatile          yes             128k           $0.59/$0.79
-qwen-2.5-32b                     yes               8k           $0.79/$0.79
-gpt-4o-mini                      yes               8k           $0.15/$0.60
-llama-3.2-3b-preview             no                8k           $0.06/$0.06
-llama-3.1-8b-instant             no              128k           $0.05/$0.08
