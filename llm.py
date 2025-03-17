@@ -33,6 +33,7 @@ def invoke(thread):
             "tools": thread["tools"],
             "tool_choice": "auto"
         })
+
         if isinstance(res, Exception):
             content = str(res)
         else:
