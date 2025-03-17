@@ -8,7 +8,10 @@ def reset(thread):
     thread["model"] = tokens[0]
     thread["tools"] = tool.create(tools)
     tool.reset(tools, thread)
-    thread["messages"] = [{ "role": "system", "content": "\n".join(spec[1:]) }]
+    thread["messages"] = [
+        { "role": "user", "content": "\n".join(spec[1:])},
+        { "role": "assistant", "content": "Yes, proceed."}
+    ]
     thread["runs"] = []
     return thread
 
