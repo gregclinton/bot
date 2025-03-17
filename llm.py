@@ -3,40 +3,33 @@ import os
 import json
 import tool
 
-def post(payload):
-    gpt = payload["model"].startswith("gpt")
-    res = requests.post(
-        f"https://api.{'openai.com' if gpt else 'groq.com/openai'}/v1/chat/completions",
-        headers = {
-            'Authorization': 'Bearer ' + os.environ['OPENAI_API_KEY' if gpt else 'GROQ_API_KEY'],
-            'Content-Type': 'application/json'
-        },
-        json = payload)
-
-    try:
-        res.raise_for_status()
-        return res
-    except Exception as e:
-        return e
-
 def invoke(thread):
     content = None
     count = 0
     messages = thread["messages"]
+    model = thread["model"]
+    gpt = model.startswith("gpt")
+    url = f"https://api.{'openai.com' if gpt else 'groq.com/openai'}/v1/chat/completions"
+    key = os.environ['OPENAI_API_KEY' if gpt else 'GROQ_API_KEY']
 
     while not content and count < 10:
         count += 1
-        res = post({
-            "model": thread["model"],
+        res = requests.post(
+            url,
+            headers = {
+                'Authorization': 'Bearer ' + key,
+                'Content-Type': 'application/json'
+            },
+            json = {
+            "model": model,
             "temperature": 0,
             "messages": messages,
             "tools": thread["tools"],
             "tool_choice": "auto"
         })
 
-        if isinstance(res, Exception):
-            content = str(res)
-        else:
+        try:
+            res.raise_for_status()
             message = res.json()["choices"][0]["message"]
             messages.append(message)
             content = message.get("content")
@@ -66,5 +59,7 @@ def invoke(thread):
                     "name": name,
                     "content": output
                 })
+        except Exception as e:
+            content = str(res)
 
     return content or "Could you rephrase that, please?"
