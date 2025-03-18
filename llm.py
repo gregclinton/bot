@@ -11,13 +11,11 @@ def from_model(model):
         else "huggingface" if "/" in model
         else "groq"
     )
-    url = {
+    return {
         "openai": f"https://api.openai.com/v1/chat/completions",
         "huggingface": f"https://api-inference.huggingface.co/models/{model}",
         "groq": f"https://api.groq.com/openai/v1/chat/completions"
-    }.get(provider)
-
-    return url, os.environ[f"{provider.upper()}_API_KEY"]
+    }[provider], os.environ[f"{provider.upper()}_API_KEY"]
 
 def invoke(thread):
     content = None
