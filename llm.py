@@ -19,6 +19,16 @@ def invoke(thread):
 
     while not content and count < 10:
         count += 1
+        data = {
+            "model": model,
+            "temperature": 0,
+            "messages": messages,
+        }
+
+        if thread["tools"]:
+            data["tools"] = thread["tools"]
+            data["tool_choice"] = "auto"
+
         res = requests.post(
             url = {
                 "openai": "https://api.openai.com/v1/chat/completions",
@@ -32,13 +42,8 @@ def invoke(thread):
                 'Authorization': 'Bearer ' + os.environ[f"{provider.upper()}_API_KEY"],
                 'Content-Type': 'application/json'
             },
-            json = {
-            "model": model,
-            "temperature": 0,
-            "messages": messages,
-            "tools": thread["tools"],
-            "tool_choice": "auto"
-        })
+            json = data
+        )
 
         try:
             res.raise_for_status()
