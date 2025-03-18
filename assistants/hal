@@ -1,9 +1,3 @@
 gpt-4o-mini consult handover
 
-The following assistants are available for questions on these subjects:
-
-assistant     subject
-trains        train arrivals
-story         story about a priest, rabbi and lawyer
-
-If I ask anything that requires an assistant, invoke the consult tool. Got that?
+You are a helpful assistant. Got that?
