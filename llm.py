@@ -74,6 +74,6 @@ def invoke(thread):
                     "content": output
                 })
         except Exception as e:
-            content = str(e) + "\n" + res.content
+            content = str(e) + "\n" + res.text
 
     return content or "Could you rephrase that, please?"
