@@ -60,6 +60,6 @@ def invoke(thread):
                     "content": output
                 })
         except Exception as e:
-            content = str(e)
+            content = str(e) + "\n" + res.content
 
     return content or "Could you rephrase that, please?"
