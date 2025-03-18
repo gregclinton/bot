@@ -16,7 +16,6 @@ def create(tools):
         "function": {
             "name": module.__name__[6:],  # strip "tools."
             "description": module.run.__doc__,
-            "strict": True,
             "parameters": {
                 "type": "object",
                 "properties": {
