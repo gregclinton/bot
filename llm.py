@@ -20,9 +20,9 @@ def invoke(thread):
         count += 1
         res = requests.post(
             url = {
-                "openai": f"https://api.openai.com/v1/chat/completions",
-                "huggingface": f"https://api-inference.huggingface.co/models/{model}",
-                "groq": f"https://api.groq.com/openai/v1/chat/completions"
+                "openai": "https://api.openai.com/v1/chat/completions",
+                "huggingface": f"https://router.huggingface.co/hf-inference/models/{model}/v1/chat/completions",
+                "groq": "https://api.groq.com/openai/v1/chat/completions"
             }[provider],
             headers = {
                 'Authorization': 'Bearer ' + os.environ[f"{provider.upper()}_API_KEY"],
