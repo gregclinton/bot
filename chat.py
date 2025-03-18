@@ -2,7 +2,7 @@ import llm
 import tool
 
 def load(assistant):
-    spec = open(f"assistants/{thread['assistant']}").read().split("\n")
+    spec = open(f"assistants/{assistant}").read().split("\n")
     tokens = spec[0].split(' ')
     model = tokens[0]
     tools = tokens[1:]
