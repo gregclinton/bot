@@ -12,6 +12,7 @@ def invoke(thread):
         "openai" if model.startswith("gpt")
         else "anthropic" if model.startswith("claude")
         else "google" if model.startswith("gemini")
+        else "xai" if model.startswith("grok")
         else "huggingface" if "/" in model
         else "groq"
     )
@@ -23,6 +24,7 @@ def invoke(thread):
                 "openai": "https://api.openai.com/v1/chat/completions",
                 "anthropic": "https://api.anthropic.com/v1/chat/completions",
                 "google": "https://generativelanguage.googleapis.com/v1/chat/completions",
+                "xai": "https://api.x.ai/v1/chat/completions",
                 "huggingface": f"https://router.huggingface.co/hf-inference/models/{model}/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
             }[provider],
