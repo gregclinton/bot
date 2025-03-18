@@ -4,7 +4,7 @@ import json
 import tool
 
 def from_model(model):
-    provider = "openai" if model.startswith("gpt") else "huggingface" if model.startswith("google") else "groq"
+    provider = "openai" if model.startswith("gpt") else "huggingface" if "/" in model else "groq"
     url = {
         "openai": f"https://api.openai.com/v1/chat/completions",
         "huggingface": f"https://api-inference.huggingface.co/models/{model}",
