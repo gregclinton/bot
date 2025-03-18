@@ -22,15 +22,15 @@ def invoke(thread):
         "messages": messages,
     }
 
+    if thread["tools"]:
+        data["tools"] = thread["tools"]
+        data["tool_choice"] = "auto"
+
     content = None
     count = 0
 
     while not content and count < 10:
         count += 1
-
-        if thread["tools"]:
-            data["tools"] = thread["tools"]
-            data["tool_choice"] = "auto"
 
         res = requests.post(
             url = {
