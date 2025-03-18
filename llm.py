@@ -3,21 +3,29 @@ import os
 import json
 import tool
 
+def from_model(model):
+    provider = "openai" if model.startswith("gpt") else "huggingface" if model.startswith("google") else "groq"
+    url = {
+        "openai": f"https://api.openai.com/v1/chat/completions",
+        "huggingface": f"https://api-inference.huggingface.co/models/{model}",
+        "groq": f"https://api.groq.com/openai/v1/chat/completions"
+    }.get(provider)
+
+    return url, os.environ[f"{provider.upper()}_API_KEY"]
+
 def invoke(thread):
     content = None
     count = 0
     messages = thread["messages"]
     model = thread["model"]
-    gpt = model.startswith("gpt")
-    url = f"https://api.{'openai.com' if gpt else 'groq.com/openai'}/v1/chat/completions"
-    key = os.environ['OPENAI_API_KEY' if gpt else 'GROQ_API_KEY']
+    url, key = from_model(model)
 
     while not content and count < 10:
         count += 1
         res = requests.post(
             url,
             headers = {
-                'Authorization': 'Bearer ' + key,
+                'Authorization': f"Bearer {key}",
                 'Content-Type': 'application/json'
             },
             json = {
