@@ -2,11 +2,7 @@ import llm
 import tool
 
 def reset(thread):
-    spec = open(f"assistants/{thread['assistant']}").read().split("\n")
-    tokens = spec[0].split(' ')
-    tools = tokens[1:]
-    thread["model"] = tokens[0]
-    thread["tools"] = tool.create(tools)
+    handover(thread)
     tool.reset(tools, thread)
     thread["messages"] = [
         { "role": "user", "content": "\n".join(spec[1:])},
@@ -15,13 +11,12 @@ def reset(thread):
     thread["runs"] = []
     return thread
 
-def handover(assistant, thread):
-    spec = open(f"assistants/{assistant}").read().split("\n")
+def handover(thread):
+    spec = open(f"assistants/{thread['assistant']}").read().split("\n")
     tokens = spec[0].split(' ')
     tools = tokens[1:]
     thread["model"] = tokens[0]
     thread["tools"] = tool.create(tools)
-    thread["assistant"] = assistant
 
 def back(thread):
     del thread["messages"][thread["runs"].pop():]
