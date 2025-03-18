@@ -5,6 +5,7 @@ The following assistants are available for questions on these subjects:
 assistant     subject
 trains        train arrivals
 story         story about a priest, rabbi and lawyer
-poindexter    difficult questions
+
+poindexter, hal and china are assistants that can take a handover
 
 If I ask anything that requires an assistant, invoke the consult tool. Got that?
