@@ -41,7 +41,11 @@ def invoke(thread):
                 args["thread"] = thread
                 output = tool.run(name, args)
 
-                if name != "consult":
+                if name == "handover":
+                    messages.pop() # remove the tool call message
+                    content = output
+                    break
+                elif name != "consult":
                     print(f"{name}:")
 
                     del args["thread"]
