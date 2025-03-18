@@ -15,6 +15,14 @@ def reset(thread):
     thread["runs"] = []
     return thread
 
+def handover(assistant, thread):
+    spec = open(f"assistants/{assistant}").read().split("\n")
+    tokens = spec[0].split(' ')
+    tools = tokens[1:]
+    thread["model"] = tokens[0]
+    thread["tools"] = tool.create(tools)
+    thread["assistant"] = assistant
+
 def back(thread):
     del thread["messages"][thread["runs"].pop():]
 
