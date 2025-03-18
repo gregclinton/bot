@@ -21,10 +21,13 @@ async def bot_proxy(request: Request, path: str):
 async def transcription(file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.post(
-            url = f"https://api.openai.com/v1/audio/transcriptions",
-            headers = { "Authorization": "Bearer " + os.environ["OPENAI_API_KEY"] },
+            url = f"https://api.groq.com/openai/v1/audio/transcriptions",
+            headers = { "Authorization": "Bearer " + os.environ["GROQ_API_KEY"] },
             files = { "file": (file.filename, await file.read(), file.content_type) },
-            data = { "model": "whisper-1", "language": "en", "response_format": "text" }
+            data = { 
+                "model": "whisper-large-v3-turbo",
+                "response_format": "text" 
+            }
         )).text
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
