@@ -21,6 +21,8 @@ def invoke(thread):
         res = requests.post(
             url = {
                 "openai": "https://api.openai.com/v1/chat/completions",
+                "anthropic": "https://api.anthropic.com/v1/chat/completions",
+                "google": "https://generativelanguage.googleapis.com/v1/chat/completions",
                 "huggingface": f"https://router.huggingface.co/hf-inference/models/{model}/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
             }[provider],
