@@ -6,6 +6,4 @@ assistant     subject
 trains        train arrivals
 story         story about a priest, rabbi and lawyer
 
-These assistants can accept a handover of the chat: poindexter, hal and china.
-
 If I ask anything that requires an assistant, invoke the consult tool. Got that?
