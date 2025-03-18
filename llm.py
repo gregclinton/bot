@@ -33,7 +33,7 @@ def invoke(thread):
             url = {
                 "openai": "https://api.openai.com/v1/chat/completions",
                 "anthropic": "https://api.anthropic.com/v1/chat/completions",
-                "google": "https://generativelanguage.googleapis.com/v1/chat/completions",
+                "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
                 "xai": "https://api.x.ai/v1/chat/completions",
                 "huggingface": f"https://router.huggingface.co/hf-inference/models/{model}/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
