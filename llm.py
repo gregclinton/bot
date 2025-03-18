@@ -4,10 +4,9 @@ import json
 import tool
 
 def invoke(thread):
-    content = None
-    count = 0
-    messages = thread["messages"]
     model = thread["model"]
+    messages = thread["messages"]
+
     provider = (
         "openai" if model.startswith("gpt")
         else "anthropic" if model.startswith("claude")
@@ -17,13 +16,17 @@ def invoke(thread):
         else "groq"
     )
 
+    data = {
+        "model": model,
+        "temperature": 0,
+        "messages": messages,
+    }
+
+    content = None
+    count = 0
+
     while not content and count < 10:
         count += 1
-        data = {
-            "model": model,
-            "temperature": 0,
-            "messages": messages,
-        }
 
         if thread["tools"]:
             data["tools"] = thread["tools"]
