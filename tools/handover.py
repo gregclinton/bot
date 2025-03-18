@@ -1,4 +1,8 @@
+import chat
+
 def run(assistant: str, thread: dict):
-    "Hands over your job to another assistant."
-    thread["assistant"] = assistant
+    "Hands over the chat to another assistant."
+    messages = thread["messages"]
+    thread = chat.reset({ "user": "me", "assistant": assistant })
+    thread["messages"] = messages + thread["messages"]
     return thread
