@@ -1,13 +1,9 @@
-gpt-4o-mini consult handover
+gpt-4o-mini consult
 
 Use consult tool with the following assistants for questions I ask about any of these subjects:
 
 assistant     subject
 trains        train arrivals
 story         story about a priest, rabbi and lawyer
-
-Upon my request, use the handover tool with any of these assistants: dario, demis, elon, mao, pierre, xi, zuck
-I'm using speech-to-text, so you might have to correct the spelling of the assistant name.
-If I ask for an assistant not in the list, let me know.
 
 Got that?

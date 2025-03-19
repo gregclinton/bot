@@ -17,6 +17,9 @@ def invoke(thread):
         else "groq"
     )
 
+    if provider == "huggingface":
+        model, inference = model.split(",")
+
     data = {
         "model": model,
         "temperature": 0,
@@ -41,7 +44,7 @@ def invoke(thread):
                 "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
                 "mistral": "https://api.mistral.ai/v1/chat/completions",
                 "xai": "https://api.x.ai/v1/chat/completions",
-                "huggingface": f"https://router.huggingface.co/hf-inference/models/{model}/v1/chat/completions",
+                "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
             }[provider],
             headers = {
@@ -64,12 +67,7 @@ def invoke(thread):
                 args["thread"] = thread
                 output = tool.run(name, args)
 
-                if name == "handover" and output.startswith("Hello,"):
-                    messages.pop() # remove the tool call message
-                    content = output
-                    break
-
-                elif name != "consult":
+                if name != "consult":
                     print(f"{name}:")
 
                     del args["thread"]
