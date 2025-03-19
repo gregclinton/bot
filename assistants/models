@@ -18,6 +18,9 @@ google
 anthropic
   claude-3-7-sonnet-latest
 
+together
+  meta-llama/Llama-3.2-3B-Instruct-Turbo
+
 huggingface
   meta-llama/Llama-3.2-3B-Instruct-Turbo,together
 

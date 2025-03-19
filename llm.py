@@ -14,7 +14,8 @@ def invoke(thread):
         else "google" if model.startswith("gemini-")
         else "mistral" if model.startswith("mistral-")
         else "xai" if model.startswith("grok-")
-        else "huggingface" if "/" in model
+        else "huggingface" if "," in model
+        else "together" if "/" in model
         else "groq"
     )
 
@@ -48,6 +49,7 @@ def invoke(thread):
                 "mistral": "https://api.mistral.ai/v1/chat/completions",
                 "xai": "https://api.x.ai/v1/chat/completions",
                 "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
+                "together": "https://api.together.xyz/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
             }[provider],
             headers = {
