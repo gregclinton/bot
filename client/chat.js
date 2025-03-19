@@ -54,9 +54,7 @@ const chat = {
         await chat.fetch(prompt)
         .then(response => response.text())
         .then(text => {
-            if (text.startsWith('Hello, this is ')) {
-                document.title = text.split(' ')[3].split('.')[0];
-            } else if (!'{['.includes(text[0])) {
+            if (!'{['.includes(text[0])) {
                 text = text.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
                 text = marked.parse(text)
             }
