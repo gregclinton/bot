@@ -27,6 +27,9 @@ def invoke(thread):
         "messages": messages,
     }
 
+    if provider == "anthropic":
+        data["max_tokens"] = 1024
+
     if thread["tools"]:
         data["tools"] = thread["tools"]
         data["tool_choice"] = "auto"
