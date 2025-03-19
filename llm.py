@@ -8,11 +8,11 @@ def invoke(thread):
     messages = thread["messages"]
 
     provider = (
-        "openai" if model.startswith("gpt")
-        else "anthropic" if model.startswith("claude")
-        else "google" if model.startswith("gemini")
-        else "mistral" if model.startswith("mistral")
-        else "xai" if model.startswith("grok")
+        "openai" if model.startswith("gpt-")
+        else "anthropic" if model.startswith("claude-")
+        else "google" if model.startswith("gemini-")
+        else "mistral" if model.startswith("mistral-")
+        else "xai" if model.startswith("grok-")
         else "huggingface" if "/" in model
         else "groq"
     )
@@ -64,10 +64,11 @@ def invoke(thread):
                 args["thread"] = thread
                 output = tool.run(name, args)
 
-                if name == "handover":
+                if name == "handover" and output.startswith("Hello,"):
                     messages.pop() # remove the tool call message
                     content = output
                     break
+
                 elif name != "consult":
                     print(f"{name}:")
 
