@@ -5,6 +5,7 @@ import tool
 
 def invoke(thread):
     model = thread["model"]
+    inference = None
     messages = thread["messages"]
 
     provider = (
