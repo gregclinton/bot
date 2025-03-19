@@ -25,7 +25,7 @@ def invoke(thread):
         "model": model,
         "temperature": 0,
         "messages": messages,
-        "max_completion_tokens": 10000 
+        "max_completion_tokens": 1024 
     }
 
     if thread["tools"]:
