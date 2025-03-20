@@ -23,6 +23,8 @@ def invoke(thread):
 
     if provider == "huggingface":
         model, inference = model.split(",")
+        if inference == "hf-inference":
+            inference += "/models/" + model
     elif provider == "nvidia":
         model = model[7:]
 

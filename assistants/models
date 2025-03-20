@@ -28,6 +28,7 @@ fireworks
   accounts/fireworks/models/llama-v3p2-3b-instruct
 
 huggingface
+  google/gemma-2-2b-it,hf-inference
   meta-llama/Llama-3.2-3B-Instruct-Turbo,together
 
 groq
