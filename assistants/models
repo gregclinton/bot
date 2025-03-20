@@ -21,6 +21,9 @@ anthropic
 together
   meta-llama/Llama-3.2-3B-Instruct-Turbo
 
+fireworks
+  accounts/fireworks/models/llama-v3p2-3b-instruct
+
 huggingface
   meta-llama/Llama-3.2-3B-Instruct-Turbo,together
 
