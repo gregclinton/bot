@@ -13,7 +13,8 @@ def invoke(thread):
         else "anthropic" if model.startswith("claude-")
         else "google" if model.startswith("gemini-")
         else "mistral" if model.startswith("mistral-")
-        else "xai" if model.startswith("grok-")
+        else "x" if model.startswith("grok-")
+        else "nvidia" if model.startswith("nvidia/")
         else "fireworks" if model.startswith("accounts/fireworks/")
         else "huggingface" if "," in model
         else "together" if "/" in model
@@ -22,6 +23,8 @@ def invoke(thread):
 
     if provider == "huggingface":
         model, inference = model.split(",")
+    elif provider == "nvidia":
+        model = model[7:]
 
     data = {
         "model": model,
@@ -48,9 +51,10 @@ def invoke(thread):
                 "anthropic": "https://api.anthropic.com/v1/chat/completions",
                 "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
                 "mistral": "https://api.mistral.ai/v1/chat/completions",
-                "xai": "https://api.x.ai/v1/chat/completions",
+                "x": "https://api.x.ai/v1/chat/completions",
                 "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
                 "fireworks": "https://api.fireworks.ai/inference/v1/chat/completions",
+                "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
                 "together": "https://api.together.xyz/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
             }[provider],

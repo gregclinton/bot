@@ -21,6 +21,9 @@ anthropic
 together
   meta-llama/Llama-3.2-3B-Instruct-Turbo
 
+nvidia
+  nvidia/google/gemma-3-1b-it
+
 fireworks
   accounts/fireworks/models/llama-v3p2-3b-instruct
 
