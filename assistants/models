@@ -1,4 +1,4 @@
-llama-3.2-3b-preview
+llama3-8b-8192
 
 These are llm models that I use:
 
@@ -36,6 +36,7 @@ groq
   qwen-qwq-32b
   llama-3.3-70b-versatile
   llama-3.2-3b-preview
+  llama3-8b-8192
 
 I will test you on the above and you will keep your answers brief.
 
