@@ -13,6 +13,8 @@ def invoke(thread):
         model, inference = model.split(",")
         if inference == "hf-inference":
             inference += "/models/" + model
+    elif provider == "fireworks":
+        model = f"accounts/fireworks/models/{model}"
 
     data = {
         "model": model,
