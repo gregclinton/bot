@@ -44,7 +44,7 @@ def invoke(thread):
                 "fireworks": "https://api.fireworks.ai/inference/v1/chat/completions",
                 "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
                 "together": "https://api.together.xyz/v1/chat/completions",
-                "groq": "https://api.groq.com/openai/v1/chat/completions"
+                "groq": "https://api.groq.com/openai/v1/chat/completions",
                 "deepinfra": "https://api.deepinfra.com/v1/chat/completions",
             }[provider],
             headers = {
