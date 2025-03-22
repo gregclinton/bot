@@ -45,7 +45,7 @@ def invoke(thread):
                 "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
                 "together": "https://api.together.xyz/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions",
-                "deepinfra": "https://api.deepinfra.com/v1/chat/completions",
+                "deepinfra": "https://api.deepinfra.com/v1/openai/chat/completions",
             }[provider],
             headers = {
                 'Authorization': 'Bearer ' + os.environ[f"{provider.upper()}_API_KEY"],
