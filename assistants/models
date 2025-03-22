@@ -29,6 +29,7 @@ generativelanguage.googleapis.com
 api.anthropic.com
   https://www.anthropic.com/pricing#anthropic-api
   claude-3-7-sonnet-latest
+  claude-3-5-haiku-latest
 
 api.together.xyz
   https://www.together.ai/pricing#inference
