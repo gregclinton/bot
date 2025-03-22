@@ -13,8 +13,6 @@ def invoke(thread):
         model, inference = model.split(",")
         if inference == "hf-inference":
             inference += "/models/" + model
-    elif provider == "nvidia":
-        model = model[7:]
 
     data = {
         "model": model,
@@ -47,6 +45,7 @@ def invoke(thread):
                 "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
                 "together": "https://api.together.xyz/v1/chat/completions",
                 "groq": "https://api.groq.com/openai/v1/chat/completions"
+                "deepinfra": "https://api.deepinfra.com/v1/chat/completions",
             }[provider],
             headers = {
                 'Authorization': 'Bearer ' + os.environ[f"{provider.upper()}_API_KEY"],
