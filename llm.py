@@ -4,22 +4,10 @@ import json
 import tool
 
 def invoke(thread):
+    provider = thread["provider"]
     model = thread["model"]
     inference = None
     messages = thread["messages"]
-
-    provider = (
-        "openai" if model.startswith("gpt-")
-        else "anthropic" if model.startswith("claude-")
-        else "google" if model.startswith("gemini-")
-        else "mistral" if model.startswith("mistral-")
-        else "x" if model.startswith("grok-")
-        else "nvidia" if model.startswith("nvidia/")
-        else "fireworks" if model.startswith("accounts/fireworks/")
-        else "huggingface" if "," in model
-        else "together" if "/" in model
-        else "groq"
-    )
 
     if provider == "huggingface":
         model, inference = model.split(",")

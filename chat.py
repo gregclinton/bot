@@ -4,8 +4,9 @@ import tool
 def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
     tokens = spec[0].split(' ')
-    model = tokens[0]
-    tools = tokens[1:]
+    thread["provider"] = tokens[0]
+    model = tokens[1]
+    tools = tokens[2:]
     content = "\n".join(spec[1:])
     thread["model"] = model
     thread["tools"] = tool.create(tools)
