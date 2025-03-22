@@ -45,6 +45,7 @@ integrate.api.nvidia.com
   deepseek-ai/deepseek-r1-distill-llama-8b
   mistralai/mistral-7b-instruct-v0.2
   mistralai/mistral-small-24b-instruct
+  nvidia/nemotron-mini-4b-instruct
 
 api.fireworks.ai
   https://fireworks.ai/models?serverless=true&type=text
