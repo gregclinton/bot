@@ -107,6 +107,7 @@ router.huggingface.co
   mistralai/Mistral-Small-24B-Instruct-2501
   mistralai/Mistral-Small-3.1-24B-Base-2503
   mistralai/Mistral-Small-3.1-24B-Instruct-2503
+  microsoft/phi-4
 
 api.groq.com
   https://groq.com/pricing
@@ -121,8 +122,16 @@ api.groq.com
 api.deepinfra.com
   https://deepinfra.com/models/text-generation/
   meta-llama/Meta-Llama-3.1-405B-Instruct
+  meta-llama/Llama-3.3-70B-Instruct-Turbo
+  meta-llama/Llama-3.3-70B-Instruct
+  mistralai/Mistral-7B-Instruct-v0.2
   mistralai/Mistral-Small-24B-Instruct-2501
   google/gemma-3-27b-it
+  deepseek-ai/DeepSeek-R1
+  deepseek-ai/DeepSeek-V3
+  Qwen/QwQ-32B
+  Qwen/Qwen2.5-Coder-32B-Instruct
+  microsoft/phi-4
 
 I will test you on the above and you will keep your answers brief.
 
