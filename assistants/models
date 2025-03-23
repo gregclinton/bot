@@ -8,10 +8,10 @@ api.openai.com
   gpt-4o
 
 api.mistral.ai
-mistral-small
-mistral-small-2501
-mistral-small-2503
-mistral-small-latest
+  mistral-small
+  mistral-small-2501
+  mistral-small-2503
+  mistral-small-latest
 
 api.x.ai 
   https://docs.x.ai/docs/models?cluster=us-east-1
