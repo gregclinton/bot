@@ -93,10 +93,12 @@ api.groq.com
   deepseek-r1-distill-llama-70b
   qwen-qwq-32b
   gemma2-9b-it
+  mistral-saba-24b
 
 api.deepinfra.com
     https://deepinfra.com/models/text-generation/
     meta-llama/Meta-Llama-3.1-405B-Instruct
+    mistralai/Mistral-Small-24B-Instruct-2501
     google/gemma-3-27b-it
 
 I will test you on the above and you will keep your answers brief.
