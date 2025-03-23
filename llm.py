@@ -6,8 +6,8 @@ import tool
 def invoke(thread):
     provider = thread["provider"]
     model = thread["model"]
-    inference = None
     messages = thread["messages"]
+    inference = None
 
     if provider == "huggingface":
         model, inference = model.split(",")
@@ -62,7 +62,7 @@ def invoke(thread):
             messages.append(message)
             content = message.get("content")
 
-            for call in message.get("tool_calls", []):
+            for call in (message.get("tool_calls", []) or []):
                 fn = call["function"]
                 name = fn["name"]
                 args = json.loads(fn["arguments"])
