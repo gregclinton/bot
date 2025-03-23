@@ -22,7 +22,10 @@ def invoke(thread):
         "messages": messages,
     }
 
-    if provider == "anthropic":
+    if provider == "openai":
+        if model.startswith("o"):
+            del data["temperature"]
+    elif provider == "anthropic":
         data["max_tokens"] = 1024
 
     if thread["tools"]:
