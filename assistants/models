@@ -8,6 +8,8 @@ api.openai.com
   gpt-4o
 
 api.mistral.ai
+  mistral-large-2407
+  mistral-large-latest
   mistral-small
   mistral-small-2501
   mistral-small-2503
