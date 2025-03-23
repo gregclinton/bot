@@ -9,8 +9,9 @@ api.openai.com
 
 api.mistral.ai
 mistral-small
-mistral-small-latest
+mistral-small-2501
 mistral-small-2503
+mistral-small-latest
 
 api.x.ai 
   https://docs.x.ai/docs/models?cluster=us-east-1
@@ -82,8 +83,10 @@ router.huggingface.co
   mistralai/Mixtral-8x7B-Instruct-v0.1
   mistralai/Mixtral-8x22B-Instruct-v0.1
   mistralai/Mistral-7B-Instruct-v0.2
+  mistralai/Mistral-Small-24B-Base-2501
   mistralai/Mistral-Small-24B-Instruct-2501
   mistralai/Mistral-Small-3.1-24B-Base-2503
+  mistralai/Mistral-Small-3.1-24B-Instruct-2503
 
 api.groq.com
   https://groq.com/pricing
