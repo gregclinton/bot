@@ -37,6 +37,24 @@ def run(prompt, thread):
     messages.append(message("assistant", reply))
     return reply
 
+def set_model(thread, model):
+    thread["provider"] = (
+        "openai" if model.startswith(x) for x in ["gpt", "o1", "o3"]
+        else "anthropic" if model.startswith("claude-")
+        else "google" if model.startswith(x) for x in ["gemini-", "gemma-"]
+        else "nvidia" if "nemotron" in model
+        else "mistral" if "mistral" in model
+        else "together" if "deepseek" in model
+        else "microsoft" if model == "phi-4"
+        else "groq"
+    )
+    if model == "gpt-4.5":
+        model += "-preview"
+    elif model.startswith("deepseek"):
+        model = "deepseek-ai" + model
+
+    thread["model"] = model
+
 if __name__ == "__main__":
     # . ./secrets
     prompt = "Hello. When is the Amtrak 228 due to arrive today?"

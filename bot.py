@@ -7,8 +7,8 @@ app = FastAPI(default_response_class=PlainTextResponse)
 threads = {}
 
 @app.put('/threads/{id}/model')
-async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
-    chat.set_model(threads[id], provider, model)
+async def put_model(id: str, model: str = Query(...)):
+    chat.set_model(threads[id], model)
     return "success"
 
 @app.post('/threads/{id}/messages')
