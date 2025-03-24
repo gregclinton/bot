@@ -52,6 +52,10 @@ def set_model(thread, model):
         model += "-preview"
     elif model.startswith("deepseek"):
         model = "deepseek-ai" + model
+    elif model.startswith("mistral"):
+        model += "-latest"
+    elif model == "grok-2"
+        model += "-1212"
 
     thread["model"] = model
 
