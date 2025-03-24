@@ -6,7 +6,7 @@ import httpx
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
-@app.api_route("/bot/{path:path}", methods = ["POST", "DELETE"])
+@app.api_route("/bot/{path:path}", methods = ["POST", "DELETE", "PUT"])
 async def bot_proxy(request: Request, path: str):
     async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.request(
