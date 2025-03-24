@@ -48,6 +48,8 @@ def set_model(thread, model):
         provider = "nvidia"
     elif "mistral" in model:
         provider = "mistral"
+    elif "grok" in model:
+        provider = "xai"
     elif "deepseek" in model:
         provider = "together"
     elif model == "phi-4":
@@ -60,6 +62,8 @@ def set_model(thread, model):
     elif model.startswith("deepseek"):
         model = "deepseek-ai" + model
     elif model.startswith("mistral"):
+        model += "-latest"
+    elif model.startswith("claude-"):
         model += "-latest"
     elif model == "grok-2":
         model += "-1212"
