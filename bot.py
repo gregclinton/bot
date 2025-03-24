@@ -1,10 +1,15 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query
 from fastapi.responses import PlainTextResponse
 import chat
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
 threads = {}
+
+@app.put('/threads/{id}/model')
+async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
+    chat.set_model(threads[id], provider, model)
+    return "success"
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
