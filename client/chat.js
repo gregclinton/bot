@@ -1,6 +1,8 @@
 document.title = "hal";
 
 const chat = {
+    model: "gpt-40-mini",
+
     models: {
         list: ("o1 o1-mini o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small grok-2 " +
             "gemini-2.0-flash gemini-2.0-flash-lite gemma-3-27b-it claude-3-7-sonnet claude-3-5-haiku " +
@@ -29,6 +31,10 @@ const chat = {
 
         title.innerHTML = name;
         title.classList.add('name');
+
+        if (name !== 'me') {
+            title.innerHTML += ' ' + chat.model;
+        }
 
         const top = document.createElement('div');
 
@@ -123,6 +129,11 @@ window.onload = () => {
         const item = document.createElement('span');
 
         item.innerHTML = model + ' ';
+        item.onclick = () => {
+            chat.model = model;
+
+            fetch(`/bot/threads/${chat.thread}/model?model=${model}`, { method: 'PUT' });
+        }
         models.appendChild(item);
     });
 };
