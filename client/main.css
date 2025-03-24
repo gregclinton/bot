@@ -32,7 +32,13 @@ body, html
     margin-bottom: 15px;
 }
 
-#models 
+#chat .post .model
+{
+    color: gray;
+    margin-left: 5px;
+}
+
+#models
 {
     margin: 10px;
 }

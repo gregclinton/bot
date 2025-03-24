@@ -32,13 +32,17 @@ const chat = {
         title.innerHTML = name;
         title.classList.add('name');
 
-        if (name !== 'me') {
-            title.innerHTML += ' ' + chat.model;
-        }
-
         const top = document.createElement('div');
 
         top.append(title);
+
+        if (name !== 'me') {
+            const model = document.createElement('span');
+
+            model.classList.add('model');
+            model.innerHTML = chat.model;
+            top.append(model);
+        }
 
         const bottom = document.createElement('div');
 
@@ -133,6 +137,7 @@ window.onload = () => {
             chat.model = model;
 
             fetch(`/bot/threads/${chat.thread}/model?model=${model}`, { method: 'PUT' });
+            chat.models.toggle();
         }
         models.appendChild(item);
     });
