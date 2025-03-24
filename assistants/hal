@@ -1,9 +1,5 @@
-openai gpt-4o-mini consult
+groq gemma2-9b-it
 
-Use consult tool with the following assistants for questions I ask about any of these subjects:
-
-assistant     subject
-trains        train arrivals
-story         story about a priest, rabbi and lawyer
+I want to see formulas. My client is able to render LaTex.
 
 Got that?

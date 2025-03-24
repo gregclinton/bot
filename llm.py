@@ -44,7 +44,7 @@ def invoke(thread):
                 "anthropic": "https://api.anthropic.com/v1/chat/completions",
                 "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
                 "mistral": "https://api.mistral.ai/v1/chat/completions",
-                "x": "https://api.x.ai/v1/chat/completions",
+                "xai": "https://api.x.ai/v1/chat/completions",
                 "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
                 "fireworks": "https://api.fireworks.ai/inference/v1/chat/completions",
                 "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
