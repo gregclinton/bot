@@ -38,25 +38,33 @@ def run(prompt, thread):
     return reply
 
 def set_model(thread, model):
-    thread["provider"] = (
-        "openai" if model.startswith(x) for x in ["gpt", "o1", "o3"]
-        else "anthropic" if model.startswith("claude-")
-        else "google" if model.startswith(x) for x in ["gemini-", "gemma-"]
-        else "nvidia" if "nemotron" in model
-        else "mistral" if "mistral" in model
-        else "together" if "deepseek" in model
-        else "microsoft" if model == "phi-4"
-        else "groq"
-    )
+    if any(model.startswith(x) for x in ["gpt", "o1", "o3"]):
+        provider = "openai"
+    elif model.startswith("claude-"):
+        provider = "anthropic"
+    elif any(model.startswith(x) for x in ["gemini-", "gemma-"]):
+        provider = "google"
+    elif "nemotron" in model:
+        provider = "nvidia"
+    elif "mistral" in model:
+        provider = "mistral"
+    elif "deepseek" in model:
+        provider = "together"
+    elif model == "phi-4":
+        provider = "microsoft"
+    else:
+        provider = "groq"
+
     if model == "gpt-4.5":
         model += "-preview"
     elif model.startswith("deepseek"):
         model = "deepseek-ai" + model
     elif model.startswith("mistral"):
         model += "-latest"
-    elif model == "grok-2"
+    elif model == "grok-2":
         model += "-1212"
 
+    thread["provider"] = provider
     thread["model"] = model
 
 if __name__ == "__main__":

@@ -1,6 +1,19 @@
 document.title = "hal";
 
 const chat = {
+    models: {
+        list: ("o1 o1-mini o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small grok-2 " +
+            "gemini-2.0-flash gemini-2.0-flash-lite gemma-3-27b-it claude-3-7-sonnet claude-3-5-haiku " +
+            "llama-3.3-nemotron-super deepseek-v3 deepseek-r1 qwq-32b phi-4").split(" "),
+
+        toggle: () => {
+            const models = document.getElementById('models');
+            models.hidden = !models.hidden;
+
+            document.getElementById('chat').hidden = !models.hidden;
+        }
+    },
+
     fetch: async prompt => {
         return fetch(`/bot/threads/${chat.thread}/messages`, {
             method: 'POST',
@@ -103,6 +116,15 @@ window.onload = () => {
     fetch('/bot/threads', { method: 'POST' })
     .then(response => response.text())
     .then(id => { chat.thread = id; });
+
+    const models = document.getElementById('models');
+
+    chat.models.list.forEach(model => {
+        const item = document.createElement('span');
+
+        item.innerHTML = model + ' ';
+        models.appendChild(item);
+    });
 };
 
 window.addEventListener("unload", () => {
