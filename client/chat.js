@@ -130,7 +130,7 @@ window.onload = () => {
     const models = document.getElementById('models');
 
     chat.models.list.forEach(model => {
-        const item = document.createElement('span');
+        const item = document.createElement('div');
 
         item.innerHTML = model + ' ';
         item.onclick = () => {

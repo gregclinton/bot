@@ -43,7 +43,7 @@ body, html
     margin: 10px;
 }
 
-#models span
+#models div
 {
     margin: 5px;
     cursor: pointer;
