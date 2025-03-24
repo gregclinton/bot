@@ -130,6 +130,10 @@ api.deepinfra.com
   Qwen/Qwen2.5-Coder-32B-Instruct
   microsoft/phi-4
 
+api.studio.nebius.com
+    https://studio.nebius.com/
+    deepseek-ai/DeepSeek-R1
+
 I will test you on the above and you will keep your answers brief.
 
 Got that?
