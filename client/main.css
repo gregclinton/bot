@@ -3,13 +3,13 @@ body, html
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: sans-serif;
 }
 
 #chat
 {
     overflow-y: scroll;
     height: calc(100% - 50px);
-    font-family: sans-serif;
 }
 
 #chat p
@@ -40,7 +40,8 @@ body, html
 
 #models
 {
-    margin: 10px;
+    overflow-y: scroll;
+    height: calc(100% - 50px);
 }
 
 #models div
