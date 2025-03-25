@@ -60,7 +60,7 @@ def set_model(thread, model):
     if model == "gpt-4.5":
         model += "-preview"
     elif model.startswith("deepseek"):
-        model = "deepseek-ai" + model
+        model = "deepseek-ai/" + model
     elif model.startswith("mistral"):
         model += "-latest"
     elif model.startswith("claude-"):
