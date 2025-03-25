@@ -62,9 +62,7 @@ def set_model(thread, model):
         model += "-preview"
     elif model.startswith("deepseek"):
         model = "deepseek-ai/" + model
-    elif model.startswith("mistral"):
-        model += "-latest"
-    elif model.startswith("claude-"):
+    elif model.startswith(("mistral-", "claude-")):
         model += "-latest"
     elif model == "grok-2":
         model += "-1212"
@@ -75,6 +73,12 @@ def set_model(thread, model):
 
     thread["provider"] = provider
     thread["model"] = model
+
+    for message in thread["messages"]:
+        if message["role"] == "assistant":
+            for key in message.keys():
+                if key not in ["role", "content"]:
+                    del message[key]
 
 if __name__ == "__main__":
     # . ./secrets
