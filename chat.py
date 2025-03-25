@@ -67,6 +67,8 @@ def set_model(thread, model):
         model += "-latest"
     elif model == "grok-2":
         model += "-1212"
+    elif model == "llama-3.3-nemotron-super":
+        model = "nvidia/llama-3.3-nemotron-super-49b-v1"
 
     thread["provider"] = provider
     thread["model"] = model
