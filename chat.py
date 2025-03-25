@@ -76,9 +76,8 @@ def set_model(thread, model):
 
     for message in thread["messages"]:
         if message["role"] == "assistant":
-            for key in message.keys():
-                if key in ["refusal", "annotations"]:
-                    del message[key]
+            for key in ["refusal", "annotations"]:
+                message.pop(key, None)
 
 if __name__ == "__main__":
     # . ./secrets
