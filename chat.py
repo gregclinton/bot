@@ -77,7 +77,7 @@ def set_model(thread, model):
     for message in thread["messages"]:
         if message["role"] == "assistant":
             for key in message.keys():
-                if key not in ["role", "content"]:
+                if key in ["refusal", "annotations"]:
                     del message[key]
 
 if __name__ == "__main__":
