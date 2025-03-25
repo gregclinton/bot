@@ -17,7 +17,7 @@ const chat = {
     },
 
     fetch: async prompt => {
-        return fetch(`/bot/threads/${chat.thread}/messages`, {
+        return fetch(`/threads/${chat.thread}/messages`, {
             method: 'POST',
             headers:  { 'Content-Type': 'text/plain' },
             body: prompt
@@ -88,7 +88,7 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = "";
-        fetch(`/bot/threads/${chat.thread}/messages`, { method: 'DELETE' });
+        fetch(`/threads/${chat.thread}/messages`, { method: 'DELETE' });
     },
 
     paste: () => {
@@ -117,13 +117,13 @@ const chat = {
         if (div.children.length > 1) {
             div.removeChild(div.lastChild);
             div.removeChild(div.lastChild);
-            fetch(`/bot/threads/${chat.thread}/messages/last`, { method: 'DELETE' });
+            fetch(`/threads/${chat.thread}/messages/last`, { method: 'DELETE' });
         }
     }
 };
 
 window.onload = () => {
-    fetch('/bot/threads', { method: 'POST' })
+    fetch('/threads', { method: 'POST' })
     .then(response => response.text())
     .then(id => { chat.thread = id; });
 
@@ -136,7 +136,7 @@ window.onload = () => {
         item.onclick = () => {
             chat.model = model;
 
-            fetch(`/bot/threads/${chat.thread}/model?model=${model}`, { method: 'PUT' });
+            fetch(`/threads/${chat.thread}/model?model=${model}`, { method: 'PUT' });
             chat.models.toggle();
         }
         models.appendChild(item);
@@ -144,5 +144,5 @@ window.onload = () => {
 };
 
 window.addEventListener("unload", () => {
-    fetch(`/bot/threads/${chat.thread}`, { method: 'DELETE' });
+    fetch(`/threads/${chat.thread}`, { method: 'DELETE' });
 });

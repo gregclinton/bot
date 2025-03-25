@@ -3,6 +3,6 @@ docker image prune -f > /dev/null
 docker rm -f hal
 sudo docker run --name hal -d -p 443:443 bot sh up
 sleep 1
-curl -k -X POST https://localhost/bot/threads
+curl -k -X POST https://localhost/threads
 echo
 docker logs -f hal
