@@ -63,6 +63,9 @@ def invoke(thread):
         try:
             res.raise_for_status()
             message = res.json()["choices"][0]["message"]
+            for key in ["refusal", "annotations"]:
+                if key in message:
+                    del message[key]
             messages.append(message)
             content = message.get("content")
 
