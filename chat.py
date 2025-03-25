@@ -53,7 +53,8 @@ def set_model(thread, model):
     elif "deepseek" in model:
         provider = "together"
     elif model == "phi-4":
-        provider = "microsoft"
+        provider = "deepinfra"
+        model = "microsoft/" + model
     else:
         provider = "groq"
 
@@ -69,6 +70,8 @@ def set_model(thread, model):
         model += "-1212"
     elif model == "llama-3.3-nemotron-super":
         model = "nvidia/llama-3.3-nemotron-super-49b-v1"
+    elif model.startswith("qwq-"):
+        model = "qwen-" + model
 
     thread["provider"] = provider
     thread["model"] = model
