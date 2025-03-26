@@ -1,6 +1,4 @@
 git clone https://github.com/gregclinton/bot.git
-rm start
 cd bot
 rm Dockerfile
 uvicorn bot:app --host 0.0.0.0 --port 4000 &
-rm start
