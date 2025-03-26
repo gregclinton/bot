@@ -1,8 +1,6 @@
-if [ -f Dockerfile ]; then
-    rm Dockerfile
-    uvicorn bot:app --host 0.0.0.0 --port 4000 &
-else
-    git clone https://github.com/gregclinton/bot.git
-    cd bot
-    sh start
-fi
+git clone https://github.com/gregclinton/bot.git
+rm start
+cd bot
+rm Dockerfile
+uvicorn bot:app --host 0.0.0.0 --port 4000 &
+rm start
