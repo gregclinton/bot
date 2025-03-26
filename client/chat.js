@@ -4,7 +4,7 @@ const chat = {
     model: "gpt-40-mini",
 
     models: {
-        list: ("o1 o1-mini o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small grok-2 " +
+        list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small grok-2 " +
             "gemini-2.0-flash gemini-2.0-flash-lite gemma-3-27b-it claude-3-7-sonnet claude-3-5-haiku " +
             "llama-3.3-nemotron-super deepseek-v3 deepseek-r1 qwq-32b phi-4").split(" "),
 

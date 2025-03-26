@@ -38,7 +38,7 @@ def run(prompt, thread):
     return reply
 
 def set_model(thread, model):
-    if any(model.startswith(x) for x in ["gpt", "o1", "o3"]):
+    if any(model.startswith(x) for x in ["gpt", "o3"]):
         provider = "openai"
     elif model.startswith("claude-"):
         provider = "anthropic"
