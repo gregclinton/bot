@@ -44,7 +44,7 @@ async def transcription(file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.post(
             url = f"https://api.groq.com/openai/v1/audio/transcriptions",
-            headers = { "Authorization": "Bearer " + os.environ["GROQ_API_KEY"] },
+            headers = { "Authorization": "Bearer " + os.environ["RUNPOD_SECRET_GROQ_API_KEY"] },
             files = { "file": (file.filename, await file.read(), file.content_type) },
             data = { 
                 "model": "whisper-large-v3-turbo",

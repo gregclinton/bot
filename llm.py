@@ -54,7 +54,7 @@ def invoke(thread):
                 "nebius": "https://api.studio.nebius.com/v1/chat/completions",
             }[provider],
             headers = {
-                'Authorization': 'Bearer ' + os.environ[f"{provider.upper()}_API_KEY"],
+                'Authorization': 'Bearer ' + os.environ[f"RUNPOD_SECRET_{provider.upper()}_API_KEY"],
                 'Content-Type': 'application/json'
             },
             json = data
