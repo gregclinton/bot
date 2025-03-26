@@ -7,3 +7,6 @@ RUN apt-get update && apt-get install -y curl nano
 RUN pip install fastapi uvicorn requests httpx python-multipart
 WORKDIR /root
 RUN openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes -subj "/CN=example.com"
+COPY . .
+RUN rm secrets up runpod Dockerfile .gitignore again
+RUN uvicorn bot:app --host 0.0.0.0 --port 443 --ssl-keyfile key.pem --ssl-certfile cert.pem &
