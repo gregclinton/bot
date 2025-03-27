@@ -46,10 +46,12 @@ async def transcription(file: UploadFile):
             url = f"https://api.groq.com/openai/v1/audio/transcriptions",
             headers = { "Authorization": "Bearer " + os.environ.get("GROQ_API_KEY") },
             files = { "file": (file.filename, await file.read(), file.content_type) },
-            data = { 
+            data = {
                 "model": "whisper-large-v3-turbo",
-                "response_format": "text" 
+                "response_format": "text"
             }
         )).text
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
+
+app.mount("/assistants", StaticFiles(directory = "assistants"))
