@@ -1,7 +1,7 @@
 document.title = "hal";
 
 const chat = {
-    model: "gpt-40-mini",
+    model: "gpt-4o-mini",
 
     models: {
         list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small grok-2 " +
