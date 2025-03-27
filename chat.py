@@ -45,9 +45,6 @@ def set_model(thread, model):
     elif model.startswith("deepseek-"):
         model = "deepseek-ai/" + model
         provider = "together"
-    elif model.startswith("gemini-2.0"):
-        model += "-flash"
-        provider = "google"
     elif model.startswith("gemini-2.5"):
         model += "-pro-exp-03-25"
         provider = "google"
