@@ -1,6 +1,11 @@
 if [ -f Dockerfile ]; then
     rm Dockerfile
+    # ---- edits here don't require a docker build ----
+    cd assistants
+    cp linus hal
+    cd ..
     uvicorn bot:app --host 0.0.0.0 --port 4000
+    # -------------------------------------------------
 else
     rm start
     curl -sL https://github.com/gregclinton/bot/archive/refs/heads/main.zip -o bot.zip
