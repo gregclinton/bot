@@ -5,7 +5,7 @@
 # https://hr2ht4crrki63o-4000.proxy.runpod.net
 
 FROM python:3.11-slim
-RUN apt-get update && apt-get install -y curl nano unzip
+RUN apt-get update && apt-get install -y curl unzip
 RUN pip install fastapi uvicorn requests httpx python-multipart
 WORKDIR /root
 COPY start .
