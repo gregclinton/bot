@@ -4,9 +4,8 @@ if [ -f Dockerfile ]; then
 else
     rm start
     curl -sL https://github.com/gregclinton/bot/archive/refs/heads/main.zip -o bot.zip
-    unzip bot.zip
+    unzip bot.zip -d bot
     rm bot.zip
-    mv bot-main bot
     cd bot
     sh start
 fi
