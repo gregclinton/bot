@@ -78,8 +78,3 @@ def set_model(thread, model):
         if message["role"] == "assistant":
             for key in ["refusal", "annotations"]:
                 message.pop(key, None)
-
-if __name__ == "__main__":
-    # . ./secrets
-    prompt = "Hello. When is the Amtrak 228 due to arrive today?"
-    run(prompt, reset({"user": "me", "assistant": "hal"}))
