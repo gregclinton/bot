@@ -38,38 +38,28 @@ def run(prompt, thread):
     return reply
 
 def set_model(thread, model):
-    if any(model.startswith(x) for x in ["gpt", "o3"]):
+    provider = "groq"
+
+    if model.startswith(("gpt", "o3")):
         provider = "openai"
-    elif model.startswith("claude-"):
-        provider = "anthropic"
-    elif any(model.startswith(x) for x in ["gemini-", "gemma-"]):
-        provider = "google"
-    elif "nemotron" in model:
-        provider = "nvidia"
-    elif "mistral" in model:
-        provider = "mistral"
-    elif "grok" in model:
-        provider = "xai"
-    elif "deepseek" in model:
-        provider = "together"
-    elif model == "phi-4":
-        provider = "deepinfra"
-        model = "microsoft/" + model
-    else:
-        provider = "groq"
 
     if model == "gpt-4.5":
         model += "-preview"
-    elif model.startswith("deepseek"):
+    elif model.startswith("deepseek-"):
         model = "deepseek-ai/" + model
-    elif model.startswith(("mistral-", "claude-")):
+        provider = "together"
+    elif model.startswith("gemini-"):
+        model += "-flash"
+        provider = "google"
+    elif model.startswith("mistral-"):
         model += "-latest"
-    elif model == "grok-2":
-        model += "-1212"
-    elif model == "llama-3.3-nemotron-super":
+        provider = "mistral"
+    elif model.startswith("claude-"):
+        model += "-sonnet-latest"
+        provider = "anthropic"
+    elif model.startswith("llama-3.3"):
         model = "nvidia/llama-3.3-nemotron-super-49b-v1"
-    elif model.startswith("qwq-"):
-        model = "qwen-" + model
+        provider = "nvidia"
 
     thread["provider"] = provider
     thread["model"] = model
