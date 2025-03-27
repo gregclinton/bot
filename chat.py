@@ -38,18 +38,18 @@ def run(prompt, thread):
     return reply
 
 def set_model(thread, model):
-    provider = "groq"
-
-    if model.startswith(("gpt", "o3")):
-        provider = "openai"
+    provider = "openai"
 
     if model == "gpt-4.5":
         model += "-preview"
     elif model.startswith("deepseek-"):
         model = "deepseek-ai/" + model
         provider = "together"
-    elif model.startswith("gemini-"):
+    elif model.startswith("gemini-2.0"):
         model += "-flash"
+        provider = "google"
+    elif model.startswith("gemini-2.5"):
+        model += "-pro-exp-03-25"
         provider = "google"
     elif model.startswith("mistral-"):
         model += "-latest"

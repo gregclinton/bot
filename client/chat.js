@@ -4,7 +4,7 @@ const chat = {
     model: "gpt-4o-mini",
 
     models: {
-        list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small " +
+        list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large mistral-small gemini-2.5 " +
             "gemini-2.0 claude-3-7 llama-3.3 deepseek-v3 deepseek-r1").split(" "),
 
         toggle: () => {
