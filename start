@@ -1,16 +1,13 @@
 if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here don't require a docker build ----
-    cd assistants
-    cp linus hal
-    cd ..
     echo https://$RUNPOD_POD_ID-4000.proxy.runpod.net
     uvicorn bot:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
 else
     rm start
     curl -sL https://github.com/gregclinton/bot/archive/refs/heads/main.zip -o bot.zip
-    unzip bot.zip
+    unzip -q bot.zip
     rm bot.zip
     mv bot-main bot
     cd bot

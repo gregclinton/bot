@@ -7,7 +7,7 @@ def run(assistant: str, thread: dict):
     Hands over the chat to another assistant.
     These assistants can accept a handover of the chat: {','.join(handovers)}.
     Use the assistant name from this list that most closely matches the requested assistant.
-    The case is sensitive.
+    The case for the assistant you pass this function must match the case of the name in the list.
     """
     spec = open(f"assistants/{assistant}").read().split("\n")
     tokens = spec[0].split(' ')
