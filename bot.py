@@ -54,4 +54,4 @@ async def transcription(file: UploadFile):
 
 app.mount("/", StaticFiles(directory = "client", html = True), name = "client")
 
-app.mount("/assistants", StaticFiles(directory = "assistants"))
+app.mount("/assistants", StaticFiles(directory = "assistants"), name = "assistants")
