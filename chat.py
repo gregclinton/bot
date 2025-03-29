@@ -54,6 +54,9 @@ def set_model(thread, model):
     elif model.startswith("claude-"):
         model += "-sonnet-latest"
         provider = "anthropic"
+    elif model == "grok-2":
+        model += "-1212"
+        provider = "xai
     elif model.startswith("llama-3.3"):
         model = "nvidia/llama-3.3-nemotron-super-49b-v1"
         provider = "nvidia"

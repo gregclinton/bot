@@ -4,8 +4,8 @@ const chat = {
     model: "gpt-4o-mini",
 
     models: {
-        list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large " +
-            "gemini-2.5 claude-3-7 llama-3.3 deepseek-v3 deepseek-r1").split(" "),
+        list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large gemini-2.5 " +
+            "claude-3-7 grok-2 llama-3.3 deepseek-v3 deepseek-r1").split(" "),
 
         toggle: () => {
             const models = document.getElementById('models');
