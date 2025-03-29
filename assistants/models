@@ -58,6 +58,7 @@ api.groq.com
   llama-3.3-70b-versatile
   llama3-8b-8192
   qwen-qwq-32b
+  qwen-2.5-32b
 
 api.deepinfra.com
   https://deepinfra.com/models/text-generation/
