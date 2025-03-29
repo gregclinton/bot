@@ -60,6 +60,9 @@ def set_model(thread, model):
     elif model.startswith("llama-3.3"):
         model = "nvidia/llama-3.3-nemotron-super-49b-v1"
         provider = "nvidia"
+    elif model.startswith("qwq-"):
+        model = "qwen-" + model
+        provider = "groq"
 
     thread["provider"] = provider
     thread["model"] = model
