@@ -49,9 +49,10 @@ def set_model(thread, model):
         model += "-pro-exp-03-25"
         provider = "google"
     elif model.startswith("mistral-"):
+        model += "-latest"
         provider = "mistral"
     elif model.startswith("claude-"):
-        model += "-sonnet"
+        model += "-sonnet-latest"
         provider = "anthropic"
     elif model == "grok-2":
         provider = "xai"
