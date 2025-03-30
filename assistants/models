@@ -11,8 +11,8 @@ api.openai.com
 
 api.anthropic.com
   https://www.anthropic.com/pricing#anthropic-api
-  claude-3-7-sonnet-latest
-  claude-3-5-haiku-latest
+  claude-3-7-sonnet
+  claude-3-5-haiku
 
 generativelanguage.googleapis.com
   https://ai.google.dev/gemini-api/docs/pricing
@@ -23,11 +23,11 @@ generativelanguage.googleapis.com
 
 api.x.ai
   https://docs.x.ai/docs/models?cluster=us-east-1
-  grok-2-1212
+  grok-2
 
 api.mistral.ai
-  mistral-large-latest
-  mistral-small-latest
+  mistral-large
+  mistral-small
 
 api.together.xyz
   https://www.together.ai/models
