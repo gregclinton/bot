@@ -8,14 +8,11 @@ api.openai.com
   gpt-4.5-preview
   gpt-4o
   gpt-4o-mini
-  
-api.mistral.ai
-  mistral-large-latest
-  mistral-small-latest
 
-api.x.ai 
-  https://docs.x.ai/docs/models?cluster=us-east-1
-  grok-2-1212
+api.anthropic.com
+  https://www.anthropic.com/pricing#anthropic-api
+  claude-3-7-sonnet-latest
+  claude-3-5-haiku-latest
 
 generativelanguage.googleapis.com
   https://ai.google.dev/gemini-api/docs/pricing
@@ -24,25 +21,13 @@ generativelanguage.googleapis.com
   gemini-2.0-flash-lite
   gemma-3-27b-it
 
-api.anthropic.com
-  https://www.anthropic.com/pricing#anthropic-api
-  claude-3-7-sonnet-latest
-  claude-3-5-haiku-latest
+api.x.ai
+  https://docs.x.ai/docs/models?cluster=us-east-1
+  grok-2-1212
 
-integrate.api.nvidia.com
-  https://build.nvidia.com/models
-  google/gemma-3-27b-it
-  meta/llama-3.1-8b-instruct
-  deepseek-ai/deepseek-r1
-  nvidia/llama-3.3-nemotron-super-49b-v1
-
-api.fireworks.ai
-  https://fireworks.ai/models?serverless=true&type=text
-  llama-v3-8b-instruct
-  llama-v3p3-70b-instruct
-  deepseek-v3
-  deepseek-r1
-  qwq-32b
+api.mistral.ai
+  mistral-large-latest
+  mistral-small-latest
 
 api.together.xyz
   https://www.together.ai/models
@@ -52,6 +37,14 @@ api.together.xyz
   deepseek-ai/deepseek-v3
   qwen/qwq-32b-preview
   qwen/qwq-32b
+
+api.fireworks.ai
+  https://fireworks.ai/models?serverless=true&type=text
+  llama-v3-8b-instruct
+  llama-v3p3-70b-instruct
+  deepseek-v3
+  deepseek-r1
+  qwq-32b
 
 api.groq.com
   https://groq.com/pricing
@@ -73,6 +66,13 @@ api.studio.nebius.com
   https://studio.nebius.com/
   deepseek-ai/DeepSeek-R1
   deepseek-ai/DeepSeek-V3
+
+integrate.api.nvidia.com
+  https://build.nvidia.com/models
+  google/gemma-3-27b-it
+  meta/llama-3.1-8b-instruct
+  deepseek-ai/deepseek-r1
+  nvidia/llama-3.3-nemotron-super-49b-v1
 
 I will test you on the above and you will keep your answers brief.
 
