@@ -42,6 +42,9 @@ def set_model(thread, model):
 
     if model == "gpt-4.5":
         model += "-preview"
+    elif model == "deepseek-v3":
+        model = "deepseek-ai/DeepSeek-V3-0324"
+        provider = "nebius"
     elif model.startswith("deepseek-"):
         model = "deepseek-ai/" + model
         provider = "together"
