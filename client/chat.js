@@ -1,7 +1,7 @@
-document.title = "hal";
+document.title = 'hal';
 
 const chat = {
-    model: "gpt-4o-mini",
+    model: 'gpt-4o-mini',
 
     models: {
         toggle: () => {
@@ -83,7 +83,7 @@ const chat = {
     },
 
     clear: () => {
-        document.getElementById('chat').innerHTML = "";
+        document.getElementById('chat').innerHTML = '';
         fetch(`/threads/${chat.thread}/messages`, { method: 'DELETE' });
     },
 
@@ -126,25 +126,26 @@ window.onload = () => {
     const models = document.getElementById('models');
 
     [
-        { text: "o3-mini",       provider: "openai",    model: "o3-mini" },
-        { text: "gpt-4.5",       provider: "openai",    model: "gpt-4.5-preview" },
-        { text: "gpt-4o",        provider: "openai",    model: "gpt-4o" },
-        { text: "gpt-4o-mini",   provider: "openai",    model: "gpt-4o-mini" },
-        { text: "claude-3.7",    provider: "anthropic", model: "claude-3-7-sonnet-latest" },
-        { text: "gemini-2.5",    provider: "google",    model: "gemini-2.5-pro-exp-03-25" },
-        { text: "grok-2",        provider: "xai",       model: "grok-2" },
-        { text: "mistral-large", provider: "mistral",   model: "mistral-large-latest" },
-        { text: "llama-3.3",     provider: "together",  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo" },
-        { text: "deepseek-v3",   provider: "nebius",    model: "deepseek-ai/DeepSeek-V3-0324" },
-        { text: "deepseek-r1",   provider: "together",  model: "deepseek-ai/DeepSeek-R1" },
-        { text: "qwen-2.5",      provider: "groq",      model: "qwen-2.5-32b" },
-    ].forEach(item => {
+        ['o3-mini',       'openai',    'o3-mini'],
+        ['gpt-4.5',       'openai',    'gpt-4.5-preview'],
+        ['gpt-4o',        'openai',    'gpt-4o'],
+        ['gpt-4o-mini',   'openai',    'gpt-4o-mini'],
+        ['claude-3.7',    'anthropic', 'claude-3-7-sonnet-latest'],
+        ['gemini-2.5',    'google',    'gemini-2.5-pro-exp-03-25'],
+        ['grok-2',        'xai',       'grok-2'],
+        ['mistral-large', 'mistral',   'mistral-large-latest'],
+        ['llama-3.3',     'together',  'meta-llama/Llama-3.3-70B-Instruct-Turbo'],
+        ['deepseek-v3',   'nebius',    'deepseek-ai/DeepSeek-V3-0324'],
+        ['deepseek-r1',   'together',  'deepseek-ai/DeepSeek-R1'],
+        ['qwen-2.5',      'groq',      'qwen-2.5-32b'],
+    ].forEach(row => {
+        const [name, provider, model] = row;
         const div = document.createElement('div');
 
-        div.innerHTML = item.text + ' ';
+        div.innerHTML = name;
         div.onclick = () => {
-            chat.model = item.text;
-            const spec = [item.provider, item.model].join(','); 
+            chat.model = name;
+            const spec = [provider, model].join(',');
 
             fetch(`/threads/${chat.thread}/model?model=${spec}`, { method: 'PUT' });
             chat.models.toggle();
@@ -153,6 +154,6 @@ window.onload = () => {
     });
 };
 
-window.addEventListener("unload", () => {
+window.addEventListener('unload', () => {
     fetch(`/threads/${chat.thread}`, { method: 'DELETE' });
 });
