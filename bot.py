@@ -11,7 +11,7 @@ threads = {}
 
 @app.put('/threads/{id}/model')
 async def put_model(id: str, model: str = Query(...)):
-    chat.set_model(threads[id], *(model.split("/")))
+    chat.set_model(threads[id], *model.split(","))
     return "success"
 
 @app.post('/threads/{id}/messages')
