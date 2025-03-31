@@ -4,9 +4,6 @@ const chat = {
     model: "gpt-4o-mini",
 
     models: {
-        list: ("o3-mini gpt-4.5 gpt-4o gpt-4o-mini mistral-large gemini-2.5 " +
-            "claude-3-7 grok-2 llama-3.3 deepseek-v3 deepseek-r1 qwen-2.5").split(" "),
-
         toggle: () => {
             const models = document.getElementById('models');
             models.hidden = !models.hidden;
@@ -128,17 +125,31 @@ window.onload = () => {
 
     const models = document.getElementById('models');
 
-    chat.models.list.forEach(model => {
-        const item = document.createElement('div');
+    [
+        { text: "o3-mini",       provider: "openai",    model: "o3-mini" },
+        { text: "gpt-4.5",       provider: "openai",    model: "gpt-4.5-preview" },
+        { text: "gpt-4o",        provider: "openai",    model: "gpt-4o" },
+        { text: "gpt-4o-mini",   provider: "openai",    model: "gpt-4o-mini" },
+        { text: "claude-3.7",    provider: "anthropic", model: "claude-3-7-sonnet-latest" },
+        { text: "gemini-2.5",    provider: "google",    model: "gemini-2.5-pro-exp-03-25" },
+        { text: "grok-2",        provider: "xai",       model: "grok-2" },
+        { text: "mistral-large", provider: "mistral",   model: "mistral-large-latest" },
+        { text: "llama-3.3",     provider: "together",  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo" },
+        { text: "deepseek-v3",   provider: "nebius",    model: "deepseek-ai/DeepSeek-V3-0324" },
+        { text: "deepseek-r1",   provider: "together",  model: "deepseek-ai/DeepSeek-R1" },
+        { text: "qwen-2.5",      provider: "groq",      model: "qwen-2.5-32b" },
+    ].forEach(item => {
+        const div = document.createElement('div');
 
-        item.innerHTML = model + ' ';
-        item.onclick = () => {
-            chat.model = model;
+        div.innerHTML = item.text + ' ';
+        div.onclick = () => {
+            chat.model = item.text;
+            const spec = [item.provider, item.model].join(','); 
 
-            fetch(`/threads/${chat.thread}/model?model=${model}`, { method: 'PUT' });
+            fetch(`/threads/${chat.thread}/model?model=${spec}`, { method: 'PUT' });
             chat.models.toggle();
         }
-        models.appendChild(item);
+        models.appendChild(div);
     });
 };
 

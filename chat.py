@@ -37,39 +37,10 @@ def run(prompt, thread):
     messages.append(message("assistant", reply))
     return reply
 
-def set_model(thread, model):
-    provider = "openai"
-
-    if model == "gpt-4.5":
-        model += "-preview"
-    elif model == "deepseek-v3":
-        model = "deepseek-ai/DeepSeek-V3-0324"
-        provider = "nebius"
-    elif model.startswith("deepseek-"):
-        model = "deepseek-ai/" + model
-        provider = "together"
-    elif model.startswith("gemini-2.5"):
-        model += "-pro-exp-03-25"
-        provider = "google"
-    elif model.startswith("mistral-"):
-        model += "-latest"
-        provider = "mistral"
-    elif model.startswith("claude-"):
-        model += "-sonnet-latest"
-        provider = "anthropic"
-    elif model == "grok-2":
-        provider = "xai"
-    elif model.startswith("llama-3.3"):
-        model = "nvidia/llama-3.3-nemotron-super-49b-v1"
-        provider = "nvidia"
-    elif model.startswith("qwen-2.5"):
-        model += "-32b"
-        provider = "groq"
-
+def set_model(thread, provider, model):
     thread["provider"] = provider
     thread["model"] = model
-
     for message in thread["messages"]:
         if message["role"] == "assistant":
             for key in ["refusal", "annotations"]:
-                message.pop(key, None)
+                message.pop(key, None)    
