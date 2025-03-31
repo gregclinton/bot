@@ -144,10 +144,8 @@ window.onload = () => {
 
         div.innerHTML = name;
         div.onclick = () => {
+            fetch(`/threads/${chat.thread}/model?model=${provider},${model}`, { method: 'PUT' });
             chat.model = name;
-            const spec = [provider, model].join(',');
-
-            fetch(`/threads/${chat.thread}/model?model=${spec}`, { method: 'PUT' });
             chat.models.toggle();
         }
         models.appendChild(div);
