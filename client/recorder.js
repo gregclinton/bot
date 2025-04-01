@@ -48,7 +48,7 @@ const recorder = {
 
         data.append('file', blob, 'stt.webm');
 
-        return fetch('/transcription', {
+        return fetch(`/transcription/${chat.thread}`, {
             method: 'POST',
             body: data
         });

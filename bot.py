@@ -39,7 +39,7 @@ async def post_thread():
     threads[id] = chat.reset({ "user": "me", "assistant": "hal" })
     return id
 
-@app.post("/transcription")
+@app.post("/transcription/{id}")
 async def transcription(file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.post(
@@ -48,6 +48,7 @@ async def transcription(file: UploadFile):
             files = { "file": (file.filename, await file.read(), file.content_type) },
             data = {
                 "model": "whisper-large-v3-turbo",
+                "prompt": "\n".join(x["content"] for x in threads[id].messages)[-700:],
                 "response_format": "text"
             }
         )).text

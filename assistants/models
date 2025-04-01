@@ -41,7 +41,7 @@ api.together.xyz
 api.fireworks.ai
   https://fireworks.ai/models?serverless=true&type=text
   llama-v3p3-70b-instruct
-  deepseek-v3
+  deepseek-v3-0324
   deepseek-r1
   qwq-32b
 
@@ -57,7 +57,6 @@ api.deepinfra.com
   google/gemma-3-27b-it
   meta-llama/Llama-3.3-70B-Instruct
   mistralai/Mistral-Small-24B-Instruct-2501
-  deepseek-ai/DeepSeek-V3
   deepseek-ai/DeepSeek-V3-0324
   deepseek-ai/DeepSeek-R1
   Qwen/QwQ-32B
@@ -68,7 +67,6 @@ api.studio.nebius.com
   google/gemma-2-27b-it
   meta-llama/Llama-3.3-70B-Instruct
   mistralai/Mistral-Nemo-Instruct-2407
-  deepseek-ai/DeepSeek-V3
   deepseek-ai/DeepSeek-V3-0324
   deepseek-ai/DeepSeek-R1
   Qwen/QwQ-32B
