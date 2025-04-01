@@ -39,7 +39,7 @@ async def post_thread():
 
 @app.post("/transcription/{id}")
 async def transcription(id: str, file: UploadFile):
-    return chat.transcribe(threads[id], file)
+    return await chat.transcribe(threads[id], file)
 
 app.mount("/assistants", StaticFiles(directory = "assistants"))
 
