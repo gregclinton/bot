@@ -137,7 +137,8 @@ window.onload = () => {
     deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
     deepseek-r1   together  deepseek-ai/DeepSeek-R1
     qwen-2.5      groq      qwen-2.5-32b
-    `.trim().split('\n').forEach(row => {
+    `
+    .trim().split('\n').forEach(row => {
         const [name, provider, model] = row.split(' ');
         const div = document.createElement('div');
 
