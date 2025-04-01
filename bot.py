@@ -10,9 +10,9 @@ app = FastAPI(default_response_class=PlainTextResponse)
 threads = {}
 
 @app.put('/threads/{id}/model')
-async def put_model(id: str, model: str = Query(...)):
-    chat.set_model(threads[id], *model.split(","))
-    return "success"
+async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
+    chat.set_model(threads[id], provider, model)
+    return "ok"
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
@@ -21,17 +21,17 @@ async def post_message(req: Request, id: str):
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
     chat.reset(threads[id])
-    return "success"
+    return "ok"
 
 @app.delete('/threads/{id}/messages')
 async def delete_messages(id: str):
     chat.reset(threads[id])
-    return "success"
+    return "ok"
 
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(id: str):
     chat.back(threads[id])
-    return "success"
+    return "ok"
 
 @app.post('/threads')
 async def post_thread():
