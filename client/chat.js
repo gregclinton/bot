@@ -124,27 +124,26 @@ window.onload = () => {
     .then(id => { chat.thread = id; });
 
     const models = document.getElementById('models');
-
-   `o3-mini       openai    o3-mini 
-    gpt-4.5       openai    gpt-4.5-preview 
-    gpt-4o        openai    gpt-4o 
-    gpt-4o-mini   openai    gpt-4o-mini 
-    claude-3.7    anthropic claude-3-7-sonnet-latest 
-    gemini-2.5    google    gemini-2.5-pro-exp-03-25 
-    grok-2        xai       grok-2 
-    mistral-large mistral   mistral-large-latest 
-    llama-3.3     together  meta-llama/Llama-3.3-70B-Instruct-Turbo 
-    deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324 
-    deepseek-r1   together  deepseek-ai/DeepSeek-R1 
-    qwen-2.5      groq      qwen-2.5-32b`
-    .split('\n')
-    .forEach(row => {
+    `
+    o3-mini       openai
+    gpt-4.5       openai    gpt-4.5-preview
+    gpt-4o        openai
+    gpt-4o-mini   openai
+    claude-3.7    anthropic claude-3-7-sonnet-latest
+    gemini-2.5    google    gemini-2.5-pro-exp-03-25
+    grok-2        xai
+    mistral-large mistral   mistral-large-latest
+    llama-3.3     together  meta-llama/Llama-3.3-70B-Instruct-Turbo
+    deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
+    deepseek-r1   together  deepseek-ai/DeepSeek-R1
+    qwen-2.5      groq      qwen-2.5-32b
+    `.trim().split('\n').forEach(row => {
         const [name, provider, model] = row.split(' ');
         const div = document.createElement('div');
 
         div.innerHTML = name;
         div.onclick = () => {
-            fetch(`/threads/${chat.thread}/model?model=${provider},${model}`, { method: 'PUT' });
+            fetch(`/threads/${chat.thread}/model?model=${provider},${model || name}`, { method: 'PUT' });
             chat.model = name;
             chat.models.toggle();
         }
