@@ -141,7 +141,7 @@ window.onload = () => {
     .trim().split('\n').forEach(row => {
         const [name, provider, model] = row.trim().split(/\s+/);
         const div = document.createElement('div');
-        const url = new URL(`/threads/${chat.thread}/model`);
+        const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
         url.search = new URLSearchParams({ provider, model: model || name });
         div.innerHTML = name;
