@@ -139,7 +139,7 @@ window.onload = () => {
     qwen-2.5      groq      qwen-2.5-32b
     `
     .trim().split('\n').forEach(row => {
-        const [name, provider, model] = row.split(' ');
+        const [name, provider, model] = row.split(/\s+/);
         const div = document.createElement('div');
 
         div.innerHTML = name;
