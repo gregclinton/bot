@@ -2,8 +2,6 @@ from fastapi import FastAPI, Request, Query, UploadFile
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import chat
-import os
-import httpx
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
@@ -41,17 +39,7 @@ async def post_thread():
 
 @app.post("/transcription/{id}")
 async def transcription(id: str, file: UploadFile):
-    async with httpx.AsyncClient(timeout = 60) as client:
-        return (await client.post(
-            url = f"https://api.groq.com/openai/v1/audio/transcriptions",
-            headers = { "Authorization": "Bearer " + os.environ.get("GROQ_API_KEY") },
-            files = { "file": (file.filename, await file.read(), file.content_type) },
-            data = {
-                "model": "whisper-large-v3-turbo",
-                "prompt": "\n".join(msg.get("content", "") for msg in threads[id]["messages"])[-700:],
-                "response_format": "text"
-            }
-        )).text
+    return chat.transcribe(threads[id], file)
 
 app.mount("/assistants", StaticFiles(directory = "assistants"))
 
