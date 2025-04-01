@@ -2,6 +2,7 @@ import llm
 import tool
 import os
 import httpx
+from fastapi import UploadFile
 
 def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
