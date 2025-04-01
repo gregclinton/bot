@@ -48,7 +48,7 @@ async def transcription(id: str, file: UploadFile):
             files = { "file": (file.filename, await file.read(), file.content_type) },
             data = {
                 "model": "whisper-large-v3-turbo",
-                "prompt": "\n".join(x["content"] for x in threads[id].messages)[-700:],
+                "prompt": "\n".join(x.get("content", "") for x in threads[id]["messages"]),
                 "response_format": "text"
             }
         )).text
