@@ -141,7 +141,7 @@ window.onload = () => {
     .trim().split('\n').forEach(row => {
         const [name, provider, model] = row.trim().split(/\s+/);
         const div = document.createElement('div');
-        const url = `/threads/${chat.thread}/model?provider=${provider}&model=${model || name}`
+        const url = `/threads/${chat.thread}/model?provider=${provider}&model=${model || name}`;
 
         div.innerHTML = name;
         div.onclick = () => {
