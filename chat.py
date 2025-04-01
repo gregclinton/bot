@@ -62,7 +62,7 @@ async def transcribe(thread, file: UploadFile):
 
         context = "\n".join(msg.get("content", "") for msg in thread["messages"])
 
-        return requests.post(
+        return await client.post(
             url = "https://api.openai.com/v1/chat/completions",
             headers = {
                 'Authorization': 'Bearer ' + os.environ.get("OPENAI_API_KEY"),
