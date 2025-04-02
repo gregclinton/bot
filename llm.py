@@ -3,7 +3,7 @@ import os
 import json
 import tool
 
-def invoke(thread):
+async def invoke(thread):
     provider = thread["provider"]
     model = thread["model"]
     messages = thread["messages"]
