@@ -39,8 +39,8 @@ async def post_thread():
     threads[id] = chat.reset({ "user": "me", "assistant": "hal" })
     return id
 
-@app.post("/transcription/{id}")
-async def transcription(id: str, file: UploadFile):
+@app.post("/transcription")
+async def transcription(file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:
         return (await client.post(
             url = f"https://api.groq.com/openai/v1/audio/transcriptions",
