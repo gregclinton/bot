@@ -3,6 +3,7 @@ import tool
 import os
 import httpx
 from fastapi import UploadFile
+from textwrap import dedent
 
 def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
@@ -66,7 +67,7 @@ async def transcribe(thread, file: UploadFile):
 
         print(f"speech to text: {transcription}\n", flush=True)
 
-        context = "\n".join(msg.get("content", "") for msg in thread["messages"])
+        context = "\n".join(msg.get("content", "") for msg in thread["messages"][-2:])
 
         return (await client.post(
             url = "https://api.openai.com/v1/chat/completions",
@@ -80,7 +81,14 @@ async def transcribe(thread, file: UploadFile):
                 "messages": [
                     {
                         "role": "system",
-                        "content": "Use the provided context to make any needed corrections to the provided speech-to-text transcription. Output your raw fix."
+                        "content": dedent("""
+                            Use the provided context to make any needed corrections to the provided speech-to-text transcription.
+                            Keep your fix simple and minimal.
+                            Capitalize or lower-case where needed.
+                            Do not add formatting or LaTex. The result should be speech-like.
+                            Output your raw fix. 
+                            If no corrections are needed, return the transcription as is.
+                        """)
                     },
                     {
                         "role": "user",
