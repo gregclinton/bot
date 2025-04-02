@@ -4,7 +4,7 @@
 
 FROM python:3.11-slim
 RUN apt-get update && apt-get install -y curl unzip
-RUN pip install fastapi uvicorn requests httpx python-multipart
+RUN pip install fastapi uvicorn httpx python-multipart
 WORKDIR /root
 COPY start .
 CMD ["sh", "start"]
