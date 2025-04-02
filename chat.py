@@ -1,6 +1,5 @@
 import llm
 import tool
-import os
 
 def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
