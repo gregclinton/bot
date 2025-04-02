@@ -54,15 +54,9 @@ def set_model(thread, provider, model):
 
 async def transcribe(thread, file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:
-        def headers(key):
-            return {
-                "Authorization": "Bearer " + os.environ.get(key),
-                "Content-Type": "application/json"        
-            }
-    
         transcription = (await client.post(
             url = f"https://api.groq.com/openai/v1/audio/transcriptions",
-            headers = headers("GROQ_API_KEY"),
+            headers = { "Authorization": "Bearer " + os.environ.get("GROQ_API_KEY") },
             files = { "file": (file.filename, await file.read(), file.content_type) },
             data = {
                 "model": "whisper-large-v3-turbo",
@@ -74,7 +68,10 @@ async def transcribe(thread, file: UploadFile):
 
         return (await client.post(
             url = "https://api.openai.com/v1/chat/completions",
-            headers = headers("OPENAI_API_KEY"),
+            headers = {
+                'Authorization': 'Bearer ' + os.environ.get("OPENAI_API_KEY"),
+                'Content-Type': 'application/json'
+            },
             json = {
                 "model": "gpt-4o-mini",
                 "temperature": 0,
