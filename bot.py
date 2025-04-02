@@ -14,7 +14,7 @@ async def put_model(id: str, provider: str = Query(...), model: str = Query(...)
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    return chat.run((await req.body()).decode("utf-8"), threads[id])
+    return await chat.run((await req.body()).decode("utf-8"), threads[id])
 
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):

@@ -35,59 +35,60 @@ def invoke(thread):
     content = None
     count = 0
 
-    while not content and count < 10:
-        count += 1
+    async with httpx.AsyncClient(timeout = 60) as client:
+        while not content and count < 10:
+            count += 1
 
-        res = requests.post(
-            url = {
-                "openai": "https://api.openai.com/v1/chat/completions",
-                "anthropic": "https://api.anthropic.com/v1/chat/completions",
-                "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-                "mistral": "https://api.mistral.ai/v1/chat/completions",
-                "xai": "https://api.x.ai/v1/chat/completions",
-                "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
-                "fireworks": "https://api.fireworks.ai/inference/v1/chat/completions",
-                "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
-                "together": "https://api.together.xyz/v1/chat/completions",
-                "groq": "https://api.groq.com/openai/v1/chat/completions",
-                "deepinfra": "https://api.deepinfra.com/v1/openai/chat/completions",
-                "nebius": "https://api.studio.nebius.com/v1/chat/completions",
-            }[provider],
-            headers = {
-                'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
-                'Content-Type': 'application/json'
-            },
-            json = data
-        )
+            res = await client.post(
+                url = {
+                    "openai": "https://api.openai.com/v1/chat/completions",
+                    "anthropic": "https://api.anthropic.com/v1/chat/completions",
+                    "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+                    "mistral": "https://api.mistral.ai/v1/chat/completions",
+                    "xai": "https://api.x.ai/v1/chat/completions",
+                    "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
+                    "fireworks": "https://api.fireworks.ai/inference/v1/chat/completions",
+                    "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
+                    "together": "https://api.together.xyz/v1/chat/completions",
+                    "groq": "https://api.groq.com/openai/v1/chat/completions",
+                    "deepinfra": "https://api.deepinfra.com/v1/openai/chat/completions",
+                    "nebius": "https://api.studio.nebius.com/v1/chat/completions",
+                }[provider],
+                headers = {
+                    'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
+                    'Content-Type': 'application/json'
+                },
+                json = data
+            )
 
-        try:
-            res.raise_for_status()
-            message = res.json()["choices"][0]["message"]
-            messages.append(message)
-            content = message.get("content")
+            try:
+                res.raise_for_status()
+                message = res.json()["choices"][0]["message"]
+                messages.append(message)
+                content = message.get("content")
 
-            for call in (message.get("tool_calls") or []):
-                fn = call["function"]
-                name = fn["name"]
-                args = json.loads(fn["arguments"])
-                args["thread"] = thread
-                output = tool.run(name, args)
+                for call in (message.get("tool_calls") or []):
+                    fn = call["function"]
+                    name = fn["name"]
+                    args = json.loads(fn["arguments"])
+                    args["thread"] = thread
+                    output = tool.run(name, args)
 
-                if name != "consult":
-                    print(f"{name}:")
+                    if name != "consult":
+                        print(f"{name}:")
 
-                    del args["thread"]
+                        del args["thread"]
 
-                    [print(arg) for arg in args.values()]
-                    print(f"\n{output}\n")
+                        [print(arg) for arg in args.values()]
+                        print(f"\n{output}\n")
 
-                messages.append({
-                    "role": "tool",
-                    "tool_call_id": call["id"],
-                    "name": name,
-                    "content": output
-                })
-        except Exception as e:
-            content = str(e) + "\n" + res.text
+                    messages.append({
+                        "role": "tool",
+                        "tool_call_id": call["id"],
+                        "name": name,
+                        "content": output
+                    })
+            except Exception as e:
+                content = str(e) + "\n" + res.text
 
     return content or "Could you rephrase that, please?"
