@@ -24,7 +24,7 @@ def reset(thread):
 def back(thread):
     del thread["messages"][thread["runs"].pop():]
 
-def run(prompt, thread):
+async def run(prompt, thread):
     def message(role, content):
         if role == "user":
             print(f"{thread['user']} to {thread['assistant']}:")
@@ -36,7 +36,7 @@ def run(prompt, thread):
     messages = thread["messages"]
     thread["runs"].append(len(thread["messages"]))
     messages.append(message("user", prompt))
-    reply = llm.invoke(thread)
+    reply = await llm.invoke(thread)
     messages.append(message("assistant", reply))
     return reply
 

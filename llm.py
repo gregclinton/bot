@@ -72,7 +72,7 @@ async def invoke(thread):
                     name = fn["name"]
                     args = json.loads(fn["arguments"])
                     args["thread"] = thread
-                    output = tool.run(name, args)
+                    output = await tool.run(name, args)
 
                     if name != "consult":
                         print(f"{name}:")
