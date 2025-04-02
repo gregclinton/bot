@@ -64,6 +64,8 @@ async def transcribe(thread, file: UploadFile):
             }
         )).text
 
+        print(f"speech to text: {transcription}\n", flush=True)
+
         context = "\n".join(msg.get("content", "") for msg in thread["messages"])
 
         return (await client.post(
