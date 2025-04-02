@@ -1,9 +1,13 @@
-import subprocess
+import asyncio
 
 async def run(command: str, thread: dict):
     """
     Runs the given command, like ls, cat, sed, echo, curl, python3, etc. in a Linux shell.
     Commands run in a docker container sandbox, so feel free to write to disk, etc.
     """
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
-    return result.stdout or result.stderr
+    out, err = (await asyncio.create_subprocess_shell(
+        command,
+        stdout = asyncio.subprocess.PIPE,
+        stderr = asyncio.subprocess.PIPE
+    )).communicate()
+    return (out or err).decode()
