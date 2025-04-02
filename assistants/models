@@ -36,6 +36,7 @@ api.together.xyz
   meta-llama/Llama-3.3-70B-Instruct-Turbo
   deepseek-ai/DeepSeek-V3
   deepseek-ai/DeepSeek-R1
+  Qwen/Qwen2.5-72B-Instruct-Turbo
   Qwen/QwQ-32B
 
 api.fireworks.ai
@@ -43,14 +44,15 @@ api.fireworks.ai
   llama-v3p3-70b-instruct
   deepseek-v3-0324
   deepseek-r1
+  qwen2p5-72b-instruct
   qwq-32b
 
 api.groq.com
   https://groq.com/pricing
   llama-3.3-70b-versatile
   llama3-8b-8192
-  qwen-qwq-32b
   qwen-2.5-32b
+  qwen-qwq-32b
 
 api.deepinfra.com
   https://deepinfra.com/models/text-generation
@@ -69,6 +71,7 @@ api.studio.nebius.com
   mistralai/Mistral-Nemo-Instruct-2407
   deepseek-ai/DeepSeek-V3-0324
   deepseek-ai/DeepSeek-R1
+  Qwen/Qwen2.5-72B-Instruct
   Qwen/QwQ-32B
   microsoft/phi-4
 
