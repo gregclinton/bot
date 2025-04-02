@@ -31,6 +31,10 @@ async def run(prompt, thread):
         elif role == "assistant":
             print(f"{thread['assistant']} to {thread['user']}:")
         print(f"{content}\n", flush=True)
+
+        # for gpt-4o-audio-preview user content:
+        # "content": [{ "type": "input_audio", "input_audio": { "data": "<base64 bytes here>",  "format": "wav"  }}]
+
         return { "role": role, "content": content }
 
     messages = thread["messages"]
