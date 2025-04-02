@@ -64,7 +64,7 @@ async def transcribe(thread, file: UploadFile):
             url = f"https://api.groq.com/openai/v1/audio/transcriptions",
             headers = headers("GROQ_API_KEY"),
             files = { "file": (file.filename, await file.read(), file.content_type) },
-            json = {
+            data = {
                 "model": "whisper-large-v3-turbo",
                 "response_format": "text"
             }
