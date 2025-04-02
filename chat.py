@@ -1,9 +1,6 @@
 import llm
 import tool
 import os
-import httpx
-from fastapi import UploadFile
-from textwrap import dedent
 
 def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
@@ -32,10 +29,6 @@ async def run(prompt, thread):
         elif role == "assistant":
             print(f"{thread['assistant']} to {thread['user']}:")
         print(f"{content}\n", flush=True)
-
-        # for gpt-4o-audio-preview user content:
-        # "content": [{ "type": "input_audio", "input_audio": { "data": "<base64 bytes here>",  "format": "wav"  }}]
-
         return { "role": role, "content": content }
 
     messages = thread["messages"]
@@ -52,48 +45,3 @@ def set_model(thread, provider, model):
         if message["role"] == "assistant":
             for key in ["refusal", "annotations"]:
                 message.pop(key, None)
-
-async def transcribe(thread, file: UploadFile):
-    async with httpx.AsyncClient(timeout = 60) as client:
-        transcription = (await client.post(
-            url = f"https://api.groq.com/openai/v1/audio/transcriptions",
-            headers = { "Authorization": "Bearer " + os.environ.get("GROQ_API_KEY") },
-            files = { "file": (file.filename, await file.read(), file.content_type) },
-            data = {
-                "model": "whisper-large-v3-turbo",
-                "response_format": "text"
-            }
-        )).text
-
-        print(f"speech to text: {transcription}\n", flush=True)
-
-        context = "\n".join(msg.get("content", "") for msg in thread["messages"][-2:])
-
-        return (await client.post(
-            url = "https://api.openai.com/v1/chat/completions",
-            headers = {
-                'Authorization': 'Bearer ' + os.environ.get("OPENAI_API_KEY"),
-                'Content-Type': 'application/json'
-            },
-            json = {
-                "model": "gpt-4o-mini",
-                "temperature": 0,
-                "messages": [
-                    {
-                        "role": "system",
-                        "content": dedent("""
-                            Use the provided context to make any needed corrections to the provided speech-to-text transcription.
-                            Keep your fix simple and minimal.
-                            Capitalize or lower-case where needed.
-                            Do not add formatting or LaTex. The result should be speech-like.
-                            Output your raw fix. 
-                            If no corrections are needed, return the transcription as is.
-                        """)
-                    },
-                    {
-                        "role": "user",
-                        "content": f"Context:\n{context}\n\nTranscription:\n{transcription}\n\nReturn the transcription with your fixes."
-                    }
-                ]
-            }
-        )).json()["choices"][0]["message"]["content"]
