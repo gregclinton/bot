@@ -72,21 +72,12 @@ async def invoke(thread):
                     name = fn["name"]
                     args = json.loads(fn["arguments"])
                     args["thread"] = thread
-                    output = await tool.run(name, args)
-
-                    if name != "consult":
-                        print(f"{name}:")
-
-                        del args["thread"]
-
-                        [print(arg) for arg in args.values()]
-                        print(f"\n{output}\n")
 
                     messages.append({
                         "role": "tool",
                         "tool_call_id": call["id"],
                         "name": name,
-                        "content": output
+                        "content": await tool.run(name, args)
                     })
             except Exception as e:
                 content = str(e) + "\n" + res.text

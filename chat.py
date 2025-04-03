@@ -22,15 +22,7 @@ def back(thread):
     del thread["messages"][thread["runs"].pop():]
 
 async def run(prompt, thread):
-    def message(role, content):
-        if thread["user"] != "me":
-            if role == "user":
-                print(f"{thread['user']} to {thread['assistant']}:")
-            elif role == "assistant":
-                print(f"{thread['assistant']} to {thread['user']}:")
-            print(f"{content}\n", flush=True)
-        return { "role": role, "content": content }
-
+    message = lambda role, content: { "role": role, "content": content }
     messages = thread["messages"]
     thread["runs"].append(len(thread["messages"]))
     messages.append(message("user", prompt))
