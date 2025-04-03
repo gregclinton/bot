@@ -64,21 +64,26 @@ async def invoke(thread):
             try:
                 res.raise_for_status()
                 message = res.json()["choices"][0]["message"]
-                messages.append(message)
-                content = message.get("content")
+                calls = message.get("tool_calls")
 
-                for call in (message.get("tool_calls") or []):
-                    fn = call["function"]
-                    name = fn["name"]
-                    args = json.loads(fn["arguments"])
-                    args["thread"] = thread
+                if calls:
+                    messages.append(message)
 
-                    messages.append({
-                        "role": "tool",
-                        "tool_call_id": call["id"],
-                        "name": name,
-                        "content": await tool.run(name, args)
-                    })
+                    for call in calls:
+                        fn = call["function"]
+                        name = fn["name"]
+                        args = json.loads(fn["arguments"])
+                        args["thread"] = thread
+
+                        messages.append({
+                            "role": "tool",
+                            "tool_call_id": call["id"],
+                            "name": name,
+                            "content": await tool.run(name, args)
+                        })
+                else:
+                    content = message.get("content")
+
             except Exception as e:
                 content = str(e) + "\n" + res.text
 
