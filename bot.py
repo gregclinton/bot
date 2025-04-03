@@ -9,10 +9,11 @@ app = FastAPI(default_response_class=PlainTextResponse)
 
 threads = {}
 
-@app.put('/threads/{id}/model')
-async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
-    chat.set_model(threads[id], provider, model)
-    return "ok"
+@app.post('/threads')
+async def post_thread():
+    id = str(10000 + len(threads))
+    threads[id] = chat.reset({ "user": "me", "assistant": "hal" })
+    return id
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
@@ -33,11 +34,10 @@ async def delete_last_message(id: str):
     chat.back(threads[id])
     return "ok"
 
-@app.post('/threads')
-async def post_thread():
-    id = str(10000 + len(threads))
-    threads[id] = chat.reset({ "user": "me", "assistant": "hal" })
-    return id
+@app.put('/threads/{id}/model')
+async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
+    chat.set_model(threads[id], provider, model)
+    return "ok"
 
 @app.post("/transcription")
 async def transcription(file: UploadFile):
