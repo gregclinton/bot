@@ -26,6 +26,6 @@ async def run(assistant: str, prompt: str, thread: dict):
 
     if is_remote(assistant):
         with httpx.Client() as client:
-            return await client.post(f'{assistant}/threads/{assistants[assistant]}/messages', content = prompt)
+            return (await client.post(f'{assistant}/threads/{assistants[assistant]}/messages', content = prompt)).text
     else:
         return await chat.run(prompt, assistants[assistant])
