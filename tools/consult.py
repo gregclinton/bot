@@ -7,9 +7,9 @@ async def reset(thread):
     assistants = thread.get("assistants", {})
 
     async with httpx.AsyncClient(timeout = 60) as client:
-        for assistant in assistants.items():
-            if is_remote(assistant):
-                await client.delete(f'{assistant}/threads/{id}')
+        for name, id in assistants.items():
+            if is_remote(name):
+                await client.delete(f'{name}/threads/{id}')
 
     thread["assistants"] = {}
 
