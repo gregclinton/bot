@@ -2,11 +2,12 @@
 
 auth="Authorization: Bearer ${RUNPOD_API_KEY}"
 json="Content-Type: application/json"
-base_url=https://rest.runpod.io/v1
+runpod=https://rest.runpod.io/v1
+pod=https://$2-4000.proxy.runpod.net
 
 case "$1" in
     list)
-        curl -H "$auth" $base_url/pods -s | jq -r .[].id
+        curl -H "$auth" $runpod/pods -s | jq -r .[].id
         ;;
     start)
         curl -H "$auth" $base_url/pods -s -X POST -H "$json" -d '{
@@ -15,11 +16,15 @@ case "$1" in
         }' | jq -r .id
         ;;
     stop)
+        curl -H "$auth" $base_url/pods/$2 -s -X DELETE
         ;;
     dial)
+        curl $pod/threads -s -X POST
         ;;
     talk)
+        curl $pod/threads/$3/messages -s -X POST -d "$4"
         ;;
     hangup)
+        curl $pod/threads/$3 -s -X DELETE
         ;;
 esac
