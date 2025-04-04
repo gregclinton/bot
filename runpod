@@ -9,11 +9,9 @@ case "$1" in
         curl -H "$auth" $base_url/pods
         ;;
     start)
-        curl -H "$auth" $base_url/pods -X POST -H "$json" -d '{
-            "pod_id": "'"$2"'",
-            "region": "'"$3"'",
-            "model": "'"$4"'",
-            "args": "'"$5"'"
+        curl -H "$auth" $base_url/pods -s -o /dev/null -X POST -H "$json" -d '{
+            "computeType": "CPU",
+            "templateId": "0dc2j9qn8i"
         }'
         ;;
     stop)
