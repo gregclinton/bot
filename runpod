@@ -28,6 +28,14 @@ case "$1" in
         curl $pod/threads/$3/messages -s -X POST -d "$4"
         ;;
     hangup)
-        curl $pod/threads/$3 -s -X DELETE
+        curl $pod/threads/$3 -s -o /dev/null -X DELETE
         ;;
 esac
+
+exit
+
+hal=$(sh runpod start)
+call=$(sh runpod dial $hal)
+sh runpod say $hal $call "Hello, hal. Do you read me?"
+sh runpod hangup $hal $call
+sh runpod stop $hal
