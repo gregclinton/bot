@@ -6,7 +6,7 @@ is_remote = lambda name: name.startswith("https:")
 async def reset(thread):
     assistants = thread.get("assistants", {})
 
-    async with httpx.Client() as client:
+    async with httpx.AsyncClient(timeout = 60) as client:
         for assistant in assistants.items():
             if is_remote(assistant):
                 await client.delete(f'{assistant}/threads/{id}')
@@ -19,13 +19,13 @@ async def run(assistant: str, prompt: str, thread: dict):
 
     if assistant not in assistants:
         if is_remote(assistant):
-            async with httpx.Client() as client:
+    async with httpx.AsyncClient(timeout = 60) as client:
                 assistants[assistant] = (await client.post(f'{assistant}/threads')).text
         else:
             assistants[assistant] = await chat.reset({"user": thread["assistant"], "assistant": assistant})
 
     if is_remote(assistant):
-        async with httpx.Client() as client:
+    async with httpx.AsyncClient(timeout = 60) as client:
             return (await client.post(f'{assistant}/threads/{assistants[assistant]}/messages', content = prompt)).text
     else:
         return await chat.run(prompt, assistants[assistant])
