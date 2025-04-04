@@ -1,13 +1,20 @@
 # https://rest.runpod.io/v1/docs
 
-header="Authorization: Bearer ${RUNPOD_API_KEY}"
+auth="Authorization: Bearer ${RUNPOD_API_KEY}"
+json="Content-Type: application/json"
 base_url=https://rest.runpod.io/v1
 
 case "$1" in
     list)
-        curl -H "$header" $base_url/pods
+        curl -H "$auth" $base_url/pods
         ;;
     start)
+        curl -H "$auth" $base_url/pods -X POST -H "$json" -d '{
+            "pod_id": "'"$2"'",
+            "region": "'"$3"'",
+            "model": "'"$4"'",
+            "args": "'"$5"'"
+        }'
         ;;
     stop)
         ;;
