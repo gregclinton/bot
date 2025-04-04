@@ -6,13 +6,13 @@ base_url=https://rest.runpod.io/v1
 
 case "$1" in
     list)
-        curl -H "$auth" $base_url/pods
+        curl -H "$auth" $base_url/pods -s | jq -r .[].id
         ;;
     start)
-        curl -H "$auth" $base_url/pods -s -o /dev/null -X POST -H "$json" -d '{
+        curl -H "$auth" $base_url/pods -s -X POST -H "$json" -d '{
             "computeType": "CPU",
             "templateId": "0dc2j9qn8i"
-        }'
+        }' | jq -r .id
         ;;
     stop)
         ;;
