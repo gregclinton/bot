@@ -21,7 +21,7 @@ case "$1" in
     dial)
         curl $pod/threads -s -X POST
         ;;
-    talk)
+    say)
         curl $pod/threads/$3/messages -s -X POST -d "$4"
         ;;
     hangup)
