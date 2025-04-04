@@ -1,0 +1,20 @@
+# https://rest.runpod.io/v1/docs
+
+header="Authorization: Bearer ${RUNPOD_API_KEY}"
+base_url=https://rest.runpod.io/v1
+
+case "$1" in
+    list)
+        curl -H "$header" $base_url/pods
+        ;;
+    start)
+        ;;
+    stop)
+        ;;
+    dial)
+        ;;
+    talk)
+        ;;
+    hangup)
+        ;;
+esac
