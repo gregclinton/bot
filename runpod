@@ -15,6 +15,9 @@ case "$1" in
             "templateId": "0dc2j9qn8i"
         }' | jq -r .id
         ;;
+    reset)
+        curl -H "$auth" $runpod/pods/$2/reset -s -X POST
+        ;;
     stop)
         curl -H "$auth" $runpod/pods/$2 -s -X DELETE
         ;;
