@@ -1,7 +1,7 @@
 import llm
 import tool
 
-def reset(thread):
+async def reset(thread):
     spec = open(f"assistants/{thread['assistant']}").read().split("\n")
     tokens = spec[0].split(' ')
     thread["provider"] = tokens[0]
@@ -10,7 +10,7 @@ def reset(thread):
     content = "\n".join(spec[1:])
     thread["model"] = model
     thread["tools"] = tool.create(tools)
-    tool.reset(tools, thread)
+    await tool.reset(tools, thread)
     thread["messages"] = [
         { "role": "user", "content": content},
         { "role": "assistant", "content": "Yes, proceed."}

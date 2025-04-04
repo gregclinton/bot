@@ -12,7 +12,7 @@ threads = {}
 @app.post('/threads')
 async def post_thread():
     id = str(10000 + len(threads))
-    threads[id] = chat.reset({ "user": "me", "assistant": "hal" })
+    threads[id] = await chat.reset({ "user": "me", "assistant": "hal" })
     return id
 
 @app.post('/threads/{id}/messages')
@@ -21,12 +21,12 @@ async def post_message(req: Request, id: str):
 
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
-    chat.reset(threads[id])
+    await chat.reset(threads[id])
     return "ok"
 
 @app.delete('/threads/{id}/messages')
 async def delete_messages(id: str):
-    chat.reset(threads[id])
+    await chat.reset(threads[id])
     return "ok"
 
 @app.delete('/threads/{id}/messages/last')

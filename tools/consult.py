@@ -3,13 +3,13 @@ import httpx
 
 is_remote = lambda name: name.startswith("https:")
 
-def reset(thread):
+async def reset(thread):
     assistants = thread["assistants"]
 
     with httpx.Client() as client:
         for assistant in assistants.items():
             if is_remote(assistant):
-                client.delete(f'{assistant}/threads/{id}'))
+                await client.delete(f'{assistant}/threads/{id}')
 
     thread["assistants"] = {}
 
@@ -22,7 +22,7 @@ async def run(assistant: str, prompt: str, thread: dict):
             with httpx.Client() as client:
                 assistants[assistant] = (await client.post(f'{assistant}/threads')).text
         else:
-            assistants[assistant] = chat.reset({"user": thread["assistant"], "assistant": assistant})
+            assistants[assistant] = await chat.reset({"user": thread["assistant"], "assistant": assistant})
 
     if is_remote(assistant):
         with httpx.Client() as client:
