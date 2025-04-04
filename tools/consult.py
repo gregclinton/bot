@@ -4,7 +4,7 @@ import httpx
 is_remote = lambda name: name.startswith("https:")
 
 async def reset(thread):
-    assistants = thread["assistants"]
+    assistants = thread.get("assistants", {})
 
     with httpx.Client() as client:
         for assistant in assistants.items():
@@ -15,7 +15,7 @@ async def reset(thread):
 
 async def run(assistant: str, prompt: str, thread: dict):
     "Prompts an assistant with the given prompt."
-    assistants = thread["assistants"]
+    assistants = thread.get("assistants", {})
 
     if assistant not in assistants:
         if is_remote(assistant):
