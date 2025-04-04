@@ -7,28 +7,28 @@ pod=https://$2-4000.proxy.runpod.net
 
 case "$1" in
     list)
-        curl -H "$auth" $runpod/pods -s | jq -r .[].id
+        curl -s $runpod/pods -X GET -H "$auth" | jq -r .[].id
         ;;
     start)
-        curl -H "$auth" $runpod/pods -s -X POST -H "$json" -d '{
+        curl -s $runpod/pods -X POST -H "$auth" -H "$json" -d '{
             "computeType": "CPU",
             "templateId": "0dc2j9qn8i"
         }' | jq -r .id
         ;;
     reset)
-        curl -H "$auth" $runpod/pods/$2/reset -s -X POST
+        curl -s $runpod/pods/$2/reset -X POST -H "$auth"
         ;;
     stop)
-        curl -H "$auth" $runpod/pods/$2 -s -X DELETE
+        curl -s $runpod/pods/$2 -X DELETE -H "$auth"
         ;;
     dial)
-        curl $pod/threads -s -X POST
+        curl -s $pod/threads -X POST
         ;;
     say)
-        curl $pod/threads/$3/messages -s -X POST -d "$4"
+        curl -s $pod/threads/$3/messages -X POST -d "$4"
         ;;
     hangup)
-        curl $pod/threads/$3 -s -o /dev/null -X DELETE
+        curl -s $pod/threads/$3 -X DELETE -o /dev/null
         ;;
 esac
 
