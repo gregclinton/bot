@@ -4,6 +4,7 @@ import tool
 async def reset(thread):
     await tool.reset(map(lambda tool: tool["function"]["name"], thread["tools"]), thread)
     thread["runs"] = []
+    thread["messages"] = []
     return thread
 
 def back(thread):
