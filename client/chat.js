@@ -63,12 +63,9 @@ const chat = {
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
-    prompt: async (prompt, hide) => {
+    prompt: async (prompt) => {
         chat.waiting = true;
-
-        if (!hide) {
-            chat.post(prompt);
-        }
+        chat.post(prompt);
 
         await chat.fetch(prompt)
         .then(response => response.text())
@@ -146,7 +143,7 @@ window.onload = async () => {
             const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
             url.search = new URLSearchParams({ provider, model: model || name });    
-            chat.fetch(`Set model and provider to ${model} and ${provider}.`)
+            chat.prompt(`Set model and provider to ${model} and ${provider}.`)
             chat.model = name;
             chat.models.toggle();
         }
