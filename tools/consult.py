@@ -16,6 +16,7 @@ async def reset(thread):
 
 async def run(assistant: str, prompt: str, thread: dict):
     "Prompts an assistant with the given prompt."
+    print(f"{thread["assistant"]} to {assistant}: {prompt}")
     assistants = thread.get("assistants", {})
     found = False
 
