@@ -64,5 +64,7 @@ app.mount("/", StaticFiles(directory = "client", html = True))
 
 @app.on_event("shutdown")
 def stop():
+    print("Stopping threads...")
     for thread in threads.values():
         chat.reset(thread)
+    print("Threads stopped.")
