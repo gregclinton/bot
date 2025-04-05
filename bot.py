@@ -20,7 +20,7 @@ async def post_thread():
     id = ''.join(random.choices(string.ascii_lowercase, k = 32))
     threads[id] = await chat.reset({ 
         "user": "me",
-        "assistant": "hal"
+        "assistant": "hal",
         "provider": "openai",
         "model": "gpt-4o-mini",
         "tools": tool.create(["bench"])
