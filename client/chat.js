@@ -6,8 +6,8 @@ const chat = {
     models: {
         toggle: () => {
             const models = document.getElementById('models');
-            models.hidden = !models.hidden;
 
+            models.hidden = !models.hidden;
             document.getElementById('chat').hidden = !models.hidden;
         }
     },
@@ -68,7 +68,7 @@ const chat = {
         chat.post(prompt);
 
         await chat.fetch(prompt)
-        .then(response => response.text())
+        .then(res => res.text())
         .then(text => {
             if (!'{['.includes(text[0])) {
                 text = text.replace(/\\/g, '\\\\');  // so markdown won't trample LaTex
@@ -81,7 +81,8 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = '';
-        fetch(`/threads/${chat.thread}/messages`, { method: 'DELETE' });
+        fetch(`/threads/${chat.thread}`, { method: 'DELETE' });
+        fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
     },
 
     paste: () => {
@@ -116,9 +117,7 @@ const chat = {
 };
 
 window.onload = async () => {
-    fetch('/threads', { method: 'POST' })
-    .then(response => response.text())
-    .then(id => { chat.thread = id; });
+    fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
 
     const models = document.getElementById('models');
     `
@@ -142,7 +141,7 @@ window.onload = async () => {
         div.onclick = () => {
             const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
-            url.search = new URLSearchParams({ provider, model: model || name });    
+            url.search = new URLSearchParams({ provider, model: model || name });
             chat.prompt(`Set model and provider to ${model} and ${provider}.`)
             chat.model = name;
             chat.models.toggle();
