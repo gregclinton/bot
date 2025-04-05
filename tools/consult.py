@@ -1,5 +1,6 @@
 import chat
 import httpx
+import os
 
 is_remote = lambda name: name.startswith("https:")
 
@@ -16,16 +17,27 @@ async def reset(thread):
 async def run(assistant: str, prompt: str, thread: dict):
     "Prompts an assistant with the given prompt."
     assistants = thread.get("assistants", {})
+    found = False
 
-    if assistant not in assistants:
+    if assistant in assistants:
+        found = True
+    else:
         if is_remote(assistant):
             async with httpx.AsyncClient(timeout = 60) as client:
-                assistants[assistant] = (await client.post(f'{assistant}/threads')).text
+                res = await client.post(f'{assistant}/threads')
+                if res.status_code < 300:
+                    assistants[assistant] = res.text
+                    found = True
         else:
-            assistants[assistant] = await chat.reset({"user": thread["assistant"], "assistant": assistant})
+            if os.path.exists(f"assistants/{assistant}"):
+                assistants[assistant] = await chat.reset({"user": thread["assistant"], "assistant": assistant})
+                found = True
 
-    if is_remote(assistant):
-        async with httpx.AsyncClient(timeout = 60) as client:
-            return (await client.post(f'{assistant}/threads/{assistants[assistant]}/messages', content = prompt)).text
+    if found:
+        if is_remote(assistant):
+            async with httpx.AsyncClient(timeout = 60) as client:
+                return (await client.post(f'{assistant}/threads/{assistants[assistant]}/messages', content = prompt)).text
+        else:
+            return await chat.run(prompt, assistants[assistant])
     else:
-        return await chat.run(prompt, assistants[assistant])
+        return f"{assistant} not found."
