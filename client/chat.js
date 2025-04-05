@@ -130,7 +130,7 @@ window.onload = async () => {
     gemini-2.5    google    gemini-2.5-pro-exp-03-25
     grok-2        xai
     mistral-large mistral   mistral-large-latest
-    llama-3.3     together  meta-llama/Llama-3.3-70B-Instruct-Turbo
+    llama-4       fireworks llama4-maverick-instruct-basic
     deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
     deepseek-r1   together  deepseek-ai/DeepSeek-R1
     qwen-2.5      groq      qwen-2.5-32b
