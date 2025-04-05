@@ -39,8 +39,7 @@ async def post_message(req: Request, id: str):
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
     if id in threads:
-        thread = threads.pop(id)
-        await tool.clear(thread)
+        await tool.clear(threads.pop(id))
     return "ok"
 
 # the remaining endpoints are just for me to play around with
