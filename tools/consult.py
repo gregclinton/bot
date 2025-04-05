@@ -24,7 +24,7 @@ async def run(assistant: str, prompt: str, thread: dict):
     You can create assistants ad hoc by coming up with a new assistant name and invoking this function.
     """
     print(f"{thread['assistant']} to {assistant}: {prompt}")
-    assistants = thread.get("assistants", {})
+    thread["assistants"] = assistants = thread.get("assistants", {})
 
     if assistant not in assistants:
         if is_remote(assistant):
