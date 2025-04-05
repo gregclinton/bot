@@ -146,7 +146,7 @@ window.onload = async () => {
             const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
             url.search = new URLSearchParams({ provider, model: model || name });    
-            await chat.fetch(`Set model and provider to ${model} and ${provider}.`)
+            chat.fetch(`Set model and provider to ${model} and ${provider}.`)
             chat.model = name;
             chat.models.toggle();
         }
