@@ -14,7 +14,7 @@ async def reset(thread):
 
     thread["assistants"] = {}
 
-async def run(assistant: str, prompt: str, thread: /dict):
+async def run(assistant: str, prompt: str, thread: dict):
     """
     Prompts an assistant with the given prompt.
     The assistant can be a local or remote assistant.
