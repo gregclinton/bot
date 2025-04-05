@@ -16,7 +16,7 @@ async def reset(thread):
 
 async def run(assistant: str, prompt: str, thread: dict):
     """
-    Prompts an assistant with the given prompt.
+    Prompts an assistant with the given natural language prompt.
     The assistant can be a local or remote assistant.
     Local assistants have names like "billing", "sales", "support", etc.
     Remote assistants are urls beginning with "https://".
