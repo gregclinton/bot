@@ -61,3 +61,8 @@ async def transcription(file: UploadFile):
 app.mount("/assistants", StaticFiles(directory = "assistants"))
 
 app.mount("/", StaticFiles(directory = "client", html = True))
+
+@app.on_event("shutdown")
+def stop():
+    for thread in threads.values():
+        chat.reset(thread)
