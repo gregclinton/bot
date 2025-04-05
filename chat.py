@@ -1,14 +1,4 @@
 import llm
-import tool
-
-async def reset(thread):
-    await tool.reset(map(lambda tool: tool["function"]["name"], thread["tools"]), thread)
-    thread["runs"] = []
-    thread["messages"] = []
-    return thread
-
-def back(thread):
-    del thread["messages"][thread["runs"].pop():]
 
 async def run(prompt, thread):
     message = lambda role, content: { "role": role, "content": content }

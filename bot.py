@@ -18,13 +18,15 @@ threads = {}
 @app.post('/threads')
 async def post_thread():
     id = ''.join(random.choices(string.ascii_lowercase, k = 32))
-    threads[id] = await chat.reset({ 
+    threads[id] = {
         "user": "me",
         "assistant": "hal",
         "provider": "openai",
         "model": "gpt-4o-mini",
-        "tools": tool.create(["bench", "model", "shell", "consult"])
-    })
+        "tools": tool.create(["bench", "model", "shell", "consult"]),
+        "runs": [],
+        "messages": [],
+    }
     return id
 
 @app.post('/threads/{id}/messages')
@@ -37,19 +39,15 @@ async def post_message(req: Request, id: str):
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
     if id in threads:
-        await chat.reset(threads.pop(id))
+        thread = threads.pop(id)
+        await tool.clear(map(lambda tool: tool["function"]["name"], thread["tools"]), thread)
     return "ok"
 
 # the remaining endpoints are just for me to play around with
 
-@app.delete('/threads/{id}/messages')
-async def delete_messages(id: str):
-    await chat.reset(threads[id])
-    return "ok"
-
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(id: str):
-    chat.back(threads[id])
+    del thread["messages"][threads[id]["runs"].pop():]
     return "ok"
 
 @app.post("/transcription")
@@ -71,5 +69,5 @@ app.mount("/", StaticFiles(directory = "client", html = True))
 def stop():
     print("Stopping threads...")
     for thread in threads.values():
-        chat.reset(thread)
+        await tool.clear(map(lambda tool: tool["function"]["name"], thread["tools"]), thread)
     print("Threads stopped.")

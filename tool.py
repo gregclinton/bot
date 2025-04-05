@@ -5,10 +5,10 @@ def modules(tools):
     for tool in tools:
         yield import_module(f"tools.{tool}")
 
-async def reset(tools, thread):
+async def clear(tools, thread):
     for module in modules(tools):
-        if hasattr(module, "reset"):
-            await module.reset(thread)
+        if hasattr(module, "clear"):
+            await module.clear(thread)
 
 def create(tools):
     return [{

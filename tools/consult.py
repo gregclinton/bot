@@ -5,7 +5,7 @@ import tool
 
 is_remote = lambda name: name.startswith("https:")
 
-async def reset(thread):
+async def clear(thread):
     assistants = thread.get("assistants", {})
 
     async with httpx.AsyncClient(timeout = 60) as client:
@@ -33,13 +33,14 @@ async def run(assistant: str, prompt: str, thread: dict):
                 if res.status_code < 300:
                     assistants[assistant] = res.text
         else:
-            assistants[assistant] = await chat.reset({
+            assistants[assistant] = {
                 "user": thread["assistant"],
                 "assistant": assistant,
                 "provider": "openai",
                 "model": "gpt-4o-mini",
-                "tools": tool.create(["bench", "model", "shell", "consult"])
-            })
+                "tools": tool.create(["bench", "model", "shell", "consult"]),
+                "messages": []
+            }
 
     t = assistants.get(assistant, None)
 
