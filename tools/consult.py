@@ -19,7 +19,7 @@ async def run(assistant: str, prompt: str, thread: dict):
     Prompts an assistant with the given prompt.
     The assistant can be a local or remote assistant.
     Local assistants have names like "billing", "sales", "support", etc.
-    Remote assistants have names like "https://xxx.example.com".
+    Remote assistants are urls beginning with "https://".
     """
     print(f"{thread['assistant']} to {assistant}: {prompt}")
     assistants = thread.get("assistants", {})
