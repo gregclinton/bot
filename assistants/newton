@@ -1,5 +1,0 @@
-openai gpt-4o-mini
-
-For rendering mathematical expressions, use LaTex with backslash square brackets, \[ ... \] for display-style and \( ... \) for inline -- no dollar signs. Do not escape the backslashes.
-
-Got that?

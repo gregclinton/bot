@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Query, UploadFile
+from fastapi import FastAPI, Request, UploadFile
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import chat
@@ -6,6 +6,7 @@ import httpx
 import os
 import random
 import string
+import tool
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
@@ -17,7 +18,13 @@ threads = {}
 @app.post('/threads')
 async def post_thread():
     id = ''.join(random.choices(string.ascii_lowercase, k = 32))
-    threads[id] = await chat.reset({ "user": "me", "assistant": "hal" })
+    threads[id] = await chat.reset({ 
+        "user": "me",
+        "assistant": "hal"
+        "provider": "openai",
+        "model": "gpt-4o-mini",
+        "tools": tool.create(["bench"])
+    })
     return id
 
 @app.post('/threads/{id}/messages')
@@ -45,11 +52,6 @@ async def delete_last_message(id: str):
     chat.back(threads[id])
     return "ok"
 
-@app.put('/threads/{id}/model')
-async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
-    chat.set_model(threads[id], provider, model)
-    return "ok"
-
 @app.post("/transcription")
 async def transcription(file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:
@@ -62,8 +64,6 @@ async def transcription(file: UploadFile):
                 "response_format": "text"
             }
         )).text
-
-app.mount("/assistants", StaticFiles(directory = "assistants"))
 
 app.mount("/", StaticFiles(directory = "client", html = True))
 

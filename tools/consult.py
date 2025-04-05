@@ -1,6 +1,7 @@
 import chat
 import httpx
 import os
+import tool
 
 is_remote = lambda name: name.startswith("https:")
 
@@ -20,6 +21,7 @@ async def run(assistant: str, prompt: str, thread: dict):
     The assistant can be a local or remote assistant.
     Local assistants have names like "billing", "sales", "support", etc.
     Remote assistants are urls beginning with "https://".
+    You can create assistants ad hoc by coming up with a new assistant name and invoking this function.
     """
     print(f"{thread['assistant']} to {assistant}: {prompt}")
     assistants = thread.get("assistants", {})
@@ -31,8 +33,13 @@ async def run(assistant: str, prompt: str, thread: dict):
                 if res.status_code < 300:
                     assistants[assistant] = res.text
         else:
-            if os.path.exists(f"assistants/{assistant}"):
-                assistants[assistant] = await chat.reset({"user": thread["assistant"], "assistant": assistant})
+            assistants[assistant] = await chat.reset({
+                "user": thread["assistant"],
+                "assistant": assistant,
+                "provider": "openai",
+                "model": "gpt-4o-mini",
+                "tools": tool.create(["bench"])
+            })
 
     t = assistants.get(assistant, None)
 
