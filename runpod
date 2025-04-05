@@ -24,7 +24,7 @@ case "$1" in
     dial)
         curl -s $pod/threads -X POST
         ;;
-    say)
+    speek)
         curl -s $pod/threads/$3/messages -X POST -d "$4"
         ;;
     hangup)
@@ -36,13 +36,13 @@ exit
 
 amtrak=$(sh runpod start)
 call=$(sh runpod dial $amtrak)
-sh runpod say $amtrak $call "Use shell tool to cp assistants/amtrak to assistants/hal."
+sh runpod speek $amtrak $call "Use shell tool to cp assistants/amtrak to assistants/hal."
 sh runpod hangup $amtrak $call
 
 hal=$(sh runpod start)
 call=$(sh runpod dial $hal)
-sh runpod say $hal $call 'Use the assistant "https://$amtrak-4000.proxy.runpod.net" to tell me when the train arrives in San Diego.'
-sh runpod say $hal $call 'When does it arrive in Los Angeles.'
+sh runpod speek $hal $call 'Consult the assistant "https://$amtrak-4000.proxy.runpod.net" to tell me when the train arrives in San Diego.'
+sh runpod speek $hal $call 'When does it arrive in Los Angeles.'
 sh runpod hangup $hal $call
 
 sh runpod reset $hal
