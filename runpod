@@ -42,7 +42,7 @@ sh runpod hangup $amtrak $call
 hal=$(sh runpod start)
 call=$(sh runpod dial $hal) && echo $call
 sh runpod speek $hal $call "Consult the assistant "https://$amtrak-4000.proxy.runpod.net" to tell me when the train arrives in San Diego."
-sh runpod speek $hal $call 'When does it arrive in Los Angeles.'
+sh runpod speek $hal $call 'When does it arrive in Los Angeles?'
 sh runpod hangup $hal $call
 
 sh runpod reset $hal
