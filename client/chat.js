@@ -118,7 +118,7 @@ const chat = {
     }
 };
 
-window.onload = () => {
+window.onload = async () => {
     fetch('/threads', { method: 'POST' })
     .then(response => response.text())
     .then(id => { chat.thread = id; });
@@ -146,7 +146,7 @@ window.onload = () => {
             const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
             url.search = new URLSearchParams({ provider, model: model || name });    
-            fetch(url, { method: 'PUT' });
+            await chat.fetch(`Set model and provider to ${model} and ${provider}.`)
             chat.model = name;
             chat.models.toggle();
         }
