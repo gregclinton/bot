@@ -21,7 +21,7 @@ async def run(assistant: str, prompt: str, thread: dict):
     Local assistants have names like "billing", "sales", "support", etc.
     Remote assistants have names like "https://xxx.example.com".
     """
-    print(f"{thread["assistant"]} to {assistant}: {prompt}")
+    print(f"{thread['assistant']} to {assistant}: {prompt}")
     assistants = thread.get("assistants", {})
 
     if assistant not in assistants:
