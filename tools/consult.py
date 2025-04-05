@@ -38,7 +38,7 @@ async def run(assistant: str, prompt: str, thread: dict):
                 "assistant": assistant,
                 "provider": "openai",
                 "model": "gpt-4o-mini",
-                "tools": tool.create(["bench"])
+                "tools": tool.create(["bench", "model", "shell", "consult"])
             })
 
     t = assistants.get(assistant, None)

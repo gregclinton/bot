@@ -23,7 +23,7 @@ async def post_thread():
         "assistant": "hal",
         "provider": "openai",
         "model": "gpt-4o-mini",
-        "tools": tool.create(["bench", "model"])
+        "tools": tool.create(["bench", "model", "shell", "consult"])
     })
     return id
 
