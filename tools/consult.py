@@ -23,27 +23,24 @@ async def run(assistant: str, prompt: str, thread: /dict):
     """
     print(f"{thread["assistant"]} to {assistant}: {prompt}")
     assistants = thread.get("assistants", {})
-    found = False
 
-    if assistant in assistants:
-        found = True
-    else:
+    if assistant not in assistants:
         if is_remote(assistant):
             async with httpx.AsyncClient(timeout = 60) as client:
                 res = await client.post(f'{assistant}/threads')
                 if res.status_code < 300:
                     assistants[assistant] = res.text
-                    found = True
         else:
             if os.path.exists(f"assistants/{assistant}"):
                 assistants[assistant] = await chat.reset({"user": thread["assistant"], "assistant": assistant})
-                found = True
 
-    if found:
+    t = assistants.get(assistant, None)
+
+    if t:
         if is_remote(assistant):
             async with httpx.AsyncClient(timeout = 60) as client:
-                return (await client.post(f'{assistant}/threads/{assistants[assistant]}/messages', content = prompt)).text
+                return (await client.post(f'{assistant}/threads/{t}/messages', content = prompt)).text
         else:
-            return await chat.run(prompt, assistants[assistant])
+            return await chat.run(prompt, t)
     else:
         return f"{assistant} not found."
