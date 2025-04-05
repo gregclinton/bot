@@ -4,6 +4,8 @@ from fastapi.staticfiles import StaticFiles
 import chat
 import httpx
 import os
+import random
+import string
 
 app = FastAPI(default_response_class=PlainTextResponse)
 
@@ -11,17 +13,21 @@ threads = {}
 
 @app.post('/threads')
 async def post_thread():
-    id = str(10000 + len(threads))
+    id = ''.join(random.choices(string.ascii_lowercase, k = 32))
     threads[id] = await chat.reset({ "user": "me", "assistant": "hal" })
     return id
 
 @app.post('/threads/{id}/messages')
 async def post_message(req: Request, id: str):
-    return await chat.run((await req.body()).decode("utf-8"), threads[id])
+    if id in threads:
+        return await chat.run((await req.body()).decode("utf-8"), threads[id])
+    else:
+        return "Connection has ended."
 
 @app.delete('/threads/{id}')
 async def delete_thread(id: str):
-    await chat.reset(threads[id])
+    if id in threads:
+        await chat.reset(threads.pop(id))
     return "ok"
 
 @app.delete('/threads/{id}/messages')
