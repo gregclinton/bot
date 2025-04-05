@@ -40,7 +40,7 @@ async def post_message(req: Request, id: str):
 async def delete_thread(id: str):
     if id in threads:
         thread = threads.pop(id)
-        await tool.clear(map(lambda tool: tool["function"]["name"], thread["tools"]), thread)
+        await tool.clear(thread)
     return "ok"
 
 # the remaining endpoints are just for me to play around with
@@ -69,5 +69,5 @@ app.mount("/", StaticFiles(directory = "client", html = True))
 def stop():
     print("Stopping threads...")
     for thread in threads.values():
-        await tool.clear(map(lambda tool: tool["function"]["name"], thread["tools"]), thread)
+        await tool.clear(thread)
     print("Threads stopped.")
