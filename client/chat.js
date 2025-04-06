@@ -1,17 +1,6 @@
 document.title = 'hal';
 
 const chat = {
-    model: 'gpt-4o-mini',
-
-    models: {
-        toggle: () => {
-            const models = document.getElementById('models');
-
-            models.hidden = !models.hidden;
-            document.getElementById('chat').hidden = !models.hidden;
-        }
-    },
-
     fetch: async prompt => {
         return fetch(`/threads/${chat.thread}/messages`, {
             method: 'POST',
@@ -31,14 +20,6 @@ const chat = {
         const top = document.createElement('div');
 
         top.append(title);
-
-        if (name !== 'me') {
-            const model = document.createElement('span');
-
-            model.classList.add('model');
-            model.innerHTML = chat.model;
-            top.append(model);
-        }
 
         const bottom = document.createElement('div');
 
@@ -118,33 +99,6 @@ const chat = {
 
 window.onload = async () => {
     fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
-
-    const models = document.getElementById('models');
-    `
-    o3-mini       openai
-    gpt-4.5       openai    gpt-4.5-preview
-    gpt-4o        openai
-    gpt-4o-mini   openai
-    claude-3.7    anthropic claude-3-7-sonnet-latest
-    gemini-2.5    google    gemini-2.5-pro-exp-03-25
-    grok-2        xai
-    mistral-large mistral   mistral-large-latest
-    llama-4       fireworks llama4-maverick-instruct-basic
-    deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
-    deepseek-r1   together  deepseek-ai/DeepSeek-R1
-    qwen-2.5      groq      qwen-2.5-32b
-    `
-    .trim().split('\n').forEach(row => {
-        const [name, provider, model] = row.trim().split(/\s+/);
-        const div = document.createElement('div');
-        div.innerHTML = name;
-        div.onclick = () => {
-            chat.prompt(`Set model to ${model} and provider to ${provider}.`)
-            chat.model = name;
-            chat.models.toggle();
-        }
-        models.appendChild(div);
-    });
 };
 
 window.addEventListener('unload', () => {
