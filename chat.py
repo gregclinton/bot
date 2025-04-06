@@ -1,6 +1,14 @@
 import llm
 
-snapshot = None
+snapshot = {
+    "user": "me",
+    "assistant": "hal",
+    "provider": "openai",
+    "model": "gpt-4o-mini",
+    "tools": tool.create(["bench"]),
+    "runs": [],
+    "messages": [],
+}
 
 async def run(prompt, thread):
     message = lambda role, content: { "role": role, "content": content }

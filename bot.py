@@ -18,15 +18,7 @@ threads = {}
 @app.post('/threads')
 async def post_thread():
     id = ''.join(random.choices(string.ascii_lowercase, k = 32))
-    threads[id] = {
-        "user": "me",
-        "assistant": "hal",
-        "provider": "openai",
-        "model": "gpt-4o-mini",
-        "tools": tool.create(["bench", "model", "shell", "consult"]),
-        "runs": [],
-        "messages": [],
-    }
+    threads[id] = chat.snapshot.copy()
     return id
 
 @app.post('/threads/{id}/messages')
