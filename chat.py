@@ -5,7 +5,7 @@ snapshot = {
     "assistant": "hal",
     "provider": "openai",
     "model": "gpt-4o-mini",
-    "tools": ["bench"],
+    "tools": ["bench","snap"],
     "runs": [],
     "messages": [],
 }
