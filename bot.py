@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, UploadFile
+from fastapi import FastAPI, Request, UploadFile, Query
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import chat
