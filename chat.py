@@ -1,5 +1,7 @@
 import llm
 
+snapshot = None
+
 async def run(prompt, thread):
     message = lambda role, content: { "role": role, "content": content }
     messages = thread["messages"]
