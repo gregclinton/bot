@@ -65,7 +65,7 @@ async def transcription(file: UploadFile):
 app.mount("/", StaticFiles(directory = "client", html = True))
 
 @app.on_event("shutdown")
-def stop():
+async def stop():
     print("Stopping threads...")
     for thread in threads.values():
         await tool.clear(thread)

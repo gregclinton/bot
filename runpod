@@ -15,9 +15,6 @@ case "$1" in
             "templateId": "0dc2j9qn8i"
         }' | jq -r .id
         ;;
-    reset)
-        curl -s $runpod/pods/$2/reset -X POST -H "$auth"
-        ;;
     stop)
         curl -s $runpod/pods/$2 -X DELETE -H "$auth"
         ;;
@@ -34,17 +31,9 @@ esac
 
 exit
 
-amtrak=$(sh runpod start)
-call=$(sh runpod dial $amtrak) && echo $call
-sh runpod speek $amtrak $call "Use shell tool to cp assistants/amtrak to assistants/hal."
-sh runpod hangup $amtrak $call
-
 hal=$(sh runpod start)
 call=$(sh runpod dial $hal) && echo $call
-sh runpod speek $hal $call "Consult the assistant "https://$amtrak-4000.proxy.runpod.net" to tell me when the train arrives in San Diego."
-sh runpod speek $hal $call 'When does it arrive in Los Angeles?'
+sh runpod speek $hal $call "Set the bench to none, the model to o3-mini and the provider to openai."
+sh runpod speek $hal $call 'Who is Gavin Newsom?'
 sh runpod hangup $hal $call
-
-sh runpod reset $hal
 sh runpod stop $hal
-sh runpod stop $amtrak
