@@ -18,7 +18,7 @@ threads = {}
 @app.post('/threads')
 async def post_thread():
     id = ''.join(random.choices(string.ascii_lowercase, k = 32))
-    threads[id] = chat.snapshot.copy()
+    threads[id] = chat.create()
     return id
 
 @app.post('/threads/{id}/messages')

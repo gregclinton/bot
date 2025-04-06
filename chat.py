@@ -10,6 +10,11 @@ snapshot = {
     "messages": [],
 }
 
+def create():
+    thread = snapshot.copy();
+    thread.messages = thread.messages.copy()
+    return thread
+
 async def run(prompt, thread):
     message = lambda role, content: { "role": role, "content": content }
     messages = thread["messages"]
