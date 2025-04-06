@@ -33,7 +33,7 @@ exit
 
 hal=$(sh runpod start)
 call=$(sh runpod dial $hal) && echo $call
-sh runpod speak $hal $call "Set the bench to none. Then set the model to o3-mini and the provider to openai."
-sh runpod speak $hal $call 'Who is Gavin Newsom?'
+sh runpod speak $hal $call 'What is the capital of California?'
+sh runpod speak $hal $call 'And its state flower?'
 sh runpod hangup $hal $call
 sh runpod stop $hal
