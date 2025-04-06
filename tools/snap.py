@@ -7,4 +7,5 @@ async def run(thread: dict):
     chat.snapshot["messages"] = thread["messages"].copy()
     chat.back(chat.snapshot) # remove snap invocation from snapshot
     chat.snapshot["runs"] = []
+    chat.snapshot["tools"] = ["consult"] # after configuring, root bot only needs to consult
     return "Snapshot taken."
