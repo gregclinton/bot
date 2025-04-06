@@ -40,7 +40,7 @@ async def run(assistant: str, prompt: str, thread: dict):
                 "assistant": assistant,
                 "provider": "openai",
                 "model": "gpt-4o-mini",
-                "tools": ["bench","model"],
+                "tools": ["bench"],
                 "messages": []
             }
 
