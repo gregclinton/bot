@@ -6,9 +6,7 @@ def modules(tools):
         yield import_module(f"tools.{tool}")
 
 async def clear(thread):
-    tools = map(lambda tool: tool["function"]["name"], thread["tools"])
-
-    for module in modules(tools):
+    for module in modules(thread["tools"]):
         if hasattr(module, "clear"):
             await module.clear(thread)
 

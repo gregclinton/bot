@@ -29,7 +29,7 @@ async def invoke(thread):
         data["max_tokens"] = 1024
 
     if thread["tools"]:
-        data["tools"] = thread["tools"]
+        data["tools"] = tool.create(thread["tools"])
         data["tool_choice"] = "auto"
 
     content = None
