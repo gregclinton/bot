@@ -35,6 +35,8 @@ async def invoke(thread):
     content = None
     count = 0
 
+    print(f"Invoking {provider} ({model})...")
+
     async with httpx.AsyncClient(timeout = 60) as client:
         while not content and count < 10:
             count += 1
