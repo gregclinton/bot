@@ -5,5 +5,6 @@ async def run(thread: dict):
     print("snap")
     chat.snapshot = thread.copy()
     chat.snapshot["messages"] = thread["messages"].copy()
-    chat.snapshot["messages"].pop() # remove the snap tool invocation message
+    chat.back(chat.snapshot) # remove snap invocation from snapshot
+    chat.snapshot["runs"] = []
     return "Snapshot taken."

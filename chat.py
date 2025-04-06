@@ -23,3 +23,6 @@ async def run(prompt, thread):
     reply = await llm.invoke(thread)
     messages.append(message("assistant", reply))
     return reply
+
+def back(thread):
+    del thread["messages"][thread["runs"].pop():]
