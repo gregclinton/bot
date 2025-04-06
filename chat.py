@@ -12,7 +12,7 @@ snapshot = {
 
 def create():
     thread = snapshot.copy();
-    thread.messages = thread.messages.copy()
+    thread["messages"] = thread["messages"].copy()
     return thread
 
 async def run(prompt, thread):
