@@ -142,7 +142,7 @@ window.onload = async () => {
             const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
             url.search = new URLSearchParams({ provider, model: model || name });
-            chat.prompt(`Set model and provider to ${model} and ${provider}.`)
+            chat.prompt(`Set model to ${model} and provider to ${provider}.`)
             chat.model = name;
             chat.models.toggle();
         }
