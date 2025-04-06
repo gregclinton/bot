@@ -26,3 +26,11 @@ async def run(prompt, thread):
 
 def back(thread):
     del thread["messages"][thread["runs"].pop():]
+
+def set_model(thread, provider, model):
+    thread["provider"] = provider
+    thread["model"] = model
+    for message in thread["messages"]:
+        if message["role"] == "assistant":
+            for key in ["refusal", "annotations"]:
+                message.pop(key, None)

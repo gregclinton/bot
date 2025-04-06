@@ -41,6 +41,11 @@ async def delete_last_message(id: str):
     chat.back(threads[id])
     return "ok"
 
+@app.put('/threads/{id}/model')
+async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
+    chat.set_model(threads[id], provider, model)
+    return "ok"
+
 @app.post("/transcription")
 async def transcription(file: UploadFile):
     async with httpx.AsyncClient(timeout = 60) as client:

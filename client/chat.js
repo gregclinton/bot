@@ -139,7 +139,10 @@ window.onload = async () => {
         const div = document.createElement('div');
         div.innerHTML = name;
         div.onclick = () => {
-            chat.prompt(`Set model to ${model} and provider to ${provider}.`)
+            const url = new URL(`/threads/${chat.thread}/model`, location.origin);
+
+            url.search = new URLSearchParams({ provider, model: model || name });    
+            fetch(url, { method: 'PUT' });
             chat.model = name;
             chat.models.toggle();
         }
