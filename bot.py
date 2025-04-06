@@ -38,7 +38,8 @@ async def delete_thread(id: str):
 
 @app.delete('/threads/{id}/messages/last')
 async def delete_last_message(id: str):
-    del thread["messages"][threads[id]["runs"].pop():]
+    thread = threads[id]
+    del thread["messages"][thread["runs"].pop():]
     return "ok"
 
 @app.post("/transcription")
