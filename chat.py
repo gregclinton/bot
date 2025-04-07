@@ -29,10 +29,14 @@ def set_model(thread, provider, model):
             for key in ["refusal", "annotations"]:
                 message.pop(key, None)
 
-def snap(thread, mode):
+def snap(thread):
     global snapshot
 
-    if mode == "reset":
+    if thread:
+        snapshot = copy.deepcopy(thread)
+        back(snapshot) # remove snap invocation from snapshot
+        snapshot.pop("runs", None)
+    else:
         snapshot = {
             "user": "me",
             "assistant": "hal",
@@ -40,9 +44,5 @@ def snap(thread, mode):
             "model": "gpt-4o-mini",
             "tools": ["bench","shell","snap","consult","model"],
         }
-    else:
-        snapshot = copy.deepcopy(thread)
-        back(snapshot) # remove snap invocation from snapshot
-        snapshot.pop("runs", None)
 
-snap(None, "reset")
+snap(None)
