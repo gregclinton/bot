@@ -7,6 +7,7 @@ async def invoke(thread):
     provider = thread["provider"]
     model = thread["model"]
     messages = thread["messages"]
+    tools = thread.get("tools", [])
     inference = None
 
     if provider == "huggingface":
@@ -28,8 +29,8 @@ async def invoke(thread):
     elif provider == "anthropic":
         data["max_tokens"] = 1024
 
-    if thread["tools"]:
-        data["tools"] = tool.create(thread["tools"])
+    if tools and provider in ["openai", "anthropic", "google"]:
+        data["tools"] = tool.create(tools)
         data["tool_choice"] = "auto"
 
     content = None
