@@ -1,4 +1,5 @@
 import llm
+import copy
 
 snapshot = {
     "user": "me",
@@ -11,9 +12,7 @@ snapshot = {
 }
 
 def create():
-    thread = snapshot.copy();
-    thread["messages"] = thread["messages"].copy()
-    return thread
+    return copy.deepcopy(snapshot)
 
 async def run(prompt, thread):
     message = lambda role, content: { "role": role, "content": content }
