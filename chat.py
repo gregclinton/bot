@@ -18,7 +18,7 @@ async def run(prompt, thread):
 
 def back(thread):
     runs = thread.get("runs", [])
-    if runs
+    if runs:
         del thread["messages"][runs.pop():]
 
 def set_model(thread, provider, model):
