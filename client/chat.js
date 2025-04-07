@@ -121,9 +121,9 @@ window.onload = async () => {
 
     const models = document.getElementById('models');
     `
-    o3-mini       openai
-    gpt-4o        openai
     gpt-4o-mini   openai
+    gpt-4o        openai
+    o3-mini       openai
     claude-3.7    anthropic claude-3-7-sonnet-latest
     gemini-2.5    google    gemini-2.5-pro-exp-03-25
     grok-2        xai
