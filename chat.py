@@ -1,13 +1,7 @@
 import llm
 import copy
 
-snapshot = {
-    "user": "me",
-    "assistant": "hal",
-    "provider": "openai",
-    "model": "gpt-4o-mini",
-    "tools": ["bench","shell","snap","consult","model"],
-}
+snapshot = None
 
 def create():
     return copy.deepcopy(snapshot)
@@ -34,3 +28,21 @@ def set_model(thread, provider, model):
         if message["role"] == "assistant":
             for key in ["refusal", "annotations"]:
                 message.pop(key, None)
+
+def snap(thread, mode):
+    global snapshot
+
+    if mode == "reset":
+        snapshot = {
+            "user": "me",
+            "assistant": "hal",
+            "provider": "openai",
+            "model": "gpt-4o-mini",
+            "tools": ["bench","shell","snap","consult","model"],
+        }
+    else:
+        snapshot = copy.deepcopy(thread)
+        back(snapshot) # remove snap invocation from snapshot
+        snapshot.pop("runs", None)
+
+snap(None, "reset")
