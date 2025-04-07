@@ -41,7 +41,6 @@ async def run(assistant: str, prompt: str, thread: dict):
                 "provider": "openai",
                 "model": "gpt-4o-mini",
                 "tools": ["bench"],
-                "messages": []
             }
 
     t = assistants.get(assistant, None)
