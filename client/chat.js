@@ -122,7 +122,6 @@ window.onload = async () => {
     const models = document.getElementById('models');
     `
     o3-mini       openai
-    gpt-4.5       openai    gpt-4.5-preview
     gpt-4o        openai
     gpt-4o-mini   openai
     claude-3.7    anthropic claude-3-7-sonnet-latest
@@ -131,7 +130,6 @@ window.onload = async () => {
     mistral-large mistral   mistral-large-latest
     llama-4       fireworks llama4-maverick-instruct-basic
     deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
-    deepseek-r1   together  deepseek-ai/DeepSeek-R1
     qwen-2.5      groq      qwen-2.5-32b
     `
     .trim().split('\n').forEach(row => {
