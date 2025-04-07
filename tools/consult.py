@@ -6,16 +6,14 @@ import tool
 is_remote = lambda name: name.startswith("https:")
 
 async def clear(thread):
-    assistants = thread.get("assistants", {})
-
     async with httpx.AsyncClient(timeout = 60) as client:
-        for name, t in assistants.items():
+        for name, t in thread.get("assistants", {}).items():
             if is_remote(name):
                 await client.delete(f'{name}/threads/{t}')
             else:
                 await tool.clear(t)
 
-    thread["assistants"] = {}
+    thread.pop("assistants", None)
 
 async def run(assistant: str, prompt: str, thread: dict):
     """
@@ -44,7 +42,7 @@ async def run(assistant: str, prompt: str, thread: dict):
                 "tools": ["bench"],
             }
 
-    t = assistants.get(assistant, None)
+    t = assistants.get(assistant)
 
     if t:
         if is_remote(assistant):
