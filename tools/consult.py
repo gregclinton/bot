@@ -21,7 +21,8 @@ async def run(assistant: str, prompt: str, thread: dict):
     """
     Prompts an assistant with the given natural language prompt.
     The assistant can be a local or remote assistant.
-    Local assistants have names like "billing", "sales", "support", etc.
+    Local assistants can have names like "tom", "dick", "harry", "jane", "maria", etc. 
+    Or names like "billing", "sales", "support", etc.
     You can create local assistants ad hoc by coming up with a new assistant name and invoking this function.
     Remote assistants are urls beginning with "https://".
     """
