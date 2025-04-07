@@ -24,7 +24,7 @@ async def run(assistant: str, prompt: str, thread: dict):
     You can create local assistants ad hoc by coming up with a new assistant name and invoking this function.
     Remote assistants are urls beginning with "https://".
     """
-    print(f"{thread['assistant']} to {assistant}: {prompt}")
+    print(f"{thread['assistant']} to {assistant}: {prompt}", flush = True)
     thread["assistants"] = assistants = thread.get("assistants", {})
 
     if assistant not in assistants:

@@ -63,7 +63,7 @@ app.mount("/", StaticFiles(directory = "client", html = True))
 
 @app.on_event("shutdown")
 async def stop():
-    print("Stopping threads...")
+    print("Stopping threads...", flush = True)
     for thread in threads.values():
         await tool.clear(thread)
-    print("Threads stopped.")
+    print("Threads stopped.", flush = True)
