@@ -8,13 +8,8 @@ async def invoke(thread):
     model = thread["model"]
     messages = thread["messages"]
     tools = thread.get("tools", [])
-    inference = None
 
-    if provider == "huggingface":
-        model, inference = model.split(",")
-        if inference == "hf-inference":
-            inference += "/models/" + model
-    elif provider == "fireworks":
+    if provider == "fireworks":
         model = f"accounts/fireworks/models/{model}"
 
     data = {
@@ -41,20 +36,19 @@ async def invoke(thread):
             count += 1
 
             res = await client.post(
-                url = {
-                    "openai": "https://api.openai.com/v1/chat/completions",
-                    "anthropic": "https://api.anthropic.com/v1/chat/completions",
-                    "google": "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
-                    "mistral": "https://api.mistral.ai/v1/chat/completions",
-                    "xai": "https://api.x.ai/v1/chat/completions",
-                    "huggingface": f"https://router.huggingface.co/{inference}/v1/chat/completions",
-                    "fireworks": "https://api.fireworks.ai/inference/v1/chat/completions",
-                    "nvidia": "https://integrate.api.nvidia.com/v1/chat/completions",
-                    "together": "https://api.together.xyz/v1/chat/completions",
-                    "groq": "https://api.groq.com/openai/v1/chat/completions",
-                    "deepinfra": "https://api.deepinfra.com/v1/openai/chat/completions",
-                    "nebius": "https://api.studio.nebius.com/v1/chat/completions",
-                }[provider],
+                url = f"https://{({
+                    'openai': 'api.openai.com/v1',
+                    'anthropic': 'api.anthropic.com/v1',
+                    'google': 'generativelanguage.googleapis.com/v1beta/openai',
+                    'mistral': 'api.mistral.ai/v1',
+                    'xai': 'api.x.ai/v1',
+                    'fireworks': 'api.fireworks.ai/inference/v1',
+                    'nvidia': 'integrate.api.nvidia.com/v1',
+                    'together': 'api.together.xyz/v1',
+                    'groq': 'api.groq.com/openai/v1',
+                    'deepinfra': 'api.deepinfra.com/v1/openai',
+                    'nebius': 'api.studio.nebius.com/v1',
+                }[provider])}/chat/completions",
                 headers = {
                     'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
                     'Content-Type': 'application/json'
