@@ -29,9 +29,9 @@ esac
 
 exit
 
-hal=$(sh runpod start)
-call=$(sh runpod dial $hal) && echo $call
-sh runpod speak $hal $call 'What is the capital of California?'
-sh runpod speak $hal $call 'And its state flower?'
-sh runpod hangup $hal $call
-sh runpod stop $hal
+hal=$(sh run start)
+call=$(sh run dial $hal) && echo $call
+sh run speak $hal $call 'What is the capital of California?'
+sh run speak $hal $call 'And its state flower?'
+sh run hangup $hal $call
+sh run stop $hal
