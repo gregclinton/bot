@@ -36,19 +36,19 @@ async def invoke(thread):
             count += 1
 
             res = await client.post(
-                url = f"https://{({
-                    'openai': 'api.openai.com/v1',
-                    'anthropic': 'api.anthropic.com/v1',
-                    'google': 'generativelanguage.googleapis.com/v1beta/openai',
-                    'mistral': 'api.mistral.ai/v1',
-                    'xai': 'api.x.ai/v1',
-                    'fireworks': 'api.fireworks.ai/inference/v1',
-                    'nvidia': 'integrate.api.nvidia.com/v1',
-                    'together': 'api.together.xyz/v1',
-                    'groq': 'api.groq.com/openai/v1',
-                    'deepinfra': 'api.deepinfra.com/v1/openai',
-                    'nebius': 'api.studio.nebius.com/v1',
-                }[provider])}/chat/completions",
+                url = f"""https://{({
+                    "openai": "api.openai.com/v1",
+                    "anthropic": "api.anthropic.com/v1",
+                    "google": "generativelanguage.googleapis.com/v1beta/openai",
+                    "mistral": "api.mistral.ai/v1",
+                    "xai": "api.x.ai/v1",
+                    "fireworks": "api.fireworks.ai/inference/v1",
+                    "nvidia": "integrate.api.nvidia.com/v1",
+                    "together": "api.together.xyz/v1",
+                    "groq": "api.groq.com/openai/v1",
+                    "deepinfra": "api.deepinfra.com/v1/openai",
+                    "nebius": "api.studio.nebius.com/v1",
+                }[provider])}/chat/completions""",
                 headers = {
                     'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
                     'Content-Type': 'application/json'
