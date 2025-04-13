@@ -126,7 +126,7 @@ window.onload = async () => {
     o3-mini       openai
     claude-3.7    anthropic claude-3-7-sonnet-latest
     gemini-2.5    google    gemini-2.5-pro-exp-03-25
-    grok-2        xai
+    grok-3        xai
     mistral-large mistral   mistral-large-latest
     llama-4       fireworks llama4-maverick-instruct-basic
     deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
