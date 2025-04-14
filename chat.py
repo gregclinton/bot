@@ -41,7 +41,7 @@ def snap(thread):
             "user": "me",
             "assistant": "hal",
             "provider": "openai",
-            "model": "gpt-4o-mini",
+            "model": "gpt-4.1-nano",
             "tools": ["bench","shell","snap","consult","model"],
         }
 

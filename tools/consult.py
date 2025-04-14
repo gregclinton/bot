@@ -38,7 +38,7 @@ async def run(assistant: str, prompt: str, thread: dict):
                 "user": thread["assistant"],
                 "assistant": assistant,
                 "provider": "openai",
-                "model": "gpt-4o-mini",
+                "model": "gpt-4.1-nano",
                 "tools": ["bench"],
             }
 
