@@ -121,10 +121,9 @@ window.onload = async () => {
 
     const models = document.getElementById('models');
     `
-    gpt-4.1-nano  openai
-    gpt-4.1-mini  openai
     gpt-4.1       openai
-    o3-mini       openai
+    gpt-4.1-mini  openai
+    gpt-4.1-nano  openai
     claude-3.7    anthropic claude-3-7-sonnet-latest
     gemini-2.5    google    gemini-2.5-pro-exp-03-25
     grok-3        xai
