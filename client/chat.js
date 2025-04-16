@@ -124,6 +124,8 @@ window.onload = async () => {
     gpt-4.1       openai
     gpt-4.1-mini  openai
     gpt-4.1-nano  openai
+    o3            openai
+    o4-mini       openai
     claude-3.7    anthropic claude-3-7-sonnet-latest
     gemini-2.5    google    gemini-2.5-pro-exp-03-25
     grok-3        xai
@@ -139,7 +141,7 @@ window.onload = async () => {
         div.onclick = () => {
             const url = new URL(`/threads/${chat.thread}/model`, location.origin);
 
-            url.search = new URLSearchParams({ provider, model: model || name });    
+            url.search = new URLSearchParams({ provider, model: model || name });
             fetch(url, { method: 'PUT' });
             chat.model = name;
             chat.models.toggle();
