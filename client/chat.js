@@ -126,13 +126,13 @@ window.onload = async () => {
     gpt-4.1-nano  openai
     o3            openai
     o4-mini       openai
-    claude-3.7    anthropic claude-3-7-sonnet-latest
-    gemini-2.5    google    gemini-2.5-pro-preview-03-25
+    claude-3.7    anthropic  claude-3-7-sonnet-latest
+    gemini-2.5    google     gemini-2.5-flash-preview-04-17
     grok-3        xai
-    mistral-large mistral   mistral-large-latest
-    llama-4       fireworks llama4-maverick-instruct-basic
-    deepseek-v3   nebius    deepseek-ai/DeepSeek-V3-0324
-    qwen-2.5      groq      qwen-2.5-32b
+    mistral-large mistral    mistral-large-latest
+    llama-4       fireworks  llama4-maverick-instruct-basic
+    deepseek-v3   nebius     deepseek-ai/DeepSeek-V3-0324
+    qwen-2.5      openrouter qwen/qwen2.5-32b-instruct
     `
     .trim().split('\n').forEach(row => {
         const [name, provider, model] = row.trim().split(/\s+/);
