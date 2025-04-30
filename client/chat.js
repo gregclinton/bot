@@ -131,8 +131,8 @@ window.onload = async () => {
     grok-3        xai
     mistral-large mistral    mistral-large-latest
     llama-4       fireworks  llama4-maverick-instruct-basic
+    qwen-3        fireworks  qwen3-235b-a22b
     deepseek-v3   nebius     deepseek-ai/DeepSeek-V3-0324
-    qwen-2.5      openrouter qwen/qwen2.5-32b-instruct
     `
     .trim().split('\n').forEach(row => {
         const [name, provider, model] = row.trim().split(/\s+/);
