@@ -133,6 +133,7 @@ window.onload = async () => {
     llama-4       fireworks  llama4-maverick-instruct-basic
     qwen-3        fireworks  qwen3-235b-a22b
     deepseek-v3   nebius     deepseek-ai/DeepSeek-V3-0324
+    prover        openrouter deepseek/deepseek-prover-v2:free
     `
     .trim().split('\n').forEach(row => {
         const [name, provider, model] = row.trim().split(/\s+/);
