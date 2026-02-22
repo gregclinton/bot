@@ -48,7 +48,6 @@ const chat = {
         .then(text => {
             chat.post(marked.parse(text));
             chat.waiting = false;
-            e.focus();
         });
     },
 
@@ -61,7 +60,6 @@ const chat = {
 
 window.onload = async () => {
     fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
-    document.getElementById("prompt").focus();
 };
 
 window.addEventListener('unload', () => {
