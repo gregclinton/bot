@@ -39,10 +39,11 @@ const chat = {
     prompt: async () => {
         chat.waiting = true;
         const e = document.getElementById("prompt")
-        chat.post(e.value.trim());
+        const prompt = e.value.trim()
+        chat.post(prompt);
         e.value = '';
 
-        await chat.fetch(text)
+        await chat.fetch(prompt)
         .then(res => res.text())
         .then(text => {
             chat.post(marked.parse(text));
