@@ -1,9 +1,7 @@
-from fastapi import FastAPI, Request, UploadFile, Query
+from fastapi import FastAPI, Request
 from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import chat
-import httpx
-import os
 import random
 import string
 import tool
@@ -33,31 +31,6 @@ async def delete_thread(id: str):
     if id in threads:
         await tool.clear(threads.pop(id))
     return "ok"
-
-# the remaining endpoints are just for me to play around with
-
-@app.delete('/threads/{id}/messages/last')
-async def delete_last_message(id: str):
-    chat.back(threads[id])
-    return "ok"
-
-@app.put('/threads/{id}/model')
-async def put_model(id: str, provider: str = Query(...), model: str = Query(...)):
-    chat.set_model(threads[id], provider, model)
-    return "ok"
-
-@app.post("/transcription")
-async def transcription(file: UploadFile):
-    async with httpx.AsyncClient(timeout = 60) as client:
-        return (await client.post(
-            url = f"https://api.groq.com/openai/v1/audio/transcriptions",
-            headers = { "Authorization": "Bearer " + os.environ.get("GROQ_API_KEY") },
-            files = { "file": (file.filename, await file.read(), file.content_type) },
-            data = {
-                "model": "whisper-large-v3-turbo",
-                "response_format": "text"
-            }
-        )).text
 
 app.mount("/", StaticFiles(directory = "client", html = True))
 

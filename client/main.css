@@ -32,26 +32,6 @@ body, html
     margin-bottom: 15px;
 }
 
-#chat .post .model
-{
-    color: gray;
-    margin-left: 10px;
-}
-
-#models
-{
-    overflow-y: scroll;
-    height: calc(100% - 50px);
-}
-
-#models div
-{
-    margin: 5px;
-    cursor: pointer;
-    color: darkblue;
-    font-size: x-large;
-}
-
 #toolbar
 {
     position: fixed;
@@ -68,7 +48,7 @@ body, html
     cursor: pointer;
 }
 
-#recorder
+#send
 {
     float: right;
 }
