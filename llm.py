@@ -52,7 +52,7 @@ async def invoke(thread):
                     "taalas": "api.taalas.com/v1",
                 }[provider])}/chat/completions""",
                 headers = {
-                    'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
+                    'Authorization': 'Bearer ' + os.environ.get(f"RUNPOD_SECRET_{provider.upper()}_API_KEY"),
                     'Content-Type': 'application/json'
                 },
                 json = data
