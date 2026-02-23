@@ -16,4 +16,4 @@ Also, by having many specialized bots, they can each keep what they need in a sm
 
 After a bot is instructed, it is asked to take a snapshot (snap tool) which becomes its starting point.
 
-I will provided example sessions on youtube to demonstrate. Stay tuned.
+See how it works at https://www.youtube.com/user/gregclinton
