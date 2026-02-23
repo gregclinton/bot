@@ -18,4 +18,4 @@ After a bot is instructed, it is asked to take a snapshot (snap tool) which beco
 
 See how it works at https://www.youtube.com/user/gregclinton
 
-Image on dockerhub https://hub.docker.com/r/gregclinton/hal
+My runpod template: https://console.runpod.io/deploy?template=0dc2j9qn8i&ref=q3k8ek5x
