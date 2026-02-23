@@ -2,6 +2,7 @@ if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here don't require a docker build ----
     echo https://$RUNPOD_POD_ID-4000.proxy.runpod.net
+    cd /workspace # default mount location for runpod
     uvicorn bot:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
 else
