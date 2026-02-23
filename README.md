@@ -17,3 +17,5 @@ Also, by having many specialized bots, they can each keep what they need in a sm
 After a bot is instructed, it is asked to take a snapshot (snap tool) which becomes its starting point.
 
 See how it works at https://www.youtube.com/user/gregclinton
+
+Image on dockerhub https://hub.docker.com/r/gregclinton/hal
