@@ -1,6 +1,6 @@
-We have here a very minimal bot, less than 1K lines of code.
+A very minimal bot, less than 1K lines of code.
 
-It runs on a server on the internet. I use runpod.
+It runs on a server on the internet (on runpod).
 
 Users (people) connect to the bot. Dial, talk and hang-up.
 
