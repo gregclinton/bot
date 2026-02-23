@@ -49,6 +49,7 @@ async def invoke(thread):
                     "openrouter": "openrouter.ai/api/v1",
                     "deepinfra": "api.deepinfra.com/v1/openai",
                     "nebius": "api.studio.nebius.com/v1",
+                    "taalas": "api.taalas.com/v1",
                 }[provider])}/chat/completions""",
                 headers = {
                     'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
