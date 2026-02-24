@@ -14,19 +14,10 @@ messages = [
     {"role": "user", "content": thread}
 ]
 
-if provider == "fireworks":
-    model = f"accounts/fireworks/models/{model}"
-
 data = {
     "model": model,
     "messages": messages,
 }
-
-if provider == "openai":
-    if model.startswith("o"):
-        del data["temperature"]
-elif provider == "anthropic":
-    data["max_tokens"] = 1024
 
 content = None
 
