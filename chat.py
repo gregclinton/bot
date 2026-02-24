@@ -1,10 +1,14 @@
 import llm
 import copy
 
-snapshot = None
-
 def create():
-    return copy.deepcopy(snapshot)
+    return {
+        "user": "me",
+        "assistant": "hal",
+        "provider": "openai",
+        "model": "gpt-4.1-nano",
+        "tools": ["shell","consult","model"],
+    }
 
 async def run(prompt, thread):
     messages = thread["messages"] = thread.get("messages", [])
@@ -28,21 +32,3 @@ def set_model(thread, provider, model):
         if message["role"] == "assistant":
             for key in ["refusal", "annotations"]:
                 message.pop(key, None)
-
-def snap(thread):
-    global snapshot
-
-    if thread:
-        snapshot = copy.deepcopy(thread)
-        back(snapshot) # remove snap invocation from snapshot
-        snapshot.pop("runs", None)
-    else:
-        snapshot = {
-            "user": "me",
-            "assistant": "hal",
-            "provider": "openai",
-            "model": "gpt-4.1-nano",
-            "tools": ["bench","shell","snap","consult","model"],
-        }
-
-snap(None)
