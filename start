@@ -1,7 +1,7 @@
 if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here don't require a docker build ----
-    python3 bot.py openai gpt-4.1-nano soul.hal.md thread.greg.md
+    python3 bot.py openai gpt-4.1-nano soul.hal.md account.greg.md thread.greg.md
     # ----------------- end of edits ------------------
 else
     rm start

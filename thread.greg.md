@@ -5,4 +5,4 @@ Hal
 Hello, how are you today?
 
 Greg
-Is Nordstrom open on Sunday?
+Is Nordstrom open on Sunday? And tell me what my balance is.

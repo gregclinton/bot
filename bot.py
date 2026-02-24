@@ -6,10 +6,11 @@ import sys
 provider = sys.argv[1]
 model = sys.argv[2]
 soul = open(sys.argv[3]).read()
-thread = open(sys.argv[4]).read()
+account = open(sys.argv[4]).read()
+thread = open(sys.argv[5]).read()
 
 messages = [
-    {"role": "system", "content": soul},
+    {"role": "system", "content": soul + "\n\n" + account},
     {"role": "user", "content": thread}
 ]
 
