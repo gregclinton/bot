@@ -3,6 +3,7 @@ import json
 import os
 
 provider = "openai"
+model = "gpt-5-nano"
 model = "gpt-4.1-nano"
 
 messages = [{"role": "user", "content": "What is 2+2?"}]
@@ -12,7 +13,6 @@ if provider == "fireworks":
 
 data = {
     "model": model,
-    "temperature": 0,
     "messages": messages,
 }
 
