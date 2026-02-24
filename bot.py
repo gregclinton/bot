@@ -1,42 +1,65 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import PlainTextResponse
-from fastapi.staticfiles import StaticFiles
-import chat
-import random
-import string
-import tool
+import requests
+import json
+import os
 
-app = FastAPI(default_response_class=PlainTextResponse)
+def invoke():
+    provider = "openai"
+    model = "gpt-4.1-nano"
+    messages = [{"role": "user", "content": "What is 2+2?"}]
 
-threads = {}
+    if provider == "fireworks":
+        model = f"accounts/fireworks/models/{model}"
 
-# the following three endpoints are required for a bot
-# they allow something similar to dialing a phone number, talking to the bot and then hanging up
+    data = {
+        "model": model,
+        "temperature": 0,
+        "messages": messages,
+    }
 
-@app.post('/threads')
-async def post_thread():
-    id = ''.join(random.choices(string.ascii_lowercase, k = 32))
-    threads[id] = chat.create()
-    return id
+    if provider == "openai":
+        if model.startswith("o"):
+            del data["temperature"]
+    elif provider == "anthropic":
+        data["max_tokens"] = 1024
 
-@app.post('/threads/{id}/messages')
-async def post_message(req: Request, id: str):
-    if id in threads:
-        return await chat.run((await req.body()).decode("utf-8"), threads[id])
-    else:
-        return "Connection has ended."
+    content = None
+    count = 0
 
-@app.delete('/threads/{id}')
-async def delete_thread(id: str):
-    if id in threads:
-        await tool.clear(threads.pop(id))
-    return "ok"
+    while not content and count < 10:
+        count += 1
 
-app.mount("/", StaticFiles(directory = "client", html = True))
+        res = requests.post(
+            f"""https://{({
+                "openai": "api.openai.com/v1",
+                "anthropic": "api.anthropic.com/v1",
+                "google": "generativelanguage.googleapis.com/v1beta/openai",
+                "mistral": "api.mistral.ai/v1",
+                "xai": "api.x.ai/v1",
+                "fireworks": "api.fireworks.ai/inference/v1",
+                "nvidia": "integrate.api.nvidia.com/v1",
+                "together": "api.together.xyz/v1",
+                "groq": "api.groq.com/openai/v1",
+                "openrouter": "openrouter.ai/api/v1",
+                "deepinfra": "api.deepinfra.com/v1/openai",
+                "nebius": "api.studio.nebius.com/v1",
+                "taalas": "api.taalas.com/v1",
+            }[provider])}/chat/completions""",
+            headers = {
+                'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
+                'Content-Type': 'application/json'
+            },
+            json = data
+        )
 
-@app.on_event("shutdown")
-async def stop():
-    print("Stopping threads...", flush = True)
-    for thread in threads.values():
-        await tool.clear(thread)
-    print("Threads stopped.", flush = True)
+        try:
+            res.raise_for_status()
+            message = res.json()["choices"][0]["message"]
+            content = message.get("content")
+
+        except Exception as e:
+            content = str(e) + "\n" + res.text
+
+    return content or "Could you rephrase that, please?"
+
+    
+print(invoke())

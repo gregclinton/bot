@@ -1,8 +1,7 @@
 if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here don't require a docker build ----
-    echo https://$RUNPOD_POD_ID-4000.proxy.runpod.net
-    uvicorn bot:app --host 0.0.0.0 --port 4000
+    python3 bot.py
     # ----------------- end of edits ------------------
 else
     rm start
