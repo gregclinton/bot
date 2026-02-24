@@ -1,12 +1,15 @@
 import requests
 import json
 import os
+import sys
 
-provider = "openai"
-model = "gpt-5-nano"
-model = "gpt-4.1-nano"
+provider = sys.argv[1]
+model = sys.argv[2]
+soul = sys.argv[3]
+thread = sys.argv[4]
+msg = open(soul).read() + "\n\n" + open(thread).read()
 
-messages = [{"role": "user", "content": "What is 2+2?"}]
+messages = [{"role": "user", "content": msg}]
 
 if provider == "fireworks":
     model = f"accounts/fireworks/models/{model}"
