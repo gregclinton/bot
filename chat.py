@@ -20,11 +20,6 @@ async def run(prompt, thread):
     messages.append(message("assistant", reply))
     return reply
 
-def back(thread):
-    runs = thread.get("runs", [])
-    if runs:
-        del thread["messages"][runs.pop():]
-
 def set_model(thread, provider, model):
     thread["provider"] = provider
     thread["model"] = model
