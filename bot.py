@@ -5,11 +5,13 @@ import sys
 
 provider = sys.argv[1]
 model = sys.argv[2]
-soul = sys.argv[3]
-thread = sys.argv[4]
-msg = open(soul).read() + "\n\n" + open(thread).read()
+soul = open(sys.argv[3]).read()
+thread = open(sys.argv[4]).read()
 
-messages = [{"role": "user", "content": msg}]
+messages = [
+    {"role": "system", "content": soul},
+    {"role": "user", "content": thread}
+]
 
 if provider == "fireworks":
     model = f"accounts/fireworks/models/{model}"
