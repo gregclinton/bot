@@ -4,9 +4,7 @@ def get(owner):
     # /tmp/threads/owner/correspondent/order-poster
     # /tmp/threads/owner/correspondent/bookmark
 
-    folder = f"/tmp/threads/{owner}"
-
-    for thread in Path(folder).iterdir():
+    for thread in Path(f"/tmp/threads/{owner}").iterdir():
         bookmark = f"{str(thread.resolve())}/bookmark"
 
         for msg in thread.iterdir():
