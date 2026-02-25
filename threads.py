@@ -21,3 +21,14 @@ def get(owner):
             return text
 
     return False
+
+def post(to, from, text):
+    # /workspace/threads/to/from/order-poster
+
+    thread = Path(f"/tmp/threads/{to}/{from}")
+    thread.mkdir(parents = True, exist_ok = True)
+    order = "10000"
+    for msg in thread.iterdir():
+        if msg.name != "mark":
+            order = msg.name.split("-")[0]
+    (thread / f"{order}-{from}").write_text(text)
