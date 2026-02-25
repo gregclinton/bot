@@ -7,10 +7,10 @@ while True:
 
     thread = threads.get("1000")
     if thread:
-        print(invoke("You are Hal.",  thread))
+        print(invoke("You are Hal.", thread))
 
     thread = threads.get("1001")
     if thread:
-        print(invoke("You are Sally.",  thread))
+        print(invoke("You are Sally.", thread))
 
     time.sleep(1)
