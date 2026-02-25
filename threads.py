@@ -1,16 +1,16 @@
 from pathlib import Path
 
-def get(inbox):
+def get(owner):
     # /tmp/threads/owner/correspondent/order-poster
     # /tmp/threads/owner/correspondent/bookmark
 
-    folder = f"/tmp/threads/{inbox}"
+    folder = f"/tmp/threads/{owner}"
 
     for thread in Path(folder).iterdir():
         bookmark = f"{str(thread.resolve())}/bookmark"
 
         for msg in thread.iterdir():
-            if msg.name != "bookmark" and not msg.name.endswith(inbox):
+            if msg.name != "bookmark" and not msg.name.endswith(owner):
                 last = msg.name.split("-")[0]
 
         if last > open(bookmark).read():
