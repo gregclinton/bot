@@ -9,6 +9,6 @@ def get(inbox):
     for p in Path("/tmp/threads/" + inbox).iterdir():
         if p.is_file() and datetime.fromtimestamp(p.stat().st_mtime) > start:
             start = datetime.now()
-            return p
+            return open(p).read()
 
     start = datetime.now()

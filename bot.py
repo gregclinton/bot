@@ -2,17 +2,15 @@ import threads
 import time
 import llm
 
-provider = "groq"
-model = "openai/gpt-oss-20b"
-
 while True:
+    invoke = lambda sys, user: llm.invoke("groq", "openai/gpt-oss-20b", sys, user)
 
     thread = threads.get("1000")
     if thread:
-        print(llm.invoke(provider, model, "You are Hal.", open(thread).read()))
+        print(invoke("You are Hal.",  thread))
 
     thread = threads.get("1001")
     if thread:
-        print(llm.invoke(provider, model, "You are Sally.", open(thread).read()))
+        print(invoke("You are Sally.",  thread))
 
     time.sleep(1)
