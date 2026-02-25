@@ -1,8 +1,8 @@
 from pathlib import Path
 
 def get(owner):
-    # /tmp/threads/owner/correspondent/order-poster
-    # /tmp/threads/owner/correspondent/mark
+    # /workspace/threads/owner/correspondent/order-poster
+    # /workspace/threads/owner/correspondent/mark
 
     for thread in Path(f"/tmp/threads/{owner}").iterdir():
         mark = thread / "mark"
