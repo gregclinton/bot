@@ -1,8 +1,7 @@
 if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here don't require a docker build ----
-    python3 llm.py groq openai/gpt-oss-20b
-    printf "Friday, February 6, 10:03 am \nCustomer \nHello. \n\n" > /tmp/thread.md
+    python3 bot.py
     # ----------------- end of edits ------------------
 else
     rm start
