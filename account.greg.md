@@ -1,1 +1,4 @@
-Customer's balance is $16.34.
+
+Account number: 1022321
+Account balance: $16.34
+Customer name: Greg Clinton

@@ -1,10 +1,13 @@
 if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here don't require a docker build ----
-    python3 bot.py openai gpt-4.1-nano soul.hal.md account.greg.md thread.greg.md
-    # groq openai/gpt-oss-20b
-    # openrouter openai/gpt-oss-20b
-    # fireworks fireworks/gpt-oss-20b
+    # export provider_model=openai,gpt-4.1-nano
+    # export provider_model=groq,openai/gpt-oss-20b
+    # export provider_model=openrouter openai/gpt-oss-20b
+    # export provider_model=fireworks fireworks/gpt-oss-20b
+    cat soul.hal.md account.greg.md > system.md
+    cat thread.greg.md > thread.md
+    python3 bot.py
     # ----------------- end of edits ------------------
 else
     rm start
