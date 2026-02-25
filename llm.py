@@ -3,16 +3,6 @@ import json
 import os
 
 def invoke(provider, model, sys, user):
-    data = {
-        "model": model,
-        "messages": [
-            {"role": "system", "content": sys},
-            {"role": "user", "content": user}
-        ],
-    }
-
-    content = None
-
     res = requests.post(
         f"""https://{({
             "openai": "api.openai.com/v1",
@@ -33,15 +23,19 @@ def invoke(provider, model, sys, user):
             'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
             'Content-Type': 'application/json'
         },
-        json = data
+        json = {
+            "model": model,
+            "messages": [
+                {"role": "system", "content": sys},
+                {"role": "user", "content": user}
+            ],
+        }
     )
 
     try:
         res.raise_for_status()
         message = res.json()["choices"][0]["message"]
-        content = message.get("content")
+        return message.get("content")
 
     except Exception as e:
-        content = str(e) + "\n" + res.text
-
-    return content
+        return str(e) + "\n" + res.text
