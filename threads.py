@@ -10,9 +10,7 @@ def get(inbox):
         bookmark = f"{str(thread.resolve())}/bookmark"
 
         for msg in thread.iterdir():
-            if msg.name == "bookmark":
-                continue
-            elif not msg.name.endswith(inbox):
+            if msg.name != "bookmark" and not msg.name.endswith(inbox):
                 last = msg.name.split("-")[0]
 
         if last > open(bookmark).read():
