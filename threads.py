@@ -2,18 +2,18 @@ from pathlib import Path
 
 def get(owner):
     # /tmp/threads/owner/correspondent/order-poster
-    # /tmp/threads/owner/correspondent/bookmark
+    # /tmp/threads/owner/correspondent/mark
 
     for thread in Path(f"/tmp/threads/{owner}").iterdir():
-        bookmark = thread / "bookmark"
-        last = false
+        mark = thread / "mark"
+        last = False
 
         for msg in thread.iterdir():
-            if msg.name != "bookmark" and not msg.name.endswith(owner):
+            if msg.name != "mark" and not msg.name.endswith(owner):
                 last = msg.name.split("-")[0]
 
-        if last and last > open(bookmark).read():
-            open(bookmark, "w").write(last)
+        if last and (not mark.exists() or last > mark.read_text()):
+            mark.write_text(last)
             return "Hello."
 
-    return false
+    return False
