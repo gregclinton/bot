@@ -1,0 +1,1 @@
+echo "$1\n$2\n$3\n\n" >> thread.md

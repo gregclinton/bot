@@ -6,7 +6,7 @@ if [ -f Dockerfile ]; then
     # export provider_model=openrouter,openai/gpt-oss-20b
     # export provider_model=fireworks,fireworks/gpt-oss-20b
     cat soul.hal.md account.greg.md > system.md
-    cat thread.greg.md > thread.md
+    echo "hello" > thread.md
     python3 bot.py
     # ----------------- end of edits ------------------
 else
