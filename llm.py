@@ -44,4 +44,4 @@ def invoke(provider, model, system_msg, user_msg):
     except Exception as e:
         content = str(e) + "\n" + res.text
 
-    print(content)
+    return content
