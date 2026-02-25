@@ -2,12 +2,12 @@ import requests
 import json
 import os
 
-def invoke(provider, model, system_msg, user_msg):
+def invoke(provider, model, sys, user):
     data = {
         "model": model,
         "messages": [
-            {"role": "system", "content": system_msg},
-            {"role": "user", "content": user_msg}
+            {"role": "system", "content": sys},
+            {"role": "user", "content": user}
         ],
     }
 
