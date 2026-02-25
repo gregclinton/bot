@@ -1,14 +1,20 @@
-from datetime import datetime
 from pathlib import Path
 
 def get(inbox):
-    filetime = lambda p: datetime.fromtimestamp(p.stat().st_mtime)
+    # /tmp/threads/owner/correspondent/order-poster
+    # /tmp/threads/owner/correspondent/bookmark
+
     folder = f"/tmp/threads/{inbox}"
-    bookmark = Path(f"{folder}/bookmark")
-    start = filetime(bookmark) if bookmark.exists() else (datetime.now() - timedelta(years=10))
 
-    for p in Path(folder).iterdir():
-        if p.is_file() and filetime(p) > start:
-            return open(p).read()
+    for thread in Path(folder).iterdir():
+        bookmark = f"{str(thread.resolve())}/bookmark"
 
-    bookmark.touch()
+        for msg in thread.iterdir():
+            if msg.name == "bookmark":
+                continue
+            elif not msg.name.endswith(inbox):
+                last = msg.name.split("-")[0]
+
+        if last > open(bookmark).read():
+            open(bookmark, "w").write(last)
+            return "Hello."
