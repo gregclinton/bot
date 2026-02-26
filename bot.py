@@ -10,6 +10,7 @@ def post(text):
             continue
         if not lines[0].lower().startswith('to:') or not lines[1].lower().startswith('from:'):
             continue
+        print('\n'.join(lines), '\n-----------------------------');
         messages.post(lines[0].split(':',1)[1].strip(),
              lines[1].split(':',1)[1].strip(),
              "\n".join(lines[2:]))
@@ -21,7 +22,7 @@ def run_worker(worker, account):
     dashes = ""
     for msg in messages.mine(worker):
         if (any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief"):
-            text += f"{dashes}To: {msg.to}\nFrom: msg{msg.poster}\n{msg.text}\n"
+            text += f"{dashes}To: {msg.to}\nFrom: {msg.poster}\n{msg.text}\n"
             dashes = "----------------------------\n"
         
     post(invoke("", text))
