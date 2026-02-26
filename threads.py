@@ -8,8 +8,10 @@ def messages(thread):
 def get(owner):
     # /workspace/threads/owner/correspondent/order-poster
     # /workspace/threads/owner/correspondent/mark
+    inbox = Path(f"/tmp/threads/{owner}")
+    inbox.mkdir(parents = True, exist_ok = True)
 
-    for thread in Path(f"/tmp/threads/{owner}").iterdir():
+    for thread in inbox.iterdir():
         mark = thread / "mark"
         last = False
         text = ""

@@ -8,12 +8,14 @@ while True:
     invoke = lambda sys, user: llm.invoke("groq", "openai/gpt-oss-20b", sys, user)
     read = lambda *files: "\n\n".join(open(f"markdown/{f}.md").read() for f in files)
 
-    thread = threads.get("1000")
+    owner = "1000"
+    thread = threads.get(owner)
     if thread:
-        print(invoke(read("hal"), thread))
+        threads.post(owner, owner, invoke(read("hal"), thread))
 
-    thread = threads.get("1001")
+    owner = "1001"
+    thread = threads.get(owner)
     if thread:
-        print(invoke(read("sally"), thread))
+        threads.post(owner, owner, invoke(read("sally"), thread))
 
     time.sleep(1)
