@@ -12,7 +12,7 @@ def run_worker(worker, account):
             text += f"{dashes}To: {msg.to}\nFrom: msg{msg.poster}\n{msg.text}\n"
             dashes = "------------------------------------------------------------\n"
         
-    print(text)
+    print(invoke("", text))
 
 while True:
     account = "CX143623"
