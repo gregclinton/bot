@@ -35,3 +35,10 @@ def post(to, _from, text):
     for msg in messages(thread):
         order = msg.name.split("-")[0]
     (thread / f"{order}-{_from}").write_text(text)
+
+import sys
+
+if __name__ == "__main__":
+    name = sys.argv[1]
+    args = sys.argv[2:]
+    {"post": post}[name](*args)
