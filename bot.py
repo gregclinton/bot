@@ -8,4 +8,5 @@ while True:
     me = "Hal"
     for msg in messages.mine(me):
         print(msg.read_text())
+        print(invoke("", msg.read_text()))
     time.sleep(1)
