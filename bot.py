@@ -10,7 +10,7 @@ def post(worker, text):
             to = lines[0].split(':',1)[1].strip()
             frm = lines[1].split(':',1)[1].strip()
             if frm == worker:
-                # print('\n'.join(lines), '\n-----------------------------')
+                # print('\n'.join(lines), '\n\n')
                 messages.post(to, frm, "\n".join(lines[2:]))
 
 while True:
