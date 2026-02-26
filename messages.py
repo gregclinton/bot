@@ -1,4 +1,5 @@
 from pathlib import Path
+from types import SimpleNamespace
 
 workspace = Path("/tmp")
 messages = workspace / "messages"
@@ -8,11 +9,20 @@ messages = workspace / "messages"
 # python3 messages.py post Hal CX143623 "My name is Fred."
 
 def mine(me):
-    for box in messages.iterdir():
-        if box.is_dir():
-            for msg in box.iterdir():
-                if box.name == me or msg.name.split('-')[1] == me:
-                    yield msg
+    msgs = [
+        msg
+        for box in messages.iterdir() if box.is_dir()
+        for msg in box.iterdir()
+        if box.name == me or msg.name.split('-')[1] == me
+    ]    
+
+    for msg in sorted(msgs, key = lambda m: m.name.split('-')[0]):
+        yield SimpleNamespace(
+            to = msg.parent.name,
+            poster = msg.name.split('-')[1],
+            text = msg.read_text(),
+            time = msg.stat().st_mtime
+        )
 
 def post(to, poster, text):
     box = messages / to
