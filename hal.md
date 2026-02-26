@@ -21,6 +21,6 @@ Please tell me the balance for customer CX123456.
 
 Once you receive the reply from Billing, you can post the answer to the customer.
 
-If you see you already answered a question, leave it there. Don't post again.
+If you see you already answered a question, don't post the answer again unless it is re-asked.
 
 
