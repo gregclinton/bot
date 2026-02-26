@@ -4,21 +4,20 @@ import llm
 
 while True:
     invoke = lambda sys, user: llm.invoke("groq", "openai/gpt-oss-20b", sys, user)
+    account = "CX143623"
 
     me = "Hal"
-    account = "CX143623"
     text = ""
 
-    for msg in filter(lambda msg: any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief",  messages.mine(me)):
+    for msg in messages.mine(me, account):
         text += f"{msg.poster} to {msg.to}: {msg.text}\n"
 
     print(text)
 
     me = "Billing"
-    account = "CX143623"
     text = ""
 
-    for msg in filter(lambda msg: any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief",  messages.mine(me)):
+    for msg in messages.mine(me, account):
         text += f"{msg.poster} to {msg.to}: {msg.text}\n"
 
     print(text)

@@ -6,21 +6,28 @@ messages = workspace / "messages"
 
 # /workspace/messages/box/order-poster
 
-def mine(me):
-    msgs = [
-        msg
-        for box in messages.iterdir() if box.is_dir()
-        for msg in box.iterdir()
-        if box.name == me or msg.name.split('-')[1] == me
-    ]    
+def mine(me, account=None):
+    msgs = []
+    for box in messages.iterdir():
+        if not box.is_dir():
+            continue
+        for msg in box.iterdir():
+            name = msg.name.split('-')
+            if box.name == me or name[1] == me:
+                msgs.append(msg)
 
-    for msg in sorted(msgs, key = lambda m: m.name.split('-')[0]):
-        yield SimpleNamespace(
-            to = msg.parent.name,
-            poster = msg.name.split('-')[1],
-            text = msg.read_text(),
-            time = msg.stat().st_mtime
+    msgs.sort(key = lambda m: m.name.split('-')[0])
+
+    for msg in msgs:
+        m = SimpleNamespace(
+            to=msg.parent.name,
+            poster=msg.name.split('-')[1],
+            text=msg.read_text(),
+            time=msg.stat().st_mtime
         )
+
+        if not account or (any(account in s for s in [m.text, m.to, m.poster]) or m.poster == "Chief"):
+            yield m
 
 def post(to, poster, text):
     box = messages / to
