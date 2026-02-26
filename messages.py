@@ -9,12 +9,10 @@ messages = workspace / "messages"
 def mine(me):
     msgs = []
     for box in messages.iterdir():
-        if not box.is_dir():
-            continue
-        for msg in box.iterdir():
-            name = msg.name.split('-')
-            if box.name == me or name[1] == me:
-                msgs.append(msg)
+        if box.is_dir():
+            for msg in box.iterdir():
+                if me in [box.name, msg.name.split('-')[1]]:
+                    msgs.append(msg)
 
     msgs.sort(key = lambda m: m.name.split('-')[0])
 
