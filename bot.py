@@ -22,7 +22,7 @@ def run_worker(worker, account):
     for msg in messages.mine(worker):
         if (any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief"):
             text += f"{dashes}To: {msg.to}\nFrom: msg{msg.poster}\n{msg.text}\n"
-            dashes = "------------------------------------------------------------\n"
+            dashes = "----------------------------\n"
         
     post(invoke("", text))
 
