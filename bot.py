@@ -2,7 +2,6 @@ import messages
 import time
 import llm
 import re
-from datetime import datetime
 
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
@@ -21,7 +20,7 @@ while True:
         dashes = ""
         for msg in messages.mine(worker):
             if (any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief"):
-                t = datetime.fromtimestamp(msg.time).strftime("%A, %B %-d, %-I:%M %P")
+                t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
                 text += f"{dashes}{t}\nTo: {msg.to}\nFrom: {msg.poster}\n{msg.text}\n"
                 dashes = "----------------------------\n"
 

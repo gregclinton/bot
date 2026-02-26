@@ -1,5 +1,6 @@
 from pathlib import Path
 from types import SimpleNamespace
+from datetime import datetime
 
 workspace = Path("/tmp")
 messages = workspace / "messages"
@@ -18,10 +19,10 @@ def mine(me):
 
     for msg in msgs:
         yield SimpleNamespace(
-            to=msg.parent.name,
-            poster=msg.name.split('-')[1],
-            text=msg.read_text(),
-            time=msg.stat().st_mtime
+            to = msg.parent.name,
+            poster = msg.name.split('-')[1],
+            text = msg.read_text(),
+            time = datetime.fromtimestamp(msg.stat().st_mtime)
         )
 
 def post(to, poster, text):
