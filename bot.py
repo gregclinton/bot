@@ -14,16 +14,21 @@ while True:
     me = "Hal"
     text = ""
 
+    dashes = ""
     for msg in my_account_messages(me, account):
-        text += f"{msg.poster} to {msg.to}: {msg.text}\n"
+        text += f"{dashes}To: {msg.to}\nFrom: msg{msg.poster}\n{msg.text}\n"
+        dashes = "------------------------------------------------------------\n"
+        
 
     print(text)
 
     me = "Billing"
     text = ""
 
+    dashes = ""
     for msg in my_account_messages(me, account):
         text += f"{msg.poster} to {msg.to}: {msg.text}\n"
+        dashes = "------------------------------------------------------------\n"
 
     print(text)
 
