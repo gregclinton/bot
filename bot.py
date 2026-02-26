@@ -13,18 +13,16 @@ def post(worker, text):
                 # print('\n'.join(lines), '\n-----------------------------')
                 messages.post(to, frm, "\n".join(lines[2:]))
 
-def run_worker(worker, account):
-    text = ""
-    dashes = ""
-    for msg in messages.mine(worker):
-        if (any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief"):
-            text += f"{dashes}To: {msg.to}\nFrom: {msg.poster}\n{msg.text}\n"
-            dashes = "----------------------------\n"
-        
-    post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
-
 while True:
     account = "CX143623"
-    run_worker("Hal", account)
-    run_worker("Billing", account)
+    for worker in ["Hal", "Billing"]:
+        text = ""
+        dashes = ""
+        for msg in messages.mine(worker):
+            if (any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief"):
+                text += f"{dashes}To: {msg.to}\nFrom: {msg.poster}\n{msg.text}\n"
+                dashes = "----------------------------\n"
+
+        post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
+
     time.sleep(10)
