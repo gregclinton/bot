@@ -4,6 +4,7 @@ workspace = Path("/tmp")
 messages = workspace / "messages"
 
 # /workspace/messages/box/order-poster
+# python3 messages.py post Hal chief "You're going to take customer calls."
 # python3 messages.py post Hal CX143623 "My name is Fred."
 
 def post(to, poster, text):
