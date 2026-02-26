@@ -6,7 +6,7 @@ messages = workspace / "messages"
 
 # /workspace/messages/box/order-poster
 
-def mine(me, account=None):
+def mine(me):
     msgs = []
     for box in messages.iterdir():
         if not box.is_dir():
@@ -19,15 +19,12 @@ def mine(me, account=None):
     msgs.sort(key = lambda m: m.name.split('-')[0])
 
     for msg in msgs:
-        m = SimpleNamespace(
+        yield SimpleNamespace(
             to=msg.parent.name,
             poster=msg.name.split('-')[1],
             text=msg.read_text(),
             time=msg.stat().st_mtime
         )
-
-        if not account or (any(account in s for s in [m.text, m.to, m.poster]) or m.poster == "Chief"):
-            yield m
 
 def post(to, poster, text):
     box = messages / to
