@@ -1,6 +1,18 @@
 import messages
 import time
 import llm
+import re
+
+def post(text):
+    for part in re.split(r'\n-{4,}\n', text.strip()):
+        lines = [l.strip() for l in part.splitlines() if l.strip()]
+        if len(lines) < 3 or ':' not in lines[0] or ':' not in lines[1]:
+            continue
+        if not lines[0].lower().startswith('to:') or not lines[1].lower().startswith('from:'):
+            continue
+        messages.post(lines[0].split(':',1)[1].strip(),
+             lines[1].split(':',1)[1].strip(),
+             "\n".join(lines[2:]))
 
 def run_worker(worker, account):
     invoke = lambda sys, user: llm.invoke("groq", "openai/gpt-oss-20b", sys, user)
@@ -12,7 +24,7 @@ def run_worker(worker, account):
             text += f"{dashes}To: {msg.to}\nFrom: msg{msg.poster}\n{msg.text}\n"
             dashes = "------------------------------------------------------------\n"
         
-    print(invoke("", text))
+    post(invoke("", text))
 
 while True:
     account = "CX143623"
