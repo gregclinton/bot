@@ -1,6 +1,6 @@
 import messages
 import time
-import l
+import llm
 
 # python3 messages.py post Hal Chief "$(cat hal.md)"
 # python3 messages.py post Hal CX143623 "My name is Fred."
