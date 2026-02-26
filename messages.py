@@ -4,8 +4,15 @@ workspace = Path("/tmp")
 messages = workspace / "messages"
 
 # /workspace/messages/box/order-poster
-# python3 messages.py post Hal chief "You're going to take customer calls."
+# python3 messages.py post Hal Chief "$(cat hal.md)"
 # python3 messages.py post Hal CX143623 "My name is Fred."
+
+def mine(me):
+    for box in messages.iterdir():
+        if box.is_dir():
+            for msg in (messages / box).iterdir():
+                if box == me or msg.name.split('-')[1] == me:
+                    yield msg
 
 def post(to, poster, text):
     box = messages / to
