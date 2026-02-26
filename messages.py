@@ -10,8 +10,8 @@ messages = workspace / "messages"
 def mine(me):
     for box in messages.iterdir():
         if box.is_dir():
-            for msg in (messages / box).iterdir():
-                if box == me or msg.name.split('-')[1] == me:
+            for msg in box.iterdir():
+                if box.name == me or msg.name.split('-')[1] == me:
                     yield msg
 
 def post(to, poster, text):
