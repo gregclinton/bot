@@ -2,9 +2,6 @@ import messages
 import time
 import llm
 
-# python3 messages.py post Hal Chief "$(cat hal.md)"
-# python3 messages.py post Hal CX143623 "My name is Fred."
-
 while True:
     invoke = lambda sys, user: llm.invoke("groq", "openai/gpt-oss-20b", sys, user)
 
