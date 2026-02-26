@@ -3,7 +3,7 @@ if [ -f Dockerfile ]; then
     # ---- edits here don't require a docker build ----
     python3 messages.py post Hal Chief "$(cat hal.md)"
     python3 messages.py post Billing Chief "$(cat billing.md)"
-    python3 messages.py post Hal CX143623 "My name is Fred."
+    python3 messages.py post Hal CX143623 "My name is Fred. How much is my balance?"
     python3 bot.py
     # ----------------- end of edits ------------------
 else
