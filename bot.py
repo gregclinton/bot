@@ -4,7 +4,6 @@ import llm
 import re
 from datetime import datetime
 
-
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
