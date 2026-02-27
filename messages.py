@@ -32,11 +32,14 @@ def archive(owner):
         yield msg
 
 def inbox(owner):
-    read = messages / owner / "read"
+    folder = messages / owner 
+    folder.mkdir(parents = True, exist_ok = True)
+
+    read = folder / "read"
     start = int(read.read_text()) if read.exists() else 0
     end = start
 
-    for f in (messages / owner).iterdir():
+    for f in folder.iterdir():
         if '-' in f.name:
             msg = create_message(f)
             if msg.order > start:
