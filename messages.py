@@ -5,7 +5,7 @@ from datetime import datetime
 workspace = Path("/tmp")
 messages = workspace / "messages"
 
-# /workspace/messages/box/order-poster
+# /workspace/messages/owner/order-poster
 
 def create_message(msg):
     order, poster = msg.name.split('-')
@@ -24,12 +24,12 @@ def archive(owner):
         if box.is_dir():
             for msg in box.iterdir():
                 if '-' in msg.name and owner in [box.name, msg.name.split('-')[1]]:
-                    msgs.append(msg)
+                    msgs.append(create_message(msg))
 
-    msgs.sort(key = lambda m: m.name.split('-')[0])
+    msgs.sort(key = lambda m: msg.order)
 
     for msg in msgs:
-        yield create_message(msg)
+        yield msg
 
 def inbox(owner):
     read = messages / owner / "read"
