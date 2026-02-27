@@ -12,11 +12,19 @@ def post(worker, text):
                 print('\n'.join(lines), '\n\n')
                 messages.post(to, frm, "\n".join(lines[2:]))
 
-def recent_accounts(worker):
-    return ["CX143623"]
-
 for worker in ["Hal", "Billing"]:
-    for account in recent_accounts(worker):
+    pending_accounts = set()
+    for msg in messages.mine(worker):
+        if msg.to.startswith("CX1"):
+            pending_accounts.discard(msg.to)
+        elif msg.poster.startswith("CX1"):
+            pending_accounts.add(msg.poster)
+        else:
+            m = re.search(r"\bCX1\w*", s)
+            if m:
+                pending_accounts.add(m.group())
+
+    for account in pending_accounts:
         text = ""
         dashes = ""
         for msg in messages.mine(worker):
