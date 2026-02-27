@@ -25,4 +25,5 @@ for worker in ["Hal", "Billing"]:
                 text += f"{dashes}{t}\nTo: {msg.to}\nFrom: {msg.poster}\n{msg.text}\n"
                 dashes = "----------------------------\n"
 
-        post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
+        if text != "":
+            post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
