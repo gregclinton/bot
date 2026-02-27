@@ -26,7 +26,7 @@ def archive(owner):
                 if '-' in msg.name and owner in [box.name, msg.name.split('-')[1]]:
                     msgs.append(create_message(msg))
 
-    msgs.sort(key = lambda m: msg.order)
+    msgs.sort(key = lambda msg: msg.order)
 
     for msg in msgs:
         yield msg

@@ -41,5 +41,4 @@ for worker in workers:
                 dashes = "----------------------------\n"
 
         if text != "":
-#            post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
-            post(worker, llm.invoke("openai", "gpt-4.1-nano", "", text))
+            post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
