@@ -44,7 +44,7 @@ def inbox(owner):
                 read.write_text(str(end))
                 yield msg
 
-def post(to, poster, body):
+def post(poster, to, body):
     box = messages / to
     box.mkdir(parents = True, exist_ok = True)
     last = messages / "last"
