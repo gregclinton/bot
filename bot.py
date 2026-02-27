@@ -3,12 +3,6 @@ import llm
 import re
 import subprocess
 
-workers = []
-
-for msg in messages.archive("Chief"):
-    if msg.to not in (["Chief", "Shell"] + workers):
-        workers.append(msg.to)
-
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
@@ -20,10 +14,11 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-for msg in messages.inbox("Shell"):
-    p = subprocess.run(msg.body, shell = True, capture_output = True, text = True)
-    results = p.stdout + p.stderr
-    messages.post("Shell", msg.poster, f"Your bash shell command:\n{msg.body}\n\nProduced these results:\n{results}")
+workers = []
+
+for msg in messages.archive("Chief"):
+    if msg.to not in (["Chief", "Shell"] + workers):
+        workers.append(msg.to)
 
 for worker in workers:
     accounts = set()
@@ -44,3 +39,8 @@ for worker in workers:
 
         if text != "":
             post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
+
+for msg in messages.inbox("Shell"):
+    p = subprocess.run(msg.body, shell = True, capture_output = True, text = True)
+    results = p.stdout + p.stderr
+    messages.post("Shell", msg.poster, f"Your bash shell command:\n{msg.body}\n\nProduced these results:\n{results}")
