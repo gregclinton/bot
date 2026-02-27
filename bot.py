@@ -21,7 +21,7 @@ def post(worker, text):
 for worker in workers:
     pending_accounts = set()
 
-    for msg in messages.archive(worker):
+    for msg in messages.inbox(worker):
         if msg.to.startswith("CX1"):
             pending_accounts.discard(msg.to)
         elif msg.poster.startswith("CX1"):
