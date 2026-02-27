@@ -5,7 +5,7 @@ import re
 workers = []
 
 for msg in messages.archive("Chief"):
-    if msg.to not in ["Chief", "Shell"] + workers:
+    if msg.to not in (["Chief", "Shell"] + workers):
         workers.append(msg.to)
 
 def post(worker, text):
