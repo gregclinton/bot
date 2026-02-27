@@ -35,9 +35,9 @@ def inbox(owner):
     for msg in archive(owner):
         if msg.order > start:
             end = max([end, msg.order])
+            read.write_text(str(end))
             yield msg
 
-    read.write_text(str(end))
 
 def post(to, poster, body):
     box = messages / to
