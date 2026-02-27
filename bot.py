@@ -2,6 +2,14 @@ import messages
 import llm
 import re
 
+workers = set()
+
+for msg in messages.archive("Chief"):
+    if msg.to not in ["Chief", "Shell"]
+        workers.add(msg.to)
+
+workers = list(workers)
+
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
@@ -12,7 +20,7 @@ def post(worker, text):
                 print('\n'.join(lines), '\n\n')
                 messages.post(to, frm, "\n".join(lines[2:]))
 
-for worker in ["Hal", "Billing"]:
+for worker in workers:
     pending_accounts = set()
 
     for msg in messages.archive(worker):
