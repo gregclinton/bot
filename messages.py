@@ -18,9 +18,11 @@ def mine(me):
     msgs.sort(key = lambda m: m.name.split('-')[0])
 
     for msg in msgs:
+        order, poster = msg.name.split('-')
         yield SimpleNamespace(
             to = msg.parent.name,
-            poster = msg.name.split('-')[1],
+            order = order,
+            poster = poster,
             text = msg.read_text(),
             time = datetime.fromtimestamp(msg.stat().st_mtime)
         )
