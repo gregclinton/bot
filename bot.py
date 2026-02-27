@@ -19,25 +19,20 @@ def post(worker, text):
                 messages.post(to, frm, "\n".join(lines[2:]))
 
 for worker in workers:
-    pending_accounts = set()
+    accounts = set()
 
     for msg in messages.inbox(worker):
-        if msg.to.startswith("CX1"):
-            pending_accounts.discard(msg.to)
-        elif msg.poster.startswith("CX1"):
-            pending_accounts.add(msg.poster)
-        else:
-            m = re.search(r"\bCX1\w*", msg.body)
-            if m:
-                pending_accounts.add(m.group())
+        m = re.search(r"\bCX1\w*", f"{msg.poster} {msg.body}")
+        if m:
+            accounts.add(m.group())
 
-    for account in pending_accounts:
+    for account in accounts:
         text = ""
         dashes = ""
         for msg in messages.archive(worker):
             if (any(account in s for s in [msg.body, msg.to, msg.poster]) or msg.poster == "Chief"):
                 t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
-                text += f"{dashes}{t}\nTo: {msg.to}\nFrom: {msg.poster}\n{msg.body}\n"
+                text += f"{dashes}{t}\nFrom: {msg.poster}\nTo: {msg.to}\n{msg.body}\n"
                 dashes = "----------------------------\n"
 
         if text != "":
