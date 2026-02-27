@@ -20,7 +20,7 @@ for worker in ["Hal", "Billing"]:
         elif msg.poster.startswith("CX1"):
             pending_accounts.add(msg.poster)
         else:
-            m = re.search(r"\bCX1\w*", s)
+            m = re.search(r"\bCX1\w*", msg.body)
             if m:
                 pending_accounts.add(m.group())
 
@@ -28,9 +28,9 @@ for worker in ["Hal", "Billing"]:
         text = ""
         dashes = ""
         for msg in messages.mine(worker):
-            if (any(account in s for s in [msg.text, msg.to, msg.poster]) or msg.poster == "Chief"):
+            if (any(account in s for s in [msg.body, msg.to, msg.poster]) or msg.poster == "Chief"):
                 t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
-                text += f"{dashes}{t}\nTo: {msg.to}\nFrom: {msg.poster}\n{msg.text}\n"
+                text += f"{dashes}{t}\nTo: {msg.to}\nFrom: {msg.poster}\n{msg.body}\n"
                 dashes = "----------------------------\n"
 
         if text != "":

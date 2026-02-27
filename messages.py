@@ -23,16 +23,16 @@ def mine(me):
             to = msg.parent.name,
             order = order,
             poster = poster,
-            text = msg.read_text(),
+            body = msg.read_text(),
             time = datetime.fromtimestamp(msg.stat().st_mtime)
         )
 
-def post(to, poster, text):
+def post(to, poster, body):
     box = messages / to
     box.mkdir(parents = True, exist_ok = True)
     last = messages / "last"
     order = (int(last.read_text()) if last.exists() else 10000) + 1
-    (box / f"{order}-{poster}").write_text(text)
+    (box / f"{order}-{poster}").write_text(body)
     last.write_text(str(order))
 
 import sys
