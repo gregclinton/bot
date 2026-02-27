@@ -13,18 +13,15 @@ def post(worker, text):
                 messages.post(to, frm, "\n".join(lines[2:]))
 
 for worker in ["Hal", "Billing"]:
-    pending_accounts = set()
+    is_account = lambda s: s.startswith("CX1")
+    pending = set()
     for msg in messages.mine(worker):
-        if msg.to.startswith("CX1"):
-            pending_accounts.discard(msg.to)
-        elif msg.poster.startswith("CX1"):
-            pending_accounts.add(msg.poster)
-        else:
-            m = re.search(r"\bCX1\w*", msg.body)
-            if m:
-                pending_accounts.add(m.group())
+        if is_account(msg.poster):
+            pending.add(msg.poster)
+        elif is_account(msg.to)
+            pending.discard(msg.to)
 
-    for account in pending_accounts:
+    for account in pending:
         text = ""
         dashes = ""
         for msg in messages.mine(worker):
