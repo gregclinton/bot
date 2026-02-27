@@ -15,7 +15,7 @@ def post(worker, text):
 for worker in ["Hal", "Billing"]:
     pending_accounts = set()
 
-    for msg in messages.mine(worker):
+    for msg in messages.archive(worker):
         if msg.to.startswith("CX1"):
             pending_accounts.discard(msg.to)
         elif msg.poster.startswith("CX1"):
@@ -28,7 +28,7 @@ for worker in ["Hal", "Billing"]:
     for account in pending_accounts:
         text = ""
         dashes = ""
-        for msg in messages.mine(worker):
+        for msg in messages.archive(worker):
             if (any(account in s for s in [msg.body, msg.to, msg.poster]) or msg.poster == "Chief"):
                 t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
                 text += f"{dashes}{t}\nTo: {msg.to}\nFrom: {msg.poster}\n{msg.body}\n"

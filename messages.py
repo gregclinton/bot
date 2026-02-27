@@ -7,7 +7,7 @@ messages = workspace / "messages"
 
 # /workspace/messages/box/order-poster
 
-def mine(me):
+def archive(me):
     msgs = []
     for box in messages.iterdir():
         if box.is_dir():
