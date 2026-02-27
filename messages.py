@@ -7,37 +7,42 @@ messages = workspace / "messages"
 
 # /workspace/messages/box/order-poster
 
+def create_message(msg):
+    order, poster = msg.name.split('-')
+
+    return SimpleNamespace(
+        to = msg.parent.name,
+        poster = poster,
+        body = msg.read_text(),
+        order = int(order),
+        time = datetime.fromtimestamp(msg.stat().st_mtime)
+    )
+
 def archive(owner):
     msgs = []
     for box in messages.iterdir():
         if box.is_dir():
             for msg in box.iterdir():
-                if '-' in box.name and owner in [box.name, msg.name.split('-')[1]]:
+                if '-' in msg.name and owner in [box.name, msg.name.split('-')[1]]:
                     msgs.append(msg)
 
     msgs.sort(key = lambda m: m.name.split('-')[0])
 
     for msg in msgs:
-        order, poster = msg.name.split('-')
-        yield SimpleNamespace(
-            to = msg.parent.name,
-            poster = poster,
-            body = msg.read_text(),
-            order = int(order),
-            time = datetime.fromtimestamp(msg.stat().st_mtime)
-        )
+        yield create_message(msg)
 
 def inbox(owner):
     read = messages / owner / "read"
     start = int(read.read_text()) if read.exists() else 0
     end = start
 
-    for msg in archive(owner):
-        if msg.order > start:
-            end = max([end, msg.order])
-            read.write_text(str(end))
-            yield msg
-
+    for f in (messages / owner).iterdir():
+        if '-' in f.name:
+            msg = create_message(f)
+            if msg.order > start:
+                end = max([end, msg.order])
+                read.write_text(str(end))
+                yield msg
 
 def post(to, poster, body):
     box = messages / to
