@@ -2,13 +2,11 @@ import messages
 import llm
 import re
 
-workers = set()
+workers = []
 
 for msg in messages.archive("Chief"):
-    if msg.to not in ["Chief", "Shell"]
-        workers.add(msg.to)
-
-workers = list(workers)
+    if msg.to not in ["Chief", "Shell"] + workers
+        workers.append(msg.to)
 
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
