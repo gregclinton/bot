@@ -29,7 +29,7 @@ def post(to, poster, body):
     box = messages / to
     box.mkdir(parents = True, exist_ok = True)
     last = messages / "last"
-    order = (int(last.read_text()) if last.exists() else 10000) + 1
+    order = (int(last.read_text()) if last.exists() else 1000000) + 1
     (box / f"{order}-{poster}").write_text(body)
     last.write_text(str(order))
 
