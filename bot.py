@@ -15,9 +15,10 @@ def post(worker, text):
         if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
             frm = lines[0].split(':',1)[1].strip()
             to = lines[1].split(':',1)[1].strip()
+            body = "\n".join(lines[2:]
             if frm == worker:
-                print('\n'.join(lines), '\n\n')
-                messages.post(frm, to, "\n".join(lines[2:]))
+                print(f"From: {frm}\nTo: {to}\n{body}\n")
+                messages.post(frm, to, body))
 
 for msg in messages.inbox("Shell"):
     p = subprocess.run(msg.body, shell = True, capture_output = True, text = True)
