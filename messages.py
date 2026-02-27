@@ -12,7 +12,7 @@ def archive(owner):
     for box in messages.iterdir():
         if box.is_dir():
             for msg in box.iterdir():
-                if owner in [box.name, msg.name.split('-')[1]]:
+                if '-' in box.name and owner in [box.name, msg.name.split('-')[1]]:
                     msgs.append(msg)
 
     msgs.sort(key = lambda m: m.name.split('-')[0])
@@ -23,7 +23,7 @@ def archive(owner):
             to = msg.parent.name,
             poster = poster,
             body = msg.read_text(),
-            order = int(order)
+            order = int(order),
             time = datetime.fromtimestamp(msg.stat().st_mtime)
         )
 
@@ -37,7 +37,7 @@ def inbox(owner):
             end = max([end, msg.order])
             yield msg
 
-    read.write_text(end)
+    read.write_text(str(end))
 
 def post(to, poster, body):
     box = messages / to
