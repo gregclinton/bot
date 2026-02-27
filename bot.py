@@ -1,5 +1,4 @@
 import messages
-import time
 import llm
 import re
 
@@ -13,9 +12,11 @@ def post(worker, text):
                 print('\n'.join(lines), '\n\n')
                 messages.post(to, frm, "\n".join(lines[2:]))
 
-while True:
-    account = "CX143623"
-    for worker in ["Hal", "Billing"]:
+def recent_accounts(worker):
+    return ["CX143623"]
+
+for worker in ["Hal", "Billing"]:
+    for account in recent_accounts(worker):
         text = ""
         dashes = ""
         for msg in messages.mine(worker):
@@ -25,5 +26,3 @@ while True:
                 dashes = "----------------------------\n"
 
         post(worker, llm.invoke("groq", "openai/gpt-oss-20b", "", text))
-
-    time.sleep(1)
