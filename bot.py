@@ -1,6 +1,7 @@
 import messages
 import llm
 import re
+import subprocess
 
 workers = []
 
@@ -17,6 +18,11 @@ def post(worker, text):
             if frm == worker:
                 print('\n'.join(lines), '\n\n')
                 messages.post(frm, to, "\n".join(lines[2:]))
+
+for msg in messages.inbox("Shell"):
+    p = subprocess.run(msg.body, shell = True, capture_output = True, text = True)
+    results = p.stdout + p.stderr
+    messages.post("Shell", msg.poster, f"Your bash shell command:\n{msg.body}\n\nProduced these results:\n{results}")
 
 for worker in workers:
     accounts = set()
