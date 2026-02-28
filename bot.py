@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.post('/messages')
 async def post_message(req: Request):
-    messages.post("CX143623", "Hal", req.body)
+    messages.post("CX143623", "Hal", (await req.body()).decode())
     return { "status": "ok" }
 
 @app.get('/messages')

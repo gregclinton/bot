@@ -1,7 +1,7 @@
 document.title = 'hal';
 
 const chat = {
-    post: text => {
+    post: (name, text) => {
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -12,8 +12,6 @@ const chat = {
         top.append(title);
 
         const bottom = document.createElement('div');
-
-        bottom.id = 'id-' + (1000 + count);
 
         const post = document.createElement('div');
         post.append(top, bottom);
@@ -35,12 +33,6 @@ const chat = {
             headers:  { 'Content-Type': 'text/plain' },
             body: prompt
         })
-
-        await chat.fetch(prompt)
-        .then(res => res.text())
-        .then(text => {
-            chat.post("hal", marked.parse(text));
-        });
     },
 
     clear: () => {
@@ -51,7 +43,7 @@ const chat = {
       fetch('/messages')
         .then(res => res.json())
         .then(list => {
-            list.forEach(text => chat.post(text));
+            list.forEach(text => chat.post("hal", marked.parse(text))));
             setTimeout(chat.run, 1000)
         }
     }
