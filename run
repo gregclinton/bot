@@ -1,5 +1,6 @@
 while true
 do
     python3 workers.py
+    python3 balance.py
     sleep 1
 done
