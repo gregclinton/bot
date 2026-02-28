@@ -5,6 +5,9 @@ if [ -f Dockerfile ]; then
     python3 messages.py post HR Hal         "`cat messages/HR/Hal.md`"
     python3 messages.py post HR Billing     "`cat messages/HR/Billing.md`"
     python3 messages.py post CX143623 Hal   "`cat messages/CX143623/Hal.md`"
+    python3 hal.py
+    python3 billing.py
+    python3 balance.py
     # ----------------- end of edits ------------------
 else
     rm start
