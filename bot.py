@@ -1,3 +1,5 @@
+# python3 bot.py
+
 import messages
 import llm
 import re
@@ -13,13 +15,7 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-workers = []
-
-for msg in messages.archive("Chief"):
-    if msg.to not in (["Chief", "Balance"] + workers):
-        workers.append(msg.to)
-
-for worker in workers:
+for worker in ["Hal", "Billing"]:
     accounts = set()
 
     for msg in messages.inbox(worker):
@@ -38,6 +34,3 @@ for worker in workers:
 
         if text != "":
             post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
-
-for msg in messages.inbox("Balance"):
-    messages.post("Balance", msg.poster, f"{msg.body}\nBalance is $13.55.")
