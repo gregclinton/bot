@@ -31,7 +31,7 @@ const chat = {
         fetch(`/messages`, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: { frm: "CX143623", to: "Hal", body: prompt }
+            body: JSON.stringify({ frm: "CX143623", to: "Hal", body: prompt })
         });
     },
 
