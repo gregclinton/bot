@@ -1,0 +1,7 @@
+while true
+do
+    python3 hal.py
+    python3 billing.py
+    python3 balance.py
+    sleep 1
+done

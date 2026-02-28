@@ -2,15 +2,8 @@ if [ -f Dockerfile ]; then
     # rm Dockerfile
     # ---- edits here don't require a docker build ----
     uvicorn bot:app --host 0.0.0.0 --port 4000
-    rm -rf /tmp/messages
-    python3 messages.py post HR Hal         "`cat messages/HR/Hal.md`"
-    python3 messages.py post HR Billing     "`cat messages/HR/Billing.md`"
-    python3 messages.py post CX143623 Hal   "`cat messages/CX143623/Hal.md`"
-    python3 hal.py
-    python3 billing.py
-    python3 balance.py
-    python3 billing.py
-    python3 hal.py
+    sh setup
+    sh run
     # ----------------- end of edits ------------------
 else
     rm start
