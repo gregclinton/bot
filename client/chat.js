@@ -44,7 +44,7 @@ const chat = {
         .then(res => res.json())
         .then(list => {
             list.forEach(text => chat.post("hal", marked.parse(text)));
-            setTimeout(chat.run, 1000)
+            setTimeout(chat.run, 1000);
         }
     }
 };
