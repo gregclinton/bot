@@ -6,20 +6,8 @@
         <script async src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script async src="chat.js"></script>
         <link rel="stylesheet" href="main.css"/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
         <link rel="icon" href="data:,"/>
     </head>
-
-    <script>
-        setInterval(() => {
-            const show = (name, show) => {
-                document.getElementById(name).hidden = !show;
-            };
-
-            show('send', !chat.waiting && document.getElementById("prompt").value.trim() !== '');
-        }, 200);
-        
-    </script>
 
     <body id="main">
         <div id="chat">
@@ -34,7 +22,5 @@
             </span>
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markup.min.js"></script>
     </body>
 </html>

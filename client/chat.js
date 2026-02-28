@@ -1,17 +1,7 @@
 document.title = 'hal';
 
 const chat = {
-    fetch: async prompt => {
-        return fetch(`/threads/${chat.thread}/messages`, {
-            method: 'POST',
-            headers:  { 'Content-Type': 'text/plain' },
-            body: prompt
-        })
-    },
-
     post: text => {
-        const count = document.getElementById('chat').children.length;
-        const name =  count % 2 ? document.title : 'me';
         const title = document.createElement('span');
 
         title.innerHTML = name;
@@ -31,23 +21,25 @@ const chat = {
         document.getElementById('chat').appendChild(post);
 
         bottom.innerHTML = text;
-        Prism.highlightAll();
 
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
     prompt: async () => {
-        chat.waiting = true;
         const e = document.getElementById("prompt")
         const prompt = e.value.trim()
-        chat.post(prompt);
+        chat.post("me", prompt);
         e.value = '';
+        fetch(`/messages`, {
+            method: 'POST',
+            headers:  { 'Content-Type': 'text/plain' },
+            body: prompt
+        })
 
         await chat.fetch(prompt)
         .then(res => res.text())
         .then(text => {
-            chat.post(marked.parse(text));
-            chat.waiting = false;
+            chat.post("hal", marked.parse(text));
         });
     },
 
@@ -56,6 +48,13 @@ const chat = {
     }
 };
 
-window.onload = async () => {
-    fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
-};
+setInterval(() => {
+    await fetch(`/messages`, {
+        method: 'GET',
+        headers:  { 'Content-Type': 'text/plain' },
+    })
+    .then(res => res.text())
+    .then(text => {
+        chat.post("hal", marked.parse(text));
+    });
+}, 1000)
