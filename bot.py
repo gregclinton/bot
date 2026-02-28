@@ -1,21 +1,16 @@
 from fastapi import FastAPI, Request
-from fastapi.responses import PlainTextResponse
 from fastapi.staticfiles import StaticFiles
 import messages
 
-app = FastAPI(default_response_class=PlainTextResponse)
+app = FastAPI()
 
 @app.post('/messages')
 async def post_message(req: Request):
     messages.post("CX143623", "Hal", req.body)
-    return "OK"
+    return { "status": "ok" }
 
 @app.get('/messages')
 async def get_messages():
-    text = ""
-    for msg in messages.inbox("CX143623"):
-        text = msg.body
-
-    return text
+    return [ msg.body for msg in messages.inbox("CX143623") ]
 
 app.mount("/", StaticFiles(directory = "client", html = True))

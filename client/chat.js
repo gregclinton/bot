@@ -45,16 +45,18 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = '';
+    },
+
+    run: () => {
+      fetch('/messages')
+        .then(res => res.json())
+        .then(list => {
+            list.forEach(text => chat.post(text));
+            setTimeout(chat.run, 1000)
+        }
     }
 };
 
-setInterval(() => {
-    await fetch(`/messages`, {
-        method: 'GET',
-        headers:  { 'Content-Type': 'text/plain' },
-    })
-    .then(res => res.text())
-    .then(text => {
-        chat.post("hal", marked.parse(text));
-    });
-}, 1000)
+window.onload = async () => {
+    chat.run();
+};
