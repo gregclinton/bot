@@ -30,8 +30,8 @@ const chat = {
         e.value = '';
         fetch(`/messages`, {
             method: 'POST',
-            headers:  { 'Content-Type': 'text/plain' },
-            body: prompt
+            headers:  { 'Content-Type': 'application/json' },
+            body: { frm: "CX143623", to: "Hal", body: prompt }
         });
     },
 
@@ -40,7 +40,7 @@ const chat = {
     },
 
     run: () => {
-      fetch('/messages')
+      fetch('/messages/CX143623')
         .then(res => res.json())
         .then(list => {
             list.forEach(text => chat.post("hal", marked.parse(text)));

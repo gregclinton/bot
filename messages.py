@@ -8,11 +8,11 @@ messages = workspace / "messages"
 # /workspace/messages/owner/order-poster
 
 def create_message(msg):
-    order, poster = msg.name.split('-')
+    order, frm = msg.name.split('-')
 
     return SimpleNamespace(
         to = msg.parent.name,
-        poster = poster,
+        frm = frm,
         body = msg.read_text(),
         order = int(order),
         time = datetime.fromtimestamp(msg.stat().st_mtime)
@@ -47,12 +47,12 @@ def inbox(owner):
                 read.write_text(str(end))
                 yield msg
 
-def post(poster, to, body):
+def post(frm, to, body):
     box = messages / to
     box.mkdir(parents = True, exist_ok = True)
     last = messages / "last"
     order = (int(last.read_text()) if last.exists() else 1000000) + 1
-    (box / f"{order}-{poster}").write_text(body)
+    (box / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
 
 import sys
