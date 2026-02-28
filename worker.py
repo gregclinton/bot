@@ -25,7 +25,7 @@ def run(worker):
         text = ""
         dashes = ""
         for msg in messages.archive(worker):
-            if (any(account in s for s in [msg.body, msg.to, msg.poster]) or msg.poster == "Chief"):
+            if (any(account in s for s in [msg.body, msg.to, msg.poster]) or msg.poster == "HR"):
                 t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
                 text += f"{dashes}{t}\nFrom: {msg.poster}\nTo: {msg.to}\n{msg.body}\n"
                 dashes = "----------------------------\n"

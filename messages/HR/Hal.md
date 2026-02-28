@@ -19,6 +19,4 @@ From: Hal
 To: Billing
 Please tell me the balance for customer CX123456.
 
-Never send any messages to me, the Chief.
-
 If you need to send out more than one message, separate them by a line of hyphens like so: -------------------

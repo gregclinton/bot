@@ -8,6 +8,8 @@ if [ -f Dockerfile ]; then
     python3 hal.py
     python3 billing.py
     python3 balance.py
+    python3 billing.py
+    python3 hal.py
     # ----------------- end of edits ------------------
 else
     rm start

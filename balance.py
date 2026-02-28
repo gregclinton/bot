@@ -1,5 +1,3 @@
-# python3 balance.py 
-
 import messages
 
 for msg in messages.inbox("Balance"):
