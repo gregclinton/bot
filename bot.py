@@ -12,6 +12,6 @@ async def post_message(req: Request):
 
 @app.get("/messages/{owner}")
 async def get_messages(owner: str):
-    return [msg.body for msg in messages.inbox(owner)]
+    return list(messages.inbox(owner))
 
 app.mount("/", StaticFiles(directory = "client", html = True))
