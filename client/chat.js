@@ -32,7 +32,7 @@ const chat = {
             method: 'POST',
             headers:  { 'Content-Type': 'text/plain' },
             body: prompt
-        })
+        });
     },
 
     clear: () => {
@@ -45,7 +45,7 @@ const chat = {
         .then(list => {
             list.forEach(text => chat.post("hal", marked.parse(text)));
             setTimeout(chat.run, 1000);
-        }
+        });
     }
 };
 
