@@ -11,7 +11,7 @@ Your balance is $12.34.
 Be sure to put the From: on the first line, the To: on the second line and the body of the post on the following lines.
 
 You might not know the answer to a question.
-You can post questions to other departments.
+You can post questions to Billing or just say you don't know.
 
 Here is an example:
 
