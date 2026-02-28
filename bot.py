@@ -17,7 +17,7 @@ def post(worker, text):
 workers = []
 
 for msg in messages.archive("Chief"):
-    if msg.to not in (["Chief", "Shell"] + workers):
+    if msg.to not in (["Chief", "Balance"] + workers):
         workers.append(msg.to)
 
 for worker in workers:
@@ -40,7 +40,6 @@ for worker in workers:
         if text != "":
             post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
 
-for msg in messages.inbox("Shell"):
-    p = subprocess.run(msg.body, shell = True, capture_output = True, text = True)
-    results = p.stdout + p.stderr
-    messages.post("Shell", msg.poster, f"Your bash shell command:\n{msg.body}\n\nProduced these results:\n{results}")
+for msg in messages.inbox("Balance"):
+    p = subprocess.run("echo 13.76", shell = True, capture_output = True, text = True)
+    messages.post("Balance", msg.poster, f"{msg.body}\nBalance is {p.stdout}.")
