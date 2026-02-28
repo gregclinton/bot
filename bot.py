@@ -1,7 +1,6 @@
 import messages
 import llm
 import re
-import subprocess
 
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
@@ -41,5 +40,4 @@ for worker in workers:
             post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
 
 for msg in messages.inbox("Balance"):
-    p = subprocess.run("echo 13.76", shell = True, capture_output = True, text = True)
-    messages.post("Balance", msg.poster, f"{msg.body}\nBalance is {p.stdout}.")
+    messages.post("Balance", msg.poster, f"{msg.body}\nBalance is $13.55.")
