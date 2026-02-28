@@ -40,10 +40,10 @@ const chat = {
     },
 
     run: () => {
-      fetch('/messages/CX143623')
+        fetch('/messages/CX143623')
         .then(res => res.json())
         .then(list => {
-            list.forEach(msg => chat.post("hal", marked.parse(msg.body)));
+            list.forEach(msg => chat.post(msg.frm, marked.parse(msg.body)));
             setTimeout(chat.run, 1000);
         });
     }
