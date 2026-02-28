@@ -53,15 +53,9 @@ const chat = {
 
     clear: () => {
         document.getElementById('chat').innerHTML = '';
-        fetch(`/threads/${chat.thread}`, { method: 'DELETE' });
-        fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
     }
 };
 
 window.onload = async () => {
     fetch('/threads', { method: 'POST' }).then(res => res.text()).then(id => { chat.thread = id; });
 };
-
-window.addEventListener('unload', () => {
-    fetch(`/threads/${chat.thread}`, { method: 'DELETE' });
-});
