@@ -9,6 +9,12 @@
         <link rel="icon" href="data:,"/>
     </head>
 
+    <script>
+        setInterval(() => {
+            document.getElementById("send").hidden = document.getElementById("prompt").value.trim() === ''
+        }, 200);
+    </script>
+
     <body id="main">
         <div id="chat">
         </div>
