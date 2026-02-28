@@ -41,6 +41,7 @@ for worker in workers:
             post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
 
 for msg in messages.inbox("Shell"):
-    p = subprocess.run(msg.body, shell = True, capture_output = True, text = True)
+    comment, cmd = re.split(r'\n-{4,}\n', msg.body.strip())
+    p = subprocess.run(cmd, shell = True, capture_output = True, text = True)
     results = p.stdout + p.stderr
-    messages.post("Shell", msg.poster, f"Your bash shell command:\n{msg.body}\n\nProduced these results:\n{results}")
+    messages.post("Shell", msg.poster, f"Your omment:\n{comment}\n\n:Your bash shell command:\n{cmd}\n\nProduced these results:\n{results}")
