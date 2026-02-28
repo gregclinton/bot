@@ -13,9 +13,15 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-def run(worker):
-    accounts = set()
+workers = set()
 
+for msg in messages.archive("HR"):
+    if msg.frm == "HR":
+        workers.add(msg.to)
+
+for worker in workers:
+    accounts = set()
+        
     for msg in messages.inbox(worker):
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:

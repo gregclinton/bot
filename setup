@@ -1,4 +1,3 @@
     rm -rf /tmp/messages
     python3 messages.py post HR Hal         "`cat messages/HR/Hal.md`"
     python3 messages.py post HR Billing     "`cat messages/HR/Billing.md`"
-    python3 messages.py post CX143623 Hal   "`cat messages/CX143623/Hal.md`"

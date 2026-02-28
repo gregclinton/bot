@@ -1,1 +1,0 @@
-My name is Fred. How much is my balance?
