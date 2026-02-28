@@ -4,7 +4,7 @@ import messages
 
 app = FastAPI()
 
-@app.post('/messages/')
+@app.post('/messages')
 async def post_message(req: Request):
     msg = await req.json()
     messages.post(msg["from"], msg["to"], msg["body"])
