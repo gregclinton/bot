@@ -17,7 +17,7 @@ def run(worker):
     accounts = set()
 
     for msg in messages.inbox(worker):
-        m = re.search(r"\bCX1\w*", f"{msg.poster} {msg.body}")
+        m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             accounts.add(m.group())
 
@@ -25,9 +25,9 @@ def run(worker):
         text = ""
         dashes = ""
         for msg in messages.archive(worker):
-            if (any(account in s for s in [msg.body, msg.to, msg.poster]) or msg.poster == "HR"):
+            if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == "HR"):
                 t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
-                text += f"{dashes}{t}\nFrom: {msg.poster}\nTo: {msg.to}\n{msg.body}\n"
+                text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
                 dashes = "----------------------------\n"
 
         if text != "":
