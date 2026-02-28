@@ -1,8 +1,10 @@
 if [ -f Dockerfile ]; then
-    rm Dockerfile
+    # rm Dockerfile
     # ---- edits here don't require a docker build ----
-    mv messages /tmp
-    python3 bot.py
+    rm -rf /tmp/messages
+    python3 messages.py post HR Hal         "`cat messages/HR/Hal.md`"
+    python3 messages.py post HR Billing     "`cat messages/HR/Billing.md`"
+    python3 messages.py post CX143623 Hal   "`cat messages/CX143623/Hal.md`"
     # ----------------- end of edits ------------------
 else
     rm start
