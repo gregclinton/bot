@@ -2,6 +2,7 @@ if [ -f Dockerfile ]; then
     # rm Dockerfile
     # ---- edits here donls't require a docker build ----
     sh setup wireless
+    python3 messages.py post CX143623 Hal "Hi, my name is Fred. What is my balance?"
     while true; do python3 workers.py && sleep 1; done &
     uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
