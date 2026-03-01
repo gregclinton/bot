@@ -58,8 +58,8 @@ def post(frm, to, body):
     (box / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
 
-messages_server = os.environ.get("MESSAGES_SERVER", "example.com")
-messages_endpoint = f"https://{messages_server}/messages"
+pod_id = os.environ.get("POD_ID", "ABCD")
+messages_endpoint = f"https://{pod_id}-4000.proxy.runpod.net/messages"
 
 def remote_inbox(owner):
     for msg in requests.get(f"{messages_endpoint}/{owner}").json():
