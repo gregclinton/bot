@@ -1,10 +1,12 @@
-# sh setup wireless remote
-# sh setup wireless messages
-
-rm -rf /tmp/messages
+# sh apps/setup wireless remote
+# sh apps/setup wireless messages
 
 app="$1"
 mode="$2"
+
+if [ "$mode" = "messages" ]; then
+    rm -rf /tmp/messages
+fi
 
 for path in apps/$app/workers/*
 do
