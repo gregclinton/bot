@@ -3,7 +3,7 @@ from types import SimpleNamespace
 from datetime import datetime
 import sys
 
-workspace = Path("/tmp")
+workspace = Path("/workspace" if Path("/workspace").exists() else "/tmp")
 messages = workspace / "messages"
 messages.mkdir(parents = True, exist_ok = True)
 
