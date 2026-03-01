@@ -1,3 +1,9 @@
-    rm -rf /tmp/messages
-    python3 messages.py post HR Hal         "`cat messages/HR/Hal.md`"
-    python3 messages.py post HR Billing     "`cat messages/HR/Billing.md`"
+rm -rf /tmp/messages
+
+app="$1"
+
+for path in apps/$app/*
+do
+  name="$(basename "$path")"
+  python3 messages.py post HR "$name" "$(cat "$path")"
+done
