@@ -1,8 +1,6 @@
 from pathlib import Path
 from types import SimpleNamespace
 from datetime import datetime
-import requests
-import os
 import sys
 
 workspace = Path("/tmp")
@@ -57,16 +55,6 @@ def post(frm, to, body):
     order = (int(last.read_text()) if last.exists() else 1000000) + 1
     (box / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
-
-pod_id = os.environ.get("POD_ID", "ABCD")
-messages_endpoint = f"https://{pod_id}-4000.proxy.runpod.net/messages"
-
-def remote_inbox(owner):
-    for msg in requests.get(f"{messages_endpoint}/{owner}").json():
-        yield SimpleNamespace(**msg)
-
-def remote_post(frm, to, body):
-    requests.post(messages_endpoint, json = { "frm": frm, "to": to, "body": body })
 
 if __name__ == "__main__":
     name = sys.argv[1]
