@@ -2,7 +2,7 @@ rm -rf /tmp/messages
 
 app="$1"
 
-for path in apps/$app/workers*
+for path in apps/$app/workers/*
 do
     name="$(basename "$path")"
     python3 messages.py post Above "$name" "$(cat "$path")"
