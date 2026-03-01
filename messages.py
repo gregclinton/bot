@@ -66,7 +66,7 @@ def remote_inbox(owner):
         yield SimpleNamespace(**msg)
 
 def remote_post(frm, to, body):
-    requests.post(f"{messages_endpoint}/{to}", json = { "frm": frm, "to": to, "body": body })
+    requests.post(messages_endpoint, json = { "frm": frm, "to": to, "body": body })
 
 if __name__ == "__main__":
     name = sys.argv[1]
