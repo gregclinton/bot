@@ -1,6 +1,9 @@
 from pathlib import Path
 from types import SimpleNamespace
 from datetime import datetime
+import requests
+import os
+import sys
 
 workspace = Path("/tmp")
 messages = workspace / "messages"
@@ -11,8 +14,8 @@ def create_message(msg):
     order, frm = msg.name.split('-')
 
     return SimpleNamespace(
-        to = msg.parent.name,
         frm = frm,
+        to = msg.parent.name,
         body = msg.read_text(),
         order = int(order),
         time = datetime.fromtimestamp(msg.stat().st_mtime)
@@ -32,7 +35,7 @@ def archive(owner):
         yield msg
 
 def inbox(owner):
-    folder = messages / owner 
+    folder = messages / owner
     folder.mkdir(parents = True, exist_ok = True)
 
     read = folder / "read"
@@ -55,7 +58,15 @@ def post(frm, to, body):
     (box / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
 
-import sys
+def remote_inbox(owner):
+    for msg in requests.get(f"https://{os.environ.get("MESSAGE_SERVER")}/messages/{owner}").json()
+        yield SimpleNamespace(**msg)
+
+def remote_post(frm, to, body):
+    requests.post(
+        f"https://{os.environ.get("MESSAGE_SERVER")}/messages/{to}",
+        { "frm": frm, "to": to, "body": body }
+    )
 
 if __name__ == "__main__":
     name = sys.argv[1]
