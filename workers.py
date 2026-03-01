@@ -2,6 +2,8 @@ import messages
 import llm
 import re
 
+chief = "Above"
+
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
@@ -15,8 +17,8 @@ def post(worker, text):
 
 workers = set()
 
-for msg in messages.archive("HR"):
-    if msg.frm == "HR":
+for msg in messages.archive(chief):
+    if msg.frm == chief:
         workers.add(msg.to)
 
 for worker in workers:
@@ -31,7 +33,7 @@ for worker in workers:
         text = ""
         dashes = ""
         for msg in messages.archive(worker):
-            if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == "HR"):
+            if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == chief):
                 t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
                 text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
                 dashes = "----------------------------\n"
