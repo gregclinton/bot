@@ -2,7 +2,7 @@ if [ -f Dockerfile ]; then
     # rm Dockerfile
     # ---- edits here donls't require a docker build ----
     sh setup wireless
-    sh run &
+    sh apps/wireless/run &
     uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
 else
