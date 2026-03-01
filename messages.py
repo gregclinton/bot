@@ -5,6 +5,7 @@ import sys
 
 workspace = Path("/tmp")
 messages = workspace / "messages"
+messages.mkdir(parents = True, exist_ok = True)
 
 # /workspace/messages/owner/order-poster
 

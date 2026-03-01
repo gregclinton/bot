@@ -3,8 +3,6 @@ if [ -f Dockerfile ]; then
     # ---- edits here donls't require a docker build ----
     rm -rf apps
     rm README.md setup start .gitignore
-    ls
-    mkdir /tmp/messages
     while true; do python3 workers.py && sleep 1; done &
     uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
