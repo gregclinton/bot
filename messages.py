@@ -58,15 +58,15 @@ def post(frm, to, body):
     (box / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
 
+messages_server = os.environ.get("MESSAGES_SERVER", "example.com")
+messages_endpoint = f"https://{messages_server}/messages"
+
 def remote_inbox(owner):
-    for msg in requests.get(f"https://{os.environ.get("MESSAGE_SERVER")}/messages/{owner}").json()
+    for msg in requests.get(f"{messages_endpoint}/{owner}").json():
         yield SimpleNamespace(**msg)
 
 def remote_post(frm, to, body):
-    requests.post(
-        f"https://{os.environ.get("MESSAGE_SERVER")}/messages/{to}",
-        { "frm": frm, "to": to, "body": body }
-    )
+    requests.post(f"{messages_endpoint}/{to}", { "frm": frm, "to": to, "body": body })
 
 if __name__ == "__main__":
     name = sys.argv[1]
