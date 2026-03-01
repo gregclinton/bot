@@ -4,6 +4,6 @@ app="$1"
 
 for path in apps/$app/*
 do
-  name="$(basename "$path")"
-  python3 messages.py post HR "$name" "$(cat "$path")"
+    name="$(basename "$path")"
+    python3 messages.py post HR "$name" "$(cat "$path")"
 done

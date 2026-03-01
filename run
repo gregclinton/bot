@@ -1,6 +1,6 @@
 while true
 do
     python3 workers.py
-    python3 balance.py
+    python3 tools/wireless/balance.py
     sleep 1
 done
