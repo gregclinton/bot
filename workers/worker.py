@@ -6,8 +6,7 @@ import storage
 import sys
 import messages
 
-if __name__ == "__main__":
-    llm_provider, llm_model, chief, worker = sys.argv[1:]
+llm_provider, llm_model, chief, worker = sys.argv[1:]
 
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
