@@ -8,11 +8,18 @@ import messages
 from types import SimpleNamespace
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
-accounts = storage.root / "workers" / worker
+root = storage.root / "workers" / worker
+accounts = root / "accounts"
+instructions = root / "instructions"
 accounts.mkdir(parents = True, exist_ok = True)
 
+# /storage/workers/worker/accounts/account/order-timestamp-frm-to   body
+# /storage/workers/worker/instructions/order-timestamp-frm   body
+#  we can't allow hyphens in frm or to
+
 def format_msg(msg):
-    return f"{msg.time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n----------------------------\n"
+    time = datetime.fromtimestamp(msg.timestamp)
+    return f"{time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n----------------------------\n"
 
 def post(worker, account, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
@@ -22,28 +29,26 @@ def post(worker, account, text):
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                with (accounts / account).open("a") as f:
-                    msg = SimpleNamespace(frm = frm, to = to, body = body, time = datetime.now().strftime("%A, %B %-d, %-I:%M %P"))
-                    text = format_msg(msg)
-                    f.write(text)
-                    print(text)
+                order = 111111111111111
+                now = 1111111111111111111111
+                (accounts / account / f"{order}-{now}-{frm}-{to}").write_text(body)
                 messages.post(frm, to, body)
 
-for msg in messages.inbox(worker):
-    account = False
-    text = format_msg(msg)
+incoming_accounts = set()
 
+for msg in messages.inbox(worker):
     if msg.frm == chief:
-        for path in accounts.iterdir():
-            with path.open("a") as f:
-                f.write(text)
+        (instructions / f"{msg.order}-{msg.timestamp}-{msg.frm}").write_text(msg.body)
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             account = m.group()
+            incoming_accounts.add(account)
+            (accounts / account / f"{msg.order}-{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
 
-    if account:
-        path = accounts / account
-        with path.open("a") as f:
-            f.write(text)
-        post(worker, account, llm.invoke(llm_provider, llm_model, "", path.read_text()).strip())
+for account in incoming_accounts:
+    # concatenate all instructions and all msgs for this account and pass to llm
+    # datetime.now().strftime("%A, %B %-d, %-I:%M %P")
+    text = ""
+    response = llm.invoke(llm_provider, llm_model, "", text)
+    post(worker, account, response)

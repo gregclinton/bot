@@ -5,7 +5,7 @@ import storage
 messages = storage.root / "messages"
 messages.mkdir(parents = True, exist_ok = True)
 
-# /workspace/messages/owner/order-poster
+# /storage/messages/to/order-frm   body
 
 def msg_from_path(path):
     order, frm = path.name.split('-')
@@ -14,11 +14,11 @@ def msg_from_path(path):
         to = path.parent.name,
         body = path.read_text(),
         order = int(order),
-        time = int(path.stat().st_mtime)
+        timestamp = int(path.stat().st_mtime)
     )
 
-def inbox(owner):
-    folder = messages / owner
+def inbox(to):
+    folder = messages / to
     folder.mkdir(parents = True, exist_ok = True)
 
     read = folder / "read"
@@ -34,9 +34,9 @@ def inbox(owner):
                 yield msg_from_path(path)
 
 def post(frm, to, body):
-    box = messages / to
-    box.mkdir(parents = True, exist_ok = True)
+    folder = messages / to
+    folder.mkdir(parents = True, exist_ok = True)
     last = messages / "last"
     order = (int(last.read_text()) if last.exists() else 1000000) + 1
-    (box / f"{order}-{frm}").write_text(body)
+    (folder / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
