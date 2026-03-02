@@ -22,18 +22,26 @@ And the assistant is smart.
 I'll check this README in for now. I'm just getting started. Stay posted.
 
 ### Why it's cheap
-- discuss runpod prices
-- discuss model prices
-- discuss specialized small workers
+Need to discuss the following
+- runpod prices
+- model prices
+- specialized small workers
 
 ### The way it was (and still is)
-- discuss my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
+Need to discuss the following
+- my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
 
 ### Where can this be used
 
 I started out mentioning mom-and-pop businesses.
 
 ### Running on runpod
+Need to discuss
+- Dockerfile
+- Template
+- Storage
+- GPU vs CPU
+- secrets
 
 ### Introducing workers
 
@@ -46,6 +54,11 @@ sh apps/setup wireless remote
 ### Introducing models
 
 ### Introducing messages
+Need to discuss
+- From, To, Body
+- message threads based on customer accounts
+
+### Introducing apps
 
 ### The context window
 
