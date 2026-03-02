@@ -22,10 +22,13 @@ def run(llm_provider, llm_model, chief, worker):
     accounts.mkdir(parents = True, exist_ok = True)
 
     for msg in messages.inbox(worker):
-        m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
-        if m:
-            account = m.group()
-            (accounts / account).append_text(msg.body)
+        if msg.frm == chief:
+            afasfdsaf
+        else:
+            m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
+            if m:
+                account = m.group()
+                (accounts / account).append_text(msg.body)
     return
 
     for account in accounts:
