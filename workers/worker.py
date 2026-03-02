@@ -12,7 +12,7 @@ accounts = storage.root / "workers" / worker
 accounts.mkdir(parents = True, exist_ok = True)
 
 def format_msg(msg):
-    return f"{msg.time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}{dashes}\n----------------------------\n"
+    return f"{msg.time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n----------------------------\n"
 
 def post(worker, account, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
