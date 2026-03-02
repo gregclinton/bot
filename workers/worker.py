@@ -25,6 +25,7 @@ def post(worker, account, text):
                 with (accounts / account).open("a") as f:
                     msg = SimpleNamespace(frm = frm, to = to, body = body, time = datetime.now().strftime("%A, %B %-d, %-I:%M %P"))
                     text = format_msg(msg)
+                    f.write(text)
                     print(text)
                 messages.post(frm, to, body)
 
