@@ -14,7 +14,7 @@ def msg_from_path(path):
         to = path.parent.name,
         body = path.read_text(),
         order = int(order),
-        time = datetime.fromtimestamp(path.stat().st_mtime).strftime("%A, %B %-d, %-I:%M %P")
+        time = int(path.stat().st_mtime)
     )
 
 def inbox(owner):
