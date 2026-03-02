@@ -1,0 +1,10 @@
+usage="""
+sh post Boss Hal <<EOF
+Hello, Hal. I'm your boss.
+What are you working on?
+EOF
+"""
+
+url=https://"$POD_ID"-4000.proxy.runpod.net/messages
+jq -n --arg body "$3" '{frm:"$1", to:"$2", body:$body}' | curl -X POST "$url" -H "Content-Type: application/json" -d @-
+echo
