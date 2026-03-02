@@ -1,0 +1,7 @@
+# sh wireless/setup
+
+for path in wireless/workers/*
+do
+    name="$(basename "$path")"
+    sh post Above "$name" "$(cat "$path")"
+done

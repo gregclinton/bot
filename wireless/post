@@ -1,7 +1,7 @@
 # the string below shows how to post a multi-line message from Boss to Hal:
 
 usage="""
-sh post Boss Hal <<EOF
+sh apps/post Boss Hal <<EOF
 Hello, Hal. I'm your boss.
 What are you working on?
 EOF
