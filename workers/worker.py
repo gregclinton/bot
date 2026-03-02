@@ -23,7 +23,7 @@ def post(worker, account, text):
             body = "\n".join(lines[2:])
             if frm == worker:
                 with (accounts / account).open("a") as f:
-                    msg = SimpleNamespace(frm = frm, to = to, body = body, time = datetime.now())
+                    msg = SimpleNamespace(frm = frm, to = to, body = body, time = datetime.now().strftime("%A, %B %-d, %-I:%M %P"))
                     text = format_msg(msg)
                     print(text)
                 messages.post(frm, to, body)
