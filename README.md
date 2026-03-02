@@ -38,6 +38,7 @@ I started out mentioning mom-and-pop businesses.
 ### Introducing workers
 
 ```bash
+sh apps/setup wireless remote
 ```
 
 ### Introducing tools
