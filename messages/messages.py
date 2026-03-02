@@ -1,7 +1,6 @@
 from types import SimpleNamespace
 from datetime import datetime
 import storage
-import sys
 
 messages = storage.root / "messages"
 messages.mkdir(parents = True, exist_ok = True)
@@ -42,8 +41,3 @@ def post(frm, to, body):
     order = (int(last.read_text()) if last.exists() else 1000000) + 1
     (box / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
-
-if __name__ == "__main__":
-    name = sys.argv[1]
-    args = sys.argv[2:]
-    {"post": post}[name](*args)

@@ -1,7 +1,9 @@
-import messages
+# python3 workers/worker.py run Above Hal
+
 import llm
 import re
 import storage
+import sys
 
 workers = storage.root / "workers"
 workers.mkdir(parents = True, exist_ok = True)
@@ -19,7 +21,9 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-def run():
+def run(chief, worker):
+    print(chief, worker)
+    return
     workers = set()
 
     for msg in messages.archive(chief):
@@ -46,4 +50,7 @@ def run():
             if text != "":
                 post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
 
-run()
+if __name__ == "__main__":
+    name = sys.argv[1]
+    args = sys.argv[2:]
+    {"run": run}[name](*args)
