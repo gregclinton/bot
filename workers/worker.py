@@ -5,10 +5,16 @@ import re
 import storage
 import sys
 import messages
+from types import SimpleNamespace
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
+accounts = storage.root / "workers" / worker
+accounts.mkdir(parents = True, exist_ok = True)
 
-def post(worker, text):
+def format_msg(msg):
+    return f"{msg.time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}{dashes}\n----------------------------\n"
+
+def post(worker, account, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
         if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
@@ -16,28 +22,27 @@ def post(worker, text):
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                print(f"From: {frm}\nTo: {to}\n{body}\n")
+                with (accounts / account).open("a") as f:
+                    msg = SimpleNamespace(frm = frm, to = to, body = body, time = datetime.now())
+                    text = format_msg(msg)
+                    print(text)
                 messages.post(frm, to, body)
 
-accounts = storage.root / "workers" / worker
-accounts.mkdir(parents = True, exist_ok = True)
-
 for msg in messages.inbox(worker):
-    dashes = "----------------------------\n"
-    format_time = lambda msg: msg.time.strftime("%A, %B %-d, %-I:%M %P")
-    format_msg = lambda msg: f"{dashes}{format_time(msg)}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
     account = False
+    text = format_msg(msg)
 
     if msg.frm == chief:
         for path in accounts.iterdir():
             with (accounts / account).open("a") as f:
-                f.write(format_msg(msg))
+                f.write(text)
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             account = m.group()
-            with (accounts / account).open("a") as f:
-                f.write(format_msg(msg))
 
     if account:
-        post(worker, llm.invoke(llm_provider, llm_model, "", (accounts / account).read_text()).strip())
+        path = accounts / account
+        with path.open("a") as f:
+            f.write(text)
+        post(worker, account, llm.invoke(llm_provider, llm_model, "", path.read_text()).strip())
