@@ -1,4 +1,4 @@
-# python3 workers/worker.py run Above Hal
+# python3 workers/worker.py run groq openai/gpt-oss-120b Above Hal
 
 import llm
 import re
@@ -20,7 +20,7 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-def run(chief, worker):
+def run(llm_provider, llm_model, chief, worker):
     accounts = set()
 
     for msg in messages.inbox(worker):
@@ -40,7 +40,7 @@ def run(chief, worker):
                 dashes = "----------------------------\n"
 
         if text != "":
-            post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
+            post(worker, llm.invoke(llm_provider, llm_model, "", text).strip())
 
 if __name__ == "__main__":
     name = sys.argv[1]
