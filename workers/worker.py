@@ -21,8 +21,6 @@ def post(worker, text):
                 messages.post(frm, to, body)
 
 def run(chief, worker):
-    print(chief, worker)
-
     accounts = set()
 
     for msg in messages.inbox(worker):
