@@ -21,13 +21,11 @@ def run(llm_provider, llm_model, chief, worker):
     accounts = storage.root / "workers" / worker
     accounts.mkdir(parents = True, exist_ok = True)
 
-    accounts = set()
-
     for msg in messages.inbox(worker):
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
-            accounts.add(m.group())
-        print(msg.body)
+            account = m.group()
+            (accounts / account).append_text(msg.body)
     return
 
     for account in accounts:
