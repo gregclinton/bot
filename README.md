@@ -37,7 +37,7 @@ I started out mentioning mom-and-pop businesses.
 
 ### Running on runpod
 Need to discuss
-- Dockerfile
+- Dockerfile and docker hub
 - Template
 - Storage
 - GPU vs CPU
