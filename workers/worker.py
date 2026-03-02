@@ -21,7 +21,7 @@ def format_msg(msg):
     time = datetime.fromtimestamp(msg.timestamp)
     return f"{time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n----------------------------\n"
 
-def post(worker, account, text):
+def post(worker, account, order, timestamp, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
         if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
@@ -29,12 +29,12 @@ def post(worker, account, text):
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                order = 111111111111111
-                now = 1111111111111111111111
-                (accounts / account / f"{order}-{now}-{frm}-{to}").write_text(body)
+                (accounts / account / f"{order}-{timestamp}-{frm}-{to}").write_text(body)
                 messages.post(frm, to, body)
 
 incoming_accounts = set()
+order = 0
+timestamp = 0
 
 for msg in messages.inbox(worker):
     if msg.frm == chief:
@@ -45,10 +45,13 @@ for msg in messages.inbox(worker):
             account = m.group()
             incoming_accounts.add(account)
             (accounts / account / f"{msg.order}-{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
+            if msg.order > order:
+                order = msg.order
+                timestamp = msg.timestamp
 
 for account in incoming_accounts:
     # concatenate all instructions and all msgs for this account and pass to llm
     # datetime.now().strftime("%A, %B %-d, %-I:%M %P")
     text = ""
     response = llm.invoke(llm_provider, llm_model, "", text)
-    post(worker, account, response)
+    post(worker, account, order + 1, timestamp, response)
