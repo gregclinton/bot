@@ -23,23 +23,21 @@ accounts = storage.root / "workers" / worker
 accounts.mkdir(parents = True, exist_ok = True)
 
 for msg in messages.inbox(worker):
+    dashes = "----------------------------\n"
+    format_time = lambda msg: msg.time.strftime("%A, %B %-d, %-I:%M %P")
+    format_msg = lambda msg: f"{dashes}{format_time(msg)}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
+    account = False
+
     if msg.frm == chief:
-        print(msg.body)
+        for path in accounts.iterdir():
+            with (accounts / account).open("a") as f:
+                f.write(format_msg(msg))
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             account = m.group()
-            (accounts / account).append_text(msg.body)
-exit(0)
+            with (accounts / account).open("a") as f:
+                f.write(format_msg(msg))
 
-for account in accounts:
-    text = ""
-    dashes = ""
-    for msg in messages.archive(worker):
-        if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == chief):
-            t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
-            text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
-            dashes = "----------------------------\n"
-
-    if text != "":
-        post(worker, llm.invoke(llm_provider, llm_model, "", text).strip())
+    if account:
+        post(worker, llm.invoke(llm_provider, llm_model, "", (accounts / account).read_text()).strip())
