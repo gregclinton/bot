@@ -42,6 +42,7 @@ Need to discuss
 - Storage
 - GPU vs CPU
 - secrets
+- pod id
 
 ### Introducing workers
 
