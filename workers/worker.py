@@ -22,12 +22,6 @@ def post(worker, text):
 
 def run(chief, worker):
     print(chief, worker)
-    return
-    workers = set()
-
-    for msg in messages.archive(chief):
-        if msg.frm == chief:
-            workers.add(msg.to)
 
     accounts = set()
 
@@ -35,6 +29,8 @@ def run(chief, worker):
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             accounts.add(m.group())
+        print(msg.body)
+    return
 
     for account in accounts:
         text = ""

@@ -1,5 +1,6 @@
 import requests
 import os
+from types import SimpleNamespace
 
 pod_id = os.environ.get("POD_ID", "ABCD")
 endpoint = f"https://{pod_id}-4000.proxy.runpod.net/messages"
