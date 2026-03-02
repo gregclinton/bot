@@ -1,12 +1,14 @@
+# sh messages/post Boss Hal "$(cat wireless/workers/Hal)"
+#                              OR
 # the string below shows how to post a multi-line message from Boss to Hal:
 
 usage="""
-sh apps/post Boss Hal <<EOF
+sh messages/post Boss Hal <<EOF
 Hello, Hal. I'm your boss.
 What are you working on?
 EOF
 """
 
 url=https://"$POD_ID"-4000.proxy.runpod.net/messages
-jq -n --arg body "$3" '{frm:"$1", to:"$2", body:$body}' | curl -X POST "$url" -H "Content-Type: application/json" -d @-
+jq -n --arg frm "$1" --arg to "$2" --arg body "$3" '{frm:$frm, to:$to, body:$body}' | curl -X POST "$url" -H "Content-Type: application/json" -d @-
 echo
