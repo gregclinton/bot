@@ -57,7 +57,7 @@ Need to discuss
 ### Introducing workers
 
 ```bash
-sh apps/setup wireless remote
+python3 install.py Hal
 ```
 
 ### Introducing tools
