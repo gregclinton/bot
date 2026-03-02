@@ -56,6 +56,7 @@ sh apps/setup wireless remote
 Need to discuss
 - models (open vs frontier)
 - inference providers
+- API and API keys
 - different models for diferent workers
 
 ### Introducing messages and threads
