@@ -6,9 +6,6 @@ import storage
 import sys
 import messages
 
-workers = storage.root / "workers"
-workers.mkdir(parents = True, exist_ok = True)
-
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
@@ -21,6 +18,9 @@ def post(worker, text):
                 messages.post(frm, to, body)
 
 def run(llm_provider, llm_model, chief, worker):
+    accounts = storage.root / "workers" / worker
+    accounts.mkdir(parents = True, exist_ok = True)
+
     accounts = set()
 
     for msg in messages.inbox(worker):
