@@ -19,30 +19,35 @@ The customer goes to the app and asks about a recent purchase or an upcoming app
 The chat assistant is available 24/7, responds instantly, remembers all past interactions, doesn't make customers repeat themselves and there are no hold times,
 And the assistant is smart.
 
-# Why it's cheap
+I'll check this README in for now. I'm just getting started. Stay posted.
 
-# The way it was (and still is)
+### Why it's cheap
+-- discuss runpod prices
+-- discuss model prices
+-- discuss specialized small workers
 
-# Where can this be used
+### The way it was (and still is)
+-- discuss my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
+
+### Where can this be used
 
 I started out mentioning mom-and-pop businesses.
 
-# Running on runpod
+### Running on runpod
 
-# Introducing workers
+### Introducing workers
 
-# Introducing tools
+### Introducing tools
 
-# Introducting models
+### Introducing models
 
-# Introducing messages
+### Introducing messages
 
-# Go remote
+### The context window
 
-# The chat box
+### Go remote
 
-# Say "no" to code (and "yes" to English or Spanish or whatever)
+### The chat box
 
-#
-
-I'll check this README in for now. I'm just getting started. Stay posted.
+### Say "no" to code (and "yes" to English or Spanish or whatever)
+-- discuss the Claude code and Codex mania
