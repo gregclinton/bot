@@ -22,13 +22,13 @@ And the assistant is smart.
 I'll check this README in for now. I'm just getting started. Stay posted.
 
 ### Why it's cheap
-Need to discuss the following
+Need to discuss
 - runpod prices
 - model prices
 - specialized small workers
 
 ### The way it was (and still is)
-Need to discuss the following
+Need to discuss
 - my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
 
 ### Where can this be used
@@ -52,11 +52,16 @@ sh apps/setup wireless remote
 ### Introducing tools
 
 ### Introducing models
+Need to discuss
+- models (open vs frontier)
+- inference providers
+- different models for diferent workers
 
-### Introducing messages
+### Introducing messages and threads
 Need to discuss
 - From, To, Body
 - message threads based on customer accounts
+- imagine all the advantages a business would have analyzing threads
 
 ### Introducing apps
 
@@ -65,6 +70,12 @@ Need to discuss
 ### Go remote
 
 ### The chat box
+Need to discuss
+- typing vs talking
+- clear the screen
+- it can be like a feed
 
 ### Say "no" to code (and "yes" to English or Spanish or whatever)
-- discuss the Claude code and Codex mania
+Need to discuss
+- the Claude code and Codex mania
+- C vs assembly, Python vs C, English vs Python
