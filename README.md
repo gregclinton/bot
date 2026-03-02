@@ -1,4 +1,4 @@
-# The big picture
+### The big picture
 
 This is a CRM.
 
@@ -45,9 +45,9 @@ I started out mentioning mom-and-pop businesses.
 
 ### The context window
 
-### Go remote
+#### Go remote
 
-### The chat box
+##### The chat box
 
-### Say "no" to code (and "yes" to English or Spanish or whatever)
+###### Say "no" to code (and "yes" to English or Spanish or whatever)
 -- discuss the Claude code and Codex mania
