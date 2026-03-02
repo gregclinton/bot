@@ -6,6 +6,9 @@ import storage
 import sys
 import messages
 
+if __name__ == "__main__":
+    llm_provider, llm_model, chief, worker = sys.argv[1:]
+
 def post(worker, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
@@ -17,33 +20,27 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-def run(llm_provider, llm_model, chief, worker):
-    accounts = storage.root / "workers" / worker
-    accounts.mkdir(parents = True, exist_ok = True)
+accounts = storage.root / "workers" / worker
+accounts.mkdir(parents = True, exist_ok = True)
 
-    for msg in messages.inbox(worker):
-        if msg.frm == chief:
-            afasfdsaf
-        else:
-            m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
-            if m:
-                account = m.group()
-                (accounts / account).append_text(msg.body)
-    return
+for msg in messages.inbox(worker):
+    if msg.frm == chief:
+        print(msg.body)
+    else:
+        m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
+        if m:
+            account = m.group()
+            (accounts / account).append_text(msg.body)
+exit(0)
 
-    for account in accounts:
-        text = ""
-        dashes = ""
-        for msg in messages.archive(worker):
-            if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == chief):
-                t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
-                text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
-                dashes = "----------------------------\n"
+for account in accounts:
+    text = ""
+    dashes = ""
+    for msg in messages.archive(worker):
+        if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == chief):
+            t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
+            text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
+            dashes = "----------------------------\n"
 
-        if text != "":
-            post(worker, llm.invoke(llm_provider, llm_model, "", text).strip())
-
-if __name__ == "__main__":
-    name = sys.argv[1]
-    args = sys.argv[2:]
-    {"run": run}[name](*args)
+    if text != "":
+        post(worker, llm.invoke(llm_provider, llm_model, "", text).strip())
