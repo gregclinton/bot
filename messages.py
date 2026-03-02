@@ -1,37 +1,12 @@
-from pathlib import Path
 from types import SimpleNamespace
 from datetime import datetime
+import storage
 import sys
 
-workspace = Path("/workspace" if Path("/workspace").exists() else "/tmp")
-messages = workspace / "messages"
+messages = storage.root / "messages"
 messages.mkdir(parents = True, exist_ok = True)
 
 # /workspace/messages/owner/order-poster
-
-def create_message(msg):
-    order, frm = msg.name.split('-')
-
-    return SimpleNamespace(
-        frm = frm,
-        to = msg.parent.name,
-        body = msg.read_text(),
-        order = int(order),
-        time = datetime.fromtimestamp(msg.stat().st_mtime)
-    )
-
-def archive(owner):
-    msgs = []
-    for box in messages.iterdir():
-        if box.is_dir():
-            for msg in box.iterdir():
-                if '-' in msg.name and owner in [box.name, msg.name.split('-')[1]]:
-                    msgs.append(create_message(msg))
-
-    msgs.sort(key = lambda msg: msg.order)
-
-    for msg in msgs:
-        yield msg
 
 def inbox(owner):
     folder = messages / owner
@@ -41,10 +16,18 @@ def inbox(owner):
     start = int(read.read_text()) if read.exists() else 0
     end = start
 
-    for f in folder.iterdir():
-        if '-' in f.name:
-            msg = create_message(f)
-            if msg.order > start:
+    for path in folder.iterdir():
+        if '-' in path.name:
+            order, frm = path.name.split('-')
+            if int(order) > start:
+                msg = SimpleNamespace(
+                    frm = frm,
+                    to = path.parent.name,
+                    body = path.read_text(),
+                    order = int(order),
+                    time = datetime.fromtimestamp(path.stat().st_mtime),
+                    path = path
+                )
                 end = max([end, msg.order])
                 read.write_text(str(end))
                 yield msg

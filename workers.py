@@ -1,6 +1,10 @@
 import messages
 import llm
 import re
+import storage
+
+workers = storage.root / "workers"
+workers.mkdir(parents = True, exist_ok = True)
 
 chief = "Above"
 
@@ -15,28 +19,31 @@ def post(worker, text):
                 print(f"From: {frm}\nTo: {to}\n{body}\n")
                 messages.post(frm, to, body)
 
-workers = set()
+def run():
+    workers = set()
 
-for msg in messages.archive(chief):
-    if msg.frm == chief:
-        workers.add(msg.to)
+    for msg in messages.archive(chief):
+        if msg.frm == chief:
+            workers.add(msg.to)
 
-for worker in workers:
-    accounts = set()
-        
-    for msg in messages.inbox(worker):
-        m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
-        if m:
-            accounts.add(m.group())
+    for worker in workers:
+        accounts = set()
 
-    for account in accounts:
-        text = ""
-        dashes = ""
-        for msg in messages.archive(worker):
-            if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == chief):
-                t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
-                text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
-                dashes = "----------------------------\n"
+        for msg in messages.inbox(worker):
+            m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
+            if m:
+                accounts.add(m.group())
 
-        if text != "":
-            post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
+        for account in accounts:
+            text = ""
+            dashes = ""
+            for msg in messages.archive(worker):
+                if (any(account in s for s in [msg.body, msg.to, msg.frm]) or msg.frm == chief):
+                    t = msg.time.strftime("%A, %B %-d, %-I:%M %P")
+                    text += f"{dashes}{t}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n"
+                    dashes = "----------------------------\n"
+
+            if text != "":
+                post(worker, llm.invoke("groq", "openai/gpt-oss-120b", "", text).strip())
+
+run()
