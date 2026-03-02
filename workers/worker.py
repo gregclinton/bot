@@ -35,7 +35,7 @@ for msg in messages.inbox(worker):
 
     if msg.frm == chief:
         for path in accounts.iterdir():
-            with (accounts / account).open("a") as f:
+            with path.open("a") as f:
                 f.write(text)
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
