@@ -31,6 +31,16 @@ Need to discuss
 Need to discuss
 - my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
 
+### The way it should be
+Need to discuss
+- 24 / 7
+- no days off
+- no holds
+- no need to repeat myself
+- no phone trees
+- no bad moods, no bad connections, difficult accents
+- everything is saved
+
 ### Where can this be used
 
 I started out mentioning mom-and-pop businesses.
