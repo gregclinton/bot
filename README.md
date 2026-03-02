@@ -22,12 +22,12 @@ And the assistant is smart.
 I'll check this README in for now. I'm just getting started. Stay posted.
 
 ### Why it's cheap
--- discuss runpod prices
--- discuss model prices
--- discuss specialized small workers
+- discuss runpod prices
+- discuss model prices
+- discuss specialized small workers
 
 ### The way it was (and still is)
--- discuss my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
+- discuss my bad experiences with my wireless carrier, the dmv, the irs, insurance, doctors, etc.
 
 ### Where can this be used
 
@@ -37,6 +37,9 @@ I started out mentioning mom-and-pop businesses.
 
 ### Introducing workers
 
+```bash
+```
+
 ### Introducing tools
 
 ### Introducing models
@@ -45,9 +48,9 @@ I started out mentioning mom-and-pop businesses.
 
 ### The context window
 
-#### Go remote
+### Go remote
 
-##### The chat box
+### The chat box
 
-###### Say "no" to code (and "yes" to English or Spanish or whatever)
--- discuss the Claude code and Codex mania
+#### Say "no" to code (and "yes" to English or Spanish or whatever)
+- discuss the Claude code and Codex mania
