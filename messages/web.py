@@ -14,4 +14,4 @@ async def post_message(req: Request):
 async def get_messages(owner: str):
     return list(messages.inbox(owner))
 
-app.mount("/", StaticFiles(directory = "client", html = True))
+app.mount("/", StaticFiles(directory = "chat", html = True))
