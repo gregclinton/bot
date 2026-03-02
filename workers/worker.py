@@ -1,4 +1,4 @@
-# python3 workers/worker.py run groq openai/gpt-oss-120b Above Hal
+# python3 workers/worker.py groq openai/gpt-oss-120b Above Hal
 
 import llm
 import re
