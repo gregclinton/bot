@@ -53,5 +53,5 @@ sh apps/setup wireless remote
 
 ### The chat box
 
-#### Say "no" to code (and "yes" to English or Spanish or whatever)
+### Say "no" to code (and "yes" to English or Spanish or whatever)
 - discuss the Claude code and Codex mania
