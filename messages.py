@@ -8,6 +8,17 @@ messages.mkdir(parents = True, exist_ok = True)
 
 # /workspace/messages/owner/order-poster
 
+def msg_from_path(path):
+    order, frm = path.name.split('-')
+    return SimpleNamespace(
+        frm = frm,
+        to = path.parent.name,
+        body = path.read_text(),
+        order = int(order),
+        time = datetime.fromtimestamp(path.stat().st_mtime),
+        path = path
+    )
+
 def inbox(owner):
     folder = messages / owner
     folder.mkdir(parents = True, exist_ok = True)
@@ -20,17 +31,9 @@ def inbox(owner):
         if '-' in path.name:
             order, frm = path.name.split('-')
             if int(order) > start:
-                msg = SimpleNamespace(
-                    frm = frm,
-                    to = path.parent.name,
-                    body = path.read_text(),
-                    order = int(order),
-                    time = datetime.fromtimestamp(path.stat().st_mtime),
-                    path = path
-                )
-                end = max([end, msg.order])
+                end = max([end, int(order)])
                 read.write_text(str(end))
-                yield msg
+                yield msg_from_path(path)
 
 def post(frm, to, body):
     box = messages / to
