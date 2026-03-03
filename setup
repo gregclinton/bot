@@ -1,5 +1,8 @@
 # sh setup wireless
 
+curl -X DELETE https://"$RUNPOD_POD_ID"-4000.proxy.runpod.net/messages
+echo
+
 for path in apps/"$1"/workers/*
 do
     name="$(basename "$path")"

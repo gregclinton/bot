@@ -1,5 +1,6 @@
 from types import SimpleNamespace
 import storage
+import shutil
 
 messages = storage.root / "messages"
 messages.mkdir(parents = True, exist_ok = True)
@@ -36,3 +37,7 @@ def post(frm, to, body):
     order = (int(last.read_text()) if last.exists() else 1000000) + 1
     (folder / f"{order}-{frm}").write_text(body)
     last.write_text(str(order))
+
+def delete_all_messages():
+    shutil.rmtree(messages)
+    messages.mkdir(parents = True, exist_ok = True)
