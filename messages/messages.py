@@ -5,17 +5,7 @@ import storage
 messages = storage.root / "messages"
 messages.mkdir(parents = True, exist_ok = True)
 
-# /storage/messages/to/order-frm   body
-
-def msg_from_path(path):
-    order, frm = path.name.split('-')
-    return SimpleNamespace(
-        frm = frm,
-        to = path.parent.name,
-        body = path.read_text(),
-        order = int(order),
-        timestamp = int(path.stat().st_mtime)
-    )
+# messages/to/order-frm   body
 
 def inbox(to):
     folder = messages / to
@@ -31,7 +21,13 @@ def inbox(to):
             if int(order) > start:
                 end = max([end, int(order)])
                 read.write_text(str(end))
-                yield msg_from_path(path)
+                yield SimpleNamespace(
+                    frm = frm,
+                    to = path.parent.name,
+                    body = path.read_text(),
+                    order = int(order),
+                    timestamp = int(path.stat().st_mtime)
+                )
 
 def post(frm, to, body):
     folder = messages / to
