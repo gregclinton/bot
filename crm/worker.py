@@ -21,18 +21,6 @@ instructions.mkdir(parents = True, exist_ok = True)
 # instructions/order-timestamp-frm-fo   body
 #  we can't allow hyphens in frm or to
 
-def post(worker, account, order, timestamp, text):
-    for part in re.split(r'\n-{4,}\n', text.strip()):
-        lines = [l.strip() for l in part.splitlines() if l.strip()]
-        if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
-            frm = lines[0].split(':',1)[1].strip()
-            to = lines[1].split(':',1)[1].strip()
-            body = "\n".join(lines[2:])
-            if frm == worker:
-                print(body)
-                (accounts / account / f"{order}-{timestamp}-{frm}-{to}").write_text(body)
-                messages.post(frm, to, body)
-
 incoming_accounts = set()
 order = 0
 timestamp = 0
@@ -60,5 +48,16 @@ for account in incoming_accounts:
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
+
     response = llm.invoke(llm_provider, llm_model, "", text)
-    post(worker, account, 2 * order + 1, timestamp, response)
+
+    for part in re.split(r'\n-{4,}\n', response.strip()):
+        lines = [l.strip() for l in part.splitlines() if l.strip()]
+        if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
+            frm = lines[0].split(':',1)[1].strip()
+            to = lines[1].split(':',1)[1].strip()
+            body = "\n".join(lines[2:])
+            if frm == worker:
+                print(body)
+                (accounts / account / f"{2 * order + 1}-{timestamp}-{frm}-{to}").write_text(body)
+                messages.post(frm, to, body)
