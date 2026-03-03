@@ -1,4 +1,4 @@
-# sh messages/post Boss Hal "$(cat wireless/workers/Hal)"
+# sh messages/post Boss Hal "$(cat apps/wireless/workers/Hal)"
 #                              OR
 # the string below shows how to post a multi-line message from Boss to Hal:
 
