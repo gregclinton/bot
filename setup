@@ -1,6 +1,6 @@
 # sh setup wireless
 
-for path in "$1"/workers/*
+for path in apps/"$1"/workers/*
 do
     name="$(basename "$path")"
     sh messages/post Above "$name" "$(cat "$path")"
