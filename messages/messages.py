@@ -29,7 +29,7 @@ def inbox(to):
                 )
 
 def post(frm, to, body):
-    print(f"From: {frm}\nTo: {to}\n{body}\n\n")
+    print(f"From: {frm}\nTo: {to}\n{body}\n\n", flush = True)
     folder = messages / to
     folder.mkdir(parents = True, exist_ok = True)
     last = messages / "last"
