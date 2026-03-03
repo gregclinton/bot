@@ -17,8 +17,8 @@ accounts.mkdir(parents = True, exist_ok = True)
 instructions = root / "instructions"
 instructions.mkdir(parents = True, exist_ok = True)
 
-# /storage/crm/worker/accounts/account/order-timestamp-frm-to   body
-# /storage/crm/worker/instructions/order-timestamp-frm-fo   body
+# /storage/workers/worker/accounts/account/order-timestamp-frm-to   body
+# /storage/workers/worker/instructions/order-timestamp-frm-fo   body
 #  we can't allow hyphens in frm or to
 
 def post(worker, account, order, timestamp, text):

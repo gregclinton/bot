@@ -2,7 +2,7 @@ if [ -f Dockerfile ]; then
     rm Dockerfile
     # ---- edits here donls't require a docker build ----
     mv messages/*.py .
-    rm -rf apps workers messages
+    rm -rf apps crm messages
     rm README.md setup start .gitignore
     uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
