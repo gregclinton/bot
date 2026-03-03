@@ -9,16 +9,19 @@ from types import SimpleNamespace
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
 root = storage.root / "workers" / worker
+
 accounts = root / "accounts"
-instructions = root / "instructions"
 accounts.mkdir(parents = True, exist_ok = True)
+
+instructions = root / "instructions"
+instructions.mkdir(parents = True, exist_ok = True)
 
 # /storage/workers/worker/accounts/account/order-timestamp-frm-to   body
 # /storage/workers/worker/instructions/order-timestamp-frm   body
 #  we can't allow hyphens in frm or to
 
 def format_msg(msg):
-    time = datetime.fromtimestamp(msg.timestamp)
+    time = datetime.fromtimestamp(msg.timestamp).strftime("%A, %B %-d, %-I:%M %P")
     return f"{time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n----------------------------\n"
 
 def post(worker, account, order, timestamp, text):
@@ -50,8 +53,7 @@ for msg in messages.inbox(worker):
                 timestamp = msg.timestamp
 
 for account in incoming_accounts:
-    # concatenate all instructions and all msgs for this account and pass to llm
-    # datetime.now().strftime("%A, %B %-d, %-I:%M %P")
+    # sort by order and concatenate all instructions and account msgs for this account and pass to llm
     text = ""
     response = llm.invoke(llm_provider, llm_model, "", text)
     post(worker, account, order + 1, timestamp, response)
