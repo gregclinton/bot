@@ -14,7 +14,6 @@ async def post_message(req: Request):
 async def get_messages(owner: str):
     return list(messages.inbox(owner))
 
-
 @app.delete("/messages") # for now, for development purposes only
 async def delete_all_messages():
     messages.delete_all_messages()
