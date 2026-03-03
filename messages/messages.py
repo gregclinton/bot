@@ -1,5 +1,4 @@
 from types import SimpleNamespace
-from datetime import datetime
 import storage
 
 messages = storage.root / "messages"
