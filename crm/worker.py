@@ -58,6 +58,5 @@ for account in incoming_accounts:
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                print(body)
                 (accounts / account / f"{2 * order + 1}-{timestamp}-{frm}-{to}").write_text(body)
                 messages.post(frm, to, body)
