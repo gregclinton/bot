@@ -9,6 +9,6 @@ What are you working on?
 EOF
 """
 
-url=https://"$POD_ID"-4000.proxy.runpod.net/messages
+url=https://"$RUNPOD_POD_ID"-4000.proxy.runpod.net/messages
 jq -n --arg frm "$1" --arg to "$2" --arg body "$3" '{frm:$frm, to:$to, body:$body}' | curl -X POST "$url" -H "Content-Type: application/json" -d @-
 echo
