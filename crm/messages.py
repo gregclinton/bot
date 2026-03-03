@@ -12,5 +12,4 @@ def inbox(owner):
         yield SimpleNamespace(**msg)
 
 def post(frm, to, body):
-    print(f"From: {frm}\nTo: {to}\n{body}\n\n")
     requests.post(endpoint, json = { "frm": frm, "to": to, "body": body }).raise_for_status()
