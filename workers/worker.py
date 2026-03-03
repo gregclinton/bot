@@ -17,12 +17,8 @@ instructions = root / "instructions"
 instructions.mkdir(parents = True, exist_ok = True)
 
 # /storage/workers/worker/accounts/account/order-timestamp-frm-to   body
-# /storage/workers/worker/instructions/order-timestamp-frm   body
+# /storage/workers/worker/instructions/order-timestamp-frm-fo   body
 #  we can't allow hyphens in frm or to
-
-def format_msg(msg):
-    time = datetime.fromtimestamp(msg.timestamp).strftime("%A, %B %-d, %-I:%M %P")
-    return f"{time}\nFrom: {msg.frm}\nTo: {msg.to}\n{msg.body}\n----------------------------\n"
 
 def post(worker, account, order, timestamp, text):
     for part in re.split(r'\n-{4,}\n', text.strip()):
@@ -41,7 +37,7 @@ timestamp = 0
 
 for msg in messages.inbox(worker):
     if msg.frm == chief:
-        (instructions / f"{msg.order}-{msg.timestamp}-{msg.frm}").write_text(msg.body)
+        (instructions / f"{msg.order}-{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
@@ -52,8 +48,13 @@ for msg in messages.inbox(worker):
                 order = msg.order
                 timestamp = msg.timestamp
 
+
 for account in incoming_accounts:
-    # sort by order and concatenate all instructions and account msgs for this account and pass to llm
     text = ""
+    for path in sorted([*instructions.iterdir(), *(accounts / account).iterdir()], key = lambda p: p.name.split("-")[0]):
+        order, timestamp, frm, to = path.name.split("-")      
+        time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
+        body = path.read_text()
+        text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
     response = llm.invoke(llm_provider, llm_model, "", text)
     post(worker, account, order + 1, timestamp, response)
