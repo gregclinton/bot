@@ -51,7 +51,6 @@ for msg in messages.inbox(worker):
                 order = msg.order
                 timestamp = msg.timestamp
 
-
 for account in incoming_accounts:
     text = ""
     for path in sorted([*instructions.iterdir(), *(accounts / account).iterdir()], key = lambda p: p.name.split("-")[0]):
