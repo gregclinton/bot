@@ -28,6 +28,7 @@ def post(worker, account, order, timestamp, text):
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
+                print(body)
                 (accounts / account / f"{order}-{timestamp}-{frm}-{to}").write_text(body)
                 messages.post(frm, to, body)
 
@@ -37,13 +38,13 @@ timestamp = 0
 
 for msg in messages.inbox(worker):
     if msg.frm == chief:
-        (instructions / f"{msg.order}-{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
+        (instructions / f"{2 * msg.order}-{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             account = m.group()
             incoming_accounts.add(account)
-            (accounts / account / f"{msg.order}-{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
+            (accounts / account / f"{2 * msg.order}-{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
             if msg.order > order:
                 order = msg.order
                 timestamp = msg.timestamp
@@ -57,4 +58,4 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
     response = llm.invoke(llm_provider, llm_model, "", text)
-    post(worker, account, order + 1, timestamp, response)
+    post(worker, account, 2 * order + 1, timestamp, response)
