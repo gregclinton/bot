@@ -44,6 +44,7 @@ for msg in messages.inbox(worker):
         if m:
             account = m.group()
             incoming_accounts.add(account)
+            (accounts / account).mkdir(parents = True, exist_ok = True)
             (accounts / account / f"{2 * msg.order}-{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
             if msg.order > order:
                 order = msg.order
