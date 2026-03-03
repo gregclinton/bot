@@ -6,6 +6,7 @@ import storage
 import sys
 import messages
 from types import SimpleNamespace
+from datetime import datetime
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
 root = storage.root / "workers" / worker
@@ -55,7 +56,7 @@ for account in incoming_accounts:
     text = ""
     for path in sorted([*instructions.iterdir(), *(accounts / account).iterdir()], key = lambda p: p.name.split("-")[0]):
         order, timestamp, frm, to = path.name.split("-")      
-        time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
+        time = datetime.fromtimestamp(int(timestamp)).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
     response = llm.invoke(llm_provider, llm_model, "", text)
