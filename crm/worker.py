@@ -50,6 +50,7 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
+    print(text)
     response = llm.invoke(llm_provider, llm_model, "", text)
 
     for part in re.split(r'\n-{4,}\n', response.strip()):

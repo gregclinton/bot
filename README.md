@@ -134,6 +134,13 @@ Need to discuss
 ### Go remote
 
 ### The chat box
+
+```text
+From: CX143623
+To: Hal
+Hello. My name is Fred. What is my balance?
+```
+
 Need to discuss
 - typing vs talking
 - clear the screen
