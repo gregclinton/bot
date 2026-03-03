@@ -1,3 +1,5 @@
+# python3 balance.py
+
 import messages
 
 tool = "Balance"
