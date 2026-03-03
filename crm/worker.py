@@ -1,4 +1,5 @@
-# python3 crm/worker.py groq openai/gpt-oss-120b Above Hal
+# cp crm and app tools py files to a folder and cd there
+# python3 worker.py groq openai/gpt-oss-120b Above Hal
 
 import llm
 import re
