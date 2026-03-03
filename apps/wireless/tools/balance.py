@@ -1,7 +1,7 @@
-import remote
+import messages
 
-worker = "Balance"
+tool = "Balance"
 
-for msg in remote.inbox(worker):
+for msg in messages.inbox(tool):
     account = msg.body.split(":")[1].strip()
-    remote.post(worker, msg.frm, f"Account balance for {account} is $13.55.")
+    messages.post(tool, msg.frm, f"Account balance for {account} is $13.55.")
