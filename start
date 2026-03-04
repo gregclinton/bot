@@ -3,7 +3,7 @@ if [ -f Dockerfile ]; then
     # ---- edits here donls't require a docker build ----
     rm -rf apps crm
     rm README.md post start
-    uvicorn messages:app --host 0.0.0.0 --port 4000 --log-level critical
+    uvicorn messages:app --host 0.0.0.0 --port 4000 # --log-level critical
     # ----------------- end of edits ------------------
 else
     rm start
