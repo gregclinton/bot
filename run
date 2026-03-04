@@ -8,11 +8,11 @@ sh post Above Hal "$(cat ~/bot/apps/wireless/workers/Billing)"
 
 while true
 do
-  for worker in Hal Billing
-  do
-    python3 worker.py groq openai/gpt-oss-120b Above "$worker"
-  done
+    for worker in Hal Billing
+    do
+        python3 worker.py groq openai/gpt-oss-120b Above "$worker"
+    done
 
-  python3 balance.py
-  sleep 1
+    python3 balance.py
+    sleep 1
 done
