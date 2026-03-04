@@ -2,7 +2,7 @@ export MESSAGES_URL=https://"$RUNPOD_POD_ID"-4000.proxy.runpod.net/messages
 
 for name in Hal Billing Balance CX143623
 do
-    curl -s $MESSAGES_URL/$name > /dev/null # clear straggler messages
+    curl -s $MESSAGES_URL/"$name" > /dev/null # clear straggler messages
 done
 
 rm -rf workers
@@ -17,6 +17,9 @@ do
         python3 worker.py groq openai/gpt-oss-120b Above "$worker"
     done
 
-    python3 balance.py
+    for tool in balance
+    do
+        python3 $tool.py
+    done
     sleep 1
 done
