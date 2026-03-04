@@ -2,7 +2,6 @@ import llm
 import re
 import sys
 import messages
-from types import SimpleNamespace
 from datetime import datetime
 from pathlib import Path
 
