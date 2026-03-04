@@ -17,34 +17,31 @@ accounts.mkdir(parents = True, exist_ok = True)
 instructions = root / "instructions"
 instructions.mkdir(parents = True, exist_ok = True)
 
-# accounts/account/order-timestamp-frm-to   body
-# instructions/order-timestamp-frm-fo   body
+# accounts/account/timestamp-frm-to   body
+# instructions/timestamp-frm-fo   body
 #  we can't allow hyphens in frm or to
 
 incoming_accounts = set()
-order = 0
-timestamp = 0
+timestamp = 0.0
 
 for msg in messages.inbox(worker):
     if msg.frm == chief:
-        (instructions / f"{2 * msg.order}-{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
+        (instructions / f"{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
     else:
         m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
         if m:
             account = m.group()
             incoming_accounts.add(account)
             (accounts / account).mkdir(parents = True, exist_ok = True)
-            (accounts / account / f"{2 * msg.order}-{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
-            if msg.order > order:
-                order = msg.order
+            (accounts / account / f"{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
+            if msg.timestamp > timestamp:
                 timestamp = msg.timestamp
 
 for account in incoming_accounts:
     text = ""
     for path in sorted([*instructions.iterdir(), *(accounts / account).iterdir()], key = lambda p: p.name.split("-")[0]):
-        order, timestamp, frm, to = path.name.split("-")      
-        order = int(order)
-        timestamp = int(timestamp)
+        timestamp, frm, to = path.name.split("-")      
+        timestamp = float(timestamp)
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
@@ -59,5 +56,5 @@ for account in incoming_accounts:
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                (accounts / account / f"{2 * order + 1}-{timestamp}-{frm}-{to}").write_text(body)
+                (accounts / account / f"{timestamp + 0.0001}-{frm}-{to}").write_text(body)
                 messages.post(frm, to, body)
