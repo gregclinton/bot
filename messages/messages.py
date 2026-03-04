@@ -29,6 +29,4 @@ def post(frm, to, body):
     print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush = True)
     folder = messages / to
     folder.mkdir(parents = True, exist_ok = True)
-    file = folder / frm
-    file.write_text(body)
-    (messages / "last").write_text(str(file.stat().st_mtime))
+    (folder / frm).write_text(body)
