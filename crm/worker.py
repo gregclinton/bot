@@ -1,5 +1,3 @@
-# python3 worker.py groq openai/gpt-oss-120b Above Hal
-
 import llm
 import re
 import sys
