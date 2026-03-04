@@ -1,6 +1,8 @@
-for worker in Hal Billing
+export MESSAGES_URL=https://"$RUNPOD_POD_ID"-4000.proxy.runpod.net/messages
+
+for name in Hal Billing Balance CX143623
 do
-    python3 worker.py x x x "$worker" # clear straggler messages
+    curl -s $MESSAGES_URL/$name > /dev/null # clear straggler messages
 done
 
 rm -rf workers
