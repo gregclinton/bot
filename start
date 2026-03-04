@@ -1,4 +1,4 @@
-repository="https://raw.githubusercontent.com/gregclinton/bot/refs/heads/main/"
+repository="https://raw.githubusercontent.com/gregclinton/bot/refs/heads/main"
 
 if [ -f messages.py ]; then
     # ---- edits here donls't require a docker build ----
