@@ -5,7 +5,7 @@ import messages
 from datetime import datetime
 from pathlib import Path
 
-llm_provider, llm_model, chief, worker = sys.argv[1:]
+llm_provider, llm_model, worker = sys.argv[1:]
 root = Path("workers")
 root.mkdir(exist_ok = True)
 root = root / worker
@@ -25,16 +25,17 @@ incoming_accounts = set()
 timestamp = 0.0
 
 for msg in messages.inbox(worker):
-    if msg.frm == chief:
-        (instructions / f"{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
+    # only account numbers starting with CX14 are real accounts
+    # CX123456, for example, is for instructional purposes only
+    m = re.search(r"\bCX14\w*", f"{msg.frm} {msg.body}")
+    if m:
+        account = m.group()
+        incoming_accounts.add(account)
+        (accounts / account).mkdir(parents = True, exist_ok = True)
+        (accounts / account / f"{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
+        timestamp = msg.timestamp
     else:
-        m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
-        if m:
-            account = m.group()
-            incoming_accounts.add(account)
-            (accounts / account).mkdir(parents = True, exist_ok = True)
-            (accounts / account / f"{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
-            timestamp = msg.timestamp
+        (instructions / f"{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
 
 for account in incoming_accounts:
     text = ""
