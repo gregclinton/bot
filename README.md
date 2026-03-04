@@ -129,9 +129,19 @@ Need to discuss
 
 ### Introducing apps
 
-### The context window
+```bash
+rm -rf /tmp/workers
 
-### Go remote
+while true
+do
+    python3 worker.py groq openai/gpt-oss-120b Above Hal
+    python3 worker.py groq openai/gpt-oss-120b Above Billing
+    python3 balance.py
+    sleep 1
+done
+```
+
+### The context window
 
 ### The chat box
 
