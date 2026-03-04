@@ -141,6 +141,34 @@ do
 done
 ```
 
+```text
+---------------------------
+From: CX143623
+To: Hal
+My name is Fred. What is my balance?
+---------------------------
+From: Hal
+To: Billing
+Please tell me the balance for customer CX143623.
+---------------------------
+From: Billing
+To: Balance
+Account: CX143623
+---------------------------
+From: Balance
+To: Billing
+Account balance for CX143623 is $13.55.
+---------------------------
+From: Billing
+To: Hal
+The balance for customer CX143623 is $13.55.
+---------------------------
+From: Hal
+To: CX143623
+Your balance is $13.55.
+---------------------------
+```
+
 ### The context window
 
 ### The chat box
