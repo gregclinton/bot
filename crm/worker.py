@@ -25,8 +25,8 @@ incoming_accounts = set()
 timestamp = 0.0
 
 for msg in messages.inbox(worker):
-    # only account numbers starting with CX14 are real accounts
-    # CX123456, for example, is for instructional purposes only
+    # only account numbers starting with CX1, but not CX123456, are real accounts
+    # CX123456 is for instructional purposes only
     m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
     if m and ms.group() != CX123456:
         account = m.group()
