@@ -2,7 +2,6 @@
 
 import llm
 import re
-import storage
 import sys
 import messages
 from types import SimpleNamespace
@@ -50,7 +49,7 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
-    response = llm.invoke(llm_provider, llm_model, "", text)
+    response = llm.invoke(llm_provider, llm_model, "", text) if text else ""
 
     for part in re.split(r'\n-{4,}\n', response.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]

@@ -1,0 +1,5 @@
+for worker in Hal Billing
+do
+    # clear all straggler messages
+    python3 worker.py x x x "$worker"
+done
