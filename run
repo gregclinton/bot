@@ -1,5 +1,18 @@
 for worker in Hal Billing
 do
-    # clear all straggler messages
-    python3 worker.py x x x "$worker"
+    python3 worker.py x x x "$worker" # clear straggler messages
+done
+
+sh post Above Hal "$(cat ~/bot/apps/wireless/workers/Hal)"
+sh post Above Hal "$(cat ~/bot/apps/wireless/workers/Billing)"
+
+while true
+do
+  for worker in Hal Billing
+  do
+    python3 worker.py groq openai/gpt-oss-120b Above "$worker"
+  done
+
+  python3 balance.py
+  sleep 1
 done
