@@ -1,16 +1,17 @@
-if [ -f Dockerfile ]; then
-    rm Dockerfile
+repository="https://raw.githubusercontent.com/gregclinton/bot/refs/heads/main/"
+
+if [ -f messages.py ]; then
     # ---- edits here donls't require a docker build ----
-    rm -rf apps crm
-    rm README.md post start
+    mkdir chat
+    curl -s $repository/chat/chat.js -o chat/chat.js
+    curl -s $repository/chat/main.css -o chat/main.css
+    curl -s $repository/chat/index.html -o chat/index.html
+
     uvicorn messages:app --host 0.0.0.0 --port 4000 --log-level critical
     # ----------------- end of edits ------------------
 else
     rm start
-    curl -sL https://github.com/gregclinton/bot/archive/refs/heads/main.zip -o bot.zip
-    unzip -q bot.zip
-    rm bot.zip
-    mv bot-main bot
-    cd bot
+    curl -s $repository/start -o start
+    curl -s $repository/messages.py -o messages.py
     sh start
 fi

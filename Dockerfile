@@ -3,7 +3,7 @@
 # docker push gregclinton/hal
 
 FROM python:3.11-slim
-RUN apt-get update && apt-get install -y curl unzip
+RUN apt-get update && apt-get install -y curl
 RUN pip install requests fastapi uvicorn
 WORKDIR /root
 COPY start .
