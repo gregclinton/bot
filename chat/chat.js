@@ -30,10 +30,10 @@ const chat = {
         const prompt = e.value.trim()
         chat.post("me", prompt);
         e.value = '';
-        fetch('/messages', {
+        fetch('/messages/Hal', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ frm: chat.account, to: "Hal", body: prompt })
+            body: JSON.stringify({ frm: chat.account, body: prompt })
         });
     },
 
