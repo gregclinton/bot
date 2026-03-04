@@ -11,12 +11,13 @@ from pathlib import Path
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
 root = Path("workers") / worker
+root.mkdir(exist_ok = True)
 
 accounts = root / "accounts"
-accounts.mkdir(parents = True, exist_ok = True)
+accounts.mkdir(exist_ok = True)
 
 instructions = root / "instructions"
-instructions.mkdir(parents = True, exist_ok = True)
+instructions.mkdir(exist_ok = True)
 
 # accounts/account/timestamp-frm-to   body
 # instructions/timestamp-frm-fo   body
@@ -47,7 +48,6 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
-    print(text)
     response = llm.invoke(llm_provider, llm_model, "", text)
 
     for part in re.split(r'\n-{4,}\n', response.strip()):
