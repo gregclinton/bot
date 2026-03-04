@@ -28,7 +28,7 @@ async def get_messages(name: str):
                 "frm": path.name,
                 "to": name,
                 "body": path.read_text(),
-                timestamp: path.stat().st_mtime
+                "timestamp": path.stat().st_mtime
             })
 
     return msgs
