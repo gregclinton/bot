@@ -1,6 +1,7 @@
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
+from shutil import rmtree
 
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
@@ -31,6 +32,7 @@ async def get_messages(name: str):
                 "timestamp": path.stat().st_mtime
             })
 
+    rmtree(folder)
     return msgs
 
 app.mount("/", StaticFiles(directory = "chat", html = True))
