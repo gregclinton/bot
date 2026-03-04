@@ -7,9 +7,10 @@ import sys
 import messages
 from types import SimpleNamespace
 from datetime import datetime
+from pathlib import Path
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
-root = storage.root / "workers" / worker
+root = Path("workers") / worker
 
 accounts = root / "accounts"
 accounts.mkdir(parents = True, exist_ok = True)
