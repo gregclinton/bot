@@ -27,8 +27,8 @@ timestamp = 0.0
 for msg in messages.inbox(worker):
     # only account numbers starting with CX14 are real accounts
     # CX123456, for example, is for instructional purposes only
-    m = re.search(r"\bCX14\w*", f"{msg.frm} {msg.body}")
-    if m:
+    m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
+    if m and ms.group() != CX123456:
         account = m.group()
         incoming_accounts.add(account)
         (accounts / account).mkdir(parents = True, exist_ok = True)

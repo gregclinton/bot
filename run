@@ -44,7 +44,7 @@ You will later receive a message with the result.
 
 From: Billing
 To: Balance
-Account: CX345678
+Account: CX123456
 EOF
 
 while true
