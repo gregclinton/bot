@@ -54,9 +54,10 @@ do
         python3 worker.py groq openai/gpt-oss-120b Greg "$worker"
     done
 
-    for tool in balance
+    for tool in Balance Enroll
     do
-        python3 $tool.py
+        python3 tool.py "$tool"
     done
+
     sleep 1
 done
