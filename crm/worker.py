@@ -34,15 +34,14 @@ for msg in messages.inbox(worker):
             incoming_accounts.add(account)
             (accounts / account).mkdir(parents = True, exist_ok = True)
             (accounts / account / f"{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
-            if msg.timestamp > timestamp:
-                timestamp = msg.timestamp
+            timestamp = msg.timestamp
 
 for account in incoming_accounts:
     text = ""
-    for path in sorted([*instructions.iterdir(), *(accounts / account).iterdir()], key = lambda p: p.name.split("-")[0]):
+    all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
+    for path in sorted(all_msgs, key = lambda p: float(p.name.split("-")[0])):
         timestamp, frm, to = path.name.split("-")      
-        timestamp = float(timestamp)
-        time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
+        time = datetime.fromtimestamp(float(timestamp)).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 

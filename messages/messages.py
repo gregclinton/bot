@@ -12,17 +12,14 @@ def inbox(to):
 
     read = folder / "read"
     start = float(read.read_text()) if read.exists() else 0.0
-    end = start
 
-    for path in folder.iterdir():
-        if '-' in path.name:
-            frm = path.name
+    for path in sorted(folder.iterdir(), key = lambda p: p.stat().st_mtime):
+        if path.name != read:
             timestamp = path.stat().st_mtime
             if timestamp > start:
-                end = max([end, start])
-                read.write_text(str(end))
+                read.write_text(str(timestamp))
                 yield SimpleNamespace(
-                    frm = frm,
+                    frm = path.name,
                     to = path.parent.name,
                     body = path.read_text(),
                     timestamp = timestamp
@@ -32,8 +29,6 @@ def post(frm, to, body):
     print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush = True)
     folder = messages / to
     folder.mkdir(parents = True, exist_ok = True)
-    last = messages / "last"
-    timestamp = (float(last.read_text()) if last.exists() else 1000000) + 1
     file = folder / frm
     file.write_text(body)
-    last.write_text(str(file.stat().st_mtime))
+    (messages / "last").write_text(str(file.stat().st_mtime))
