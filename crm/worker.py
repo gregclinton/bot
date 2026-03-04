@@ -10,7 +10,9 @@ from datetime import datetime
 from pathlib import Path
 
 llm_provider, llm_model, chief, worker = sys.argv[1:]
-root = Path("workers") / worker
+root = Path("workers")
+root.mkdir(exist_ok = True)
+root = root / worker
 root.mkdir(exist_ok = True)
 
 accounts = root / "accounts"
@@ -43,7 +45,7 @@ for account in incoming_accounts:
     all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("-")[0])):
         timestamp, frm, to = path.name.split("-")
-        timestamp = float(timestamp)     
+        timestamp = float(timestamp)
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
