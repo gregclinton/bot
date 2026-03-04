@@ -11,7 +11,7 @@ app = FastAPI()
 async def post_message(req: Request, name: str):
     folder = messages / name
     msg = await req.json()
-    frm, body = msg["frm"], name, msg["body"]
+    frm, body = msg["frm"], msg["body"]
     print(f"From: {frm}\nTo: {name}\n{body}\n---------------------------\n", flush = True)
     folder.mkdir(exist_ok = True)
     (folder / frm).write_text(body)
