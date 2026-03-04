@@ -14,7 +14,7 @@ def inbox(to):
     start = float(read.read_text()) if read.exists() else 0.0
 
     for path in sorted(folder.iterdir(), key = lambda p: p.stat().st_mtime):
-        if path.name != read:
+        if path.name != "read":
             timestamp = path.stat().st_mtime
             if timestamp > start:
                 read.write_text(str(timestamp))
