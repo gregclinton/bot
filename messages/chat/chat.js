@@ -3,8 +3,6 @@ document.title = 'hal';
 const chat = {
     account: 'CX143623',
 
-    correspondent: "Hal",
-
     post: (name, text) => {
         const title = document.createElement('span');
 
@@ -32,7 +30,7 @@ const chat = {
         const prompt = e.value.trim()
         chat.post("me", prompt);
         e.value = '';
-        fetch(`/messages/${chat.correspondent}`, {
+        fetch('/messages/Hal', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ frm: chat.account, body: prompt })
@@ -47,7 +45,6 @@ const chat = {
         fetch(`/messages/${chat.account}`)
         .then(res => res.json())
         .then(list => {
-            chat.correspondent = msg.frm;
             list.forEach(msg => chat.post(msg.frm, marked.parse(msg.body)));
             setTimeout(chat.run, 1000);
         });
