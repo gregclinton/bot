@@ -9,9 +9,8 @@ messages.mkdir(exist_ok = True)
 app = FastAPI()
 
 @app.post("/messages")
-async def post_message():
+async def post_message(req: Request):
     msg = await req.json()
-    print(msg, flush=True)
     frm, to, body = msg["from"], msg["to"], msg["body"]
     folder = messages / to
     folder.mkdir(exist_ok = True)
