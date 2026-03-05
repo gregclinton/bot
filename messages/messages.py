@@ -26,7 +26,7 @@ async def get_messages(name: str):
     if folder.exists():
         for path in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime):
             msgs.append({
-                "frm": path.name,
+                "from": path.name,
                 "to": name,
                 "body": path.read_text(),
                 "timestamp": path.stat().st_mtime
