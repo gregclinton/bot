@@ -11,7 +11,7 @@ app = FastAPI()
 from fastapi import Query
 
 @app.post("/messages")
-async def post_message(frm: str = Query(..., alias = "from"), to: str, body: str):
+async def post_message(frm: str = Query(..., alias = "from"), to: str = Query(...), body: str = Query(...)):
     folder = messages / to
     print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush=True)
     folder.mkdir(exist_ok = True)
