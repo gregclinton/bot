@@ -24,17 +24,18 @@ instructions.mkdir(exist_ok = True)
 incoming_accounts = set()
 
 for msg in messages.inbox(worker):
-    last_timestamp = msg.timestamp
+    frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
+    last_timestamp = timestamp
     # only account numbers starting with CX1, but not CX123456, are real accounts
     # CX123456 is for instructional purposes only
-    m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
+    m = re.search(r"\bCX1\w*", f"{frm} {body}")
     if m and m.group() != "CX123456":
         account = m.group()
         incoming_accounts.add(account)
         (accounts / account).mkdir(parents = True, exist_ok = True)
-        (accounts / account / f"{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
+        (accounts / account / f"{timestamp}-{frm}-{to}").write_text(body)
     else:
-        (instructions / f"{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
+        (instructions / f"{timestamp}-{frm}-{worker}").write_text(body)
 
 for account in incoming_accounts:
     text = ""

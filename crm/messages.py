@@ -1,13 +1,11 @@
 import requests
 import os
-from types import SimpleNamespace
 
 endpoint = os.environ.get("MESSAGES_URL")
 
 def inbox(owner):
-    res = requests.get(f"{endpoint}/{owner}")
-    for msg in res.json():
-        yield SimpleNamespace(**msg)
+    for msg in requests.get(f"{endpoint}/{owner}").json():
+        yield msg
 
 def post(frm, to, body):
     requests.post(endpoint, json = { "from": frm, "to": to, "body": body })
