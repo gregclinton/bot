@@ -1,13 +1,22 @@
-for path in ~/bot/apps/"$1"/workers/*
+source=~/bot
+apps=$source/apps
+
+for path in $apps/"$1"/workers/*
 do
     name="$(basename "$path")"
-    echo $name
     curl -s $MESSAGES_URL/"$name" > /dev/null # clear leftover messages
-    cat "$path" | sh ~/bot/apps/post Above "$name"
+    cat "$path" | sh $apps/post Greg "$name"
 done
-exit
 
+for path in $apps/"$1"/tools/*
+do
+    cp $path .
+done
+
+cp $source/crm/*.py .
 rm -rf workers
+ls
+exit
 
 while true
 do
