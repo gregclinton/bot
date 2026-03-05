@@ -10,7 +10,7 @@ app = FastAPI()
 
 @app.post("/messages")
 async def post_message(req: Request):
-    return "ok"
+    return "success"
     msg = await req.json()
     frm, to, body = msg["from"], msg["to"], msg["body"]
     folder = messages / to
