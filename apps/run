@@ -9,7 +9,7 @@ for path in $apps/"$app"/workers/*
 do
     name="$(basename "$path")"
     curl -s $MESSAGES_URL/"$name" > /dev/null # clear leftover messages
-    cat "$path" | sh $apps/post Greg "$name"
+    cat "$path" | sh $source/messages/post Greg "$name"
 done
 
 cp $apps/"$app"/tools/* .
