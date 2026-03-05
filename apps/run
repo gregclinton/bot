@@ -24,7 +24,7 @@ do
         python3 worker.py groq openai/gpt-oss-120b $worker
     done
 
-    for tool in $app/tools/*
+    for path in $app/tools/*
     do
         tool=$(basename $path)
         python3 tool.py $tool
