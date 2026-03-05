@@ -8,8 +8,6 @@ messages.mkdir(exist_ok = True)
 
 app = FastAPI()
 
-from fastapi import Query
-
 @app.post("/messages")
 async def post_message():
     msg = await req.json()
