@@ -30,10 +30,10 @@ const chat = {
         const prompt = e.value.trim()
         chat.post("me", prompt);
         e.value = '';
-        fetch('/messages/Hal', {
+        fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ frm: chat.account, body: prompt })
+            body: JSON.stringify({ from: chat.account, to: "Hal", body: prompt })
         });
     },
 
@@ -42,10 +42,10 @@ const chat = {
     },
 
     run: () => {
-        fetch(`/messages/${chat.account}`)
+        fetch(`/messages?name=${chat.account}`)
         .then(res => res.json())
         .then(list => {
-            list.forEach(msg => chat.post(msg.frm, marked.parse(msg.body)));
+            list.forEach(msg => chat.post(msg.from, marked.parse(msg.body)));
             setTimeout(chat.run, 1000);
         });
     }
