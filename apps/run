@@ -20,13 +20,13 @@ while true
 do
     for path in $apps/"$app"/workers/*
     do
-        name="$(basename "$path")"
+        worker="$(basename "$path")"
         python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
     for path in $apps/"$app"/tools/*
     do
-        name="$(basename "$path")"
+        tool="$(basename "$path")"
         python3 tool.py "$tool"
     done
 
