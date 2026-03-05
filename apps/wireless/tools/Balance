@@ -1,2 +1,10 @@
-echo $1
-echo 12.37
+args=$1
+account=${args#*:}
+account="${account#"${account%%[![:space:]]*}"}"
+account="${account%"${account##*[![:space:]]}"}"
+
+# toy example -- here we would call code to calculate account's balance 
+# balance=$(sh calc_balance $account)
+balance=12.37 
+
+echo "The balance for $account is \$$balance."
