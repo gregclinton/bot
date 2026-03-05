@@ -1,6 +1,6 @@
-# sh post Boss Hal "$(cat apps/wireless/workers/Hal)"
-#                              OR
-# the string below shows how to post a multi-line message from Boss to Hal:
+# cat apps/wireless/workers/Hal | sh post Boss Hal
+#                       OR
+# pass body to post with here document as show below
 
 usage="""
 sh post Boss Hal <<EOF
@@ -9,6 +9,7 @@ What are you working on?
 EOF
 """
 
+body=$(cat)
 url=$MESSAGES_URL/$2
-jq -n --arg frm "$1" --arg body "$3" '{frm:$frm, body:$body}' | curl -X POST "$url" -H "Content-Type: application/json" -d @-
+jq -n --arg frm "$1" --arg body "$body" '{frm:$frm, body:$body}' | curl -X POST "$url" -H "Content-Type: application/json" -d @-
 echo
