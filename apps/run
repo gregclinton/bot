@@ -2,8 +2,7 @@
 # sh ~/bot/apps/run wireless
 
 source=~/bot
-apps=$source/apps
-app=$apps/$1
+app=$source/apps/$1
 
 for path in $app/workers/*
 do
