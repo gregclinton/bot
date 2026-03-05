@@ -11,4 +11,5 @@ EOF
 
 body=$(cat)
 url=$MESSAGES_URL/$2
-jq -n --arg frm "$1" --arg body "$body" '{frm:$frm, body:$body}' | curl -s -X POST "$url" -H "Content-Type: application/json" -d @- > /dev/null
+jq -n --arg frm "$1" --arg body "$body" '{frm:$frm, body:$body}' |
+curl -s -X POST "$url" -H "Content-Type: application/json" -d @- > /dev/null
