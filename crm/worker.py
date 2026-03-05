@@ -22,9 +22,10 @@ instructions.mkdir(exist_ok = True)
 #  we can't allow hyphens in frm or to
 
 incoming_accounts = set()
-timestamp = 0.0
+last_timestamp = 0.0
 
 for msg in messages.inbox(worker):
+    last_timestamp = msg.timestamp
     # only account numbers starting with CX1, but not CX123456, are real accounts
     # CX123456 is for instructional purposes only
     m = re.search(r"\bCX1\w*", f"{msg.frm} {msg.body}")
@@ -33,7 +34,6 @@ for msg in messages.inbox(worker):
         incoming_accounts.add(account)
         (accounts / account).mkdir(parents = True, exist_ok = True)
         (accounts / account / f"{msg.timestamp}-{msg.frm}-{msg.to}").write_text(msg.body)
-        timestamp = msg.timestamp
     else:
         (instructions / f"{msg.timestamp}-{msg.frm}-{worker}").write_text(msg.body)
 
@@ -56,5 +56,5 @@ for account in incoming_accounts:
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                (accounts / account / f"{timestamp + 0.0001}-{frm}-{to}").write_text(body)
+                (accounts / account / f"{last_timestamp + 0.0001}-{frm}-{to}").write_text(body)
                 messages.post(frm, to, body)
