@@ -2,7 +2,8 @@ import sys
 import messages
 import subprocess
 
-tool = sys.argv[1:]
+tool = sys.argv[1]
+print(tool)
 
 for msg in messages.inbox(tool):
     # will run a script with tool name
