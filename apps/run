@@ -1,3 +1,6 @@
+# cd ~/app
+# sh ~/bot/apps/run wireless
+
 source=~/bot
 apps=$source/apps
 
@@ -10,23 +13,23 @@ done
 
 for path in $apps/"$1"/tools/*
 do
-    cp $path .
+    cp "$path" .
 done
 
 cp $source/crm/*.py .
 rm -rf workers
-ls
-exit
 
 while true
 do
-    for worker in Hal Billing
+    for path in $apps/"$1"/workers/*
     do
+        name="$(basename "$path")"
         python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
-    for tool in Balance Enroll
+    for path in $apps/"$1"/tools/*
     do
+        name="$(basename "$path")"
         python3 tool.py "$tool"
     done
 
