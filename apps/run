@@ -11,11 +11,7 @@ do
     cat "$path" | sh $apps/post Greg "$name"
 done
 
-for path in $apps/"$1"/tools/*
-do
-    cp "$path" .
-done
-
+cp $apps/"$1"/tools/* .
 cp $source/crm/*.py .
 rm -rf workers
 
