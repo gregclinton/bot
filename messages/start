@@ -7,7 +7,7 @@ if [ -f messages.py ]; then
     curl -s $messages/chat/main.css -o chat/main.css
     curl -s $messages/chat/index.html -o chat/index.html
     curl -s $messages/messages.py -o messages.py
-    uvicorn messages:app --host 0.0.0.0 --port 4000 --log-level critical
+    uvicorn messages:app --host 0.0.0.0 --port 4000 # --log-level critical
     # ----------------- end of edits ------------------
 else
     rm start
