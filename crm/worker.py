@@ -32,10 +32,10 @@ for msg in messages.inbox(worker):
     if m and m.group() != "CX123456":
         account = m.group()
         incoming_accounts.add(account)
-        (accounts / account).mkdir(parents = True, exist_ok = True)
+        (accounts / account).mkdir(exist_ok = True)
         (accounts / account / f"{timestamp}-{frm}-{to}").write_text(body)
     else:
-        (instructions / f"{timestamp}-{frm}-{worker}").write_text(body)
+        (instructions / f"{timestamp}-{frm}-{to}").write_text(body)
 
 for account in incoming_accounts:
     text = ""
