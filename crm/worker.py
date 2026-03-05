@@ -17,9 +17,8 @@ accounts.mkdir(exist_ok = True)
 instructions = root / "instructions"
 instructions.mkdir(exist_ok = True)
 
-# accounts/account/timestamp-frm-to   body
-# instructions/timestamp-frm-fo   body
-#  we can't allow hyphens in frm or to
+# accounts/account/timestamp|frm|to   body
+# instructions/timestamp|frm|fo   body
 
 incoming_accounts = set()
 
@@ -33,7 +32,7 @@ for msg in messages.inbox(worker):
         account = m.group()
         incoming_accounts.add(account)
         (accounts / account).mkdir(exist_ok = True)
-        (accounts / account / f"{timestamp}-{frm}-{to}").write_text(body)
+        (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
     else:
         (instructions / f"{timestamp}-{frm}-{to}").write_text(body)
 
@@ -41,7 +40,7 @@ for account in incoming_accounts:
     text = ""
     all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("-")[0])):
-        timestamp, frm, to = path.name.split("-")
+        timestamp, frm, to = path.name.split("|")
         timestamp = float(timestamp)
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
@@ -56,5 +55,5 @@ for account in incoming_accounts:
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                (accounts / account / f"{last_timestamp + 0.0001}-{frm}-{to}").write_text(body)
+                (accounts / account / f"{last_timestamp + 0.0001}|{frm}|{to}").write_text(body)
                 messages.post(frm, to, body)
