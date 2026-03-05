@@ -1,5 +1,5 @@
 from pathlib import Path
-from fastapi import FastAPI, Request, Query
+from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from shutil import rmtree
 
