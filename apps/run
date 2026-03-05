@@ -1,29 +1,30 @@
 # cd ~/app
 # sh ~/bot/apps/run wireless
 
+app="$1"
 source=~/bot
 apps=$source/apps
 
-for path in $apps/"$1"/workers/*
+for path in $apps/"$app"/workers/*
 do
     name="$(basename "$path")"
     curl -s $MESSAGES_URL/"$name" > /dev/null # clear leftover messages
     cat "$path" | sh $apps/post Greg "$name"
 done
 
-cp $apps/"$1"/tools/* .
+cp $apps/"$app"/tools/* .
 cp $source/crm/*.py .
 rm -rf workers
 
 while true
 do
-    for path in $apps/"$1"/workers/*
+    for path in $apps/"$app"/workers/*
     do
         name="$(basename "$path")"
         python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
-    for path in $apps/"$1"/tools/*
+    for path in $apps/"$app"/tools/*
     do
         name="$(basename "$path")"
         python3 tool.py "$tool"
