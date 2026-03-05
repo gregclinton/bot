@@ -1,7 +1,5 @@
 args=$1
 account=${args#*:}
-account="${account#"${account%%[![:space:]]*}"}"
-account="${account%"${account##*[![:space:]]}"}"
 
 # toy example -- here we would call code to calculate account's balance 
 # balance=$(sh calc_balance $account)
