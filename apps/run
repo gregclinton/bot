@@ -9,7 +9,7 @@ for path in $app/workers/*
 do
     worker=$(basename $path)
     curl -s $MESSAGES_URL/$worker > /dev/null # clear leftover messages
-    cat "$path" | sh $source/messages/post Greg $worker
+    cat $path | sh $source/messages/post Greg $worker
 done
 
 cp $source/crm/*.py .
