@@ -22,7 +22,6 @@ instructions.mkdir(exist_ok = True)
 #  we can't allow hyphens in frm or to
 
 incoming_accounts = set()
-last_timestamp = 0.0
 
 for msg in messages.inbox(worker):
     last_timestamp = msg.timestamp
