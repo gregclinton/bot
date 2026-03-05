@@ -6,9 +6,8 @@ endpoint = os.environ.get("MESSAGES_URL")
 
 def inbox(owner):
     res = requests.get(f"{endpoint}/{owner}")
-    res.raise_for_status()
     for msg in res.json():
         yield SimpleNamespace(**msg)
 
 def post(frm, to, body):
-    requests.post(f"{endpoint}/{to}", json = { "frm": frm, "body": body }).raise_for_status()
+    requests.post(f"{endpoint}/{to}", json = { "frm": frm, "body": body })
