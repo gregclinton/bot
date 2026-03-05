@@ -31,9 +31,8 @@ async def get_messages(name: str):
                 "body": path.read_text(),
                 "timestamp": path.stat().st_mtime
             })
-
-    if folder.exists():
         rmtree(folder)
+
     return msgs
 
 app.mount("/", StaticFiles(directory = "chat", html = True))
