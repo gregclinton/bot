@@ -1,5 +1,5 @@
 from pathlib import Path
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Query
 from fastapi.staticfiles import StaticFiles
 from shutil import rmtree
 
@@ -8,23 +8,23 @@ messages.mkdir(exist_ok = True)
 
 app = FastAPI()
 
-@app.post("/messages/{name}")
-async def post_message(req: Request, name: str):
-    folder = messages / name
-    msg = await req.json()
-    frm, body = msg["frm"], msg["body"]
-    print(f"From: {frm}\nTo: {name}\n{body}\n---------------------------\n", flush = True)
+from fastapi import Query
+
+@app.post("/messages")
+async def post_message(frm: str = Query(..., alias = "from"), to: str, body: str):
+    folder = messages / to
+    print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush=True)
     folder.mkdir(exist_ok = True)
     (folder / frm).write_text(body)
-    return { "status": "ok" }
+    return {"status": "ok"}
 
-@app.get("/messages/{name}")
+@app.get("/messages")
 async def get_messages(name: str):
     folder = messages / name
     msgs = []
 
     if folder.exists():
-        for path in sorted(folder.iterdir(), key = lambda p: p.stat().st_mtime):
+        for path in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime):
             msgs.append({
                 "frm": path.name,
                 "to": name,
