@@ -12,6 +12,6 @@ if [ -f messages.py ]; then
 else
     rm start
     curl -s $repository/start -o start
-    curl -s $repository/messages.py -o messages.py
+    curl -s $repository/messages/messages.py -o messages.py
     sh start
 fi

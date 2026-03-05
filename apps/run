@@ -1,5 +1,3 @@
-export MESSAGES_URL=https://"$RUNPOD_POD_ID"-4000.proxy.runpod.net/messages
-
 for name in Hal Billing Balance CX143623
 do
     curl -s $MESSAGES_URL/"$name" > /dev/null # clear straggler messages
