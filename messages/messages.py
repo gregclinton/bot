@@ -18,7 +18,7 @@ async def post_message(req: Request):
     print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush=True)
     return {"status": "ok"}
 
-@app.get("/messages")
+@app.get("/messages/{name}")
 async def get_messages(name: str):
     folder = messages / name
     msgs = []

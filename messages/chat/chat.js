@@ -2,6 +2,7 @@ document.title = 'hal';
 
 const chat = {
     account: 'CX143623',
+    correspondent: 'Hal',
 
     post: (name, text) => {
         const title = document.createElement('span');
@@ -33,7 +34,7 @@ const chat = {
         fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ from: chat.account, to: "Hal", body: prompt })
+            body: JSON.stringify({ from: chat.account, to: chat.correspondent, body: prompt })
         });
     },
 
@@ -42,7 +43,7 @@ const chat = {
     },
 
     run: () => {
-        fetch(`/messages?name=${chat.account}`)
+        fetch(`/messages/${chat.account}`)
         .then(res => res.json())
         .then(list => {
             list.forEach(msg => chat.post(msg.from, marked.parse(msg.body)));

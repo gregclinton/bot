@@ -2,12 +2,12 @@
 # sh ~/bot/apps/run wireless
 
 source=~/bot
-app=$source/apps/$1
+app=$source/apps/"$1"
 
-for path in $app/workers/*
+for path in "$app"/workers/*
 do
-    worker=$(basename $path)
-    curl -s $MESSAGES_URL?name=$worker > /dev/null # clear leftover messages
+    worker=$(basename "$path")
+    curl -s "$MESSAGES_URL/$worker" > /dev/null # clear leftover messages
     cat $path | sh $source/messages/post Greg $worker
 done
 
@@ -17,16 +17,16 @@ rm -rf workers
 
 while true
 do
-    for path in $app/workers/*
+    for path in "$app"/workers/*
     do
-        worker=$(basename $path)
-        python3 worker.py groq openai/gpt-oss-120b $worker
+        worker=$(basename "$path")
+        python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
     for path in $app/tools/*
     do
-        tool=$(basename $path)
-        python3 tool.py $tool
+        tool=$(basename "$path")
+        python3 tool.py "$tool"
     done
 
     sleep 1
