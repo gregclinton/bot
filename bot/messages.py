@@ -7,6 +7,7 @@ endpoint = os.environ.get("MESSAGES_URL")
 def inbox(owner):
     if owner == "Hal":
         for msg in telegram.inbox():
+            print(msg)
             yield msg
 
     res = requests.get(f"{endpoint}/{owner}")
