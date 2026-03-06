@@ -21,6 +21,6 @@ def inbox(owner):
 
 def post(frm, to, body):
     if to.startswith("CX1"):
-        telegram.post(to[3:], body)
+        telegram.post(int(to[3:]), body)
     else:
         requests.post(endpoint, json = { "from": frm, "to": to, "body": body })

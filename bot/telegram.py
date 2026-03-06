@@ -19,7 +19,7 @@ def inbox():
         body = message["text"]
         if body[0] != "/":
             yield {
-                "from": f"CX1{frm}",
+                "from": frm,
                 "to": "Hal",
                 "body": body,
                 "timestamp": message["date"]
