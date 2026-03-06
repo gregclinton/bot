@@ -11,7 +11,7 @@ do
     cat "$path" | sh "$source"/messages/post Greg $worker
 done
 
-cp "$source"/crm/*.py .
+cp "$source"/bot/*.py .
 cp "$app"/tools/* .
 rm -rf workers
 
