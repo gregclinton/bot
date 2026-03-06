@@ -7,7 +7,6 @@ endpoint = os.environ.get("MESSAGES_URL")
 def inbox(owner):
     if owner == "Hal":
         for msg in telegram.inbox():
-            print(msg)
             yield msg
 
     res = requests.get(f"{endpoint}/{owner}")
@@ -20,7 +19,6 @@ def inbox(owner):
 
 def post(frm, to, body):
     if to.startswith("CX1"):
-        print(to)
-#        telegram.post(body)
+        telegram.post(body)
     else:
         requests.post(endpoint, json = { "from": frm, "to": to, "body": body })
