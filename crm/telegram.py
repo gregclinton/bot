@@ -2,6 +2,7 @@ import requests
 import os
 import time
 
+# https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
 endpoint = f"https://api.telegram.org/bot{token}"
 offset = 0
