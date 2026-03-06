@@ -23,5 +23,5 @@ def inbox():
             "timestamp": message["date"]
         }
 
-def post(to, body):
+def post(body):
     requests.post(f"{endpoint}/sendMessage", json = { "chat_id": chat_id, "text": body })
