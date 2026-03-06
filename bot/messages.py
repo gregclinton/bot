@@ -11,7 +11,7 @@ def inbox(owner):
     if owner == "Hal":
         for msg in telegram.inbox():
             frm = msg["from"]
-            msg["from"] = f"CX1{frm}"
+            msg["from"] = f"TLG{frm}"
             log(msg["from"], msg["to"], msg["body"])
             yield msg
 
@@ -25,7 +25,7 @@ def inbox(owner):
 
 def post(frm, to, body):
     log(frm, to, body)
-    if to.startswith("CX1"):
+    if to.startswith("TLG"):
         telegram.post(int(to[3:]), body)
     else:
         requests.post(endpoint, json = { "from": frm, "to": to, "body": body })

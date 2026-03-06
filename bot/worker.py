@@ -25,10 +25,10 @@ incoming_accounts = set()
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
     last_timestamp = timestamp
-    # only account numbers starting with CX1, but not CX123456, are real accounts
-    # CX123456 is for instructional purposes only
-    m = re.search(r"\bCX1\w*", f"{frm} {body}")
-    if m and m.group() != "CX123456":
+    # only account numbers starting with TLG, but not TLG23456, are real accounts
+    # TLG23456 is for instructional purposes only
+    m = re.search(r"\bTLG\w*", f"{frm} {body}")
+    if m and m.group() != "TLG23456":
         account = m.group()
         incoming_accounts.add(account)
         (accounts / account).mkdir(exist_ok = True)
