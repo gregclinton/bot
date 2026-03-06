@@ -14,7 +14,6 @@ async def post_message(req: Request):
     folder = messages / to
     folder.mkdir(exist_ok = True)
     (folder / frm).write_text(body)
-    print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush=True)
     return "ok"
 
 @app.get("/messages/{name}")
