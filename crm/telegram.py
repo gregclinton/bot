@@ -10,5 +10,6 @@ while True:
     res = requests.get(f"{endpoint}/getUpdates", params = { "offset": offset }).json()
     for update in res["result"]:
         offset = update["update_id"] + 1
-    print(update)
+        print(update["message"]["text"])
+        print(update)
     time.sleep(1)
