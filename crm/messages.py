@@ -4,13 +4,12 @@ import os
 endpoint = os.environ.get("MESSAGES_URL")
 
 def inbox(owner):
-    r = requests.get(f"{endpoint}/{owner}")
-    if r.ok:
+    res = requests.get(f"{endpoint}/{owner}")
+    if res.ok:
         try:
-            for msg in r.json():
+            for msg in res.json():
                 yield msg
         except ValueError:
-            print("ouch")
             pass
 
 def post(frm, to, body):
