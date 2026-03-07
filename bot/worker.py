@@ -24,7 +24,7 @@ incoming_accounts = set()
 last_timestamp = 0
 
 def post(worker, frm, to, body):
-    if frm and to and body and frm == worker:
+    if frm == worker and to and body:
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
         messages.post(frm, to, body)
 
