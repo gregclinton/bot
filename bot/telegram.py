@@ -1,7 +1,6 @@
 import requests
 import os
 from pathlib import Path
-import json
 
 # https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
