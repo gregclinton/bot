@@ -21,6 +21,13 @@ instructions.mkdir(exist_ok = True)
 # instructions/timestamp|frm|fo   body
 
 incoming_accounts = set()
+last_timestamp = 0
+
+def post(worker, frm, to, body):
+    print
+    if frm and to and body and frm == worker:
+        (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
+        messages.post(frm, to, body)
 
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
@@ -44,14 +51,18 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
-    response = llm.invoke(llm_provider, llm_model, "", text) if text else ""
+    response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
+    frm = to = body = ""
 
-    for part in re.split(r'\n-{3,}\n', response.strip()):
-        lines = [l.strip() for l in part.splitlines() if l.strip()]
-        if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
-            frm = lines[0].split(':',1)[1].strip()
-            to = lines[1].split(':',1)[1].strip()
-            body = "\n".join(lines[2:])
-            if frm == worker:
-                (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
-                messages.post(frm, to, body)
+    for line in response.splitlines():
+        if line.startswith("From:"):
+            frm = line.split(':')[1].strip()
+        elif line.startswith("To:"):
+            to = line.split(':')[1].strip()
+        elif line.startswith("---"):
+            post(worker, frm, to, body)
+            frm = to = body = ""
+        else:
+            body += f"{line}\n"
+
+    post(worker, frm, to, body)
