@@ -1,4 +1,3 @@
-import requests
 import telegram
 from pathlib import Path
 from shutil import rmtree
