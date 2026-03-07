@@ -5,7 +5,6 @@ import sys
 
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
-order = int(Path("order").read_text())
 
 def log(frm, to, body):
     print(f"From: {frm}\nTo: {to}\n{body}\n\n---------------------------\n", flush = True)
@@ -32,8 +31,9 @@ def post(frm, to, body):
     else:
         folder = messages / to
         folder.mkdir(exist_ok = True)
+        order = int(open("order").read())
         (folder / f"{order}|{frm}").write_text(body)
-        order += 1
+        open("file.txt","w").write(str(order + 1))
 
 if __name__ == "__main__":
     frm, to, body = sys.argv[1:4]
