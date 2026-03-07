@@ -21,6 +21,7 @@ do
     printf "\n\n---------------------------\n\n"
 done
 
+stty -icanon min 0 time 0
 while true
 do
     for path in "$app"/workers/*
@@ -35,6 +36,7 @@ do
         python3 tool.py "$tool"
     done
 
-    read -t 0.1 -n 1 k && break
+    c=$(dd bs=1 count=1 2>/dev/null)
+    [ -n "$c" ] && break
     sleep 1
 done
