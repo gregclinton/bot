@@ -35,5 +35,6 @@ do
         python3 tool.py "$tool"
     done
 
+    read -t 0.1 -n 1 k && break
     sleep 1
 done

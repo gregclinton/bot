@@ -48,7 +48,7 @@ for account in incoming_accounts:
 
     response = llm.invoke(llm_provider, llm_model, "", text) if text else ""
 
-    for part in re.split(r'\n-{4,}\n', response.strip()):
+    for part in re.split(r'\n-{3,}\n', response.strip()):
         lines = [l.strip() for l in part.splitlines() if l.strip()]
         if len(lines) > 2 and lines[0].startswith('From:') and lines[1].startswith('To:'):
             frm = lines[0].split(':',1)[1].strip()
