@@ -16,7 +16,7 @@ if __name__ == "__main__":
     storage = Path("telegram")
     offset = int(storage.read_text()) if storage.exists() else 0
 
-    res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 50, "offset": offset })
+    res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 30, "offset": offset })
     res.raise_for_status()
     res = res.json()
     for update in res["result"]:
