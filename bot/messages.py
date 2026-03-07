@@ -9,7 +9,7 @@ def log(frm, to, body):
     print(f"From: {frm}\nTo: {to}\n{body}\n\n---------------------------\n", flush = True)
 
 def inbox(name):
-    if name == "Hal":
+    if name == "Hal" and not any(messages.iterdir()):
         for msg in telegram.inbox():
             frm = msg["from"]
             msg["from"] = f"TLG{frm}"

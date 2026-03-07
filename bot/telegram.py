@@ -11,7 +11,8 @@ storage = Path("telegram")
 def inbox():
     offset = int(storage.read_text()) if storage.exists() else 0
 
-    res = requests.get(f"{endpoint}/getUpdates", params = { "offset": offset }).json()
+    print("request")
+    res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 50, "offset": offset }).json()
     for update in res["result"]:
         offset = update["update_id"] + 1
         message = update["message"]
