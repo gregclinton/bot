@@ -1,3 +1,7 @@
+# setup long polling of telegram
+# cd ~/app
+# while true; do python3 telegram.py; done
+
 import requests
 import os
 

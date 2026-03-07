@@ -5,7 +5,7 @@ source=~/bot
 app="$source"/apps/"$1"
 boss=Greg
 
-rm -rf messages workers stop
+rm -rf messages workers
 cp "$source"/bot/*.py .
 cp "$app"/tools/* .
 
@@ -16,12 +16,7 @@ do
     python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
 
-while [ ! -f "stop" ];
-do
-    python3 telegram.py
-done &
-
-while [ ! -f "stop" ];
+while true
 do
     for path in "$app"/workers/*
     do
@@ -36,4 +31,4 @@ do
     done
 
     sleep 0.1
-done &
+done
