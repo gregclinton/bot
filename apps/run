@@ -8,24 +8,21 @@ boss=Greg
 rm -rf messages workers stop
 cp "$source"/bot/*.py .
 cp "$app"/tools/* .
+echo 1000000 > order
 
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
-    folder=messages/"$worker"
-    mkdir -p "$folder"
-    cat "$path" > $folder/"$boss"
-    echo "From: $boss"
-    echo "To: $worker"
-    cat "$path"
-    printf "\n\n---------------------------\n\n"
+    python3 messages.py "$boss" "$worker" "$(cat "$path")"
 done
 
-while [ ! -f "stop" ]; do
+while [ ! -f "stop" ];
+do
     python3 telegram.py
+    sleep 1
 done &
 
-while [ ! -f "stop" ]; do
+while [ ! -f "stop" ];
 do
     for path in "$app"/workers/*
     do
@@ -38,4 +35,6 @@ do
         tool=$(basename "$path")
         python3 tool.py "$tool"
     done
+
+    sleep 1
 done &
