@@ -21,6 +21,8 @@ do
     printf "\n\n---------------------------\n\n"
 done
 
+python3 telegram.py
+
 while true
 do
     for path in "$app"/workers/*
