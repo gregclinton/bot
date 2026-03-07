@@ -55,5 +55,5 @@ for account in incoming_accounts:
             to = lines[1].split(':',1)[1].strip()
             body = "\n".join(lines[2:])
             if frm == worker:
-                (accounts / account / f"{last_timestamp + 0.0001}|{frm}|{to}").write_text(body)
+                (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
                 messages.post(frm, to, body)

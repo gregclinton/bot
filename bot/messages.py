@@ -24,7 +24,7 @@ def inbox(name):
                 "from": path.name,
                 "to": name,
                 "body": path.read_text(),
-                "timestamp": path.stat().st_mtime
+                "timestamp": int(path.stat().st_mtime)
             }
         rmtree(folder)
 
