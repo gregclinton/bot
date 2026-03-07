@@ -1,6 +1,5 @@
 import requests
 import os
-from pathlib import Path
 
 # https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
@@ -13,17 +12,15 @@ def post(to, body):
 if __name__ == "__main__":
     import messages
 
-    storage = Path("telegram")
-    offset = int(storage.read_text()) if storage.exists() else 0
-
+    offset = int(open("offset").read()) if os.path.exists("offset") else 0
     res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 30, "offset": offset })
     res.raise_for_status()
     res = res.json()
     for update in res["result"]:
-        offset = update["update_id"] + 1
+        offset = update["update_id"]
         message = update["message"]
         frm = message["from"]["id"]
         body = message["text"]
         messages.post(f"TLG{frm}", "Hal", body)
 
-    storage.write_text(str(offset))
+    open("offset","w").write(str(offset + 1))
