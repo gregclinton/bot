@@ -23,8 +23,6 @@ def inbox(name):
         rmtree(folder)
 
 def post(frm, to, body):
-    global order
-    
     log(frm, to, body)
     if to.startswith("TLG"):
         telegram.post(int(to[3:]), body)
