@@ -6,7 +6,7 @@ messages = Path("messages")
 messages.mkdir(exist_ok = True)
 
 def log(frm, to, body):
-    print(f"From: {frm}\nTo: {to}\n{body}\n---------------------------\n", flush = True)
+    print(f"From: {frm}\nTo: {to}\n{body}\n\n---------------------------\n", flush = True)
 
 def inbox(name):
     if name == "Hal":

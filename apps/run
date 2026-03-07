@@ -15,6 +15,10 @@ do
     folder=messages/"$worker"
     mkdir -p "$folder"
     cat "$path" > $folder/"$boss"
+    echo "From: $boss"
+    echo "To: $worker"
+    cat "$path"
+    printf "\n\n---------------------------\n\n"
 done
 
 while true
