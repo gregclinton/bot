@@ -14,7 +14,7 @@ def inbox():
     res = requests.get(f"{endpoint}/getUpdates", params = { "offset": offset }).json()
     for update in res["result"]:
         offset = update["update_id"] + 1
-        message = update["message"]``
+        message = update["message"]
         frm = message["from"]["id"]
         body = message["text"]
         if body[0] != "/":

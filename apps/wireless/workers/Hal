@@ -14,6 +14,4 @@ From: Hal
 To: Billing
 Is customer TLG12345678 paid up?
 
-Hal, do not use a Subject: line.
-Just keep it simple as shown above.
-Also, do not include markdown. 
+No Subject: line and no markdown.
