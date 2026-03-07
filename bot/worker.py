@@ -28,7 +28,7 @@ for msg in messages.inbox(worker):
     # only account numbers starting with TLG, but not TLG23456, are real accounts
     # TLG23456 is for instructional purposes only
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
-    if m and m.group() != "TLG23456":
+    if m and m.group() != "TLG12345678":
         account = m.group()
         incoming_accounts.add(account)
         (accounts / account).mkdir(exist_ok = True)
