@@ -13,13 +13,13 @@ echo 1000000 > order
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
-    python3 messages.py "$boss" "$worker" "$(cat "$path")"
+    # call messages.post
+    python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
 
 while [ ! -f "stop" ];
 do
     python3 telegram.py
-    sleep 1
 done &
 
 while [ ! -f "stop" ];
@@ -36,5 +36,5 @@ do
         python3 tool.py "$tool"
     done
 
-    sleep 1
+    sleep 0.1
 done &
