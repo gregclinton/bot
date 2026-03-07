@@ -25,8 +25,6 @@ incoming_accounts = set()
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
     last_timestamp = timestamp
-    # only account numbers starting with TLG, but not TLG23456, are real accounts
-    # TLG23456 is for instructional purposes only
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
     if m and m.group() != "TLG12345678":
         account = m.group()
