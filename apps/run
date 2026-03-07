@@ -3,17 +3,19 @@
 
 source=~/bot
 app="$source"/apps/"$1"
+boss=Greg
+
+rm -rf messages workers
+cp "$source"/bot/*.py .
+cp "$app"/tools/* .
 
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
-    curl -s "$MESSAGES_URL/$worker" > /dev/null # clear leftover messages
-    cat "$path" | sh "$source"/messages/post Greg $worker
+    folder=messages/"$worker"
+    mkdir -p "$folder"
+    cat "$path" > $folder/"$boss"
 done
-
-cp "$source"/bot/*.py .
-cp "$app"/tools/* .
-rm -rf workers
 
 while true
 do
