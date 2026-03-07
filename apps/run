@@ -21,11 +21,11 @@ do
     printf "\n\n---------------------------\n\n"
 done
 
-while [ ! -e "stop" ]; do
+while [ ! -f "stop" ]; do
     python3 telegram.py
 done &
 
-while [ ! -e "stop" ]; do
+while [ ! -f "stop" ]; do
 do
     for path in "$app"/workers/*
     do

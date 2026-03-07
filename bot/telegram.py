@@ -16,16 +16,15 @@ if __name__ == "__main__":
     storage = Path("telegram")
     offset = int(storage.read_text()) if storage.exists() else 0
 
-    while True:
-        print(f"request {offset}")
-        res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 50, "offset": offset })
-        res.raise_for_status()
-        res = res.json()
-        for update in res["result"]:
-            offset = update["update_id"] + 1
-            message = update["message"]
-            frm = message["from"]["id"]
-            body = message["text"]
-            messages.post(f"TLG{frm}", "Hal", body)
+    print(f"request {offset}")
+    res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 50, "offset": offset })
+    res.raise_for_status()
+    res = res.json()
+    for update in res["result"]:
+        offset = update["update_id"] + 1
+        message = update["message"]
+        frm = message["from"]["id"]
+        body = message["text"]
+        messages.post(f"TLG{frm}", "Hal", body)
 
-        storage.write_text(str(offset))
+    storage.write_text(str(offset))
