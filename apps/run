@@ -8,7 +8,6 @@ boss=Greg
 rm -rf messages workers stop
 cp "$source"/bot/*.py .
 cp "$app"/tools/* .
-echo 1000000 > order
 
 for path in "$app"/workers/*
 do
