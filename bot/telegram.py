@@ -18,7 +18,9 @@ if __name__ == "__main__":
 
     while True:
         print(f"request {offset}")
-        res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 50, "offset": offset }).json()
+        res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 50, "offset": offset })
+        res.raise_for_status()
+        res = res.json()
         for update in res["result"]:
             offset = update["update_id"] + 1
             message = update["message"]
