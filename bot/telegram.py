@@ -9,6 +9,7 @@ endpoint = f"https://api.telegram.org/bot{token}"
 storage = Path("telegram")
 
 def inbox():
+    msgs = []
     offset = int(storage.read_text()) if storage.exists() else 0
 
     print("request")
@@ -19,14 +20,15 @@ def inbox():
         frm = message["from"]["id"]
         body = message["text"]
         if body[0] != "/":
-            yield {
+            msgs.append({
                 "from": frm,
                 "to": "Hal",
                 "body": body,
                 "timestamp": int(message["date"])
-            }
+            })
 
     storage.write_text(str(offset))
+    return msgs
 
 
 def post(to, body):

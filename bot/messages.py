@@ -1,6 +1,7 @@
 import telegram
 from pathlib import Path
 from shutil import rmtree
+from threading import Thread
 
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
@@ -8,14 +9,17 @@ messages.mkdir(exist_ok = True)
 def log(frm, to, body):
     print(f"From: {frm}\nTo: {to}\n{body}\n\n---------------------------\n", flush = True)
 
-def inbox(name):
-    if name == "Hal" and not any(messages.iterdir()):
-        for msg in telegram.inbox():
-            frm = msg["from"]
-            msg["from"] = f"TLG{frm}"
-            log(msg["from"], msg["to"], msg["body"])
-            yield msg
+def poll_telegram():
+    while True:
+        try:
+            for msg in telegram.inbox():
+                post(f"TLG{msg['from']}", "Hal", msg["body"])
+        except:
+            pass
 
+Thread(target = poll_telegram, daemon = True).start()
+
+def inbox(name):
     folder = messages / name
 
     if folder.exists():
