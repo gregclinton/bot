@@ -17,9 +17,9 @@ do
 done
 
 while [ -f worker.py ]
-    do python3 telegram.py
-done
-exit
+do
+    python3 telegram.py
+done &
 
 while [ -f worker.py ]
 do
