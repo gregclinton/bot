@@ -1,0 +1,16 @@
+while true
+do
+    for path in messages/workers/*
+    do
+        worker=$(basename "$path")
+        python3 worker.py groq openai/gpt-oss-120b "$worker"
+    done
+
+    for path in "$app"/tools/*
+    do
+        tool=$(basename "$path")
+        python3 tool.py "$tool"
+    done
+
+    sleep 0.1
+done

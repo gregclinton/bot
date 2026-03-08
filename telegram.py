@@ -15,6 +15,7 @@ endpoint = f"https://api.telegram.org/bot{token}"
 
 def post(to, body):
     # except for group chats, chat id is same as user id
+    print(to, body, flush=True)
     requests.post(f"{endpoint}/sendMessage", json = { "chat_id": to, "text": body })
 
 def updates():
