@@ -65,19 +65,22 @@ EOF
 )"
 ```
 
-Export your LLM API keys and telegram BotFather token. Then run your workers.
+Export your LLM API keys and Telegram BotFather token. Then run your workers.
 ```
 export GROQ_API_KEY=ASFJSADFLHHJFLAJDFSAFHASLKHAFLHJ
 export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
 while true; do sh run; sleep 0.1; done
 ```
 
-In another terminal session, poll telegram:
+In another terminal session, poll Telegram:
 
 ```
 export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
 while true; do python3 telegram.py updates; done
 ```
+
+Then, you or a friend go to Telegram and chat with your Bot.
+
 
 Here are the messages:
 
@@ -142,6 +145,12 @@ From: Sales
 To: Hal
 Yes, stores will be open on Labor Day.
 ```
+
+Then, you or a friend go to Telegram and chat with your Bot.
+
+
+Here are the messages:
+
 
 ```
 From: TLG1515151515
