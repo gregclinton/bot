@@ -1,14 +1,12 @@
 while true
 do
-    for path in messages/workers/*
+    for worker in Hal Billing Sales
     do
-        worker=$(basename "$path")
         python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
-    for path in "$app"/tools/*
+    for tool in balance.sh
     do
-        tool=$(basename "$path")
         python3 tool.py "$tool"
     done
 
