@@ -1,5 +1,3 @@
-# while true; do python3 telegram.py; done
-
 import requests
 import os
 import sys
