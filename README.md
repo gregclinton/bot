@@ -1,17 +1,17 @@
-Post instructions to workers:
+Instruct workers:
 
 ```
 sh instruct
 ```
 
-Poll telegram.
+Poll telegram:
 
 ```
 while true; do python3 telegram.py updates; done
 
 ```
 
-Run workers.
+Run workers:
 ```
 while true: sh run; sleep 0.1; done
 ```
