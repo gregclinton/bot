@@ -32,7 +32,7 @@ def updates():
         body = message["text"]
         messages.post(f"TLG{frm}", "Hal", body)
 
-    open("offset","w").write(str(offset + 1))
+    open("offset","w").write(str(offset))
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
