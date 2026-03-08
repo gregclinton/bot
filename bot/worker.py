@@ -4,6 +4,7 @@ import sys
 import messages
 from datetime import datetime
 from pathlib import Path
+import telegram
 
 llm_provider, llm_model, worker = sys.argv[1:]
 root = Path("workers")
@@ -26,11 +27,15 @@ last_timestamp = 0
 def post(worker, frm, to, body):
     if frm == worker and to and body:
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
-        messages.post(frm, to, body)
+        if frm == "Hal" and to.startswith("TLG"):
+            telegram.post(to[3:], body)
+        else
+            messages.post(frm, to, body)
 
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
     last_timestamp = timestamp
+
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
     if m and m.group() != "TLG12345678":
         account = m.group()
