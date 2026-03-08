@@ -1,7 +1,6 @@
 from pathlib import Path
 from shutil import rmtree
 import sys
-from glob import glob
 
 # messages/to/from|order  body
 

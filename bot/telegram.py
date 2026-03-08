@@ -3,7 +3,6 @@ import os
 import sys
 from time import sleep
 import messages
-from glob import glob
 
 # https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
