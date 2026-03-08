@@ -2,6 +2,7 @@ import llm
 import re
 import sys
 import messages
+import instruct
 from datetime import datetime
 from pathlib import Path
 import telegram
@@ -24,19 +25,6 @@ instructions.mkdir(exist_ok = True)
 incoming_accounts = set()
 last_timestamp = 0
 
-def post(worker, frm, to, body):
-    if frm == worker and to and body:
-        body = body.strip()
-        (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
-
-        if to.startswith("TLG") or frm.startswith("TLG"):
-            print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
-
-        if to.startswith("TLG"):
-            if frm == "Hal":
-                telegram.post(to[3:], body)
-        else:
-            messages.post(frm, to, body)
 
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
@@ -61,18 +49,4 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
-    response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
-    frm = to = body = ""
-
-    for line in response.splitlines():
-        if line.startswith("From:"):
-            frm = line.split(':')[1].strip()
-        elif line.startswith("To:"):
-            to = line.split(':')[1].strip()
-        elif line.startswith("---"):
-            post(worker, frm, to, body)
-            frm = to = body = ""
-        else:
-            body += f"{line}\n"
-
-    post(worker, frm, to, body)
+    instruct.runf(llm.invoke(llm_provider, llm_model, "", text).strip() if text else "")
