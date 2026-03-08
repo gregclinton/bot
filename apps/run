@@ -16,8 +16,6 @@ do
     python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
 
-while true; do python3 telegram.py; done
-
 while true
 do
     for path in "$app"/workers/*

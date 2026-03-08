@@ -1,5 +1,5 @@
 import telegram
-from pathlib import Pathkil
+from pathlib import Path
 from shutil import rmtree
 import sys
 
