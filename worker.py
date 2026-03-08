@@ -30,6 +30,7 @@ def post(worker, frm, to, body):
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
         if to.startswith("TLG"):
             if frm == "Hal":
+                print(to, body, flush=True)
                 telegram.post(to[3:], body)
         else:
             messages.post(frm, to, body)
