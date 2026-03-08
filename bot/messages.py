@@ -36,5 +36,4 @@ def post(frm, to, body):
         (folder / f"{frm}|{order + 1:06d}").write_text(body)
 
 if __name__ == "__main__":
-    frm, to, body = sys.argv[1:4]
-    post(frm, to, body)
+    globals()[sys.argv[1]](*sys.argv[2:])
