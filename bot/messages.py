@@ -1,8 +1,7 @@
 import telegram
-from pathlib import Path
+from pathlib import Pathkil
 from shutil import rmtree
 import sys
-import os
 
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
@@ -30,7 +29,7 @@ def post(frm, to, body):
     else:
         folder = messages / to
         folder.mkdir(exist_ok = True)
-        order = int(open("order").read()) if os.path.exists("order") else 1000000
+        order = len(list(folder.iterdir())) + 1000000
         (folder / f"{order}|{frm}").write_text(body)
         open("order","w").write(str(order + 1))
 

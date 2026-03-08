@@ -11,17 +11,14 @@ cp "$app"/tools/* .
 
 for path in "$app"/workers/*
 do
-    worker=$(basename "$path")
+    worker=$(basename "$path")ki
     # call messages.post
     python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
 
-while [ -f worker.py ]
-do
-    python3 telegram.py
-done &
+while true; do python3 telegram.py; done
 
-while [ -f worker.py ]
+while true
 do
     for path in "$app"/workers/*
     do
@@ -36,4 +33,4 @@ do
     done
 
     sleep 0.1
-done &
+done
