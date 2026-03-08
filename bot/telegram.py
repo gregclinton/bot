@@ -18,11 +18,9 @@ endpoint = f"https://api.telegram.org/bot{token}"
 # while true; do python3 telegram.py post; sleep 0.1 done
 def post():
     for path in messages.messages.glob("TLG*"):
-        print(path)
-        if False:
-            for msg in messages.inbox(user):
-                # except for group chats, chat id is same as user id
-                requests.post(f"{endpoint}/sendMessage", json = { "chat_id": msg["to"][3:], "text": msg["body"] })
+        for msg in messages.inbox(path.name):
+            # except for group chats, chat id is same as user id
+            requests.post(f"{endpoint}/sendMessage", json = { "chat_id": msg["to"][3:], "text": msg["body"] })
 
 def updates():
     offset = int(open("offset").read()) if os.path.exists("offset") else 0
