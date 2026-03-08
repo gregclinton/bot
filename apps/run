@@ -5,13 +5,12 @@ source=~/bot
 app="$source"/apps/"$1"
 boss=Greg
 
-rm -r * && cp "$source"/bot/* . && cp "$app"/tools/* .
+rm -rf * && cp "$source"/bot/* . && cp "$app"/tools/* .
 
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
-    # call messages.post
-    python3 messages.py "$boss" "$worker" "$(cat "$path")" 
+    python3 messages.py post "$boss" "$worker" "$(cat "$path")" 
 done
 
 while true
