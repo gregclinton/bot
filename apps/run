@@ -16,11 +16,11 @@ do
     python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
 
-while [ -f worker.py ];
-    do python3 telegram.py;
+while [ -f worker.py ]
+    do python3 telegram.py
 done &
 
-while [ -f worker.py ];
+while [ -f worker.py ]
 do
     for path in "$app"/workers/*
     do
