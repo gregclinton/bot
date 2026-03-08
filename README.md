@@ -1,3 +1,19 @@
+Post a message from Greg to Hal, from a file:
+
+```
+python3 messages.py post Greg Hal "$(cat ~/bot/apps/wireless/workers/Hal)"
+
+```
+Post a message from Greg to Hal inline:
+
+```
+python3 messages.py post Greg Hal "$(cat <<EOF
+Hello
+World
+EOF
+)"
+```
+
 ```
 From: Greg
 To: Hal
