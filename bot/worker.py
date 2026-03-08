@@ -18,7 +18,7 @@ instructions = root / "instructions"
 instructions.mkdir(exist_ok = True)
 
 # accounts/account/timestamp|from|to   body
-# instructions/timestamp|from|fo   body
+#     instructions/timestamp|from|fo   body
 
 incoming_accounts = set()
 last_timestamp = 0
