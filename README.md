@@ -61,7 +61,7 @@ EOF
 )"
 ```
 
-Exprrt your LLM API keys and telegram BotFather token. Then run your workers.
+Export your LLM API keys and telegram BotFather token. Then run your workers.
 ```
 export GROQ_API_KEY=ASFJSADFLHHJFLAJDFSAFHASLKHAFLHJ
 export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
