@@ -7,6 +7,7 @@ token = os.environ.get("TELEGRAM_TOKEN")
 
 if not token:
     print("TELEGRAM_TOKEN not set.", flush = True)
+    sleep 2
     sys.exit()
 
 endpoint = f"https://api.telegram.org/bot{token}"
