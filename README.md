@@ -1,7 +1,7 @@
 Instruct workers with the command below:
 
 ```
-python3 instruct.py === messages.txt
+python3 instruct.py run === messages.txt
 ```
 
 With this messages.txt file:

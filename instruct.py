@@ -15,7 +15,7 @@ def post(worker, frm, to, body):
         else:
             messages.post(frm, to, body)
 
-def run(scissors, text)
+def run(scissors, text):
     frm = to = body = ""
 
     for line in text.splitlines():
