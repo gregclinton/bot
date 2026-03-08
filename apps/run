@@ -5,7 +5,7 @@ source=~/bot
 app="$source"/apps/"$1"
 boss=Greg
 
-rm -r * && cp "$source"/bot/* . && cp "$app"/tools/* . && ls
+rm -r * && cp "$source"/bot/* . && cp "$app"/tools/* .
 
 for path in "$app"/workers/*
 do
