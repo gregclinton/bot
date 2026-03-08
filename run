@@ -1,14 +1,9 @@
-while true
+for worker in Hal Billing Sales
 do
-    for worker in Hal Billing Sales
-    do
-        python3 worker.py groq openai/gpt-oss-120b "$worker"
-    done
+    python3 worker.py groq openai/gpt-oss-120b "$worker"
+done
 
-    for tool in Balance
-    do
-        python3 tool.py "$tool"
-    done
-
-    sleep 0.1
+for tool in Balance
+do
+    python3 tool.py "$tool"
 done

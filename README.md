@@ -1,17 +1,7 @@
-Post a message from Greg to Hal, from a file:
+Post instructions to workers:
 
 ```
-python3 messages.py post Greg Hal "$(cat ~/bot/apps/wireless/workers/Hal)"
-
-```
-Post a message from Greg to Hal inline:
-
-```
-python3 messages.py post Greg Hal "$(cat <<EOF
-Hello
-World
-EOF
-)"
+sh instruct
 ```
 
 Poll telegram.
@@ -19,6 +9,11 @@ Poll telegram.
 ```
 while true; do python3 telegram.py updates; done
 
+```
+
+Run workers.
+```
+while true: sh run; sleep 0.1; done
 ```
 
 ```
