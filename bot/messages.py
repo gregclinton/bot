@@ -4,6 +4,8 @@ from shutil import rmtree
 import sys
 from glob import glob
 
+# messages/to/from|order  body
+
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
 
