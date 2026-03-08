@@ -13,7 +13,7 @@ while true; do python3 telegram.py updates; done
 
 Run workers:
 ```
-while true: sh run; sleep 0.1; done
+while true; do sh run; sleep 0.1; done
 ```
 Here are the messages:
 
