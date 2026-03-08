@@ -2,6 +2,7 @@ import telegram
 from pathlib import Path
 from shutil import rmtree
 import sys
+from glob import glob
 
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
@@ -15,7 +16,7 @@ def inbox(name):
     if folder.exists():
         for path in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime):
             yield {
-                "from": path.name.split("|")[1],
+                "from": path.name.split("|")[0],
                 "to": name,
                 "body": path.read_text(),
                 "timestamp": int(path.stat().st_mtime)
@@ -29,9 +30,8 @@ def post(frm, to, body):
     else:
         folder = messages / to
         folder.mkdir(exist_ok = True)
-        order = len(list(folder.iterdir())) + 1000000
-        (folder / f"{order}|{frm}").write_text(body)
-        open("order","w").write(str(order + 1))
+        order = len(list(folder.glob((folder / frm).name + "*")))
+        (folder / f"{frm}|{order + 1:06d}").write_text(body)
 
 if __name__ == "__main__":
     frm, to, body = sys.argv[1:4]

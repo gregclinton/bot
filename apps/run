@@ -11,7 +11,7 @@ cp "$app"/tools/* .
 
 for path in "$app"/workers/*
 do
-    worker=$(basename "$path")ki
+    worker=$(basename "$path")
     # call messages.post
     python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
