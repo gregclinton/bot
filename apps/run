@@ -16,7 +16,11 @@ do
     python3 messages.py "$boss" "$worker" "$(cat "$path")" 
 done
 
-while true
+while [ -f run ];
+    do python3 telegram.py;
+done &
+
+while [ -f run ];
 do
     for path in "$app"/workers/*
     do
@@ -31,4 +35,4 @@ do
     done
 
     sleep 0.1
-done
+done &

@@ -1,12 +1,14 @@
-# setup long polling of telegram
-# cd ~/app
-# while true; do python3 telegram.py; done
-
 import requests
 import os
+import sys
 
 # https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
+
+if not token:
+    print("TELEGRAM_TOKEN not set.")
+    sys.exit()
+
 endpoint = f"https://api.telegram.org/bot{token}"
 
 def post(to, body):

@@ -1,7 +1,15 @@
 import requests
 import os
+import sys
 
 def invoke(provider, model, sys, user):
+    key_name = f"{provider.upper()}_API_KEY"
+    key = os.environ.get(f"{provider.upper()}_API_KEY)
+
+    if not key:
+        print(f"{key_name} not set."")
+        sys.exit()
+
     res = requests.post(
         f"""https://{({
             "openai": "api.openai.com/v1",
