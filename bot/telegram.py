@@ -1,24 +1,30 @@
 import requests
 import os
 import sys
+from time import sleep
+import messages
+from glob import glob
 
 # https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
 
 if not token:
     print("TELEGRAM_TOKEN not set.", flush = True)
-    sleep 2
+    sleep(2)
     sys.exit()
 
 endpoint = f"https://api.telegram.org/bot{token}"
 
-def post(to, body):
-    # except for group chats, chat id is same as user id
-    requests.post(f"{endpoint}/sendMessage", json = { "chat_id": to, "text": body })
+# while true; do python3 telegram.py post; sleep 0.1 done
+def post():
+    for path in messages.messages.glob("TLG*"):
+        print(path)
+        if False:
+            for msg in messages.inbox(user):
+                # except for group chats, chat id is same as user id
+                requests.post(f"{endpoint}/sendMessage", json = { "chat_id": msg["to"][3:], "text": msg["body"] })
 
 def updates():
-    import messages
-
     offset = int(open("offset").read()) if os.path.exists("offset") else 0
     res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 30, "offset": offset })
     res.raise_for_status()
