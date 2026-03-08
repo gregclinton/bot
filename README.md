@@ -146,9 +146,6 @@ To: Hal
 Yes, stores will be open on Labor Day.
 ```
 
-Then, you or a friend go to Telegram and chat with your Bot.
-
-
 Here are the messages:
 
 
