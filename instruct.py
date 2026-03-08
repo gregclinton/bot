@@ -1,3 +1,5 @@
+import telegram
+
 def post(worker, frm, to, body):
     if frm == worker and to and body:
         body = body.strip()

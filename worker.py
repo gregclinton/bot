@@ -5,7 +5,6 @@ import messages
 import instruct
 from datetime import datetime
 from pathlib import Path
-import telegram
 
 llm_provider, llm_model, worker = sys.argv[1:]
 root = Path("workers")
@@ -24,7 +23,6 @@ instructions.mkdir(exist_ok = True)
 
 incoming_accounts = set()
 last_timestamp = 0
-
 
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
@@ -49,4 +47,4 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
-    instruct.runf(llm.invoke(llm_provider, llm_model, "", text).strip() if text else "")
+    instruct.run(llm.invoke(llm_provider, llm_model, "", text).strip() if text else "")
