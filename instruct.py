@@ -2,7 +2,7 @@ import telegram
 import sys
 
 def post(worker, frm, to, body):
-    if frm == worker and to and body:
+    if frm == worker or worker == "" and to and body:
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
 
@@ -15,7 +15,7 @@ def post(worker, frm, to, body):
         else:
             messages.post(frm, to, body)
 
-def run(scissors, text):
+def run(worker, scissors, text):
     frm = to = body = ""
 
     for line in text.splitlines():
