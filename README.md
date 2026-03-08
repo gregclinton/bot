@@ -72,16 +72,6 @@ export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
 while true; do sh run; sleep 0.1; done
 ```
 
-In another terminal session, poll Telegram:
-
-```
-export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
-while true; do python3 telegram.py updates; done
-```
-
-Then, you or a friend go to Telegram and chat with your Bot.
-
-
 Here are the messages:
 
 ```
@@ -146,8 +136,16 @@ To: Hal
 Yes, stores will be open on Labor Day.
 ```
 
-Here are the messages:
+In another terminal session, poll Telegram:
 
+```
+export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
+while true; do python3 telegram.py updates; done
+```
+
+Then, you or a friend go to Telegram and chat with your Bot.
+
+Here are the messages:
 
 ```
 From: TLG1515151515
