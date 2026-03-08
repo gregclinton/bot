@@ -21,7 +21,7 @@ def inbox(name):
         rmtree(folder)
 
 def post(frm, to, body):
-    print(f"From: {frm}\nTo: {to}\n{body}\n==========================\n", flush = True)
+    print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
     folder = messages / to
     folder.mkdir(exist_ok = True)
     order = len(list(folder.glob((folder / frm).name + "*")))
