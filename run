@@ -5,7 +5,7 @@ do
         python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
-    for tool in balance.sh
+    for tool in Balance
     do
         python3 tool.py "$tool"
     done
