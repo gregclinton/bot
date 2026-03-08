@@ -7,7 +7,7 @@ def invoke(provider, model, sys, user):
     key = os.environ.get(f"{provider.upper()}_API_KEY")
 
     if not key:
-        print(f"{key_name} not set.")
+        print(f"{key_name} not set.", flush = True)
         sys.exit()
 
     res = requests.post(
