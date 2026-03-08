@@ -1,21 +1,8 @@
 import telegram
 import sys
+import messages
 
-def post(worker, frm, to, body):
-    if frm == worker or worker == "" and to and body:
-        body = body.strip()
-        (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
-
-        if to.startswith("TLG") or frm.startswith("TLG"):
-            print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
-
-        if to.startswith("TLG"):
-            if frm == "Hal":
-                telegram.post(to[3:], body)
-        else:
-            messages.post(frm, to, body)
-
-def run(worker, scissors, text):
+def run(worker, scissors, post, text):
     frm = to = body = ""
 
     for line in text.splitlines():
@@ -29,7 +16,10 @@ def run(worker, scissors, text):
         else:
             body += f"{line}\n"
 
-    post(worker, frm, to, body)
+    if post:
+        post(worker, frm, to, body)
+    else:
+        messages.post(frm, to, body)
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
