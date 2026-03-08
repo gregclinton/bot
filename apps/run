@@ -5,9 +5,7 @@ source=~/bot
 app="$source"/apps/"$1"
 boss=Greg
 
-rm -rf messages workers
-cp "$source"/bot/*.py .
-cp "$app"/tools/* .
+rm -r * && cp "$source"/bot/* . && cp "$app"/tools/* . && ls
 
 for path in "$app"/workers/*
 do

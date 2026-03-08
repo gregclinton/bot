@@ -14,6 +14,13 @@ EOF
 )"
 ```
 
+Poll telegram.
+
+```
+while true; do python3 telegram.py updates; done
+
+```
+
 ```
 From: Greg
 To: Hal
