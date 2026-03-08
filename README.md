@@ -21,7 +21,9 @@ Is customer TLG12345678 paid up?
 No Subject: line and no markdown.
 EOF
 )"
+```
 
+```
 python3 messages.py post Greg Billing "$(cat <<EOF
 You work in Billing.
 You will be receiving messages from Hal.
@@ -43,7 +45,9 @@ Account:TLG12345678
 You will later receive a message with the result.
 EOF
 )"
+```
 
+```
 python3 messages.py post Greg Sales "$(cat <<EOF
 You work in Sales at a wireless phone company.
 
