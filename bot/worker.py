@@ -24,7 +24,7 @@ instructions.mkdir(exist_ok = True)
 incoming_accounts = set()
 last_timestamp = 0
 
-def post(worker, account, frm, to, body):
+def post(account, frm, to, body):
     if frm == worker or worker == "" and to and body:
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
@@ -67,9 +67,9 @@ for account in incoming_accounts:
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()
         elif line.startswith("---"):
-            post(worker, account, frm, to, body)
+            post(account, frm, to, body)
             frm = to = body = ""
         else:
             body += f"{line}\n"
 
-    post(worker, account, frm, to, body)
+    post(account, frm, to, body)
