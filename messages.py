@@ -39,17 +39,17 @@ def parse(cuts, text):
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()
         elif line.startswith(cuts) and frm and to and body:
-            yield {"from": frm, "to": to, "body": body}
+            yield frm, to, body
             frm = to = body = ""
         else:
             body += f"{line}\n"
 
     if frm and to and body:
-        yield { "from": frm, "to": to, "body": body }
+        yield frm, to, body
 
 def load(text):
-    for msg in parse("===", text):
-        post(msg["from"], msg["to"], msg["body"])
+    for frm, to, body in parse("===", text):
+        post(frm, to, body)
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
