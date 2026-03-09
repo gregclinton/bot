@@ -30,7 +30,11 @@ Is customer TLG12345678 due for an appointment?
 
 Do not use markdown.
 
-Currently we only have the following two departments: Billing, Sales
+Currently we only have these departments:
+    Marketing
+    Sundries
+    Billing
+    Sales
 ```
 
 For Billing:
