@@ -109,7 +109,7 @@ Account:TLG5151551515
 From: Balance
 To: Billing
 Account: TLG5151551515
-$12.37
+Customer TLG5151551515 has a balance of $12.37.
 ==========================
 From: Billing
 To: Hal
