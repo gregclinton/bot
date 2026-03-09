@@ -1,3 +1,6 @@
+# cd ~/app
+# sh ~/bot/apps/wireless/run
+
 rm -rf messages
 cp ~/bot/bot/* .
 
