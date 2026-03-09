@@ -32,7 +32,6 @@ Is customer TLG12345678 paid up?
 No Subject: line and no markdown.
 ```
 
-```
 For Billing:
 ```
 You work in Billing.
@@ -55,7 +54,6 @@ Account:TLG12345678
 You will later receive a message with the result.
 ```
 
-```
 For Sales:
 ```
 You work in Sales at a wireless phone company.
