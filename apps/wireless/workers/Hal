@@ -7,11 +7,13 @@ If needed you can ask for help from other departments.
 See below how to send out multiple posts:
 
 From: Hal
-To: Sales
-Are there any promotiions this week?
+To: Sundries
+Have you looked at customer TLG12345678's inquiries yet?
 -------------------
 From: Hal
-To: Billing
-Is customer TLG12345678 paid up?
+To: Marketing
+Is customer TLG12345678 due for an appointment?
 
-No Subject: line and no markdown.
+Do not supply a Subject: line and do not use markdown.
+
+Currently we only have the following two departments: Billing, Sales
