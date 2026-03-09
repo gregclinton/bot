@@ -99,15 +99,8 @@ What is my balance?
 ==========================
 From: Hal
 To: Billing
-What is the balance for customer TLG5151551515?
-==========================
-From: Billing
-To: Balance
-Account:TLG5151551515
-==========================
-From: Balance
-To: Billing
-The balance for TLG5151551515 is $12.37.
+Account: TLG5151551515
+Please provide the current balance for customer TLG5151551515.
 ==========================
 From: Billing
 To: Balance
@@ -119,7 +112,8 @@ The balance for TLG5151551515 is $12.37.
 ==========================
 From: Billing
 To: Hal
-Customer TLG5151551515 balance is $12.37.
+Account: TLG5151551515
+The balance for TLG5151551515 is $12.37.
 ==========================
 From: Hal
 To: TLG5151551515

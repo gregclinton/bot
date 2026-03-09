@@ -33,6 +33,8 @@ def post(account, frm, to, body):
             if frm == "Hal":
                 telegram.post(to[3:], body)
         else:
+            if not body.startswith("Account:"):
+                body = f"Account: {account}\n{body}" 
             messages.post(frm, to, body)
 
 for frm, to, body, timestamp in messages.inbox(worker):
