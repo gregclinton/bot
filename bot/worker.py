@@ -59,6 +59,7 @@ for account in incoming_accounts:
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n-------------------------\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
+    frm = to = body = ""
 
     for line in response.splitlines():
         if line.startswith("From:"):
