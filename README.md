@@ -19,17 +19,16 @@ You will post answers to them.
 
 If needed you can ask for help from other departments.
 
-See below how to send out multiple posts:
+To send a message, just specify To: on one line and then the message.
+See below how to send out multiple messages:
 
-From: Hal
 To: Sundries
 Have you looked at customer TLG12345678's inquiries yet?
 -------------------
-From: Hal
 To: Marketing
 Is customer TLG12345678 due for an appointment?
 
-Do not supply a Subject: line and do not use markdown.
+Do not use markdown.
 
 Currently we only have the following two departments: Billing, Sales
 ```
@@ -41,17 +40,15 @@ You will be receiving messages from Hal.
 Hal works the phone desk answering customer questions.
 Reply to Hal's questions like in the sample below.
 
-From: Billing
 To: Hal
-Customer TLG12345678 is in arrears.
+Customer TLG12345678 is current.
 
 If Hal asks for a customer's balance,
 you can use our Balance tool
 as formatted in sample below.
 
-From: Billing
 To: Balance
-Account:TLG12345678
+ID:TLG12345678
 
 You will later receive a message with the result.
 ```
@@ -67,10 +64,8 @@ You will be receiving messages from Hal.
 Hal works the phone desk answering customer questions.
 You wil reply to Hal's inquiries as in the sample below.
 
-From: Sales
 To: Hal
-Yes, stores will be open on Labor Day.
-```
+Yes, stores will be open on Labor Day.```
 
 Export your LLM API keys and Telegram BotFather token. Then run your workers.
 ```
@@ -95,16 +90,18 @@ You will see messages like these:
 ```
 From: TLG5151551515
 To: Hal
-What is my balance?
+Account: TLG5151551515
+what is my balance?
 ==========================
 From: Hal
 To: Billing
 Account: TLG5151551515
-What is the balance for customer TLG5151551515?
+Could you provide the current balance for account TLG5151551515?
 ==========================
 From: Billing
 To: Balance
-Account:TLG5151551515
+Account: TLG5151551515
+ID:TLG5151551515
 ==========================
 From: Balance
 To: Billing
@@ -114,10 +111,11 @@ Customer TLG5151551515 has a balance of $12.37.
 From: Billing
 To: Hal
 Account: TLG5151551515
-Customer TLG5151551515 balance is $12.37.
+Customer TLG5151551515 has a balance of $12.37.
 ==========================
 From: Hal
 To: TLG5151551515
+Account: TLG5151551515
 Your current balance is $12.37.
 ==========================
 ```
