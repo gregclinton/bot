@@ -26,4 +26,5 @@ def post(frm, to, account, body):
     folder = messages / to
     folder.mkdir(exist_ok = True)
     order = len(list(folder.glob((folder / frm).name + "*")))
-    (folder / f"{frm}|{order + 1:06d}").write_text(f"Account: {account}\n{body}")
+    body = body if body.startswith("Account:") else f"Account: {account}\n{body}"
+    (folder / f"{frm}|{order + 1:06d}").write_text(body)
