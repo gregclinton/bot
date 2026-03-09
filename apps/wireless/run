@@ -16,7 +16,7 @@ do
     python3 tool.py "$tool"
 done
 
-for worker in Billing
+for worker in Foo Bar
 do
     rm -rf workers/"$worker"/accounts
 done
