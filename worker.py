@@ -35,8 +35,7 @@ def post(worker, account, frm, to, body):
         else:
             messages.post(frm, to, body)
 
-for msg in messages.inbox(worker):
-    frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
+for frm, to, body, timestamp in messages.inbox(worker):
     last_timestamp = timestamp
 
     if frm.startswith("TLG")

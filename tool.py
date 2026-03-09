@@ -4,8 +4,8 @@ import subprocess
 
 tool = sys.argv[1]
 
-for msg in messages.inbox(tool):
+for frm, to, body, timestamp in messages.inbox(tool):
     # will run a script with tool name
-    out = subprocess.run(["sh", tool, msg["body"]], capture_output = True, text = True)
+    out = subprocess.run(["sh", tool, body, capture_output = True, text = True)
     result = out.stdout + out.stderr
-    messages.post(tool, msg["from"], result)
+    messages.post(tool, frm, result)

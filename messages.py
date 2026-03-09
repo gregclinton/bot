@@ -15,12 +15,7 @@ def inbox(name):
 
     if folder.exists():
         for path in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime):
-            yield {
-                "from": path.name.split("|")[0],
-                "to": name,
-                "body": path.read_text(),
-                "timestamp": int(path.stat().st_mtime)
-            }
+            yield path.name.split("|")[0], name, path.read_text(), int(path.stat().st_mtime)
         rmtree(folder)
 
 def post(frm, to, body):
