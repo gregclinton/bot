@@ -40,7 +40,7 @@ for msg in messages.inbox(worker):
     last_timestamp = timestamp
 
     if frm.startswith("TLG")
-        messages.log(frm to, body)
+        messages.log(frm, to, body)
 
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
     if m and m.group() != "TLG12345678":
