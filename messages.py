@@ -7,6 +7,9 @@ import sys
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
 
+def log(frm, to, body):
+    print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
+
 def inbox(name):
     folder = messages / name
 
@@ -21,7 +24,7 @@ def inbox(name):
         rmtree(folder)
 
 def post(frm, to, body):
-    print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
+    log(frm, to, body)
     folder = messages / to
     folder.mkdir(exist_ok = True)
     order = len(list(folder.glob((folder / frm).name + "*")))
@@ -47,6 +50,6 @@ def parse(cuts, text):
 def load(text):
     for msg in parse("===", text):
         post(msg["from"], msg["to"], msg["body"])
-    
+
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])

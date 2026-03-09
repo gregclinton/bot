@@ -28,11 +28,9 @@ def post(worker, account, frm, to, body):
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
 
-        if to.startswith("TLG") or frm.startswith("TLG"):
-            print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
-
         if to.startswith("TLG"):
             if frm == "Hal":
+                messages.log(frm, to, body)
                 telegram.post(to[3:], body)
         else:
             messages.post(frm, to, body)
@@ -40,6 +38,9 @@ def post(worker, account, frm, to, body):
 for msg in messages.inbox(worker):
     frm, to, body, timestamp = msg["from"], msg["to"], msg["body"], msg["timestamp"]
     last_timestamp = timestamp
+
+    if frm.startswith("TLG")
+        messages.log(frm to, body)
 
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
     if m and m.group() != "TLG12345678":
