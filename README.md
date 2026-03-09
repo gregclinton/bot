@@ -1,13 +1,18 @@
-Instruct workers with the command below:
 
+I include a toy app under apps called wireless.
+This is how you set it up.
 ```
-python3 messages.py load "$(cat instructions)"
+mkdir ~/app
+cd ~/app
+sh ~/bot/apps/wireless/setup
 ```
 
-With a instructions file like this example:
+The toy wireless app has three workers.
+We write instructions for the workers.
+The instructions are in the workers folder under the app.
+
+For Hal:
 ```
-From: Greg
-To: Hal
 Your name is Hal.
 You will be receiving messages from customers.
 You will post answers to them.
@@ -25,9 +30,11 @@ To: Billing
 Is customer TLG12345678 paid up?
 
 No Subject: line and no markdown.
-====================================================
-From: Greg
-To: Billing
+```
+
+```
+For Billing:
+```
 You work in Billing.
 You will be receiving messages from Hal.
 Hal works the phone desk answering customer questions.
@@ -46,9 +53,11 @@ To: Balance
 Account:TLG12345678
 
 You will later receive a message with the result.
-====================================================
-From: Greg
-To: Sales
+```
+
+```
+For Sales:
+```
 You work in Sales at a wireless phone company.
 
 Currently we are not holding any promotions.
@@ -65,14 +74,16 @@ Yes, stores will be open on Labor Day.
 
 Export your LLM API keys and Telegram BotFather token. Then run your workers.
 ```
+cd ~/app
 export GROQ_API_KEY=ASFJSADFLHHJFLAJDFSAFHASLKHAFLHJ
 export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
-while true; do sh run; sleep 0.1; done
+sh ~/bot/apps/wireless/run
 ```
 
 In another terminal session, poll Telegram:
 
 ```
+cd ~/app
 export TELEGRAM_TOKEN=ASFDAFDSF:DFAFSAFSAFAFAFASDFAFAFAADFAFASF
 while true; do python3 telegram.py updates; done
 ```
