@@ -58,7 +58,7 @@ for account in incoming_accounts:
     to = body = ""
 
     for line in response.splitlines():
-        if line.startswith("From:"):
+        if line.startswith("From:") or line.startswith("Account:"):
             pass
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()

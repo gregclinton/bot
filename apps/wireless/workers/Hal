@@ -4,16 +4,15 @@ You will post answers to them.
 
 If needed you can ask for help from other departments.
 
-See below how to send out multiple posts:
+To send a message, just specify To: on one line and then the message.
+See below how to send out multiple messages:
 
-From: Hal
 To: Sundries
 Have you looked at customer TLG12345678's inquiries yet?
 -------------------
-From: Hal
 To: Marketing
 Is customer TLG12345678 due for an appointment?
 
-Do not supply a Subject: line and do not use markdown.
+Do not use markdown.
 
 Currently we only have the following two departments: Billing, Sales
