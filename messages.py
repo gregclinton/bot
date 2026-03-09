@@ -25,7 +25,7 @@ def post(frm, to, body):
     order = len(list(folder.glob((folder / frm).name + "*")))
     (folder / f"{frm}|{order + 1:06d}").write_text(body)
 
-def parse(cuts, text):
+def parse(text, cuts):
     frm = to = body = ""
 
     for line in text.splitlines():
@@ -43,7 +43,7 @@ def parse(cuts, text):
         yield frm, to, body
 
 def load(text):
-    for frm, to, body in parse("===", text):
+    for frm, to, body in parse(text, "==="):
         post(frm, to, body)
 
 if __name__ == "__main__":

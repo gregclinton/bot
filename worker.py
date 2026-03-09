@@ -61,5 +61,5 @@ for account in incoming_accounts:
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
 
-    for frm, to, body in messages.parse("---", response):
+    for frm, to, body in messages.parse(response, "---"):
         post(worker, account, frm, to, body)
