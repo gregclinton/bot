@@ -18,7 +18,7 @@ instructions = root / "instructions"
 instructions.mkdir(exist_ok = True)
 
 # accounts/account/timestamp|from|to   body
-#     instructions/timestamp|from|fo   body
+#     instructions/timestamp|from|to   body
 
 incoming_accounts = set()
 last_timestamp = 0
@@ -58,7 +58,7 @@ for account in incoming_accounts:
     to = body = ""
 
     for line in response.splitlines():
-        if line.startswith("From:") or line.startswith("Account"):
+        if line.startswith("From:"):
             pass
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()
