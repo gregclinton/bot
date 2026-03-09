@@ -6,8 +6,8 @@ cp $source/bot/* .
 app=$source/apps/"$(basename $(dirname "$0"))"
 cp "$app"/tools/* .
 
-#while true
-#do
+while true
+do
     for worker in Hal Billing Sales
     do
         python3 worker.py groq openai/gpt-oss-120b "$worker"
@@ -23,5 +23,5 @@ cp "$app"/tools/* .
         rm -rf workers/"$worker"/accounts
     done
 
-#    sleep 0.1
-#done
+    sleep 0.1
+done
