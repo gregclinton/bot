@@ -5,6 +5,8 @@ source=~/bot
 cp $source/bot/* .
 app=$source/apps/"$(basename $(dirname "$0"))"
 
+rm -rf workers
+
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
