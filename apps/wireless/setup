@@ -1,0 +1,4 @@
+worker="$1"
+source=~/bot
+cp $source/bot/* .
+echo "$worker"

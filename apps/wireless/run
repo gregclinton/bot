@@ -1,3 +1,5 @@
+rm -rf messages
+
 for worker in Hal Billing Sales
 do
     python3 worker.py groq openai/gpt-oss-120b "$worker"
@@ -6,4 +8,9 @@ done
 for tool in Balance
 do
     python3 tool.py "$tool"
+done
+
+for worker in Billing
+do
+    rm -rf workers/accounts
 done
