@@ -9,7 +9,7 @@ sh ~/bot/apps/wireless/setup
 
 The toy wireless app has three workers.
 We write instructions for the workers.
-The instructions are in the workers folder under the app.
+Each worker's instructions can be found under the app.
 
 For Hal:
 ```
@@ -93,36 +93,36 @@ Then, you or a friend go to Telegram and chat with your Bot.
 You will see messages like these:
 
 ```
-From: TLG8616785797
+From: TLG5151551515
 To: Hal
 What is my balance?
 ==========================
 From: Hal
 To: Billing
-What is the balance for customer TLG8616785797?
+What is the balance for customer TLG5151551515?
 ==========================
 From: Billing
 To: Balance
-Account:TLG8616785797
+Account:TLG5151551515
 ==========================
 From: Balance
 To: Billing
-The balance for TLG8616785797 is $12.37.
+The balance for TLG5151551515 is $12.37.
 ==========================
 From: Billing
 To: Balance
-Account:TLG8616785797
+Account:TLG5151551515
 ==========================
 From: Balance
 To: Billing
-The balance for TLG8616785797 is $12.37.
+The balance for TLG5151551515 is $12.37.
 ==========================
 From: Billing
 To: Hal
-Customer TLG8616785797 balance is $12.37.
+Customer TLG5151551515 balance is $12.37.
 ==========================
 From: Hal
-To: 8616785797
+To: TLG5151551515
 Your current balance is $12.37.
 ==========================
 ```
