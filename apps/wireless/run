@@ -1,4 +1,5 @@
 rm -rf messages
+cp ~/bot/bot/* .
 
 for worker in Hal Billing Sales
 do
