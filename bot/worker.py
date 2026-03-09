@@ -46,8 +46,6 @@ for frm, to, body, timestamp in messages.inbox(worker):
         incoming_accounts.add(account)
         (accounts / account).mkdir(exist_ok = True)
         (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
-    else:
-        (instructions / f"{timestamp}|{frm}|{to}").write_text(body)
 
 for account in incoming_accounts:
     text = ""
@@ -61,5 +59,15 @@ for account in incoming_accounts:
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
 
-    for frm, to, body in messages.parse(response, "---"):
-        post(worker, account, frm, to, body)
+    for line in response.splitlines():
+        if line.startswith("From:"):
+            frm = line.split(':')[1].strip()
+        elif line.startswith("To:"):
+            to = line.split(':')[1].strip()
+        elif line.startswith(cuts) and frm and to and body:
+            post(worker, account, frm, to, body)
+            frm = to = body = ""
+        else:
+            body += f"{line}\n"
+
+    post(worker, account, frm, to, body)
