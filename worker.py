@@ -30,7 +30,6 @@ def post(worker, account, frm, to, body):
 
         if to.startswith("TLG"):
             if frm == "Hal":
-                messages.log(frm, to, body)
                 telegram.post(to[3:], body)
         else:
             messages.post(frm, to, body)

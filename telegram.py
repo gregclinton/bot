@@ -2,6 +2,7 @@ import requests
 import os
 import sys
 from time import sleep
+import messages
 
 # https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
@@ -15,11 +16,10 @@ endpoint = f"https://api.telegram.org/bot{token}"
 
 def post(to, body):
     # except for group chats, chat id is same as user id
+    messages.log(to, "Hal", body)
     requests.post(f"{endpoint}/sendMessage", json = { "chat_id": to, "text": body })
 
 def updates():
-    import messages
-
     offset = int(open("offset").read()) if os.path.exists("offset") else 0
     res = requests.get(f"{endpoint}/getUpdates", params = { "timeout": 30, "offset": offset })
     res.raise_for_status()
