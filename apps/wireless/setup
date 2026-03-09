@@ -1,4 +1,4 @@
-worker="$1"
 source=~/bot
 cp $source/bot/* .
+worker="$(basename $(dirname "$0"))"
 echo "$worker"
