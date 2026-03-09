@@ -23,22 +23,22 @@ instructions.mkdir(exist_ok = True)
 incoming_accounts = set()
 last_timestamp = 0
 
-def post(frm, to, account, body):
-    if frm == worker and to and body:
+def post(to, account, body):
+    if to and body:
         body = body.strip()
-        (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
+        (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
 
         if to.startswith("TLG"):
-            if frm == "Hal":
+            if worker == "Hal":
                 telegram.post(to[3:], body)
         else:
-            messages.post(frm, to, account, body)
+            messages.post(worker, to, account, body)
 
-for frm, to, account, body, timestamp in messages.inbox(worker):
+for frm, account, body, timestamp in messages.inbox(worker):
     last_timestamp = timestamp
 
     if frm.startswith("TLG"):
-        messages.log(frm, to, account, body)
+        messages.log(frm, worker, account, body)
 
     incoming_accounts.add(account)
     (accounts / account).mkdir(exist_ok = True)
@@ -55,19 +55,17 @@ for account in incoming_accounts:
         text += f"{time}\nFrom: {frm}\nTo: {to}\nAccount: {account}\n{body}\n-------------------------\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
-    frm = to = body = ""
+    to = body = ""
 
     for line in response.splitlines():
-        if line.startswith("From:"):
-            frm = line.split(':')[1].strip()
+        if line.startswith("From:") or line.startswith("Account"):
+            pass
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()
-        elif line.startswith("Account:"):
-            pass
         elif line.startswith("---"):
-            post(frm, to, account, body)
-            frm = to = body = ""
+            post(to, account, body)
+            to = body = ""
         else:
             body += f"{line}\n"
 
-    post(frm, to, account, body)
+    post(to, account, body)

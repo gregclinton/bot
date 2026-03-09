@@ -14,11 +14,11 @@ def inbox(name):
 
     if folder.exists():
         for path in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime):
-            frm, to, text, timestamp = path.name.split("|")[0], name, path.read_text(), int(path.stat().st_mtime)
+            frm, text, timestamp = path.name.split("|")[0], path.read_text(), int(path.stat().st_mtime)
             lines = text.split("\n")
             account = lines[0].split(":")[1].strip()
             body = "\n".join(lines[1:])
-            yield frm, to, account, body, timestamp
+            yield frm, account, body, timestamp
         rmtree(folder)
 
 def post(frm, to, account, body):
