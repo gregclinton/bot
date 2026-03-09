@@ -61,7 +61,7 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------\n"
 
-    response = llm.invoke(llm_provider, llm_model, "", post, text).strip() if text else ""
+    response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
 
     for msg in messages.parse("---", response):
         post(worker, account, msg["from"], msg["to"], msg["body"])
