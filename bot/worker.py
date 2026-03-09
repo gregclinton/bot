@@ -64,7 +64,7 @@ for account in incoming_accounts:
             frm = line.split(':')[1].strip()
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()
-        elif line.startswith(cuts) and frm and to and body:
+        elif line.startswith("---") and frm and to and body:
             post(worker, account, frm, to, body)
             frm = to = body = ""
         else:
