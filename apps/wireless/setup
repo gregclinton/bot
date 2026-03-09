@@ -1,4 +1,14 @@
+# cd ~/app
+# sh ~/bot/apps/wireless/setup
+
 source=~/bot
 cp $source/bot/* .
-worker="$(basename $(dirname "$0"))"
-echo "$worker"
+app=$source/apps/"$(basename $(dirname "$0"))"
+
+for path in "$app"/workers/*
+do
+    worker=$(basename "$path")
+    dst=workers/"$worker"/instructions
+    mkdir -p "$dst"
+    cp "$path" "$dst"/1773019154|HR|"$worker"
+done
