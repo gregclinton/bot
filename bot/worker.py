@@ -1,5 +1,4 @@
 import llm
-import re
 import sys
 import messages
 from datetime import datetime
@@ -24,7 +23,7 @@ instructions.mkdir(exist_ok = True)
 incoming_accounts = set()
 last_timestamp = 0
 
-def post(account, frm, to, body):
+def post(frm, to, account, body):
     if frm == worker and to and body:
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
@@ -34,21 +33,18 @@ def post(account, frm, to, body):
                 telegram.post(to[3:], body)
         else:
             if not body.startswith("Account:"):
-                body = f"Account: {account}\n{body}" 
-            messages.post(frm, to, body)
+                body = f"Account: {account}\n{body}"
+            messages.post(frm, to, account, body)
 
-for frm, to, body, timestamp in messages.inbox(worker):
+for frm, to, account, body, timestamp in messages.inbox(worker):
     last_timestamp = timestamp
 
     if frm.startswith("TLG"):
-        messages.log(frm, to, body)
+        messages.log(frm, to, account, body)
 
-    m = re.search(r"\bTLG\w*", f"{frm} {body}")
-    if m and m.group() != "TLG12345678":
-        account = m.group()
-        incoming_accounts.add(account)
-        (accounts / account).mkdir(exist_ok = True)
-        (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
+    incoming_accounts.add(account)
+    (accounts / account).mkdir(exist_ok = True)
+    (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
 
 for account in incoming_accounts:
     text = ""
@@ -58,7 +54,7 @@ for account in incoming_accounts:
         timestamp = float(timestamp)
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
-        text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n-------------------------\n"
+        text += f"{time}\nFrom: {frm}\nTo: {to}\nAccount: {account}\n{body}\n-------------------------\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
     frm = to = body = ""
@@ -68,10 +64,12 @@ for account in incoming_accounts:
             frm = line.split(':')[1].strip()
         elif line.startswith("To:"):
             to = line.split(':')[1].strip()
+        elif line.startswith("Account:"):
+            pass
         elif line.startswith("---"):
-            post(account, frm, to, body)
+            post(frm, to, account, body)
             frm = to = body = ""
         else:
             body += f"{line}\n"
 
-    post(account, frm, to, body)
+    post(frm, to, account, body)
