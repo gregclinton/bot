@@ -6,17 +6,22 @@ cp $source/bot/* .
 app=$source/apps/"$(basename $(dirname "$0"))"
 cp "$app"/tools/* .
 
-for worker in Hal Billing Sales
+while true
 do
-    python3 worker.py groq openai/gpt-oss-120b "$worker"
-done
+    for worker in Hal Billing Sales
+    do
+        python3 worker.py groq openai/gpt-oss-120b "$worker"
+    done
 
-for tool in Balance
-do
-    python3 tool.py "$tool"
-done
+    for tool in Balance
+    do
+        python3 tool.py "$tool"
+    done
 
-for worker in Foo Bar
-do
-    rm -rf workers/"$worker"/accounts
+    for worker in Foo Bar
+    do
+        rm -rf workers/"$worker"/accounts
+    done
+
+    sleep 0.1
 done
