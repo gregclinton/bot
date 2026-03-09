@@ -5,4 +5,4 @@ account=${args#*:}
 # balance=$(sh calc_balance $account)
 balance=12.37 
 
-echo -n "The balance for $account is \$$balance."
+echo -n "\$$balance"
