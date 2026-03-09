@@ -22,14 +22,16 @@ If needed you can ask for help from other departments.
 See below how to send out multiple posts:
 
 From: Hal
-To: Sales
-Are there any promotiions this week?
+To: Sundries
+Have you looked at customer TLG12345678's inquiries yet?
 -------------------
 From: Hal
-To: Billing
-Is customer TLG12345678 paid up?
+To: Marketing
+Is customer TLG12345678 due for an appointment?
 
-No Subject: line and no markdown.
+Do not supply a Subject: line and do not use markdown.
+
+Currently we only have the following two departments: Billing, Sales
 ```
 
 For Billing:
@@ -91,37 +93,36 @@ Then, you or a friend go to Telegram and chat with your Bot.
 You will see messages like these:
 
 ```
-From: TLG1515151515
+From: TLG8616785797
 To: Hal
-what is my balance?
-```
-
-```
+What is my balance?
+==========================
 From: Hal
 To: Billing
-Please tell me the balance for customer TLG1515151515.
-```
-
-```
+What is the balance for customer TLG8616785797?
+==========================
 From: Billing
 To: Balance
-Account:TLG1515151515
-```
-
-```
+Account:TLG8616785797
+==========================
 From: Balance
 To: Billing
-The balance for TLG1515151515 is $12.37.
-```
-
-```
+The balance for TLG8616785797 is $12.37.
+==========================
+From: Billing
+To: Balance
+Account:TLG8616785797
+==========================
+From: Balance
+To: Billing
+The balance for TLG8616785797 is $12.37.
+==========================
 From: Billing
 To: Hal
-The balance for customer TLG1515151515 is $12.37.
-```
-
-```
+Customer TLG8616785797 balance is $12.37.
+==========================
 From: Hal
-To: TLG1515151515
-Your balance is $12.37.
+To: 8616785797
+Your current balance is $12.37.
+==========================
 ```
