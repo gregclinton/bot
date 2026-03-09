@@ -24,7 +24,7 @@ instructions.mkdir(exist_ok = True)
 incoming_accounts = set()
 last_timestamp = 0
 
-def post(worker, frm, to, body):
+def post(worker, account, frm, to, body):
     if frm == worker or worker == "" and to and body:
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
@@ -61,4 +61,7 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------------------\n"
 
-    instruct.run(worker, "---", llm.invoke(llm_provider, llm_model, "", post, text).strip() if text else "")
+    response = llm.invoke(llm_provider, llm_model, "", post, text).strip() if text else ""
+
+    for msg in messages.parse("---", response):
+        post(worker, account, msg["from"], msg["to"], msg["body"])

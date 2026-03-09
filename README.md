@@ -1,10 +1,10 @@
 Instruct workers with the command below:
 
 ```
-python3 instruct.py run "" === messages.txt
+python3 messages.py instruct "$(cat messages.txt)"
 ```
 
-With this messages.txt file:
+With a messages.txt file like this example:
 ```
 From: Greg
 To: Hal
@@ -79,7 +79,7 @@ while true; do python3 telegram.py updates; done
 
 Then, you or a friend go to Telegram and chat with your Bot.
 
-Here are the messages:
+You will see messages like these:
 
 ```
 From: TLG1515151515
