@@ -7,7 +7,7 @@ messages = Path("messages")
 messages.mkdir(exist_ok = True)
 
 def log(frm, to, account, body):
-    print(f"From: {frm}\nTo: {to}\nAccount: {account}\n{body}\n==========================", flush = True)
+    pass #print(f"From: {frm}\nTo: {to}\nAccount: {account}\n{body}\n==========================", flush = True)
 
 def inbox(name):
     folder = messages / name
