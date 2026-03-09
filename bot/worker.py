@@ -25,7 +25,7 @@ incoming_accounts = set()
 last_timestamp = 0
 
 def post(account, frm, to, body):
-    if frm == worker or worker == "" and to and body:
+    if frm == worker and to and body:
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{frm}|{to}").write_text(body)
 
