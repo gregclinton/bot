@@ -16,5 +16,5 @@ done
 
 for worker in Billing
 do
-    rm -rf workers/accounts
+    rm -rf workers/"$worker"/accounts
 done
