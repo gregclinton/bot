@@ -30,7 +30,7 @@ Is customer TLG12345678 due for an appointment?
 
 Do not use markdown.
 
-Currently we only have these departments:
+We have these departments:
     Marketing
     Sundries
     Billing
