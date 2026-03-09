@@ -44,7 +44,7 @@ def parse(cuts, text):
     if frm and to and body:
         yield { "from": frm, "to": to, "body": body }
 
-def instruct(text):
+def load(text):
     for msg in parse("===", text):
         post(msg["from"], msg["to"], msg["body"])
     

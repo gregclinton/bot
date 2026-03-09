@@ -1,10 +1,10 @@
 Instruct workers with the command below:
 
 ```
-python3 messages.py instruct "$(cat messages.txt)"
+python3 messages.py load "$(cat instructions)"
 ```
 
-With a messages.txt file like this example:
+With a instructions file like this example:
 ```
 From: Greg
 To: Hal
