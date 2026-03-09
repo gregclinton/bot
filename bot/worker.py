@@ -42,7 +42,7 @@ for frm, account, body, timestamp in messages.inbox(worker):
 
     incoming_accounts.add(account)
     (accounts / account).mkdir(exist_ok = True)
-    (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
+    (accounts / account / f"{timestamp}|{frm}|{worker}").write_text(body)
 
 for account in incoming_accounts:
     text = ""
