@@ -2,10 +2,9 @@
 # sh ~/bot/apps/wireless/setup
 
 source=~/bot
-cp $source/bot/* .
 app=$source/apps/"$(basename $(dirname "$0"))"
 
-rm -rf workers
+rm -rf workers messages
 
 for path in "$app"/workers/*
 do

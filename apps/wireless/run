@@ -1,7 +1,10 @@
 # cd ~/app
 # sh ~/bot/apps/wireless/run
 
-cp ~/bot/bot/* .
+source=~/bot
+cp $source/bot/* .
+app=$source/apps/"$(basename $(dirname "$0"))"
+cp "$app"/tools/* .
 
 for worker in Hal Billing Sales
 do
