@@ -58,7 +58,7 @@ for account in incoming_accounts:
         timestamp = float(timestamp)
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
         body = path.read_text()
-        text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n----------------\n"
+        text += f"{time}\nFrom: {frm}\nTo: {to}\n{body}\n\n\n\"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
 
