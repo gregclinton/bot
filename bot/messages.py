@@ -6,9 +6,6 @@ from shutil import rmtree
 messages = Path("messages")
 messages.mkdir(exist_ok = True)
 
-def log(frm, to, account, body):
-    print(f"From: {frm}\nTo: {to}\nAccount: {account}\n{body}\n==========================", flush = True)
-
 def inbox(name):
     folder = messages / name
 
@@ -27,7 +24,6 @@ def inbox(name):
         rmtree(folder)
 
 def post(frm, to, account, body):
-    log(frm, to, account, body)
     folder = messages / to / account
     folder.mkdir(parents = True, exist_ok = True)
     order = len(list(folder.glob((folder / frm).name + "*")))

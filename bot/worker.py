@@ -37,9 +37,6 @@ def post(to, account, body):
 for frm, account, body, timestamp in messages.inbox(worker):
     last_timestamp = timestamp
 
-    if frm.startswith("TLG"):
-        messages.log(frm, worker, account, body)
-
     incoming_accounts.add(account)
     (accounts / account).mkdir(exist_ok = True)
     (accounts / account / f"{timestamp}|{frm}|{worker}").write_text(body)
