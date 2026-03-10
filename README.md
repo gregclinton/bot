@@ -143,6 +143,9 @@ By default I've been using gpt-oss-120b which at this time is 60 cents per milli
 I've seen OpenRouter offer that model for free.
 See my llm.py for a list of other inference providers.
 
+Also, since this system makes it easy to orchestrate many small specialized workers,
+each worker uses a small context window, further reducing inference costs.
+
 You the run the bot on your own computer. You don't need to deploy it to the cloud.
 So running the bot is extremely inexpensive and can even be free.
 And it is under your control on your computer.
