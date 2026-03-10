@@ -104,6 +104,7 @@ To: Balance
 balance?
 
 Balance:
+To: Billing
 $12.37
 
 Billing:
