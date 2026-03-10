@@ -45,24 +45,21 @@ for account in incoming_accounts:
     all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("|")[0])):
         timestamp, frm, to = path.name.split("|")
-        timestamp = float(timestamp)
-        time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
+        # timestamp = float(timestamp)
+        # time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
         body = path.read_text()
-        regarding = (account not in (frm, to)) * f", regarding {account}"
-        text += f"Message sent by {frm} on {time}{regarding}:\n\nTo: {to}\n{body}\n\n\n"
+        text += f"{frm}:\nTo: {to}\n{body}\n\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
+    print(f"{worker}:\n{response.strip()}\n\n")
 
     to = body = ""
 
     for line in response.splitlines():
-        if line.startswith("From:") or line.startswith("Account:"):
-            pass
-        elif line.startswith("To:"):
-            to = line.split(':')[1].strip()
-        elif line.startswith("---"):
+        if line.startswith("To:"):
             post(to, account, body)
-            to = body = ""
+            to = line.split(':')[1].strip()
+            body = ""
         else:
             body += f"{line}\n"
 
