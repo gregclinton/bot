@@ -50,11 +50,13 @@ for account in incoming_accounts:
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("|")[0])):
         timestamp, frm, to = path.name.split("|")
         timestamp = float(timestamp)
-        time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d, %-I:%M %P")
+        time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
         body = path.read_text()
-        text += f"{time}\nFrom: {frm}\nTo: {to}\nAccount: {account}\n{body}\n-------------------------\n\n"
+        regarding = f", regarding {account}" if frm != account and to != account else ""
+        text += f"Message sent by {frm} on {time}{regarding}:\n\nTo: {to}\n{body}\n\n\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
+
     to = body = ""
 
     for line in response.splitlines():
