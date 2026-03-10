@@ -52,7 +52,7 @@ for account in incoming_accounts:
         timestamp = float(timestamp)
         time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
         body = path.read_text()
-        regarding = f", regarding {account}" if frm != account and to != account else ""
+        regarding = (account not in (frm, to)) * f", regarding {account}"
         text += f"Message sent by {frm} on {time}{regarding}:\n\nTo: {to}\n{body}\n\n\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
