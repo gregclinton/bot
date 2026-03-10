@@ -137,6 +137,31 @@ but more and more we'll need them less and speak to our computers in our native 
 If you look at the apps/wireless/workers Hal, Billing and Sales, you'll find understandable English.
 Programming computers from here on, will consist of just talking or writing to them.
 
+You hear a lot about the high price of token generation.
+I've designed this system to work well with inexpensive open source models.
+By default I've been using gpt-oss-120b which at this time is 60 cents per million output tokens.
+I've seen OpenRouter offer that model for free.
+See my llm.py for a list of other inference providers.
+
+You the run the bot on your own computer. You don't need to deploy it to the cloud.
+So running the bot is extremely inexpensive and can even be free.
+And it is under your control on your computer.
+
+I am new to the Telegram product, but I was extremely blown away by how easy it was to use
+and how practical and useful I think it will become in this new LLM world.
+You'll see that my telegram.py code is all of 35 lines.
+
+The idea of this bot is to power call centers.
+I show a toy example.
+Your toy example and real world examples are left as an excecsise to the reader.
+
+
+
+
+
+
+
+
 
 
 
