@@ -131,7 +131,7 @@ just as C replaced assembly in the past.
 Compilers came along then, just as now, LLM's came along.
 
 Assembly language still exists, and some programmers still need to code with it.
-Python and its brothers also still exist, 
+Python and its brothers also still exist,
 but more and more we'll need them less and speak to our computers in our native tongues.
 
 If you look at the apps/wireless/workers Hal, Billing and Sales, you'll find understandable English.
@@ -146,13 +146,21 @@ See my llm.py for a list of other inference providers.
 Also, since this system makes it easy to orchestrate many small specialized workers,
 each worker uses a small context window, further reducing inference costs.
 
-You the run the bot on your own computer. You don't need to deploy it to the cloud.
+You run the bot on your own computer. You don't need to deploy it to the cloud.
 So running the bot is extremely inexpensive and can even be free.
-And it is under your control on your computer.
+And it is under your control.
 
 I am new to the Telegram product, but I was extremely blown away by how easy it was to use
 and how practical and useful I think it will become in this new LLM world.
 You'll see that my telegram.py code is all of 35 lines.
+
+I want to briefly describe the secret sauce (well not so secret, open source, actually) of this program.
+This is mainly seen in worker.py.
+Workers receive their instructions and then receive messages from Telegram and from other workers.
+Each worker stores on disk all messages they've sent or received in per-user-account folders.
+This way when a worker is called into action for a user,
+it has a complete chronological transcript, a dossier as it were, for that user.
+We have here a poor man's CRM.
 
 The idea of this bot is to power call centers.
 I show a toy example.
