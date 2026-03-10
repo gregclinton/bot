@@ -126,12 +126,12 @@ During that time I've used Pascal, C, C++, C#, rust,
 javascript, typescript, html, css, xml, perl, python, R, julia
 and even assembly language.
 
-English (or some other natural language) is replacing python (or someo other high level programming language)
+English (or some other natural language) is replacing python (or some other high level programming language)
 just as C replaced assembly in the past.
 Compilers came along then, just as now, LLM's came along.
 
-Now assembly language still exists, and some programmers still need to code with it.
-Python and its brothers still exist, 
+Assembly language still exists, and some programmers still need to code with it.
+Python and its brothers also still exist, 
 but more and more we'll need them less and speak to our computers in our native tongues.
 
 If you look at the apps/wireless/workers Hal, Billing and Sales, you'll find understandable English.
