@@ -62,29 +62,6 @@ To Hal:
 Go ahead, Hal. Billing will handle your request.
 ```
 
-For Sales:
-```
-You work in Sales at a wireless phone company.
-
-Below is communication from Hal, our help specialist.
-
-You can reply to Hal's request as in the sample below.
-
-To: Hal
-Yes, our stores will be open on Labor Day.
-
-Do not use markdown in your response.
-
-Never mention account numbers.
-Our system automatically includes that detail to departments as needed.
-
-Currently we are not holding any promotions.
-
-To Hal:
-Go ahead, Hal. Sales will handle your request.
-
-```
-
 Export your LLM API keys and Telegram BotFather token. Then run your workers.
 ```
 cd ~/app
@@ -140,3 +117,43 @@ Hal:
 To: Customer
 Your current balance is $12.37. Let me know if there’s anything else I can help you with.
 ```
+
+The source code for this bot (in the bot subfolder) is fewer than 200 lines of python.
+This is where the world is heading.
+
+I've been a programmer for over 30 years.
+During that time I've used Pascal, C, C++, C#, rust,
+javascript, typescript, html, css, xml, perl, python, R, julia
+and even assembly language.
+
+English (or some other natural language) is replacing python (or someo other high level programming language)
+just as C replaced assembly in the past.
+Compilers came along then, just as now, LLM's came along.
+
+Now assembly language still exists, and some programmers still need to code with it.
+Python and its brothers still exist, 
+but more and more we'll need them less and speak to our computers in our native tongues.
+
+If you look at the apps/wireless/workers Hal, Billing and Sales, you'll find understandable English.
+Programming computers from here on, will consist of just talking or writing to them.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
