@@ -84,7 +84,7 @@ I see messages logged:
 ```
 Customer:
 To: Hal
-hello
+Hello.
 
 Hal:
 To: Customer
@@ -92,7 +92,7 @@ Hello! I’m Hal, your help specialist. How can I assist you today?
 
 Customer:
 To: Hal
-I’d like to know my balance
+I’d like to know my balance.
 
 Hal:
 To: Customer
