@@ -74,6 +74,9 @@ Yes, stores will be open on Labor Day.
 Currently we are not holding any promotions.
 
 ```
+
+Export your LLM API keys and Telegram BotFather token. Then run your workers.
+```
 cd ~/app
 export GROQ_API_KEY=ASFJSADFLHHJFL
 export TELEGRAM_TOKEN=ASFDAFDSFDFAFSAFSA
