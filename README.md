@@ -77,9 +77,7 @@ export TELEGRAM_TOKEN=ASFDAFDSFDFAFSAFSA
 while true; do python3 telegram.py updates; done
 ```
 
-Then I go to Telegram and chat with my Bot.
-
-I see messages logged:
+I go to Telegram and chat with my bot and see these messages logged:
 
 ```
 Customer:
@@ -133,7 +131,7 @@ Assembly language still exists, and some programmers still need to code with it.
 Python and its brothers also still exist,
 but more and more we'll need them less and speak to our computers in our native tongues more.
 
-If you look at Hal, Billing and Sales in apps/wireless/workers, you'll find understandable English.
+Hal, Billing and Sales in apps/wireless/workers use understandable English.
 Programming computers from here on, will consist of just talking or writing to them.
 
 You hear a lot about the high price of token generation.
