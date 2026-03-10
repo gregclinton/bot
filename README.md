@@ -161,7 +161,7 @@ When a user checks in a day or a month later, she won't have to repeat herself.
 
 The idea of this bot is to power call centers.
 I show a toy example.
-Your toy example and real world examples are left as an excecsise to the reader.
+Your toy example and real world examples are left as an excersise to the reader.
 
 
 
