@@ -164,10 +164,7 @@ The idea of this bot is to power call centers.
 I show a toy example.
 Your toy example and real world examples are left as an excersise to the reader.
 
-
-
-
-
+See short demo https://youtube.com/shorts/UBMu9rhvjZY.
 
 
 
