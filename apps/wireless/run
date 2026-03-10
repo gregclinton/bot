@@ -18,10 +18,5 @@ do
         python3 tool.py "$tool"
     done
 
-    for worker in Foo Bar
-    do
-        rm -rf workers/"$worker"/accounts
-    done
-
     sleep 0.1
 done
