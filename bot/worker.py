@@ -35,6 +35,9 @@ def post(to, account, body):
             messages.post(worker, to, account, body)
 
 for frm, account, body, timestamp in messages.inbox(worker):
+    if frm == account:
+        print(f"{frm}:\n{body}\n")
+
     last_timestamp = timestamp
     incoming_accounts.add(account)
     (accounts / account).mkdir(exist_ok = True)
@@ -48,10 +51,10 @@ for account in incoming_accounts:
         # timestamp = float(timestamp)
         # time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
         body = path.read_text()
-        text += f"{frm}:\nTo: {to}\n{body}\n\n"
+        text += f"{frm}:\nTo: {to}\n{body}\n"
 
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
-    print(f"{worker}:\n{response.strip()}\n\n")
+    print(f"{worker}:\n{response.strip()}\n")
 
     to = body = ""
 
