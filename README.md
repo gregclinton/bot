@@ -1,15 +1,14 @@
 
 I include a toy app under apps called wireless.
-This is how you set it up.
+This is how I set it up.
 ```
 mkdir ~/app
 cd ~/app
 sh ~/bot/apps/wireless/setup
 ```
 
+Each worker's instructions can be found under its folder.
 The toy wireless app has three workers.
-We write instructions for the workers.
-Each worker's instructions can be found under the app.
 
 For Hal:
 ```
@@ -62,7 +61,7 @@ To Hal:
 Go ahead, Hal. Billing will handle your request.
 ```
 
-Export your LLM API keys and Telegram BotFather token. Then run your workers.
+I export LLM API keys and Telegram BotFather token. Then I run my workers.
 ```
 cd ~/app
 export GROQ_API_KEY=ASFJSADFLHHJFL
@@ -70,7 +69,7 @@ export TELEGRAM_TOKEN=ASFDAFDSFDFAFSAFSA
 sh ~/bot/apps/wireless/run
 ```
 
-In another terminal session, poll Telegram:
+In another terminal session, I poll Telegram:
 
 ```
 cd ~/app
@@ -78,9 +77,9 @@ export TELEGRAM_TOKEN=ASFDAFDSFDFAFSAFSA
 while true; do python3 telegram.py updates; done
 ```
 
-Then, you or a friend go to Telegram and chat with your Bot.
+Then I go to Telegram and chat with my Bot.
 
-You will see messages like these:
+I see messages logged:
 
 ```
 Customer:
@@ -118,7 +117,7 @@ To: Customer
 Your current balance is $12.37. Let me know if there’s anything else I can help you with.
 ```
 
-The source code for this bot (in the bot subfolder) is fewer than 200 lines of python.
+The source code for this bot is fewer than 200 lines of python.
 This is where the world is heading.
 
 I've been a programmer for over 30 years.
@@ -128,39 +127,39 @@ and even assembly language.
 
 English (or some other natural language) is replacing python (or some other high level programming language)
 just as C replaced assembly in the past.
-Compilers came along then, just as now, LLM's came along.
+Compilers came along then, just as now, LLM's are coming along.
 
 Assembly language still exists, and some programmers still need to code with it.
 Python and its brothers also still exist,
-but more and more we'll need them less and speak to our computers in our native tongues.
+but more and more we'll need them less and speak to our computers in our native tongues more.
 
-If you look at the apps/wireless/workers Hal, Billing and Sales, you'll find understandable English.
+If you look at Hal, Billing and Sales in apps/wireless/workers, you'll find understandable English.
 Programming computers from here on, will consist of just talking or writing to them.
 
 You hear a lot about the high price of token generation.
 I've designed this system to work well with inexpensive open source models.
 By default I've been using gpt-oss-120b which at this time is 60 cents per million output tokens.
-I've seen OpenRouter offer that model for free.
+I've even seen OpenRouter offer that model for free.
 See my llm.py for a list of other inference providers.
 
 Also, since this system makes it easy to orchestrate many small specialized workers,
 each worker uses a small context window, further reducing inference costs.
 
-You run the bot on your own computer. You don't need to deploy it to the cloud.
-So running the bot is extremely inexpensive and can even be free.
-And it is under your control.
+I run the bot on my own computer. I don't need to deploy it to the cloud.
+Running it is extremely inexpensive and can even be free.
+And it is under my control.
 
 I am new to the Telegram product, but I was extremely blown away by how easy it was to use
 and how practical and useful I think it will become in this new LLM world.
-You'll see that my telegram.py code is all of 35 lines.
+My telegram.py code is all of 35 lines.
 
-I want to briefly describe the secret sauce (well not so secret, open source, actually) of this program.
-This is mainly seen in worker.py.
-Workers receive their instructions and then receive messages from Telegram and from other workers.
+Consider the secret sauce (well not so secret, open source, actually) of this program, mainly in worker.py.
+Workers receive instructions from me and then receive messages from Telegram and from other workers.
 Each worker stores on disk all messages they've sent or received in per-user-account folders.
 This way when a worker is called into action for a user,
 it has a complete chronological transcript, a dossier as it were, for that user.
 We have here a poor man's CRM.
+When a user checks in a day or a month later, she won't have to repeat herself.
 
 The idea of this bot is to power call centers.
 I show a toy example.
