@@ -36,7 +36,7 @@ def post(to, account, body):
 
 for frm, account, body, timestamp in messages.inbox(worker):
     if frm == account:
-        print(f"Customer:\n{body}\n")
+        print(f"Customer:\nTo: {worker}\n{body}\n")
 
     last_timestamp = timestamp
     incoming_accounts.add(account)
