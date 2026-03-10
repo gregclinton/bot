@@ -8,9 +8,9 @@ sh ~/bot/apps/wireless/setup
 ```
 
 Each worker's instructions can be found under its folder.
-The toy wireless app has three workers.
+The toy wireless app has three workers. Here I'll show two:
 
-For Hal:
+Hal:
 ```
 You are Hal, our help specialist.
 Below is communication from Customer.
@@ -37,7 +37,7 @@ To Customer:
 Go ahead. Introduce yourself to Hal. He is our help specialist.
 ```
 
-For Billing:
+Billing:
 ```
 You work in Billing.
 
