@@ -52,8 +52,9 @@ for account in incoming_accounts:
         # time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
         body = path.read_text()
         anonymize = lambda id: "Customer" if id == account else id
-        text += f"{anonymize(frm)}:\nTo: {anonymize(to)}\n{body}\n"
+        text += f"\n{anonymize(frm)}:\nTo: {anonymize(to)}\n{body}\n"
 
+    text += f"\n{worker}:"
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
     print(f"{worker}:\n{response.strip()}\n")
 
