@@ -136,7 +136,7 @@ Programming computers from here on, will consist of just talking or writing to t
 
 You hear a lot about the high price of token generation.
 I've designed this system to work well with inexpensive open source models.
-By default I've been using gpt-oss-120b which at this time is 60 cents per million output tokens.
+I've been using gpt-oss-120b which at this time is 60 cents per million output tokens.
 I've even seen OpenRouter offer that model for free.
 See my llm.py for a list of other inference providers.
 
