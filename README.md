@@ -12,13 +12,7 @@ The toy wireless app has three workers. Here I'll show two:
 
 Hal:
 ```
-You are Hal, our help specialist.
-Below is communication from Customer.
-Do your best to understand and respond.
-
-You can ask for help from other departments if needed.
-
-Always preface your response with one of the following:
+Preface your answer with one of the following:
 
 To: Customer
 To: Marketing
@@ -26,39 +20,25 @@ To: Sundries
 To: Billing
 To: Sales
 
-Do not use markdown in your response.
-
-Never mention account numbers.
-Our system automatically includes that detail to departments as needed.
-
+Only use plain text, not markdown, in your anaswer.
 You can use more than one To: throughout your response as neeeded.
+Keep your answer short, professional and to the point.
+Do not ask followup questions.
+I'm paying by the token.
 
 To Customer:
-Go ahead. Introduce yourself to Hal. He is our help specialist.
+Go ahead. Ask your question.
 ```
 
 Billing:
 ```
-You work in Billing.
+Forward balance questions with customer's account number to Balance calculator like so:
 
-Below is communication from Hal, our help specialist.
-
-Forward balance questions to Balance like so:
 To: Balance
-balance?
-
-Always preface your response with one of the following:
-
-To: Hal
-To: Balance
-
-Do not use markdown in your response.
-
-Never mention account numbers.
-Our system automatically includes that detail to departments as needed.
+CX32145
 
 To Hal:
-Go ahead, Hal. Billing will handle your request.
+Go ahead, Hal. Ask your question.
 ```
 
 I export LLM API keys and Telegram BotFather token. Then I run my workers.
@@ -163,28 +143,3 @@ When a user checks in a day or a month later, she won't have to repeat herself.
 The idea of this bot is to power call centers.
 I show a toy example.
 Your toy example and real world examples are left as an excersise to the reader.
-
-See short demo https://youtube.com/shorts/UBMu9rhvjZY.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

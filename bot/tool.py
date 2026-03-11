@@ -5,9 +5,9 @@ import re
 
 tool = sys.argv[1]
 
-for frm, account, body, timestamp in messages.inbox(tool):
+for frm, body, timestamp in messages.inbox(tool):
     # will run a script with tool name
-    out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
+    out = subprocess.run(["sh", tool, body], capture_output = True, text = True)
     result = out.stdout + out.stderr
     print(f"{tool}:\nTo: {frm}\n{result.strip()}\n")  
-    messages.post(tool, frm, account, result)
+    messages.post(tool, frm, result)

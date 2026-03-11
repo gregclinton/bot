@@ -4,6 +4,7 @@ import messages
 from datetime import datetime
 from pathlib import Path
 import telegram
+import re
 
 llm_provider, llm_model, worker = sys.argv[1:]
 root = Path("workers")
@@ -32,31 +33,34 @@ def post(to, account, body):
             if worker == "Hal":
                 telegram.post(to[3:], body)
         else:
-            messages.post(worker, to, account, body)
+            messages.post(worker, to, body)
 
-for frm, account, body, timestamp in messages.inbox(worker):
-    if frm == account:
+for frm, to, body, timestamp in messages.inbox(worker):
+    if frm.startswith("TLG"):
         print(f"Customer:\nTo: {worker}\n{body}\n")
 
     last_timestamp = timestamp
-    incoming_accounts.add(account)
-    (accounts / account).mkdir(exist_ok = True)
-    (accounts / account / f"{timestamp}|{frm}|{worker}").write_text(body)
+    m = re.search(r"\bTLG\w*", f"{frm} {body}")
+    if m:
+        account = m.group()
+        incoming_accounts.add(account)
+        (accounts / account).mkdir(exist_ok = True)
+        (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
+    else:
+        (instructions / f"{timestamp}|{frm}|{to}").write_text(body)
 
 for account in incoming_accounts:
     text = ""
     all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("|")[0])):
         timestamp, frm, to = path.name.split("|")
-        # timestamp = float(timestamp)
-        # time = datetime.fromtimestamp(timestamp).strftime("%A, %B %-d")
         body = path.read_text()
-        anonymize = lambda id: "Customer" if id == account else id
+        anonymize = lambda id: "Customer" if id.startswith("TLG") else id
         text += f"\n{anonymize(frm)}:\nTo: {anonymize(to)}\n{body}\n"
 
-    text += f"\n{worker}:"
+    text += f"\nFrom {worker}:"
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
-    print(f"{worker}:\n{response.strip()}\n")
+    print(f"From {worker}:\n{response.strip()}\n")
 
     to = body = ""
 

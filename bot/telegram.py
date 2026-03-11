@@ -4,7 +4,6 @@ import sys
 from time import sleep
 import messages
 
-# https://t.me/Hal202020Bot
 token = os.environ.get("TELEGRAM_TOKEN")
 
 if not token:
@@ -28,7 +27,7 @@ def updates():
         message = update["message"]
         frm = message["from"]["id"]
         body = message["text"]
-        messages.post(f"TLG{frm}", "Hal", f"TLG{frm}", body)
+        messages.post(f"TLG{frm}", "Hal", body)
         open("offset","w").write(str(offset + 1))
 
 if __name__ == "__main__":
