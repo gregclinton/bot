@@ -31,7 +31,7 @@ def post(to, account, body):
 
 for frm, body, timestamp in messages.inbox(worker):
     if frm.startswith("TLG"):
-        print(f"Customer:\nTo: {worker}\n{body}\n")
+        print(f"From Customer:\nTo: {worker}\n{body}\n")
 
     last_timestamp = timestamp
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
@@ -50,7 +50,7 @@ for account in incoming_accounts:
         timestamp, frm, to = path.name.split("|")
         body = path.read_text()
         anonymize = lambda id: "Customer" if id.startswith("TLG") else id
-        text += f"\n{anonymize(frm)}:\nTo: {anonymize(to)}\n{body}\n"
+        text += f"\nFrom {anonymize(frm)}:\nTo: {anonymize(to)}\n{body}\n"
 
     text += f"\nFrom {worker}:"
     response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
