@@ -1,16 +1,14 @@
-I create and cd to a folder called ~/app and copy *.py there.
-
-I also export my LLM API keys such as GROQ_API_KEY.
+I create and cd to a folder called ~/app.
 
 Then I run the setup for the app. In this case, wireless.
 
 ```
-sh ~/bot/apps/wireless/setup`
+cd ~/app && sh ~/bot/apps/wireless/setup
 ```
 
-I run the workers in a separate terminal session.
+I export my GROQ_API_KEY and run workers in a separate terminal session.
 ```
-sh ~/bot/apps/wireless/run
+cd ~/app && sh ~/bot/apps/wireless/run
 ```
 
 To post a question:
@@ -18,10 +16,11 @@ To post a question:
 python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
 
-I poll for answers in a separate terminal session.
+
+poll for answers in a separate terminal session.
 
 ```
-while true; do python3 messages poll TLG15151515; sleep 0.2 done
+while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
 ```
 
 The prefix TLG is required here for users. I used to use Telegram, hence TLG.

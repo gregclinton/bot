@@ -10,3 +10,10 @@ do
     mkdir -p "$dst"
     cp "$path" "$dst"/"1773019154|HR|""$worker"
 done
+
+for path in "$app"/tools/*
+do
+    cp "$path" .
+done
+
+cp $source/bot/*.py .
