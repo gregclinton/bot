@@ -1,0 +1,50 @@
+from pathlib import Path
+from shutil import rmtree
+import sys
+
+# messages/to/from|order  body
+
+messages = Path("messages")
+messages.mkdir(exist_ok = True)
+
+def log(frm, to, body):
+    print(f"From: {frm}\nTo: {to}\n{body}\n==========================", flush = True)
+
+def inbox(name):
+    folder = messages / name
+
+    if folder.exists():
+        for path in sorted(folder.iterdir(), key=lambda p: p.stat().st_mtime):
+            yield path.name.split("|")[0], name, path.read_text(), int(path.stat().st_mtime)
+        rmtree(folder)
+
+def post(frm, to, body):
+    log(frm, to, body)
+    folder = messages / to
+    folder.mkdir(exist_ok = True)
+    order = len(list(folder.glob((folder / frm).name + "*")))
+    (folder / f"{frm}|{order + 1:06d}").write_text(body)
+
+def parse(text, cuts):
+    frm = to = body = ""
+
+    for line in text.splitlines():
+        if line.startswith("From:"):
+            frm = line.split(':')[1].strip()
+        elif line.startswith("To:"):
+            to = line.split(':')[1].strip()
+        elif line.startswith(cuts) and frm and to and body:
+            yield frm, to, body
+            frm = to = body = ""
+        else:
+            body += f"{line}\n"
+
+    if frm and to and body:
+        yield frm, to, body
+
+def load(text):
+    for frm, to, body in parse(text, "==="):
+        post(frm, to, body)
+
+if __name__ == "__main__":
+    globals()[sys.argv[1]](*sys.argv[2:])
