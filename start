@@ -20,7 +20,7 @@ if [ -f web.py ]; then
     while true; do python3 worker.py groq openai/gpt-oss-120b Billing; sleep 0.2; done &
     while true; do python3 tool.py Balance; sleep 0.2; done &
 
-    uvicorn web:app --host 0.0.0.0 --port 4000 --log-level critical
+    uvicorn web:app --host 0.0.0.0 --port 4000 # --log-level critical
     # ----------------- end of edits ------------------
 else
     rm start
