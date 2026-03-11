@@ -29,6 +29,6 @@ if [ -f web.py ]; then
 else
     rm start
     curl -s $repo/start -o start
-    curl -s $repo/web.py -o web.py
+    curl -s $chat/web.py -o web.py
     sh start
 fi

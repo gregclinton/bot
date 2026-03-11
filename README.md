@@ -1,4 +1,4 @@
-I create and cd to a folder called ~/app.
+I create a folder called ~/app.
 
 Then I run the setup for the app. In this case, wireless.
 
@@ -6,21 +6,19 @@ Then I run the setup for the app. In this case, wireless.
 cd ~/app && sh ~/bot/apps/wireless/setup
 ```
 
-I export my GROQ_API_KEY and run workers in a separate terminal session.
+In a another terminal session I export my GROQ_API_KEY and run workers.
 ```
 cd ~/app && sh ~/bot/apps/wireless/run
 ```
 
-To post a question:
+In a another terminal session I poll for answers.
+```
+cd ~/app && while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
+```
+
+I post questions in the original terminal:
 ```
 python3 messages.py post TLG15151515 Hal "What is my balance?"
-```
-
-
-poll for answers in a separate terminal session.
-
-```
-while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
 ```
 
 The prefix TLG is required here for users. I used to use Telegram, hence TLG.
