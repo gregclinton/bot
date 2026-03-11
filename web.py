@@ -8,7 +8,7 @@ app = FastAPI()
 async def post_message(req: Request):
     msg = await req.json()
     messages.post(msg["frm"], msg["to"], msg["body"])
-    return { "status": "ok" }
+    return "ok"
 
 @app.get("/messages/{owner}")
 async def get_messages(owner: str):
