@@ -1,6 +1,3 @@
-# cd ~/app
-# sh ~/bot/apps/wireless/run
-
 source=~/bot
 cp $source/bot/* .
 app=$source/apps/"$(basename $(dirname "$0"))"

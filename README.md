@@ -2,7 +2,11 @@ I create and cd to a folder called ~/app and copy *.py there.
 
 I also export my LLM API keys such as GROQ_API_KEY.
 
-Then I run `sh ~/bot/apps/wireless/setup`.
+Then I run the setup for the app. In this case, wireless.
+
+```
+sh ~/bot/apps/wireless/setup`
+```
 
 I run the workers in a separate terminal session:
 ```
