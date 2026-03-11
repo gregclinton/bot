@@ -50,6 +50,7 @@ const chat = {
         .then(res => res.json())
         .then(list => {
             list.forEach(response => chat.post(chat.correspondent, marked.parse(response)));
+            setTimeout(chat.run, 100);
         })
     }
 };
