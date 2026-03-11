@@ -8,7 +8,7 @@ Then I run the setup for the app. In this case, wireless.
 sh ~/bot/apps/wireless/setup`
 ```
 
-I run the workers in a separate terminal session:
+I run the workers in a separate terminal session.
 ```
 sh ~/bot/apps/wireless/run
 ```
