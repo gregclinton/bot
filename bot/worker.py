@@ -29,7 +29,7 @@ def post(to, account, body):
         (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
         messages.post(worker, to, body)
 
-for frm, to, body, timestamp in messages.inbox(worker):
+for frm, body, timestamp in messages.inbox(worker):
     if frm.startswith("TLG"):
         print(f"Customer:\nTo: {worker}\n{body}\n")
 
@@ -39,9 +39,9 @@ for frm, to, body, timestamp in messages.inbox(worker):
         account = m.group()
         incoming_accounts.add(account)
         (accounts / account).mkdir(exist_ok = True)
-        (accounts / account / f"{timestamp}|{frm}|{to}").write_text(body)
+        (accounts / account / f"{timestamp}|{frm}|{worker}").write_text(body)
     else:
-        (instructions / f"{timestamp}|{frm}|{to}").write_text(body)
+        (instructions / f"{timestamp}|{frm}|{worker}").write_text(body)
 
 for account in incoming_accounts:
     text = ""

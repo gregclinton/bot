@@ -15,7 +15,7 @@ def inbox(to):
             frm = path.name.split("|")[0]
             body = path.read_text()
             timestamp = int(path.stat().st_mtime)
-            yield frm, to, body, timestamp
+            yield frm, body, timestamp
 
         rmtree(folder)
 
@@ -26,7 +26,7 @@ def post(frm, to, body):
     (folder / f"{frm}|{order + 1:06d}").write_text(body)
 
 def poll(to):
-    for frm, to, body, timestamp in inbox(to):
+    for frm, body, timestamp in inbox(to):
         print(f"From: {frm}\nTo: {to}\n{body}\n")
 
 if __name__ == "__main__":
