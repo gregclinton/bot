@@ -49,8 +49,7 @@ const chat = {
         fetch(`/messages/${chat.account}?timeout=30`)
         .then(res => res.json())
         .then(list => {
-            chat.correspondent = msg.frm;
-            list.forEach(msg => chat.post(msg.frm, marked.parse(msg.body)));
+            list.forEach(response => chat.post(chat.correspondent, marked.parse(response)));
         });
     }
 };
