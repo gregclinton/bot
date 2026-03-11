@@ -37,23 +37,20 @@ const chat = {
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ from: chat.account, to: chat.correspondent, body: prompt })
         });
+
+        chat.retrieve();
     },
 
     clear: () => {
         document.getElementById('chat').innerHTML = '';
     },
 
-    run: () => {
+    retrieve: () => {
         fetch(`/messages/${chat.account}?timeout=30`)
         .then(res => res.json())
         .then(list => {
             chat.correspondent = msg.frm;
             list.forEach(msg => chat.post(msg.frm, marked.parse(msg.body)));
-            setTimeout(chat.run, 500);
         });
     }
-};
-
-window.onload = async () => {
-    chat.run();
 };

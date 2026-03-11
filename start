@@ -1,21 +1,24 @@
-repository="https://raw.githubusercontent.com/gregclinton/bot/refs/heads/main"
+repo="https://raw.githubusercontent.com/gregclinton/bot/refs/heads/main"
+bot=$repo/bot
+chat=$repo/chat
+app=$repo/apps/wireless
 
 if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
-    curl -s $repository/bot/llm.py -o llm.py
-    curl -s $repository/bot/messages.py -o messages.py
-    curl -s $repository/bot/tool.py -o tool.py
-    curl -s $repository/bot/worker.py -o worker.py
+    curl -s $bot/llm.py -o llm.py
+    curl -s $bot/messages.py -o messages.py
+    curl -s $bot/tool.py -o tool.py
+    curl -s $bot/worker.py -o worker.py
 
     mkdir chat
-    curl -s $repository/chat/chat.js -o chat/chat.js
-    curl -s $repository/chat/main.css -o chat/main.css
-    curl -s $repository/chat/index.html -o chat/index.html
+    curl -s $chat/chat.js -o chat/chat.js
+    curl -s $chat/main.css -o chat/main.css
+    curl -s $chat/index.html -o chat/index.html
 
     mkdir -p workers/Hal/instructions workers/Billing/instructions
-    curl -s $repository/apps/wireless/workers/Hal     -o "workers/Hal/instructions/1773019154|HR|Hal"
-    curl -s $repository/apps/wireless/workers/Billing -o "workers/Hal/instructions/1773019154|HR|Billing"
-    curl -s $repository/apps/wireless/tools/Balance   -o "Balance"
+    curl -s $app/workers/Hal -o "workers/Hal/instructions/1773019154|HR|Hal"
+    curl -s $app/workers/Billing -o "workers/Hal/instructions/1773019154|HR|Billing"
+    curl -s $app/tools/Balance -o "Balance"
 
     while true; do python3 worker.py groq openai/gpt-oss-120b Hal;     sleep 0.2; done &
     while true; do python3 worker.py groq openai/gpt-oss-120b Billing; sleep 0.2; done &
@@ -25,7 +28,7 @@ if [ -f web.py ]; then
     # ----------------- end of edits ------------------
 else
     rm start
-    curl -s $repository/start -o start
-    curl -s $repository/web.py -o web.py
+    curl -s $repo/start -o start
+    curl -s $repo/web.py -o web.py
     sh start
 fi
