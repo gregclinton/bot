@@ -41,23 +41,26 @@ To Hal:
 Go ahead, Hal. Ask your question.
 ```
 
-I export LLM API keys and Telegram BotFather token. Then I run my workers.
+I export LLM API keys and then I run my workers.
 ```
 cd ~/app
 export GROQ_API_KEY=ASFJSADFLHHJFL
-export TELEGRAM_TOKEN=ASFDAFDSFDFAFSAFSA
 sh ~/bot/apps/wireless/run
 ```
 
-In another terminal session, I poll Telegram:
+In another terminal session, I poll for answers.
 
 ```
 cd ~/app
-export TELEGRAM_TOKEN=ASFDAFDSFDFAFSAFSA
-while true; do python3 telegram.py updates; done
+while true; do python3 messages poll TLG15151515; sleep 0.2 done
 ```
 
-I go to Telegram and chat with my bot and see these messages logged:
+I post questions, like so:
+
+```
+cd ~/app
+python3 messages.py post TLG15151515 Hal "What is my balance?"
+```
 
 ```
 Customer:
@@ -128,12 +131,7 @@ I run the bot on my own computer. I don't need to deploy it to the cloud.
 Running it is extremely inexpensive and can even be free.
 And it is under my control.
 
-I am new to the Telegram product, but I was extremely blown away by how easy it was to use
-and how practical and useful I think it will become in this new LLM world.
-My telegram.py code is all of 35 lines.
-
-Consider the secret sauce (well not so secret, open source, actually) of this program, mainly in worker.py.
-Workers receive instructions from me and then receive messages from Telegram and from other workers.
+Workers receive instructions from me and messages from the customer and from other workers.
 Each worker stores on disk all messages they've sent or received in per-user-account folders.
 This way when a worker is called into action for a user,
 it has a complete chronological transcript, a dossier as it were, for that user.

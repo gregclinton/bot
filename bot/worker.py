@@ -3,7 +3,6 @@ import sys
 import messages
 from datetime import datetime
 from pathlib import Path
-import telegram
 import re
 
 llm_provider, llm_model, worker = sys.argv[1:]
@@ -28,12 +27,7 @@ def post(to, account, body):
     if to and body:
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
-
-        if to.startswith("TLG"):
-            if worker == "Hal":
-                telegram.post(to[3:], body)
-        else:
-            messages.post(worker, to, body)
+        messages.post(worker, to, body)
 
 for frm, to, body, timestamp in messages.inbox(worker):
     if frm.startswith("TLG"):
