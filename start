@@ -15,6 +15,7 @@ if [ -f web.py ]; then
     mkdir -p workers/Hal/instructions workers/Billing/instructions
     curl -s $repository/apps/wireless/workers/Hal     -o "workers/Hal/instructions/1773019154|HR|Hal"
     curl -s $repository/apps/wireless/workers/Billing -o "workers/Hal/instructions/1773019154|HR|Billing"
+    curl -s $repository/apps/wireless/tools/Balance   -o "Balance"
 
     while true; do python3 worker.py groq openai/gpt-oss-120b Hal;     sleep 0.2; done &
     while true; do python3 worker.py groq openai/gpt-oss-120b Billing; sleep 0.2; done &
