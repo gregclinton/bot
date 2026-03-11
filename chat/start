@@ -28,7 +28,7 @@ if [ -f web.py ]; then
     # ----------------- end of edits ------------------
 else
     rm start
-    curl -s $repo/start -o start
+    curl -s $chat/start -o start
     curl -s $chat/web.py -o web.py
     sh start
 fi
