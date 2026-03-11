@@ -25,4 +25,4 @@ The prefix TLG is required here for users. I used to use Telegram, hence TLG.
 Each worker stores all messages they've sent or received in per-user-account folders.
 This way it has a complete chronological transcript, a dossier as it were, for that user.
 
-The possibilities with such a paper trail are considerable.
+The possibilities for such a paper trail are considerable.
