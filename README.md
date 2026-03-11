@@ -1,5 +1,7 @@
 I create and cd to a folder called ~/app and copy *.py there.
+
 I also export my LLM API keys such as GROQ_API_KEY.
+
 Then I run `sh ~/bot/apps/wireless/setup`.
 
 I run the workers in a separate terminal session:
@@ -22,4 +24,5 @@ The prefix TLG is required here for users. I used to use Telegram, hence TLG.
 
 Each worker stores all messages they've sent or received in per-user-account folders.
 This way it has a complete chronological transcript, a dossier as it were, for that user.
-One could imagine all that one could do with such a trail.
+
+The possibilities with such a paper trail are considerable.
