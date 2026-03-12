@@ -25,6 +25,9 @@ last_timestamp = 0
 
 def post(to, account, body):
     if to and body:
+        if body.startswith("From:") and "\n" in body:
+            body = body.split("\n", 1)[1]
+
         body = (body if account in body else f"References account: {account}\n{body}").strip()
         (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
         messages.post(worker, to, body)
