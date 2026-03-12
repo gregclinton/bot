@@ -47,7 +47,7 @@ for account in incoming_accounts:
     text = ""
     all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("|")[0])):
-        timestamp, frm, to = path.name.split("|")
+        _, frm, to = path.name.split("|")
         body = path.read_text()
         text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
 
