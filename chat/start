@@ -5,26 +5,32 @@ app=$repo/apps/wireless
 
 if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
-    curl -s $bot/llm.py -o llm.py
-    curl -s $bot/messages.py -o messages.py
-    curl -s $bot/tool.py -o tool.py
-    curl -s $bot/worker.py -o worker.py
+    for name in llm messages worker tool
+    do
+        curl -s $bot/$name.py -o $name.py
+    done
 
     mkdir chat
-    curl -s $chat/chat.js -o chat/chat.js
-    curl -s $chat/main.css -o chat/main.css
-    curl -s $chat/index.html -o chat/index.html
+    for file in chat.js main.css index.html
+    do
+        curl -s $chat/$file -o chat/$file
+    done
 
     mkdir -p workers/Hal/instructions workers/Billing/instructions
-    curl -s $app/workers/Hal -o "workers/Hal/instructions/1773019154|HR|Hal"
-    curl -s $app/workers/Billing -o "workers/Hal/instructions/1773019154|HR|Billing"
-    curl -s $app/tools/Balance -o "Balance"
+    for worker in Hal Billing
+    do
+        curl -s $app/workers/"$worker" -o "workers/Hal/instructions/1773019154|HR|$worker"
+    done
 
-    while true; do python3 worker.py groq openai/gpt-oss-120b Hal;     sleep 0.2; done &
-    while true; do python3 worker.py groq openai/gpt-oss-120b Billing; sleep 0.2; done &
-    while true; do python3 tool.py Balance; sleep 0.2; done &
+    for tool in Balance
+    do
+        curl -s $app/tools/$tool -o $tool
+    done
 
-    uvicorn web:app --host 0.0.0.0 --port 4000 # --log-level critical
+    curl -s $app/run -o run
+    sh run &
+
+    uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
 else
     rm start
