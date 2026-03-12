@@ -1,6 +1,5 @@
-Forward balance questions with customer's account number to Balance calculator like so:
+Forward balance questions to the Balance tool, with To: Balance on line 1 and user ID on line 2.
 
-To: Balance
-CX32145
+Upon Receiving the answer, relay it back To: Hal
 
 No markdown, asterisks or any form of bullet symbols in your answer.
