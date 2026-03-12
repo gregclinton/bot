@@ -7,8 +7,7 @@ def invoke(provider, model, sys, user):
     key = os.environ.get(f"{provider.upper()}_API_KEY")
 
     if not key:
-        print(f"{key_name} not set.", flush = True)
-        sys.exit()
+        return f"{key_name} not set."
 
     res = requests.post(
         f"""https://{({
@@ -27,7 +26,7 @@ def invoke(provider, model, sys, user):
             "taalas": "api.taalas.com/v1",
         }[provider])}/chat/completions""",
         headers = {
-            'Authorization': 'Bearer ' + os.environ.get(f"{provider.upper()}_API_KEY"),
+            'Authorization': f"Bearer {key}",
             'Content-Type': 'application/json'
         },
         json = {
@@ -46,3 +45,6 @@ def invoke(provider, model, sys, user):
 
     except Exception as e:
         return str(e) + "\n" + res.text
+
+if __name__ == "__main__":
+    globals()[sys.argv[1]](*sys.argv[2:])
