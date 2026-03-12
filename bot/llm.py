@@ -46,5 +46,8 @@ def invoke(provider, model, sys, user):
     except Exception as e:
         return str(e) + "\n" + res.text
 
+def show(provider, model, sys, user):
+    print(invoke(provider, model, sys, user))
+
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
