@@ -7,13 +7,13 @@ sh ~/bot/apps/wireless/setup
 python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
 
-In a another terminal session I export my GROQ_API_KEY and run the workers.
+In another terminal session I export my GROQ_API_KEY and run the workers.
 
 ```
 ~/bot/apps/wireless/run
 ```
 
-In a another terminal session I poll for answers.
+In another terminal session I poll for answers.
 
 ```
 while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
