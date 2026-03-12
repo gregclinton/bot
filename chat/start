@@ -19,7 +19,7 @@ if [ -f web.py ]; then
     mkdir -p workers/Hal/instructions workers/Billing/instructions
     for worker in Hal Billing
     do
-        curl -s $app/workers/"$worker" -o "workers/Hal/instructions/1773019154|HR|$worker"
+        curl -s "$app/workers/$worker" -o "workers/Hal/instructions/1773019154|HR|$worker"
     done
 
     for tool in Balance
