@@ -7,4 +7,4 @@ address=$2
 # balance=$(sh calc_balance $account)
 balance=12.37
 
-echo -n "\$$balance"
+echo -n "The balance for account $account is \$$balance."
