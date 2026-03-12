@@ -1,29 +1,23 @@
-I create a folder called ~/app.
+I create a folder called ~/app and run all commands from there.
 
-Then I run the setup for the app. In this case, wireless.
+I run the setup for the app, in this case, wireless, and I post questions.
 
 ```
-cd ~/app && sh ~/bot/apps/wireless/setup
+sh ~/bot/apps/wireless/setup
+python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
 
-In a another terminal session I export my GROQ_API_KEY and run workers.
+In a another terminal session I export my GROQ_API_KEY and run the workers.
 ```
-cd ~/app && sh ~/bot/apps/wireless/run
+~/bot/apps/wireless/run
 ```
 
 In a another terminal session I poll for answers.
 ```
-cd ~/app && while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
+while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
 ```
-
-I post questions in the original terminal:
-```
-python3 messages.py post TLG15151515 Hal "What is my balance?"
-```
-
-The prefix TLG is required here for users. I used to use Telegram, hence TLG.
 
 Each worker stores all messages they've sent or received in per-user-account folders.
-This way it has a complete chronological transcript, a dossier as it were, for that user.
+So it has a complete chronological transcript, a dossier as it were, for each user.
 
 The possibilities for such a paper trail are considerable.
