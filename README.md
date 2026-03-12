@@ -19,7 +19,7 @@ In a another terminal session I poll for answers.
 while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
 ```
 
-Each worker stores all messages they've sent or received in per-user-account folders.
+Each worker stores all messages it sends or receives in per-user-account folders.
 So it has a complete chronological transcript, a dossier as it were, for each user.
 
 The possibilities for such a paper trail are considerable.
