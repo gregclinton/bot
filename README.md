@@ -2,20 +2,20 @@ I create a folder called ~/app and run all commands from there.
 
 I run setup for the app, in this case, wireless, and post questions.
 
-```
+```bash
 sh ~/bot/apps/wireless/setup
 python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
 
 In another terminal session I export my GROQ_API_KEY and run the workers.
 
-```
-~/bot/apps/wireless/run
+```sh
+sh ~/bot/apps/wireless/run
 ```
 
 In another terminal session I poll for answers.
 
-```
+```sh
 while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
 ```
 
