@@ -16,9 +16,9 @@ if [ -f web.py ]; then
         curl -s $chat/$file -o chat/$file
     done
 
-    mkdir -p workers/Hal/instructions workers/Billing/instructions
     for worker in Hal Billing
     do
+        mkdir -p "workers/$worker/instructions"
         curl -s "$app/workers/$worker" -o "workers/$worker/instructions/1773019154|HR|$worker"
     done
 
