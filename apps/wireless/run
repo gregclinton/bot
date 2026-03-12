@@ -1,8 +1,3 @@
-source=~/bot
-cp $source/bot/* .
-app=$source/apps/"$(basename $(dirname "$0"))"
-cp "$app"/tools/* .
-
 while true
 do
     for worker in Hal Billing Sales
