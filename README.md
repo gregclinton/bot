@@ -2,7 +2,7 @@ I create a folder called ~/app and run all commands from there.
 
 I run setup for the app, in this case, wireless, and post questions.
 
-```bash
+```sh
 sh ~/bot/apps/wireless/setup
 python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
