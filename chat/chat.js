@@ -1,8 +1,7 @@
 document.title = 'hal';
 
 const chat = {
-    account: 'TLG143623',
-
+    from: 'TLG143623',
     to: "Hal",
 
     post: (name, text) => {
@@ -35,7 +34,7 @@ const chat = {
         fetch(`/messages`, {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ from: chat.account, to: chat.to, body: prompt })
+            body: JSON.stringify({ from: chat.from, to: chat.to, body: prompt })
         });
 
         chat.retrieve();
@@ -46,7 +45,7 @@ const chat = {
     },
 
     retrieve: () => {
-        fetch(`/messages/${chat.account}?timeout=30`)
+        fetch(`/messages/${chat.from}?timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
