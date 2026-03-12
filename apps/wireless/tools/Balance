@@ -1,10 +1,8 @@
-IFS='
-' set -- $1
 account=$1
-address=$2
+query=$2
 
 # toy example -- here we would call code to calculate account's balance
 # balance=$(sh calc_balance $account)
 balance=12.37
 
-echo -n "The balance for account $account is \$$balance."
+echo -n \$$balance."
