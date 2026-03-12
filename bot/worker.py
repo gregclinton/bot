@@ -55,8 +55,8 @@ for account in incoming_accounts:
         text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
 
     text += f"\nFrom: {worker}"
-    response = llm.invoke(llm_provider, llm_model, "", text).strip() if text else ""
-    print(f"From: {worker}\n{response.strip()}\n")
+    response = llm.invoke(llm_provider, llm_model, "", text).strip()
+    print(f"From: {worker}\n{response}\n")
 
     to = body = ""
 
