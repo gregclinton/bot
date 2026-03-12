@@ -18,8 +18,8 @@ async def get_messages(to: str, timeout: int = 10):
     start = time.time()
 
     while True:
-        for _, body, _ in messages.inbox(to):
-            results.append(body)
+        for frm, body, timestamp in messages.inbox(to):
+            results.append({"from": frm, "body": body, "timestamp": timestamp})
         if results or time.time() - start > timeout:
             break
         await asyncio.sleep(0.2)
