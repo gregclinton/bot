@@ -1,6 +1,6 @@
 I create a folder called ~/app and run all commands from there.
 
-I run the setup for the app, in this case, wireless, and I post questions.
+I run setup for the app, in this case, wireless, and post questions.
 
 ```
 sh ~/bot/apps/wireless/setup
