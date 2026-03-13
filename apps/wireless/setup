@@ -8,7 +8,5 @@ cp $source/bot/*.py .
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
-    dst="workers/$worker/instructions"
-    mkdir -p "$dst"
-    cp "$path" "$dst/1773019154|HR|$worker"
+    python3 messages.py post HR "$worker" "$(cat "$path")"
 done

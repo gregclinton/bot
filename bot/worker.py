@@ -54,7 +54,7 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
 
-    text = text.replace("TLG????????", account)
+    text = text.replace("????????", account)
     text += f"\nFrom: {worker}"
     response = llm.invoke(llm_provider, llm_model, "", text).strip()
     print(f"From: {worker}\n{response}\n")
