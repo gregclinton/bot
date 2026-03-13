@@ -1,22 +1,25 @@
-I create a folder called ~/app and run all commands from there.
-
-I run setup for the app, in this case, wireless, and post questions.
+I run setup.
 
 ```sh
 sh ~/bot/apps/wireless/setup
-python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
 
-In another terminal session I export my GROQ_API_KEY and run the workers.
+In a separate terminal I export my GROQ_API_KEY and run the workers.
 
 ```sh
 sh ~/bot/apps/wireless/run
 ```
 
-In another terminal session I poll for answers.
+Back in the first terminal I post questions...
 
 ```sh
-while true; do python3 messages.py poll TLG15151515; sleep 0.2; done
+python3 messages.py post TLG15151515 Hal "What is my balance?"
+```
+
+...and poll for answers.
+
+```sh
+python3 messages.py poll TLG15151515
 ```
 
 Each worker stores all messages it sends or receives in per-user-account folders.
