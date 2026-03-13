@@ -18,7 +18,7 @@ if [ -f web.py ]; then
 
     for worker in Hal Billing
     do
-        python3 messages.py post HR "$worker" "$(curl -s "$app/workers/$worker")"
+        python3 messages.py post HR "$worker" "$(curl "$app/workers/$worker")"
     done
 
     for tool in Balance
