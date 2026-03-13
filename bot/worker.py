@@ -28,7 +28,7 @@ def post(to, account, body):
         if body.startswith("From:") and "\n" in body:
             body = body.split("\n", 1)[1]
 
-        body = body.strip()
+        body = (body if account == to or account in body else f"In reference to account: {account}\n{body}").strip()
         (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
         messages.post(worker, to, body)
 
@@ -47,7 +47,7 @@ for frm, body, timestamp in messages.inbox(worker):
         (instructions / f"{timestamp}|{frm}|{worker}").write_text(body)
 
 for account in incoming_accounts:
-    text = f"In reference to account: {account}\n\n"
+    text = ""
     all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
     for path in sorted(all_msgs, key = lambda p: float(p.name.split("|")[0])):
         _, frm, to = path.name.split("|")
