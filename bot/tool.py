@@ -15,7 +15,7 @@ for frm, body, timestamp in messages.inbox(tool):
         result = (out.stdout + out.stderr).strip()
 
         if account not in result:
-            result = f"In reference to account: {account}\n\n{result}"
+            result = f"In reference to account: {account}\n{result}"
 
         print(f"From: {tool}\nTo: {frm}\n{result}\n")
         messages.post(tool, frm, result)
