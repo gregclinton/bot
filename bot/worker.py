@@ -30,11 +30,7 @@ def post(to, account, body):
 
         body = (body if account == to or account in body else f"In reference to account: {account}\n{body}").strip()
         (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
-
-        if to == account or (workers / to).exists():
-            messages.post(worker, to, body)
-        else:
-            messages.post(to, worker, "Unavailable. Refrain from sending messages to unknown addresses.")
+        messages.post(worker, to, body)
 
 for frm, body, timestamp in messages.inbox(worker):
     if frm.startswith("TLG"):
