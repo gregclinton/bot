@@ -7,13 +7,13 @@ if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
     for name in llm messages worker tool
     do
-        curl -s $bot/$name.py -o $name.py
+        curl $bot/$name.py -o $name.py
     done
 
     mkdir chat
     for file in chat.js main.css index.html
     do
-        curl -s $chat/$file -o chat/$file
+        curl $chat/$file -o chat/$file
     done
 
     for worker in Hal Billing
@@ -23,17 +23,17 @@ if [ -f web.py ]; then
 
     for tool in Balance
     do
-        curl -s $app/tools/$tool -o $tool
+        curl $app/tools/$tool -o $tool
     done
 
-    curl -s $app/run -o run
+    curl $app/run -o run
     sh run &
 
     uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
 else
     rm start
-    curl -s $chat/start -o start
-    curl -s $chat/web.py -o web.py
+    curl $chat/start -o start
+    curl $chat/web.py -o web.py
     sh start
 fi
