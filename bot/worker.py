@@ -29,7 +29,7 @@ def post(to, account, body):
             body = body.split("\n", 1)[1]
 
         if account not in f"{to} {body}":
-            body = f"In reference to account: {account}\n{body}"
+            body = f"In reference to account: {account}\n\n{body}"
         body = body.strip()
         (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
         messages.post(worker, to, body)
