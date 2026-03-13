@@ -10,7 +10,7 @@ In a separate terminal I export my GROQ_API_KEY and run the workers.
 sh ~/bot/apps/wireless/run
 ```
 
-Back in the first terminal I post questions...
+Back in the first terminal, I post questions...
 
 ```sh
 python3 messages.py post TLG15151515 Hal "What is my balance?"
