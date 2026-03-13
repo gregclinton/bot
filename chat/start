@@ -18,9 +18,9 @@ if [ -f web.py ]; then
 
     for worker in Hal Billing
     do
-        dst="workers/$worker/instructions"
-        mkdir -p "$dst"
-        curl -s "$app/workers/$worker" -o  "$dst/1773019154|HR|$worker"
+        curl -s "$app/workers/$worker" -o xxx
+        python3 messages.py post HR "$worker" "$(cat xxx)"
+        rm xxx
     done
 
     for tool in Balance
