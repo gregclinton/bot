@@ -4,7 +4,7 @@ while true # for i in $(seq 1 5)
 do
     for worker in Hal Billing
     do
-        python3 worker.py groq openai/gpt-oss-20b "$worker"
+        python3 worker.py groq openai/gpt-oss-120b "$worker"
     done
 
     for tool in Balance
