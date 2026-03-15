@@ -24,7 +24,7 @@ incoming_accounts = set()
 last_timestamp = 0
 
 def post(to, account, body):
-    if to and body:
+    if body:
         if account not in f"{to} {body}":
             body = f"In reference to account: {account}\n{body}"
         body = body.strip()
@@ -53,12 +53,12 @@ for account in incoming_accounts:
         body = path.read_text()
         text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
 
+    to = frm
     text = text.replace("????????", account)
     text += f"\nFrom: {worker}"
     response = llm.invoke(llm_provider, llm_model, "", text).strip()
     print(f"From: {worker}\n{response}\n")
-
-    to = body = ""
+    body = ""
 
     for line in response.splitlines():
         if line.startswith("To:"):
