@@ -27,7 +27,6 @@
         let prompt = document.getElementById('prompt');
 
         setInterval(() => {
-            prompt.focus();
             document.getElementById("send").hidden = prompt.value.trim() === '';
         }, 200);
 
