@@ -5,7 +5,6 @@ import sys
 # messages/to/from|order  body
 
 messages = Path("messages")
-messages.mkdir(exist_ok = True)
 
 def inbox(to):
     folder = messages / to
