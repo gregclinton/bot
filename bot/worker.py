@@ -26,9 +26,6 @@ def post(to, account, body):
         messages.post(worker, to, body)
 
 for frm, body, timestamp in messages.inbox(worker):
-    if frm.startswith("TLG"):
-        print(f"From: {frm}\nTo: {worker}\n{body}\n")
-
     last_timestamp = timestamp
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
     if m:
