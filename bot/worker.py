@@ -7,15 +7,9 @@ import re
 
 llm_provider, llm_model, worker = sys.argv[1:]
 workers = Path("workers")
-workers.mkdir(exist_ok = True)
 root = workers / worker
-root.mkdir(exist_ok = True)
-
 accounts = root / "accounts"
-accounts.mkdir(exist_ok = True)
-
 instructions = root / "instructions"
-instructions.mkdir(exist_ok = True)
 
 # accounts/account/timestamp|from|to   body
 #     instructions/timestamp|from|to   body
@@ -40,10 +34,11 @@ for frm, body, timestamp in messages.inbox(worker):
     if m:
         account = m.group()
         incoming_accounts.add(account)
-        (accounts / account).mkdir(exist_ok = True)
-        (accounts / account / f"{timestamp}|{frm}|{worker}").write_text(body)
+        folder = accounts / account
     else:
-        (instructions / f"{timestamp}|{frm}|{worker}").write_text(body)
+        folder = instructions
+    folder.mkdir(parents = True, exist_ok = True)
+    (folder / f"{timestamp}|{frm}|{worker}").write_text(body)
 
 for account in incoming_accounts:
     text = ""
