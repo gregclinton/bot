@@ -52,7 +52,6 @@ const chat = {
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
-
     clear: () => {
         document.getElementById('chat').innerHTML = '';
     }
