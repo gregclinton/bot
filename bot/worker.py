@@ -10,10 +10,6 @@ workers = Path("workers")
 root = workers / worker
 accounts = root / "accounts"
 instructions = root / "instructions"
-
-# accounts/account/timestamp|from|to   body
-#     instructions/timestamp|from|to   body
-
 incoming_accounts = set()
 last_timestamp = 0
 
