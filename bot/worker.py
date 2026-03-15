@@ -25,9 +25,6 @@ last_timestamp = 0
 
 def post(to, account, body):
     if to and body:
-        if body.startswith("From:") and "\n" in body:
-            body = body.split("\n", 1)[1]
-
         if account not in f"{to} {body}":
             body = f"In reference to account: {account}\n{body}"
         body = body.strip()
@@ -68,7 +65,7 @@ for account in incoming_accounts:
             post(to, account, body)
             to = line.split(':')[1].strip()
             body = ""
-        else:
+        elif not line.startswith("From:"):
             body += f"{line}\n"
 
     post(to, account, body)
