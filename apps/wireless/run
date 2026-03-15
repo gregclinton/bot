@@ -15,4 +15,4 @@ do
     sleep 0.1
 done
 
-# python3 messages.py poll TLG15151515
+# python3 messages.py poll TLG15151515 > /dev/null
