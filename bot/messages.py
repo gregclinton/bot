@@ -24,9 +24,5 @@ def post(frm, to, body):
     order = len(list(folder.glob((folder / frm).name + "*")))
     (folder / f"{frm}|{order + 1:06d}").write_text(body)
 
-def poll(to):
-    for frm, body, timestamp in inbox(to):
-        print(f"From: {frm}\nTo: {to}\n{body}\n")
-
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])

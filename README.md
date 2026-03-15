@@ -16,11 +16,8 @@ Back in the first terminal, I post questions...
 python3 messages.py post TLG15151515 Hal "What is my balance?"
 ```
 
-...and poll for answers.
+...and watch the worker terminal for answers.
 
-```sh
-python3 messages.py poll TLG15151515
-```
 
 Each worker stores all messages it sends or receives in per-user-account folders.
 So it has a complete chronological transcript, a dossier as it were, for each user.

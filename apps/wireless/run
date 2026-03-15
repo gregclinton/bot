@@ -15,4 +15,4 @@ do
     sleep 0.1
 done
 
-# python3 messages.py poll TLG15151515 > /dev/null
+# python3 messages.py inbox TLG15151515
