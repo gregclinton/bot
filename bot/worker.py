@@ -6,8 +6,7 @@ from pathlib import Path
 import re
 
 llm_provider, llm_model, worker = sys.argv[1:]
-workers = Path("workers")
-root = workers / worker
+root = Path("workers") / worker
 accounts = root / "accounts"
 instructions = root / "instructions"
 incoming_accounts = set()
