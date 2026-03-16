@@ -55,4 +55,3 @@ const chat = {
 window.onload = async () => {
     chat.retrieve();
 };
-
