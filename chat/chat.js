@@ -15,11 +15,9 @@ const chat = {
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ from: chat.from, to: chat.to, body: prompt })
         });
-
-        chat.retrieve();
     },
 
-    retrieve: () => {
+    retrieve: async () => {
         fetch(`/messages/${chat.from}?timeout=30`)
         .then(res => res.json())
         .then(list => {
