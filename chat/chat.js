@@ -32,23 +32,17 @@ const chat = {
 
     show: (name, text) => {
         const title = document.createElement('span');
+        const top = document.createElement('div');
+        const bottom = document.createElement('div');
+        const post = document.createElement('div');
 
         title.innerHTML = name;
         title.classList.add('name');
-
-        const top = document.createElement('div');
-
         top.append(title);
-
-        const bottom = document.createElement('div');
-
-        const post = document.createElement('div');
         post.append(top, bottom);
         post.classList.add('post');
         document.getElementById('chat').appendChild(post);
-
         bottom.innerHTML = text;
-
         post.scrollIntoView({ behavior: 'smooth' });
     },
 
