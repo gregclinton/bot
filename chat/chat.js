@@ -1,4 +1,4 @@
-document.title = 'hal';
+document.title = 'bot';
 
 const chat = {
     from: 'TLG143623',
