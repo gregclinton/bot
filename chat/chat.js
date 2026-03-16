@@ -7,6 +7,7 @@ const chat = {
     send: async () => {
         const e = document.getElementById("prompt")
         const prompt = e.value.trim()
+
         chat.show("me", prompt);
         e.value = '';
         fetch(`/messages`, {
