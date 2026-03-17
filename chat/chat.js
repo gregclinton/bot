@@ -2,15 +2,15 @@ document.title = 'bot';
 
 const chat = {
     from: 'TLG143623',
-    to: "Hal",
+    to: 'Hal',
 
     send: async () => {
-        const e = document.getElementById("prompt")
+        const e = document.getElementById('prompt')
         const prompt = e.value.trim()
 
-        chat.show("me", prompt);
+        chat.show('me', prompt);
         e.value = '';
-        fetch(`/messages`, {
+        fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ from: chat.from, to: chat.to, body: prompt })
