@@ -3,6 +3,7 @@ document.title = 'bot';
 const chat = {
     me: 'TLG143623',
     worker: 'Hal',
+    timestamp: 0,
 
     send: async () => {
         const e = document.getElementById('prompt')
@@ -18,11 +19,12 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.me}?timeout=30`)
+        fetch(`/messages/${chat.me}?timestamp=${chat.timestamp}&timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
                 chat.worker = item.from;
+                chat.timestamp = item.timestamp;
                 chat.show(item.from, marked.parse(item.body));
             });
             setTimeout(chat.retrieve, 100);
