@@ -19,7 +19,7 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.me}?timestamp=${chat.timestamp}&timeout=30`)
+        fetch(`/messages/${chat.worker}/${chat.me}?timestamp=${chat.timestamp}&timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {

@@ -2,7 +2,7 @@ while true # for i in $(seq 1 5)
 do
     for worker in Hal Billing Phones Plans
     do
-        python3 worker.py groq openai/gpt-oss-120b "$worker"
+        python3 worker.py run "$worker" groq openai/gpt-oss-120b
     done
 
     for tool in Balance
