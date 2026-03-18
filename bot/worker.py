@@ -65,9 +65,9 @@ def chat(worker, account, start):
 
     if folder.exists():
         for path in folder.iterdir():
-            order, frm, _ = path.name.split("|")
+            order, frm, to = path.name.split("|")
             order = int(order)
-            if order >= start and frm in [worker, account]:
+            if order >= start and frm in [worker, account] and to in [worker, account]:
                 body = path.read_text()
                 yield order, frm, body
 
