@@ -5,8 +5,6 @@ from pathlib import Path
 import re
 
 def run(worker, llm_provider, llm_model):
-    root = Path("workers") / worker
-    accounts = root / "accounts"
     last_timestamp = 0
 
     def post(worker, to, account, body):
@@ -60,6 +58,7 @@ def run(worker, llm_provider, llm_model):
 def chat(worker, account, timestamp):
     root = Path("workers") / worker
     accounts = root / "accounts"
+    accounts.mkdir(parents = True, exist_ok = True)
     folder = accounts / account
 
     if folder.exists():
