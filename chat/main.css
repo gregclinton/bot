@@ -42,7 +42,7 @@ body, html
 
 #toolbar svg
 {
-    margin: 8px;
+    margin: 4px;
     margin-right: 8;
     cursor: pointer;
 }
@@ -55,7 +55,7 @@ body, html
     resize: none;
     border: none;
     outline: none;
-    padding: 8px;
+    padding: 6px;
     overflow: hidden;
 }
 
