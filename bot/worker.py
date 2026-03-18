@@ -4,8 +4,13 @@ import messages
 from pathlib import Path
 import re
 
+workers = Path("workers")
+
 def run(worker, llm_provider, llm_model):
     last_timestamp = 0
+    root = workers / worker
+    instructions = root / "instructions"
+    accounts = root / "accounts"
 
     def post(worker, to, account, body):
         if body:
@@ -15,7 +20,6 @@ def run(worker, llm_provider, llm_model):
             (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
             messages.post(worker, to, body)
 
-    instructions = root / "instructions"
     incoming_accounts = set()
 
     for frm, body, timestamp in messages.inbox(worker):
@@ -56,10 +60,7 @@ def run(worker, llm_provider, llm_model):
         post(worker, to, account, body)
 
 def chat(worker, account, timestamp):
-    root = Path("workers") / worker
-    accounts = root / "accounts"
-    accounts.mkdir(parents = True, exist_ok = True)
-    folder = accounts / account
+    folder = workers / worker / "accounts" / account
 
     if folder.exists():
         for path in folder.iterdir():
