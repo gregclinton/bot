@@ -1,8 +1,8 @@
 document.title = 'bot';
 
 const chat = {
-    from: 'TLG143623',
-    to: 'Hal',
+    me: 'TLG143623',
+    worker: 'Hal',
 
     send: async () => {
         const e = document.getElementById('prompt')
@@ -13,16 +13,16 @@ const chat = {
         fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ from: chat.from, to: chat.to, body: prompt })
+            body: JSON.stringify({ from: chat.me, to: chat.worker, body: prompt })
         });
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.from}?timeout=30`)
+        fetch(`/messages/${chat.me}?timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
-                chat.to = item.from;
+                chat.worker = item.from;
                 chat.show(item.from, marked.parse(item.body));
             });
             setTimeout(chat.retrieve, 100);
@@ -44,10 +44,6 @@ const chat = {
         bottom.innerHTML = text;
         post.scrollIntoView({ behavior: 'smooth' });
     },
-
-    clear: () => {
-        document.getElementById('chat').innerHTML = '';
-    }
 };
 
 window.onload = async () => {
