@@ -17,7 +17,7 @@ def run(worker, llm_provider, llm_model):
             if account not in f"{to} {body}":
                 body = f"In reference to account: {account}\n{body}"
             body = body.strip()
-            (accounts / account / f"{last_timestamp}|{worker}|{to}").write_text(body)
+            (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
             messages.post(worker, to, body)
 
     incoming_accounts = set()
