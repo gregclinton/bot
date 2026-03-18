@@ -65,7 +65,7 @@ def chat(worker, account, timestamp):
         for path in folder.iterdir():
             ts, frm, _ = path.name.split("|")
             ts = int(ts)
-            if ts > timestamp and frm in [worker, account]:
+            if ts >= timestamp and frm in [worker, account]:
                 body = path.read_text()
                 yield frm, body, ts
 
