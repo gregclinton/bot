@@ -4,22 +4,18 @@ import messages
 from pathlib import Path
 import re
 
-last_timestamp = 0
-
-def post(worker, to, account, body):
-    root = Path("workers") / worker
-    accounts = root / "accounts"
-
-    if body:
-        if account not in f"{to} {body}":
-            body = f"In reference to account: {account}\n{body}"
-        body = body.strip()
-        (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
-        messages.post(worker, to, body)
-
 def run(worker, llm_provider, llm_model):
     root = Path("workers") / worker
     accounts = root / "accounts"
+    last_timestamp = 0
+
+    def post(worker, to, account, body):
+        if body:
+            if account not in f"{to} {body}":
+                body = f"In reference to account: {account}\n{body}"
+            body = body.strip()
+            (accounts / account / f"{last_timestamp + 1}|{worker}|{to}").write_text(body)
+            messages.post(worker, to, body)
 
     instructions = root / "instructions"
     incoming_accounts = set()
@@ -64,13 +60,15 @@ def run(worker, llm_provider, llm_model):
 def chat(worker, account, timestamp):
     root = Path("workers") / worker
     accounts = root / "accounts"
+    folder = accounts / account
 
-    for path in (accounts / account).iterdir():
-        ts, frm, to = path.name.split("|")
-        ts = int(ts)
-        if ts > timestamp:
-            body = path.read_text()
-            yield frm, body, ts
+    if folder.exists():
+        for path in folder.iterdir():
+            ts, frm, to = path.name.split("|")
+            ts = int(ts)
+            if ts > timestamp:
+                body = path.read_text()
+                yield frm, body, ts
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
