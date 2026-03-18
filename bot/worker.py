@@ -11,14 +11,17 @@ def run(worker, llm_provider, llm_model):
     instructions = root / "instructions"
     accounts = root / "accounts"
 
+    def write(folder, frm, to, body):
+        folder.mkdir(parents = True, exist_ok = True)
+        order = 1000000 + len(list(folder.iterdir()))
+        (folder / f"{order}|{frm}|{to}").write_text(body)
+
     def post(worker, to, account, body):
         if body:
             if account not in f"{to} {body}":
                 body = f"In reference to account: {account}\n{body}"
             body = body.strip()
-            folder = accounts / account
-            order = 1000000 + len(list(folder.iterdir()))
-            (folder / f"{order}|{worker}|{to}").write_text(body)
+            write(accounts / account, worker, to, body)
             messages.post(worker, to, body)
 
     incoming_accounts = set()
@@ -31,9 +34,7 @@ def run(worker, llm_provider, llm_model):
             folder = accounts / account
         else:
             folder = instructions
-        folder.mkdir(parents = True, exist_ok = True)
-        order = 1000000 + len(list(folder.iterdir()))
-        (folder / f"{order}|{frm}|{worker}").write_text(body)
+        write(folder, frm, worker, body)
 
     for account in incoming_accounts:
         text = ""
@@ -60,14 +61,14 @@ def run(worker, llm_provider, llm_model):
 
         post(worker, to, account, body)
 
-def chat(worker, account, start):
+def chat(worker, account, after):
     folder = workers / worker / "accounts" / account
 
     if folder.exists():
         for path in folder.iterdir():
             order, frm, to = path.name.split("|")
             order = int(order)
-            if order >= start and frm in [worker, account] and to in [worker, account]:
+            if order > after and frm in [worker, account] and to in [worker, account]:
                 body = path.read_text()
                 yield order, frm, body
 

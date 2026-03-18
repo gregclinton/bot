@@ -3,7 +3,7 @@ document.title = 'bot';
 const chat = {
     account: 'TLG143623',
     worker: 'Hal',
-    start: 0,
+    after: 0,
 
     send: async () => {
         const e = document.getElementById('prompt')
@@ -18,7 +18,7 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.worker}/${chat.account}?start=${chat.start}&timeout=30`)
+        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.after}&timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
@@ -38,7 +38,7 @@ const chat = {
                 post.scrollIntoView({ behavior: 'smooth' });
 
                 chat.worker = item.from;
-                chat.start = item.order + 1;
+                chat.after = item.order;
             });
             setTimeout(chat.retrieve, 100);
         })
