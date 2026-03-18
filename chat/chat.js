@@ -1,7 +1,7 @@
 document.title = 'bot';
 
 const chat = {
-    me: 'TLG143623',
+    account: 'TLG143623',
     worker: 'Hal',
     timestamp: 0,
 
@@ -9,42 +9,39 @@ const chat = {
         const e = document.getElementById('prompt')
         const prompt = e.value.trim()
 
-        chat.show('me', prompt);
         e.value = '';
         fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ from: chat.me, to: chat.worker, body: prompt })
+            body: JSON.stringify({ from: chat.account, to: chat.worker, body: prompt })
         });
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.worker}/${chat.me}?timestamp=${chat.timestamp}&timeout=30`)
+        fetch(`/messages/${chat.worker}/${chat.account}?timestamp=${chat.timestamp}&timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
+                const text = marked.parse(item.body);
+                const title = document.createElement('span');
+                const top = document.createElement('div');
+                const bottom = document.createElement('div');
+                const post = document.createElement('div');
+
+                title.innerHTML = item.from === chat.account ? 'me' : item.from;
+                title.classList.add('name');
+                top.append(title);
+                post.append(top, bottom);
+                post.classList.add('post');
+                document.getElementById('chat').appendChild(post);
+                bottom.innerHTML = text;
+                post.scrollIntoView({ behavior: 'smooth' });
+
                 chat.worker = item.from;
                 chat.timestamp = item.timestamp;
-                chat.show(item.from, marked.parse(item.body));
             });
             setTimeout(chat.retrieve, 100);
         })
-    },
-
-    show: (name, text) => {
-        const title = document.createElement('span');
-        const top = document.createElement('div');
-        const bottom = document.createElement('div');
-        const post = document.createElement('div');
-
-        title.innerHTML = name;
-        title.classList.add('name');
-        top.append(title);
-        post.append(top, bottom);
-        post.classList.add('post');
-        document.getElementById('chat').appendChild(post);
-        bottom.innerHTML = text;
-        post.scrollIntoView({ behavior: 'smooth' });
     },
 };
 
