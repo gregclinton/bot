@@ -19,7 +19,7 @@ async def get_messages(worker: str, account: str, start: int = 0, timeout: int =
     start = time.time()
 
     while True:
-        for order, frm, body in chat(worker, account, start:
+        for order, frm, body in chat(worker, account, start):
             results.append({"order": order, "from": frm, "body": body})
         if results or time.time() - start > timeout:
             break
