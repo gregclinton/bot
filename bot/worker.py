@@ -31,7 +31,7 @@ def run(worker, llm_provider, llm_model):
 
     incoming_accounts = set()
 
-    for frm, body, _ in messages.inbox(worker):
+    for frm, body in messages.inbox(worker):
         m = re.search(r"\bTLG\w*", f"{frm} {body}")
         if m:
             account = m.group()

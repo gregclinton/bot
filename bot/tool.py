@@ -5,7 +5,7 @@ import re
 
 tool = sys.argv[1]
 
-for frm, body, timestamp in messages.inbox(tool):
+for frm, body in messages.inbox(tool):
     m = re.search(r"\bTLG\w*", f"{frm} {body}")
     if m:
         account = m.group()
