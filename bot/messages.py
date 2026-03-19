@@ -25,7 +25,7 @@ def post(frm, to, body):
     while True:
         random = ''.join(choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(3))
         path = folder / f"{frm}|{random}"
-        if not path.exists()
+        if not path.exists():
             path.write_text(body)
             break
 
