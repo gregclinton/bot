@@ -56,7 +56,7 @@ const chat = {
                     hour12: true
                     });
 
-                when.innerHTML = `${day}, at ${time}`;
+                when.innerHTML = `${day} at ${time}`;
                 when.classList.add('when');
 
                 chat.after = item.timestamp;
