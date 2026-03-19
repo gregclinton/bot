@@ -25,6 +25,12 @@ body, html
     font-weight: bold;
 }
 
+#chat .post .when
+{
+    color: gray;
+    font-size: smaller;
+}
+
 #chat .post
 {
     margin-left: 15px;

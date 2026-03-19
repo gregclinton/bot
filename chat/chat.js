@@ -24,6 +24,7 @@ const chat = {
             list.forEach(item => {
                 const text = marked.parse(item.body);
                 const title = document.createElement('span');
+                const when = document.createElement('span');
                 const top = document.createElement('div');
                 const bottom = document.createElement('div');
                 const post = document.createElement('div');
@@ -31,11 +32,32 @@ const chat = {
                 title.innerHTML = item.from === chat.account ? 'me' : item.from;
                 title.classList.add('name');
                 top.append(title);
+                top.append(when);
                 post.append(top, bottom);
                 post.classList.add('post');
                 document.getElementById('chat').appendChild(post);
                 bottom.innerHTML = text;
                 post.scrollIntoView({ behavior: 'smooth' });
+
+                const d = new Date(item.timestamp * 1000);
+                const now = new Date();
+                const a = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                const b = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+                const days = (a - b) / 86400000;
+                const day = days === 0 ? 'Today' : days === 1 ? 'Yesterday' :
+                    d.toLocaleDateString('en-US', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric'
+                    });
+                const time = d.toLocaleTimeString('en-US', {
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                    });
+
+                when.innerHTML = `${day}, at ${time}`;
+                when.classList.add('when');
 
                 chat.after = item.timestamp;
             });
