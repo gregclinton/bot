@@ -29,6 +29,7 @@ body, html
 {
     color: gray;
     font-size: smaller;
+    margin-left: 15px;
 }
 
 #chat .post
