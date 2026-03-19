@@ -11,10 +11,12 @@ def inbox(to):
     folder = messages / to
 
     if folder.exists():
-        for path in sorted(folder.iterdir(), key = lambda p: p.stat().st_mtime):
+        pairs = [(p.stat().st_mtime, p) for p in folder.iterdir()]
+        pairs.sort()
+
+        for timestamp, path in pairs:
             frm = path.name.split("|")[0]
             body = path.read_text()
-            timestamp = int(path.stat().st_mtime)
             yield frm, body, timestamp
 
         rmtree(folder)
