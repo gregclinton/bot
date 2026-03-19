@@ -45,8 +45,8 @@ const chat = {
                 const b = new Date(now).setHours(0, 0, 0, 0);
                 const c = new Date(new Date(now).setDate(now.getDate() - 1)).setHours(0, 0, 0, 0);
                 const date = a === b ? 'Today' : a === c ? 'Yesterday' : d.toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
+                    weekday: 'long',
+                    month: 'long',
                     day: 'numeric'
                 }) + (d.getFullYear() === now.getFullYear() ? '' : `, ${d.getFullYear()}`);
                 const time = d.toLocaleTimeString('en-US', {
