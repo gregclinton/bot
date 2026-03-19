@@ -40,19 +40,21 @@ const chat = {
                 post.scrollIntoView({ behavior: 'smooth' });
 
                 const d = new Date(item.timestamp * 1000);
+                const a = new Date(d).setHours(0,0,0,0)
+                const b = new Date().setHours(0,0,0,0)
+                const c = new Date(new Date().setDate(new Date().getDate() - 1)).setHours(0,0,0,0)
+                const date = a === b ? "Today" : a === c ? "Yesterday" : d.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
+                }) + d.getFullYear() === new Date().getFullYear() ? '' : `, ${d.getFullYear()}`;
                 const time = d.toLocaleTimeString('en-US', {
                     hour: 'numeric',
                     minute: '2-digit',
                     hour12: true
                 });
-                const off = (new Date().setHours(0,0,0,0) - d.setHours(0,0,0,0)) / 86400000;
-                const day = off === 0 ? 'Today' : off === 1? 'Yesterday' : d.toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric'
-                });
 
-                when.innerHTML = `${day} at ${time}`;
+                when.innerHTML = `${date} at ${time}`;
                 when.classList.add('when');
 
                 chat.after = item.timestamp;
