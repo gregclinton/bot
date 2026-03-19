@@ -40,16 +40,16 @@ const chat = {
                 post.scrollIntoView({ behavior: 'smooth' });
 
                 const d = new Date(item.timestamp * 1000);
-                const off = Math.floor((new Date().setHours(0,0,0,0) - d.setHours(0,0,0,0)) / 86400000);
-                const day = off === 0 ? 'Today' : off === 1 ? 'Yesterday' : d.toLocaleDateString('en-US', {
-                    weekday: 'short',
-                    month: 'short',
-                    day: 'numeric'
-                });
                 const time = d.toLocaleTimeString('en-US', {
                     hour: 'numeric',
                     minute: '2-digit',
                     hour12: true
+                });
+                const off = (new Date().setHours(0,0,0,0) - d.setHours(0,0,0,0)) / 86400000;
+                const day = off === 0 ? 'Today' : off === 1? 'Yesterday' : d.toLocaleDateString('en-US', {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric'
                 });
 
                 when.innerHTML = `${day} at ${time}`;
