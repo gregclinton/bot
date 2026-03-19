@@ -14,13 +14,13 @@ async def post_message(req: Request):
     return "ok"
 
 @app.get("/messages/{worker}/{account}")
-async def get_messages(worker: str, account: str, after: int = 0, timeout: int = 10):
+async def get_messages(worker: str, account: str, after: float = 0, timeout: int = 10):
     results = []
     start = time.time()
 
     while True:
-        for order, frm, body in chat(worker, account, after):
-            results.append({"order": order, "from": frm, "body": body})
+        for frm, body, timestamp in chat(worker, account, after):
+            results.append({"from": frm, "body": body, "timestamp": timestamp})
         if results or time.time() - start > timeout:
             break
         await asyncio.sleep(0.2)

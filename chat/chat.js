@@ -38,7 +38,7 @@ const chat = {
                 post.scrollIntoView({ behavior: 'smooth' });
 
                 chat.worker = item.from;
-                chat.after = item.order;
+                chat.after = item.timestamp;
             });
             setTimeout(chat.retrieve, 100);
         })

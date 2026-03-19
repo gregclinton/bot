@@ -3,6 +3,7 @@ import sys
 import messages
 from pathlib import Path
 import re
+from random import choice
 
 workers = Path("workers")
 
@@ -13,8 +14,12 @@ def run(worker, llm_provider, llm_model):
 
     def write(folder, frm, to, body):
         folder.mkdir(parents = True, exist_ok = True)
-        order = 1000000 + len(list(folder.iterdir()))
-        (folder / f"{order}|{frm}|{to}").write_text(body)
+        while True:
+            random = ''.join(choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(3))
+            path = folder / f"{frm}|{to}|{random}"
+            if not path.exists()
+                path.write_text(body)
+                break
 
     def post(worker, to, account, body):
         if body:
@@ -40,7 +45,7 @@ def run(worker, llm_provider, llm_model):
         text = ""
         all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
         for path in sorted(all_msgs, key = lambda p: p.stat().st_mtime):
-            _, frm, to = path.name.split("|")
+            frm, to, _ = path.name.split("|")
             body = path.read_text()
             text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
 
@@ -65,12 +70,15 @@ def chat(worker, account, after):
     folder = workers / worker / "accounts" / account
 
     if folder.exists():
-        for path in folder.iterdir():
-            order, frm, to = path.name.split("|")
-            order = int(order)
-            if order > after and frm in [worker, account] and to in [worker, account]:
-                body = path.read_text()
-                yield order, frm, body
+        pairs = [(p.stat().st_mtime, p) for p in folder.iterdir()]
+        pairs.sort()
+
+        for timestamp, path in pairs:
+            if timestamp > after:
+                frm, to, _ = path.name.split("|")
+                if frm in [worker, account] and to in [worker, account]:
+                    body = path.read_text()
+                    yield frm, body, timestamp
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
