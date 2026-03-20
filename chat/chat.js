@@ -3,7 +3,7 @@ document.title = 'bot';
 const chat = {
     account: 'TLG143623',
     worker: 'Hal',
-    after: 0,
+    latest: 0,
 
     send: async () => {
         const e = document.getElementById('prompt')
@@ -18,13 +18,12 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.after}&timeout=30`)
+        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.latest}&timeout=30`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
                 const text = marked.parse(item.body);
                 const title = document.createElement('span');
-                const when = document.createElement('span');
                 const top = document.createElement('div');
                 const bottom = document.createElement('div');
                 const post = document.createElement('div');
@@ -32,33 +31,36 @@ const chat = {
                 title.innerHTML = item.from === chat.account ? 'me' : item.from;
                 title.classList.add('name');
                 top.append(title);
-                top.append(when);
                 post.append(top, bottom);
                 post.classList.add('post');
                 document.getElementById('chat').appendChild(post);
                 bottom.innerHTML = text;
                 post.scrollIntoView({ behavior: 'smooth' });
 
-                const d = new Date(item.timestamp * 1000);
-                const now = new Date();
-                const a = new Date(d).setHours(0, 0, 0, 0);
-                const b = new Date(now).setHours(0, 0, 0, 0);
-                const c = new Date(new Date(now).setDate(now.getDate() - 1)).setHours(0, 0, 0, 0);
-                const date = a === b ? 'Today' : a === c ? 'Yesterday' : d.toLocaleDateString('en-US', {
-                    weekday: 'long',
-                    month: 'long',
-                    day: 'numeric'
-                }) + (d.getFullYear() === now.getFullYear() ? '' : `, ${d.getFullYear()}`);
-                const time = d.toLocaleTimeString('en-US', {
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                });
+                if (item.timestamp - chat.latest > 3600) {
+                    const d = new Date(item.timestamp * 1000);
+                    const now = new Date();
+                    const a = new Date(d).setHours(0, 0, 0, 0);
+                    const b = new Date(now).setHours(0, 0, 0, 0);
+                    const c = new Date(new Date(now).setDate(now.getDate() - 1)).setHours(0, 0, 0, 0);
+                    const date = a === b ? 'Today' : a === c ? 'Yesterday' : d.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        month: 'long',
+                        day: 'numeric'
+                    }) + (d.getFullYear() === now.getFullYear() ? '' : `, ${d.getFullYear()}`);
+                    const time = d.toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+                    const when = document.createElement('span');                    
 
-                when.innerHTML = `${date} at ${time}`;
-                when.classList.add('when');
-
-                chat.after = item.timestamp;
+                    when.innerHTML = `${date} at ${time}`;
+                    when.classList.add('when');
+                    top.append(when);
+                }
+                
+                chat.latest = item.timestamp;
             });
             setTimeout(chat.retrieve, 100);
         })
