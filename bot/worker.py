@@ -32,7 +32,8 @@ def run(worker, llm_provider, llm_model):
                 body = f"In reference to account: {account}\n{body}"
             body = body.strip()
             write(accounts / account, worker, to, body)
-            messages.post(worker, to, body)
+            if to != account:
+                messages.post(worker, to, body)
 
     incoming_accounts = set()
 
