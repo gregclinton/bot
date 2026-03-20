@@ -15,7 +15,7 @@ def run(worker, llm_provider, llm_model):
     def write(folder, frm, to, body):
         folder.mkdir(parents = True, exist_ok = True)
         while True:
-            random = ''.join(choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(3))
+            random = ''.join(choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(5))
             path = folder / f"{frm}|{to}|{random}"
             if not path.exists():
                 path.write_text(body)
@@ -44,7 +44,10 @@ def run(worker, llm_provider, llm_model):
     for account in incoming_accounts:
         text = ""
         all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
-        for path in sorted(all_msgs, key = lambda p: p.stat().st_mtime):
+        pairs = [(p.stat().st_mtime, p) for p in all_msgs]
+        pairs.sort()
+
+        for timestamp, path in pairs:
             frm, to, _ = path.name.split("|")
             body = path.read_text()
             text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
