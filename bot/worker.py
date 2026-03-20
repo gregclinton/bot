@@ -7,6 +7,11 @@ from random import choice
 
 workers = Path("workers")
 
+def message_list(*folders):
+    pairs = [(p.stat().st_mtime, p) for f in folders for p in f.iterdir()]
+    pairs.sort()
+    return pairs    
+
 def run(worker, llm_provider, llm_model):
     root = workers / worker
     instructions = root / "instructions"
@@ -43,11 +48,8 @@ def run(worker, llm_provider, llm_model):
 
     for account in incoming_accounts:
         text = ""
-        all_msgs = [*instructions.iterdir(), *(accounts / account).iterdir()]
-        pairs = [(p.stat().st_mtime, p) for p in all_msgs]
-        pairs.sort()
 
-        for timestamp, path in pairs:
+        for timestamp, path in message_list(instructions, accounts / account):
             frm, to, _ = path.name.split("|")
             body = path.read_text()
             text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
@@ -73,10 +75,7 @@ def chat(worker, account, after):
     folder = workers / worker / "accounts" / account
 
     if folder.exists():
-        pairs = [(p.stat().st_mtime, p) for p in folder.iterdir()]
-        pairs.sort()
-
-        for timestamp, path in pairs:
+        for timestamp, path in message_list(folder):
             if timestamp > after:
                 frm, to, _ = path.name.split("|")
                 if frm in [worker, account] and to in [worker, account]:
