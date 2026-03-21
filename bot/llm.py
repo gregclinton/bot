@@ -3,7 +3,7 @@ import os
 
 def invoke(provider, model, sys, user):
     key_name = f"{provider.upper()}_API_KEY"
-    key = os.environ.get(f"{provider.upper()}_API_KEY")
+    key = os.environ.get(key_name)
 
     if not key:
         return f"{key_name} not set."
