@@ -2,7 +2,7 @@ import llm
 import sys
 import messages
 from pathlib import Path
-from account import extract
+from account import scrape
 from random import choice
 
 workers = Path("workers")
@@ -38,7 +38,7 @@ def run(worker, llm_provider, llm_model):
     incoming_accounts = set()
 
     for frm, body in messages.inbox(worker):
-        account = extract(f"{frm} {body}")
+        account = scrape(f"{frm} {body}")
         if account:
             incoming_accounts.add(account)
             folder = accounts / account

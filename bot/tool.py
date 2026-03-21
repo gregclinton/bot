@@ -1,12 +1,12 @@
 import sys
 import messages
 import subprocess
-from account import extract
+from account import scrape
 
 tool = sys.argv[1]
 
 for frm, body in messages.inbox(tool):
-    account = extract(f"{frm} {body}")
+    account = scrape(f"{frm} {body}")
     if account:
         # will run a script with tool
         out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
