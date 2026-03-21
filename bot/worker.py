@@ -10,7 +10,7 @@ workers = Path("workers")
 def chronology(*folders):
     pairs = [(p.stat().st_mtime, p) for f in folders for p in f.iterdir()]
     pairs.sort()
-    return pairs    
+    return pairs
 
 def run(worker, llm_provider, llm_model):
     root = workers / worker
@@ -79,7 +79,7 @@ def chat(worker, account, after):
         for timestamp, path in chronology(folder):
             if timestamp > after:
                 frm, to, _ = path.name.split("|")
-                if frm in [worker, account] and to in [worker, account]:
+                if account in [frm, to]:
                     body = path.read_text()
                     yield frm, body, timestamp
 
