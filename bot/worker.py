@@ -3,7 +3,7 @@ import sys
 import messages
 from pathlib import Path
 from account import scrape
-from random import choice
+import unique
 
 workers = Path("workers")
 
@@ -17,34 +17,26 @@ def run(worker, llm_provider, llm_model):
     instructions = root / "instructions"
     accounts = root / "accounts"
 
-    def write(folder, frm, to, body):
-        folder.mkdir(parents = True, exist_ok = True)
-        while True:
-            random = ''.join(choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(5))
-            path = folder / f"{frm}|{to}|{random}"
-            if not path.exists():
-                path.write_text(body)
-                break
-
     def post(worker, to, account, body):
         if body:
             if account not in f"{to} {body}":
                 body = f"In reference to account: {account}\n{body}"
             body = body.strip()
-            write(accounts / account, worker, to, body)
+            folder = accounts / account
+            unique.path(folder, f"{worker}|{to}").write_text(body)
             if to != account:
                 messages.post(worker, to, body)
 
     incoming_accounts = set()
 
-    for frm, body in messages.inbox(worker):
+    for frm, body, path in messages.inbox(worker):
         account = scrape(f"{frm} {body}")
         if account:
             incoming_accounts.add(account)
             folder = accounts / account
         else:
             folder = instructions
-        write(folder, frm, worker, body)
+        path.rename(unique.path(folder, f"{frm}|{worker}"))
 
     for account in incoming_accounts:
         text = ""

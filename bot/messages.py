@@ -1,7 +1,7 @@
 from pathlib import Path
 from shutil import rmtree
 import sys
-from random import choice
+import unique
 
 # messages/to/from|random  body
 
@@ -14,19 +14,12 @@ def inbox(to):
         for path in sorted(folder.iterdir(), key = lambda p: p.stat().st_mtime):
             frm = path.name.split("|")[0]
             body = path.read_text()
-            yield frm, body
+            yield frm, body, path
 
         rmtree(folder)
 
 def post(frm, to, body):
-    folder = messages / to
-    folder.mkdir(parents = True, exist_ok = True)
-    while True:
-        random = ''.join(choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') for _ in range(3))
-        path = folder / f"{frm}|{random}"
-        if not path.exists():
-            path.write_text(body)
-            break
+    unique.path(messages / to, frm).write_text(body)
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
