@@ -1,15 +1,13 @@
 import sys
 import messages
 import subprocess
-import re
+from account import extract
 
 tool = sys.argv[1]
 
 for frm, body in messages.inbox(tool):
-    m = re.search(r"\bTLG\w*", f"{frm} {body}")
-    if m:
-        account = m.group()
-
+    account = extract(f"{frm} {body}")
+    if account:
         # will run a script with tool
         out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
         result = (out.stdout + out.stderr).strip()

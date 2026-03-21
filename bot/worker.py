@@ -2,7 +2,7 @@ import llm
 import sys
 import messages
 from pathlib import Path
-import re
+from account import extract
 from random import choice
 
 workers = Path("workers")
@@ -38,9 +38,8 @@ def run(worker, llm_provider, llm_model):
     incoming_accounts = set()
 
     for frm, body in messages.inbox(worker):
-        m = re.search(r"\bTLG\w*", f"{frm} {body}")
-        if m:
-            account = m.group()
+        account = extract(f"{frm} {body}")
+        if account:
             incoming_accounts.add(account)
             folder = accounts / account
         else:
