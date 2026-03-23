@@ -1,5 +1,7 @@
 See how in apps/wireless, workers are just text files with instructions in English and tools are just shell scripts.
 
+Afterwards, further instructions can be posted to workers as the situation requires.
+
 Many possible apps other than wireless provider come to mind: call center, dental office, insurance, dmv, bike shop, etc.
 
 An LLM could be set loose on an org's documentation and create the workers and tools.
