@@ -18,10 +18,10 @@ def run(worker, llm_provider, llm_model):
     accounts = root / "accounts"
 
     def post(worker, to, account, body):
+        body = body.strip()
         if body:
             if account not in f"{to} {body}":
                 body = f"In reference to account: {account}\n{body}"
-            body = body.strip()
             unique.path(accounts / account, f"{worker}|{to}").write_text(body)
             if to != account:
                 messages.post(worker, to, body)
