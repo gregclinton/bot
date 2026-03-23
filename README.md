@@ -1,10 +1,8 @@
-See how in apps/wireless, workers are just text files with instructions in English and tools are just shell scripts.
+Create and train workers by simply posting text instructions.
 
-Further instructions can be posted to workers as the situation requires.
+Create tools by simply writing shell scripts.
 
-Many possible apps other than wireless provider come to mind: call center, dental office, insurance, dmv, bike shop, etc.
-
-An LLM could be set loose on an org's documentation and create the workers and tools.
+Or set your LLM agent loose on your org's documentation to instruct the workers and create the tools.
 
 The python code (on the order of 200 lines) can be copied to a company's computer, or a person's Raspberry Pi, with slight modifications and run.
 
