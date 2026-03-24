@@ -1,7 +1,7 @@
 import requests
 import os
 
-key_name = "RUNPOD_ID"
+key_name = "RUNPOD_POD_ID"
 runpod_id = os.environ.get(key_name)
 
 if not runpod_id:
