@@ -61,6 +61,9 @@ const chat = {
                 }
                 
                 chat.latest = item.timestamp;
+
+                if (item.from != chat.account)
+                    chat.worker = item.from;
             });
             setTimeout(chat.retrieve, 100);
         })
