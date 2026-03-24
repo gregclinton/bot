@@ -1,5 +1,6 @@
 import requests
 import os
+import sys
 
 key_name = "RUNPOD_POD_ID"
 runpod_id = os.environ.get(key_name)
@@ -18,3 +19,6 @@ def inbox(to):
 
 def post(frm, to, body):
     requests.post(f"{url}/messages", json = { "from": frm, "to": to, "body": body }).raise_for_status()
+
+if __name__ == "__main__":
+    globals()[sys.argv[1]](*sys.argv[2:])
