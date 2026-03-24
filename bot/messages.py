@@ -1,11 +1,12 @@
-from requests
+import requests
 import os
 
 key_name = "RUNPOD_ID"
 runpod_id = os.environ.get(key_name)
 
 if not runpod_id:
-    return f"{key_name} not set."
+    print(f"{key_name} not set.")
+    exit(1)
 
 url = f"https://{runpod_id}-4000.proxy.runpod.net"
 
