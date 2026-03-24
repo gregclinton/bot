@@ -2,6 +2,7 @@ from pathlib import Path
 from shutil import rmtree
 import sys
 import unique
+import chronological
 
 # messages/to/from|random  body
 
@@ -11,10 +12,10 @@ def inbox(to):
     folder = messages / to
 
     if folder.exists():
-        for path in sorted(folder.iterdir(), key = lambda p: p.stat().st_mtime):
+        for timestamp, path in chronological.paths(folder):
             frm = path.name.split("|")[0]
             body = path.read_text()
-            yield frm, body, path
+            yield frm, body, timestamp, path
 
         rmtree(folder)
 
