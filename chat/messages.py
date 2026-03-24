@@ -1,5 +1,6 @@
 from pathlib import Path
 from shutil import rmtree
+import sys
 import unique
 import chronological
 
@@ -20,3 +21,6 @@ def inbox(to):
 
 def post(frm, to, body):
     unique.path(messages / to, frm).write_text(body)
+
+if __name__ == "__main__":
+    globals()[sys.argv[1]](*sys.argv[2:])
