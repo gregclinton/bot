@@ -1,26 +1,19 @@
-from pathlib import Path
-from shutil import rmtree
-import sys
-import unique
-import chronological
+from requests
+import os
 
-# messages/to/from|random  body
+key_name = "RUNPOD_ID"
+runpod_id = os.environ.get(key_name)
 
-messages = Path("messages")
+if not runpod_id:
+    return f"{key_name} not set."
+
+url = f"https://{runpod_id}-4000.proxy.runpod.net"
 
 def inbox(to):
-    folder = messages / to
-
-    if folder.exists():
-        for timestamp, path in chronological.paths(folder):
-            frm = path.name.split("|")[0]
-            body = path.read_text()
-            yield frm, body, timestamp
-
-        rmtree(folder)
+    res = requests.get(f"{url}/messages/{to}?timeout=30")
+    res.raise_for_status()
+    for msg in res.json():
+        yield msg["from"], msg["body"], msg["timestamp"]
 
 def post(frm, to, body):
-    unique.path(messages / to, frm).write_text(body)
-
-if __name__ == "__main__":
-    globals()[sys.argv[1]](*sys.argv[2:])
+    requests.post(f"{url}/messages", json = { "from": frm, "to": to, "body": body }).raise_for_status()
