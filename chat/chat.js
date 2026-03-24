@@ -9,7 +9,7 @@ const chat = {
         const e = document.getElementById('prompt')
         const prompt = e.value.trim()
 
-        chat.show(chat.account, prompt, new Date() * 1000);
+        chat.show(chat.account, prompt, new Date() / 1000);
         e.value = '';
         fetch('/messages', {
             method: 'POST',
