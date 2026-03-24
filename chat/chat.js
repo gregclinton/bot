@@ -24,7 +24,6 @@ const chat = {
         .then(list => {
             list.forEach(item => {
                 chat.show(item.from, item.body, item.timestamp);
-                chat.latest = item.timestamp;
 
                 if (item.from != chat.account)
                     chat.worker = item.from;
@@ -70,6 +69,7 @@ const chat = {
             when.innerHTML = `${date} at ${time}`;
             when.classList.add('when');
             top.append(when);
+            chat.latest = timestamp;
         }
     }
 };
