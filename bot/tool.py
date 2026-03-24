@@ -4,8 +4,9 @@ import subprocess
 from account import scrape
 
 tool = sys.argv[1]
+timeout = sys.argv[2]
 
-for frm, body, _ in messages.inbox(tool):
+for frm, body, _ in messages.inbox(tool, timeout):
     account = scrape(f"{frm} {body}")
     if account:
         out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)

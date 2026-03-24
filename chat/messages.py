@@ -8,7 +8,7 @@ import chronological
 
 messages = Path("messages")
 
-def inbox(to):
+def inbox(to, _):
     folder = messages / to
 
     if folder.exists():

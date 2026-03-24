@@ -8,7 +8,7 @@ import chronological
 
 workers = Path("workers")
 
-def run(worker, llm_provider, llm_model):
+def run(worker, llm_provider, llm_model, timeout):
     root = workers / worker
     instructions = root / "instructions"
     accounts = root / "accounts"
@@ -23,7 +23,7 @@ def run(worker, llm_provider, llm_model):
 
     incoming_accounts = set()
 
-    for frm, body, _ in messages.inbox(worker):
+    for frm, body, _ in messages.inbox(worker, timeout):
         account = scrape(f"{frm} {body}")
         if account:
             incoming_accounts.add(account)
