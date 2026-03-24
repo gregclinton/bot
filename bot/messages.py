@@ -15,7 +15,7 @@ def inbox(to):
         for timestamp, path in chronological.paths(folder):
             frm = path.name.split("|")[0]
             body = path.read_text()
-            yield frm, body, timestamp, path
+            yield frm, body, timestamp
 
         rmtree(folder)
 
