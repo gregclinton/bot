@@ -5,10 +5,12 @@ app=$repo/apps/wireless
 
 if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
-    for name in llm messages unique chronological account worker tool
+    for name in llm unique chronological account worker tool
     do
         curl $bot/$name.py -o $name.py
     done
+
+    curl $chat/messages.py -o messages.py
 
     mkdir chat
     for file in chat.js main.css index.html

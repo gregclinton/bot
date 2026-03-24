@@ -4,6 +4,7 @@ app=$source/apps/"$(basename $(dirname "$0"))"
 rm -rf workers messages
 cp "$app"/tools/* .
 cp $source/bot/*.py .
+cp $source/chat/messages.py .
 
 for path in "$app"/workers/*
 do
