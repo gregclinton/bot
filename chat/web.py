@@ -18,7 +18,7 @@ async def get_messages(to: str, timeout: int = 10):
     start = time.time()
 
     while True:
-        for frm, body, timestamp in messages.inbox(to):
+        for frm, body, timestamp in messages.inbox(to, 0):
             results.append({"from": frm, "body": body, "timestamp": timestamp})
         if results or time.time() - start > timeout:
             break
