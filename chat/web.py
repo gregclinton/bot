@@ -13,14 +13,14 @@ async def post_message(req: Request):
     return "ok"
 
 @app.get("/messages/{to}")
-async def get_messages(to: str, timeout: int = 10):
+async def get_messages(to: str):
     results = []
     start = time.time()
 
     while True:
         for frm, body, timestamp in messages.inbox(to, 0):
             results.append({"from": frm, "body": body, "timestamp": timestamp})
-        if results or time.time() - start > timeout:
+        if results or time.time() - start > 60:
             break
         await asyncio.sleep(0.2)
 

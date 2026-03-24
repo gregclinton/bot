@@ -1,14 +1,9 @@
-while true # for i in $(seq 1 5)
+for worker in Hal Billing
 do
-    for worker in Hal Billing Phones Plans
-    do
-        python3 worker.py run "$worker" groq openai/gpt-oss-120b 0
-    done
+    python3 worker.py run "$worker" groq openai/gpt-oss-120b
+done
 
-    for tool in Balance
-    do
-        python3 tool.py "$tool" 0
-    done
-
-    sleep 0.1
+for tool in Balance
+do
+    python3 tool.py "$tool"
 done

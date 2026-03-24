@@ -1,19 +1,21 @@
+# python3 tool.py Balance
+
 import sys
 import messages
 import subprocess
 from account import scrape
 
 tool = sys.argv[1]
-timeout = sys.argv[2]
 
-for frm, body, _ in messages.inbox(tool, timeout):
-    account = scrape(f"{frm} {body}")
-    if account:
-        out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
-        result = (out.stdout + out.stderr).strip()
+while True:
+    for frm, body, _ in messages.inbox(tool):
+        account = scrape(f"{frm} {body}")
+        if account:
+            out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
+            result = (out.stdout + out.stderr).strip()
 
-        if account not in result:
-            result = f"In reference to account: {account}\n{result}"
+            if account not in result:
+                result = f"In reference to account: {account}\n{result}"
 
-        print(f"From: {tool}\nTo: {frm}\n{result}\n")
-        messages.post(tool, frm, result)
+            print(f"From: {tool}\nTo: {frm}\n{result}\n")
+            messages.post(tool, frm, result)

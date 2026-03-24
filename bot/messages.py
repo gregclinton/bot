@@ -11,8 +11,8 @@ if not runpod_id:
 
 url = f"https://{runpod_id}-4000.proxy.runpod.net"
 
-def inbox(to, timeout):
-    res = requests.get(f"{url}/messages/{to}?timeout={timeout}")
+def inbox(to):
+    res = requests.get(f"{url}/messages/{to}")
     res.raise_for_status()
     for msg in res.json():
         yield msg["from"], msg["body"], msg["timestamp"]
