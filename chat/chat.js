@@ -9,7 +9,7 @@ const chat = {
         const e = document.getElementById('prompt')
         const prompt = e.value.trim()
 
-        chat.show(chat.account, prompt, new Date() / 1000);
+        chat.show(chat.account, prompt, new Date());
         e.value = '';
         fetch('/messages', {
             method: 'POST',
@@ -23,7 +23,7 @@ const chat = {
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
-                chat.show(item.from, item.body, item.timestamp);
+                chat.show(item.from, item.body, new Date(item.timestamp * 1000));
 
                 if (item.from != chat.account)
                     chat.worker = item.from;
@@ -49,7 +49,7 @@ const chat = {
         post.scrollIntoView({ behavior: 'smooth' });
 
         if (timestamp - chat.latest > 3600) {
-            const d = new Date(timestamp * 1000);
+            const d = new Date(timestamp);
             const now = new Date();
             const a = new Date(d).setHours(0, 0, 0, 0);
             const b = new Date(now).setHours(0, 0, 0, 0);
