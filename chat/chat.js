@@ -34,13 +34,13 @@ const chat = {
     },
 
     show: (from, body, timestamp) => {
-        const text = marked.parse(item.body);
+        const text = marked.parse(body);
         const title = document.createElement('span');
         const top = document.createElement('div');
         const bottom = document.createElement('div');
         const post = document.createElement('div');
 
-        title.innerHTML = item.from === chat.account ? 'me' : item.from;
+        title.innerHTML = from === chat.account ? 'me' : from;
         title.classList.add('name');
         top.append(title);
         post.append(top, bottom);
@@ -49,8 +49,8 @@ const chat = {
         bottom.innerHTML = text;
         post.scrollIntoView({ behavior: 'smooth' });
 
-        if (item.timestamp - chat.latest > 3600) {
-            const d = new Date(item.timestamp * 1000);
+        if (timestamp - chat.latest > 3600) {
+            const d = new Date(timestamp * 1000);
             const now = new Date();
             const a = new Date(d).setHours(0, 0, 0, 0);
             const b = new Date(now).setHours(0, 0, 0, 0);
