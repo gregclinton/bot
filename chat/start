@@ -5,7 +5,7 @@ app=$repo/apps/wireless
 
 if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
-    for name in llm unique chronological account worker tool
+    for name in unique chronological
     do
         curl $bot/$name.py -o $name.py
     done
@@ -17,19 +17,6 @@ if [ -f web.py ]; then
     do
         curl $chat/$file -o chat/$file
     done
-
-    for worker in Hal Billing Phones Plans
-    do
-        python3 messages.py post HR "$worker" "$(curl "$app/workers/$worker")"
-    done
-
-    for tool in Balance
-    do
-        curl $app/tools/$tool -o $tool
-    done
-
-    curl $app/run -o run
-    sh run &
 
     uvicorn web:app --host 0.0.0.0 --port 4000
     # ----------------- end of edits ------------------
