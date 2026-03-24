@@ -1,9 +1,0 @@
-for worker in Hal Billing
-do
-    python3 worker.py run "$worker" groq openai/gpt-oss-120b
-done
-
-for tool in Balance
-do
-    python3 tool.py "$tool"
-done
