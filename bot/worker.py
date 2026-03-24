@@ -19,8 +19,7 @@ def run(worker, llm_provider, llm_model):
             if account not in f"{to} {body}":
                 body = f"In reference to account: {account}\n{body}"
             unique.path(accounts / account, f"{worker}|{to}").write_text(body)
-            if to != account:
-                messages.post(worker, to, body)
+            messages.post(worker, to, body)
 
     incoming_accounts = set()
 
