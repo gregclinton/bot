@@ -27,14 +27,18 @@ def run(worker, llm_provider, llm_model):
 
         incoming_accounts = set()
 
-        for frm, body, _, path in messages.inbox(worker):
+        for frm, body, _, path in (remote if worker == "Hal" else messages).inbox(worker):
             account = scrape(f"{frm} {body}")
             if account:
                 incoming_accounts.add(account)
                 folder = accounts / account
             else:
                 folder = instructions
-            path.rename(unique.path(folder, f"{frm}|{worker}"))
+            dst = unique.path(folder, f"{frm}|{worker}")
+            if path:
+                path.rename(dst)
+            else:
+                dst.write_text(body)
 
         for account in incoming_accounts:
             text = ""

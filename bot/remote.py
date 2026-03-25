@@ -13,7 +13,7 @@ def inbox(to):
     res = requests.get(f"{url}/messages/{to}")
     res.raise_for_status()
     for msg in res.json():
-        yield msg["from"], msg["body"], msg["timestamp"]
+        yield msg["from"], msg["body"], msg["timestamp"], None
 
 def post(frm, to, body):
     requests.post(f"{url}/messages", json = { "from": frm, "to": to, "body": body }).raise_for_status()
