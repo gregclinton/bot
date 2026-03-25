@@ -5,7 +5,7 @@ app=$repo/apps/wireless
 
 if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
-    for name in llm messages chronological unique account worker tool
+    for name in llm messages unique account worker tool
     do
         curl $bot/$name.py -o $name.py
     done
