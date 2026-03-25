@@ -18,7 +18,7 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.latest / 1000}`)
+        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.latest}`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
@@ -38,7 +38,7 @@ const chat = {
                 bottom.innerHTML = text;
                 post.scrollIntoView({ behavior: 'smooth' });
 
-                if (timestamp - chat.latest > 3600) {
+                if (item.timestamp - chat.latest > 3600) {
                     const d = new Date(timestamp);
                     const now = new Date();
                     const a = new Date(d).setHours(0, 0, 0, 0);
@@ -59,11 +59,7 @@ const chat = {
                     when.innerHTML = `${date} at ${time}`;
                     when.classList.add('when');
                     top.append(when);
-                    chat.latest = timestamp;
-
-
-                if (item.from != chat.account)
-                    chat.worker = item.from;
+                    chat.latest = item.timestamp;
                 }
             });
             setTimeout(chat.retrieve, 100);
