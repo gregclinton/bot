@@ -3,7 +3,6 @@
 import llm
 import sys
 import messages
-import remote
 from pathlib import Path
 from account import scrape
 import unique
@@ -23,22 +22,19 @@ def run(worker, llm_provider, llm_model):
                 if account not in f"{to} {body}":
                     body = f"In reference to account: {account}\n{body}"
                 unique.path(accounts / account, f"{worker}|{to}").write_text(body)
-                (remote if to == account else messages).post(worker, to, body)
+                if to != account:
+                    messages.post(worker, to, body)
 
         incoming_accounts = set()
 
-        for frm, body, _, path in (remote if worker == "Hal" else messages).inbox(worker):
+        for frm, body, _, path in messages.inbox(worker):
             account = scrape(f"{frm} {body}")
             if account:
                 incoming_accounts.add(account)
                 folder = accounts / account
             else:
                 folder = instructions
-            dst = unique.path(folder, f"{frm}|{worker}")
-            if path:
-                path.rename(dst)
-            else:
-                dst.write_text(body)
+            path.rename(unique.path(folder, f"{frm}|{worker}"))
 
         for account in incoming_accounts:
             text = ""
