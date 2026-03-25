@@ -64,7 +64,7 @@ def chat(worker, account, after):
     folder = workers / worker / "accounts" / account
 
     if folder.exists():
-        for timestamp, path in chronology(folder):
+        for timestamp, path in chronological.paths(folder):
             if timestamp > after:
                 frm, to, _ = path.name.split("|")
                 if account in [frm, to]:
