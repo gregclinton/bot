@@ -5,12 +5,10 @@ app=$repo/apps/wireless
 
 if [ -f web.py ]; then
     # ---- edits here donls't require a docker build ----
-    for name in unique chronological
+    for name in unique chronological messages
     do
         curl $bot/$name.py -o $name.py
     done
-
-    curl $chat/messages.py -o messages.py
 
     mkdir chat
     for file in chat.js main.css index.html

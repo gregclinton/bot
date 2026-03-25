@@ -1,22 +1,26 @@
-import requests
-import os
+from pathlib import Path
+from shutil import rmtree
+import unique
+import chronological
 import sys
 
-key = "MESSAGES_URL"
-url = os.environ.get(key)
+# messages/to/from|random  body
 
-if not url:
-    print(f"{key} not set.")
-    exit(1)
+messages = Path("messages")
 
 def inbox(to):
-    res = requests.get(f"{url}/messages/{to}")
-    res.raise_for_status()
-    for msg in res.json():
-        yield msg["from"], msg["body"], msg["timestamp"]
+    folder = messages / to
+
+    if folder.exists():
+        for timestamp, path in chronological.paths(folder):
+            frm = path.name.split("|")[0]
+            body = path.read_text()
+            yield frm, body, timestamp, path
+
+        rmtree(folder)
 
 def post(frm, to, body):
-    requests.post(f"{url}/messages", json = { "from": frm, "to": to, "body": body }).raise_for_status()
+    unique.path(messages / to, frm).write_text(body)
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])

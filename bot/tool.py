@@ -8,7 +8,7 @@ from account import scrape
 tool = sys.argv[1]
 
 while True:
-    for frm, body, _ in messages.inbox(tool):
+    for frm, body, _, _ in messages.inbox(tool):
         account = scrape(f"{frm} {body}")
         if account:
             out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
