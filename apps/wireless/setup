@@ -8,5 +8,9 @@ cp $source/bot/*.py .
 for path in "$app"/workers/*
 do
     worker=$(basename "$path")
-    python3 messages.py post HR "$worker" "$(cat "$path")"
+    if [ "$worker" = "Hal" ]; then
+        python3 remote.py post HR "$worker" "$(cat "$path")"
+    else
+        python3 messages.py post HR "$worker" "$(cat "$path")"
+    fi
 done
