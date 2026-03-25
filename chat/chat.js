@@ -59,8 +59,9 @@ const chat = {
                     when.innerHTML = `${date} at ${time}`;
                     when.classList.add('when');
                     top.append(when);
-                    chat.latest = item.timestamp;
                 }
+
+                chat.latest = item.timestamp;
             });
             setTimeout(chat.retrieve, 100);
         })
