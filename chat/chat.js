@@ -9,7 +9,6 @@ const chat = {
         const e = document.getElementById('prompt')
         const prompt = e.value.trim()
 
-        chat.show(chat.account, prompt, new Date());
         e.value = '';
         fetch('/messages', {
             method: 'POST',
@@ -23,54 +22,51 @@ const chat = {
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
-                chat.show(item.from, item.body, new Date(item.timestamp * 1000));
+                const timestamp = new Date(item.timestamp * 1000);
+                const text = marked.parse(item.body);
+                const title = document.createElement('span');
+                const top = document.createElement('div');
+                const bottom = document.createElement('div');
+                const post = document.createElement('div');
+
+                title.innerHTML = from === chat.account ? 'me' : item.from;
+                title.classList.add('name');
+                top.append(title);
+                post.append(top, bottom);
+                post.classList.add('post');
+                document.getElementById('chat').appendChild(post);
+                bottom.innerHTML = text;
+                post.scrollIntoView({ behavior: 'smooth' });
+
+                if (timestamp - chat.latest > 3600) {
+                    const d = new Date(timestamp);
+                    const now = new Date();
+                    const a = new Date(d).setHours(0, 0, 0, 0);
+                    const b = new Date(now).setHours(0, 0, 0, 0);
+                    const c = new Date(new Date(now).setDate(now.getDate() - 1)).setHours(0, 0, 0, 0);
+                    const date = a === b ? 'Today' : a === c ? 'Yesterday' : d.toLocaleDateString('en-US', {
+                        weekday: 'long',
+                        month: 'long',
+                        day: 'numeric'
+                    }) + (d.getFullYear() === now.getFullYear() ? '' : `, ${d.getFullYear()}`);
+                    const time = d.toLocaleTimeString('en-US', {
+                        hour: 'numeric',
+                        minute: '2-digit',
+                        hour12: true
+                    });
+                    const when = document.createElement('span');
+
+                    when.innerHTML = `${date} at ${time}`;
+                    when.classList.add('when');
+                    top.append(when);
+                    chat.latest = timestamp;
+
 
                 if (item.from != chat.account)
                     chat.worker = item.from;
             });
             setTimeout(chat.retrieve, 100);
         })
-    },
-
-    show: (from, body, timestamp) => {
-        const text = marked.parse(body);
-        const title = document.createElement('span');
-        const top = document.createElement('div');
-        const bottom = document.createElement('div');
-        const post = document.createElement('div');
-
-        title.innerHTML = from === chat.account ? 'me' : from;
-        title.classList.add('name');
-        top.append(title);
-        post.append(top, bottom);
-        post.classList.add('post');
-        document.getElementById('chat').appendChild(post);
-        bottom.innerHTML = text;
-        post.scrollIntoView({ behavior: 'smooth' });
-
-        if (timestamp - chat.latest > 3600) {
-            const d = new Date(timestamp);
-            const now = new Date();
-            const a = new Date(d).setHours(0, 0, 0, 0);
-            const b = new Date(now).setHours(0, 0, 0, 0);
-            const c = new Date(new Date(now).setDate(now.getDate() - 1)).setHours(0, 0, 0, 0);
-            const date = a === b ? 'Today' : a === c ? 'Yesterday' : d.toLocaleDateString('en-US', {
-                weekday: 'long',
-                month: 'long',
-                day: 'numeric'
-            }) + (d.getFullYear() === now.getFullYear() ? '' : `, ${d.getFullYear()}`);
-            const time = d.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            });
-            const when = document.createElement('span');
-
-            when.innerHTML = `${date} at ${time}`;
-            when.classList.add('when');
-            top.append(when);
-            chat.latest = timestamp;
-        }
     }
 };
 
