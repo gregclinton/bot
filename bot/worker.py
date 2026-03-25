@@ -1,4 +1,6 @@
-# python3 worker.py run Billing groq openai/gpt-oss-120b
+# set worker=Billing
+# python3 messages.py post HR "$worker" "$(cat ~/bot/apps/wireless/workers/"$worker")"
+# python3 worker.py run "$worker" groq openai/gpt-oss-120b
 
 import llm
 import sys
