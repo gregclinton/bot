@@ -3,6 +3,7 @@ from fastapi.staticfiles import StaticFiles
 import messages
 import time
 import asyncio
+from worker import chat
 
 app = FastAPI()
 
@@ -12,13 +13,13 @@ async def post_message(req: Request):
     messages.post(msg["from"], msg["to"], msg["body"])
     return "ok"
 
-@app.get("/messages/{to}")
-async def get_messages(to: str):
+@app.get("/messages/{worker}/{account}")
+async def get_messages(worker: str, account: str, after: float = 0):
     results = []
     start = time.time()
 
     while True:
-        for frm, body, timestamp, _ in messages.inbox(to):
+        for frm, body, timestamp in chat(worker, account, after):
             results.append({"from": frm, "body": body, "timestamp": timestamp})
         if results or time.time() - start > 60:
             break

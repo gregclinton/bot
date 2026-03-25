@@ -60,5 +60,16 @@ def run(worker, llm_provider, llm_model):
 
         post(worker, to, account, body)
 
+def chat(worker, account, after):
+    folder = workers / worker / "accounts" / account
+
+    if folder.exists():
+        for timestamp, path in chronology(folder):
+            if timestamp > after:
+                frm, to, _ = path.name.split("|")
+                if account in [frm, to]:
+                    body = path.read_text()
+                    yield frm, body, timestamp
+
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])

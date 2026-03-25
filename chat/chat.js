@@ -18,7 +18,7 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.account}`)
+        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.latest / 1000}`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
