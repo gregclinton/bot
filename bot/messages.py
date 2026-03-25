@@ -2,14 +2,12 @@ import requests
 import os
 import sys
 
-key_name = "RUNPOD_POD_ID"
-runpod_id = os.environ.get(key_name)
+key = "MESSAGES_URL"
+url = os.environ.get(key)
 
-if not runpod_id:
-    print(f"{key_name} not set.")
+if not url:
+    print(f"{key} not set.")
     exit(1)
-
-url = f"https://{runpod_id}-4000.proxy.runpod.net"
 
 def inbox(to):
     res = requests.get(f"{url}/messages/{to}")
