@@ -29,7 +29,7 @@ const chat = {
                 const bottom = document.createElement('div');
                 const post = document.createElement('div');
 
-                title.innerHTML = from === chat.account ? 'me' : item.from;
+                title.innerHTML = item.from === chat.account ? 'me' : item.from;
                 title.classList.add('name');
                 top.append(title);
                 post.append(top, bottom);
