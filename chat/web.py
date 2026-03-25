@@ -18,11 +18,9 @@ async def get_messages(worker: str, account: str, after: float = 0):
     results = []
     start = time.time()
 
-    while True:
+    while not results and time.time() - start < 60:
         for frm, body, timestamp in chat(worker, account, after):
             results.append({"from": frm, "body": body, "timestamp": timestamp})
-        if results or time.time() - start > 60:
-            break
         await asyncio.sleep(0.2)
 
     return results
