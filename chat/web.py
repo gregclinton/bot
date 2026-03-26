@@ -7,9 +7,9 @@ import secrets
 
 app = FastAPI()
 
-def get_account(token):
+def get_account(session):
     # for now -- your system should implement
-    return "TLG143623" if token else None
+    return "TLG143623" if session else None
 
 @app.post('/messages')
 async def post_message(req: Request, session: str = Cookie(None)):
