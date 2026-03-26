@@ -12,15 +12,15 @@ def get_account(session):
     return "TLG143623" if session else None
 
 @app.post('/messages')
-async def post_message(req: Request, session: str = Cookie(None)):
+async def post_message(req: Request):
     msg = await req.json()
-    account = get_account(session)
+    account = get_account(req.cookies.get("session"))
     if account:
         messages.post(account, "", msg["body"])
     return "ok"
 
 @app.get("/messages")
-async def get_messages(response: Response, session: str = Cookie(None), after: float = 0):
+async def get_messages(response: Response, after: float, session: str = Cookie(None)):
     posts = []
     start = time.time()
 
