@@ -19,15 +19,14 @@ async def get_messages(response: Response, after: float, session: str = Cookie(N
 
     if not session:
         # for now -- your system should implement
-        session = secrets.token_hex(16)
-        response.set_cookie(key="session", value = session, httponly = True)
-
-    acct = account.get(session)
-    start = time.time()
-    while not posts and time.time() - start < 60:
-        for frm, body, timestamp in messages.chat(acct, after):
-            posts.append({"from": frm, "body": body, "timestamp": timestamp})
-        await asyncio.sleep(0.2)
+        response.set_cookie(key="session", value = secrets.token_hex(16), httponly = True)
+    else:
+        acct = account.get(session)
+        start = time.time()
+        while not posts and time.time() - start < 60:
+            for frm, body, timestamp in messages.chat(acct, after):
+                posts.append({"from": frm, "body": body, "timestamp": timestamp})
+            await asyncio.sleep(0.2)
 
     return posts
 
