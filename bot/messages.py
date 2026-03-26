@@ -23,8 +23,8 @@ def inbox(to):
         rmtree(folder)
 
 def post(frm, to, body):
-    unique.path(messages / to, frm).write_text(body)
     account = scrape(f"{frm} {to}")
+    unique.path(messages / ("Hal" if frm == account else to), frm).write_text(body)
     if account:
         unique.path(chats / account, frm).write_text(body)
 
