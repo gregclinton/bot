@@ -18,7 +18,7 @@ async def post_message(req: Request):
     return "ok"
 
 @app.get("/messages")
-async def get_messages(worker: str, account: str, after: float = 0):
+async def get_messages(after: float = 0):
     results = []
     start = time.time()
 
