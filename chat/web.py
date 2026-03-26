@@ -10,15 +10,12 @@ app = FastAPI()
 
 @app.post("/messages")
 async def post_message(req: Request, session: str = Cookie(None)):
-    msg = await req.json()
-    acct = account.get(session)
-    messages.post(acct, "", msg["body"])
+    messages.post(account.get(session), "", (await req.json())["body"])
     return "ok"
 
 @app.get("/messages")
 async def get_messages(response: Response, after: float, session: str = Cookie(None)):
     posts = []
-    start = time.time()
 
     if not session:
         # for now -- your system should implement
@@ -26,6 +23,7 @@ async def get_messages(response: Response, after: float, session: str = Cookie(N
         response.set_cookie(key="session", value = session, httponly = True)
 
     acct = account.get(session)
+    start = time.time()
     while not posts and time.time() - start < 60:
         for frm, body, timestamp in messages.chat(acct, after):
             posts.append({"from": frm, "body": body, "timestamp": timestamp})
