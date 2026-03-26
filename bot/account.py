@@ -3,6 +3,7 @@ from random import randint
 from pathlib import Path
 
 accounts = Path("accounts")
+folder.mkdir(exist_ok = True)
 
 def scrape(text):
     # you should implement this yourself
