@@ -3,7 +3,6 @@ from fastapi.staticfiles import StaticFiles
 import messages
 import time
 import asyncio
-from worker import chat
 
 app = FastAPI()
 
@@ -23,8 +22,8 @@ async def get_messages(after: float = 0):
     start = time.time()
 
     while not results and time.time() - start < 60:
-        for frm, body, timestamp in chat(worker, account, after):
-            results.append({"from": "me" if frm == account else "ai", "body": body, "timestamp": timestamp})
+        for frm, body, timestamp in messages.chat(account, after):
+            results.append({"from": frm, "body": body, "timestamp": timestamp})
         await asyncio.sleep(0.2)
 
     return results

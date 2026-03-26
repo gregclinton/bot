@@ -4,13 +4,9 @@ import messages
 from pathlib import Path
 from account import scrape
 import unique
+import chronological
 
 workers = Path("workers")
-
-def chronology(*folders):
-    pairs = [(p.stat().st_mtime, p) for f in folders for p in f.iterdir()]
-    pairs.sort()
-    return pairs
 
 def run(worker, llm_provider, llm_model):
     root = workers / worker
@@ -23,8 +19,7 @@ def run(worker, llm_provider, llm_model):
             if account not in f"{to} {body}":
                 body = f"In reference to account: {account}\n{body}"
             unique.path(accounts / account, f"{worker}|{to}").write_text(body)
-            if to != account:
-                messages.post(worker, to, body)
+            messages.post(worker, to, body)
 
     incoming_accounts = set()
 
@@ -40,7 +35,7 @@ def run(worker, llm_provider, llm_model):
     for account in incoming_accounts:
         text = ""
 
-        for timestamp, path in chronology(instructions, accounts / account):
+        for timestamp, path in chronological.paths(instructions, accounts / account):
             frm, to, _ = path.name.split("|")
             body = path.read_text()
             text += f"\nFrom: {frm}\nTo: {to}\n{body}\n"
@@ -61,17 +56,6 @@ def run(worker, llm_provider, llm_model):
                 body += f"{line}\n"
 
         post(worker, to, account, body)
-
-def chat(worker, account, after):
-    folder = workers / worker / "accounts" / account
-
-    if folder.exists():
-        for timestamp, path in chronology(folder):
-            if timestamp > after:
-                frm, to, _ = path.name.split("|")
-                if account in [frm, to]:
-                    body = path.read_text()
-                    yield frm, body, timestamp
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
