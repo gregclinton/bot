@@ -27,7 +27,7 @@ async def get_messages(token: str, after: float = 0):
     if account:
         while not posts and time.time() - start < 60:
             for frm, body, timestamp in messages.chat(account, after):
-                results.append({"from": frm, "body": body, "timestamp": timestamp})
+                posts.append({"from": frm, "body": body, "timestamp": timestamp})
             await asyncio.sleep(0.2)
 
     return {
