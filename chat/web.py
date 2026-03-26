@@ -8,7 +8,7 @@ import account
 
 app = FastAPI()
 
-@app.post('/messages')
+@app.post("/messages")
 async def post_message(req: Request, session: str = Cookie(None)):
     msg = await req.json()
     acct = account.get(session)
