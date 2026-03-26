@@ -1,7 +1,7 @@
 source=~/bot
 app=$source/apps/"$(basename $(dirname "$0"))"
 
-rm -rf workers
+rm -rf workers messages chats
 cp "$app"/tools/* .
 cp $source/bot/*.py .
 
