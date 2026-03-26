@@ -7,20 +7,24 @@ from worker import chat
 
 app = FastAPI()
 
+# for now -- ultimately determined by the system
+account = "TLG143623"
+worker = "Hal"
+
 @app.post('/messages')
 async def post_message(req: Request):
     msg = await req.json()
-    messages.post(msg["from"], msg["to"], msg["body"])
+    messages.post(account, worker, msg["body"])
     return "ok"
 
-@app.get("/messages/{worker}/{account}")
+@app.get("/messages")
 async def get_messages(worker: str, account: str, after: float = 0):
     results = []
     start = time.time()
 
     while not results and time.time() - start < 60:
         for frm, body, timestamp in chat(worker, account, after):
-            results.append({"from": frm, "body": body, "timestamp": timestamp})
+            results.append({"from": "me" if frm == account else "ai", "body": body, "timestamp": timestamp})
         await asyncio.sleep(0.2)
 
     return results

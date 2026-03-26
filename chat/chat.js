@@ -1,8 +1,6 @@
 document.title = 'bot';
 
 const chat = {
-    account: 'TLG143623',
-    worker: 'Hal',
     latest: 0,
 
     send: async () => {
@@ -13,12 +11,12 @@ const chat = {
         fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ from: chat.account, to: chat.worker, body: prompt })
+            body: JSON.stringify({ body: prompt })
         });
     },
 
     retrieve: async () => {
-        fetch(`/messages/${chat.worker}/${chat.account}?after=${chat.latest}`)
+        fetch(`/messages?after=${chat.latest}`)
         .then(res => res.json())
         .then(list => {
             list.forEach(item => {
@@ -29,7 +27,7 @@ const chat = {
                 const bottom = document.createElement('div');
                 const post = document.createElement('div');
 
-                title.innerHTML = item.from === chat.account ? 'me' : item.from;
+                title.innerHTML = item.from;
                 title.classList.add('name');
                 top.append(title);
                 post.append(top, bottom);
