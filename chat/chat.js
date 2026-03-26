@@ -2,14 +2,13 @@ document.title = 'bot';
 
 const chat = {
     latest: 0,
-    token: "",
 
     send: async () => {
         const e = document.getElementById('prompt')
         const prompt = e.value.trim()
 
         e.value = '';
-        fetch(`/messages?token=${chat.token}`, {
+        fetch('/messages', {
             method: 'POST',
             headers:  { 'Content-Type': 'application/json' },
             body: JSON.stringify({ body: prompt })
@@ -17,10 +16,10 @@ const chat = {
     },
 
     retrieve: async () => {
-        fetch(`/messages?token=${chat.token}&after=${chat.latest}`)
+        fetch(`/messages?after=${chat.latest}`)
         .then(res => res.json())
-        .then(res => {
-            res.posts.forEach(item => {
+        .then(posts => {
+            posts.forEach(item => {
                 const timestamp = new Date(item.timestamp * 1000);
                 const text = marked.parse(item.body);
                 const title = document.createElement('span');
@@ -62,7 +61,6 @@ const chat = {
 
                 chat.latest = item.timestamp;
             });
-            chat.token = res.token;
             setTimeout(chat.retrieve, 100);
         })
     }

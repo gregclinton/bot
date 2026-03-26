@@ -1,8 +1,9 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Response, Request, Cookie
 from fastapi.staticfiles import StaticFiles
 import messages
 import time
 import asyncio
+import secrets
 
 app = FastAPI()
 
@@ -11,28 +12,30 @@ def get_account(token):
     return "TLG143623" if token else None
 
 @app.post('/messages')
-async def post_message(req: Request, token: str):
+async def post_message(req: Request, session: str = Cookie(None)):
     msg = await req.json()
-    account = get_account(token)
+    account = get_account(session)
     if account:
         messages.post(account, "", msg["body"])
     return "ok"
 
 @app.get("/messages")
-async def get_messages(token: str, after: float = 0):
+async def get_messages(response Response, session: str = Cookie(None), after: float = 0):
     posts = []
     start = time.time()
 
-    account = get_account(token)
+    if not session:
+        # for now -- your system should implement
+        session = secrets.token_hex(16)
+        response.set_cookie(key="session", value = session, httponly = True)
+
+    account = get_account(session)
     if account:
         while not posts and time.time() - start < 60:
             for frm, body, timestamp in messages.chat(account, after):
                 posts.append({"from": frm, "body": body, "timestamp": timestamp})
             await asyncio.sleep(0.2)
 
-    return {
-        "token": "WEHTKWGTK", # for now -- your system should implement
-        "posts": posts
-    }
+    return posts
 
 app.mount("/", StaticFiles(directory = "chat", html = True))
