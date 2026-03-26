@@ -1,5 +1,3 @@
-# python3 tool.py Balance
-
 import sys
 import messages
 import subprocess
