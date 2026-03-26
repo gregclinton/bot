@@ -20,7 +20,7 @@ async def post_message(req: Request, session: str = Cookie(None)):
     return "ok"
 
 @app.get("/messages")
-async def get_messages(response Response, session: str = Cookie(None), after: float = 0):
+async def get_messages(response: Response, session: str = Cookie(None), after: float = 0):
     posts = []
     start = time.time()
 
