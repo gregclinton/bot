@@ -5,12 +5,27 @@ import time
 import asyncio
 import secrets
 import account
+from pathlib import Path
 
 app = FastAPI()
 
+def get_account(session):
+    # you should implement this yourself
+    folder = Path("sessions") / session
+    folder.mkdir(parents = True, exist_ok = True)
+    path = folder / "account"
+
+    if path.exists():
+        account = path.read_text()
+    else:
+        account = account.create()
+        path.write_text(account)
+
+    return account
+
 @app.post("/messages")
 async def post_message(req: Request, session: str = Cookie(None)):
-    messages.post(account.get(session), "", (await req.json())["body"])
+    messages.post(get_account(session), "", (await req.json())["body"])
     return "ok"
 
 @app.get("/messages")
@@ -23,7 +38,7 @@ async def get_messages(response: Response, after: float, session: str = Cookie(N
     else:
         start = time.time()
         while not posts and time.time() - start < 60:
-            for frm, body, timestamp in messages.chat(account.get(session), after):
+            for frm, body, timestamp in messages.chat(get_account(session), after):
                 posts.append({"from": frm, "body": body, "timestamp": timestamp})
             await asyncio.sleep(0.2)
 
