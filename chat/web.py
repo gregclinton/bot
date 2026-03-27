@@ -16,12 +16,12 @@ def get_account(session):
     path = folder / "account"
 
     if path.exists():
-        account = path.read_text()
+        acct = path.read_text()
     else:
-        account = account.create()
-        path.write_text(account)
+        acct = account.create()
+        path.write_text(acct)
 
-    return account
+    return acct
 
 @app.post("/messages")
 async def post_message(req: Request, session: str = Cookie(None)):
