@@ -8,12 +8,17 @@ import account
 from pathlib import Path
 
 app = FastAPI()
+sessions = Path("sessions")
+
+def get_session(res, session):
+    if not session:
+        session = secrets.token_hex(16)
+        (sessions / session).mkdir(parents = True, exist_ok = True)
+    res.set_cookie(key="session", value = session, max_age = 31536000, httponly = True)
+    return session
 
 def get_account(session):
-    # you should implement this yourself
-    folder = Path("sessions") / session
-    folder.mkdir(parents = True, exist_ok = True)
-    path = folder / "account"
+    path = sessions / session / "account"
 
     if path.exists():
         acct = path.read_text()
@@ -24,24 +29,22 @@ def get_account(session):
     return acct
 
 @app.post("/messages")
-async def post_message(req: Request, session: str = Cookie(None)):
-    messages.post(get_account(session), "", (await req.json())["body"])
+async def post_message(req: Request, res: Response, session: str = Cookie(None)):
+    messages.post(get_account(get_session(res, session)), "", (await req.json())["body"])
     return "ok"
 
 @app.get("/messages")
-async def get_messages(response: Response, after: float, session: str = Cookie(None)):
+async def get_messages(res: Response, after: float, session: str = Cookie(None)):
     posts = []
 
-    if not session:
-        # for now -- your system should implement
-        response.set_cookie(key="session", value = secrets.token_hex(16), httponly = True)
-    else:
+    if session:
         start = time.time()
         while not posts and time.time() - start < 60:
             for frm, body, timestamp in messages.chat(get_account(session), after):
                 posts.append({"from": frm, "body": body, "timestamp": timestamp})
             await asyncio.sleep(0.2)
 
+    get_session(res, session)
     return posts
 
 app.mount("/", StaticFiles(directory = "chat", html = True))
