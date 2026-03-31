@@ -6,10 +6,8 @@ from account import scrape
 import unique
 import chronological
 
-workers = Path("workers")
-
 def run(worker, llm_provider, llm_model):
-    root = workers / worker
+    root = Path("workers") / worker
     instructions = root / "instructions"
     accounts = root / "accounts"
     incoming_accounts = set()
