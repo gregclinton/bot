@@ -12,15 +12,6 @@ def run(worker, llm_provider, llm_model):
     root = workers / worker
     instructions = root / "instructions"
     accounts = root / "accounts"
-
-    def post(worker, to, account, body):
-        body = body.strip()
-        if body:
-            if account not in f"{to} {body}":
-                body = f"In reference to account: {account}\n{body}"
-            unique.path(accounts / account, f"{worker}|{to}").write_text(body)
-            messages.post(worker, to, body)
-
     incoming_accounts = set()
 
     for frm, body, path in messages.inbox(worker):
@@ -47,15 +38,23 @@ def run(worker, llm_provider, llm_model):
         print(f"From: {worker}\n{response}\n")
         body = ""
 
+        def post(body):
+            body = body.strip()
+            if body:
+                if account not in f"{to} {body}":
+                    body = f"In reference to account: {account}\n{body}"
+                unique.path(accounts / account, f"{worker}|{to}").write_text(body)
+                messages.post(worker, to, body)
+
         for line in response.splitlines():
             if line.startswith("To:"):
-                post(worker, to, account, body)
+                post(body)
                 to = line.split(':')[1].strip()
                 body = ""
             elif not line.startswith("From:"):
                 body += f"{line}\n"
 
-        post(worker, to, account, body)
+        post(body)
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
