@@ -38,23 +38,23 @@ def run(worker, llm_provider, llm_model):
         print(f"From: {worker}\n{response}\n")
         body = ""
 
-        def post(body):
-            body = body.strip()
-            if body:
-                if account not in f"{to} {body}":
-                    body = f"In reference to account: {account}\n{body}"
-                unique.path(accounts / account, f"{worker}|{to}").write_text(body)
-                messages.post(worker, to, body)
+        def post():
+            stripped = body.strip()
+            if stripped:
+                if account not in f"{to} {stripped}":
+                    stripped = f"In reference to account: {account}\n{stripped}"
+                unique.path(accounts / account, f"{worker}|{to}").write_text(stripped)
+                messages.post(worker, to, stripped)
 
         for line in response.splitlines():
             if line.startswith("To:"):
-                post(body)
+                post()
                 to = line.split(':')[1].strip()
                 body = ""
             elif not line.startswith("From:"):
                 body += f"{line}\n"
 
-        post(body)
+        post()
 
 if __name__ == "__main__":
     globals()[sys.argv[1]](*sys.argv[2:])
