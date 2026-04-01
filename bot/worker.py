@@ -26,7 +26,7 @@ def run(worker, llm_provider, llm_model):
 
         for timestamp, path in chronological.paths(instructions, accounts / account):
             frm, to, _ = path.name.split("|")
-            body = path.read_text().strip()
+            body = path.read_text()
             text += f"\n\nFrom: {frm}\nTo: {to}\n{body}"
 
         to = frm

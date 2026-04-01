@@ -24,6 +24,7 @@ def inbox(to):
 
 def post(frm, to, body):
     account = scrape(f"{frm} {to}")
+    body = body.strip()
     unique.path(messages / ("Hal" if frm == account else to), frm).write_text(body)
     if account:
         unique.path(chats / account, frm).write_text(body)
