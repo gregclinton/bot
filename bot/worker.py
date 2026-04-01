@@ -37,7 +37,7 @@ def run(worker, llm_provider, llm_model):
         body = ""
 
         def post():
-            if body:
+            if body.strip():
                 text = f"In reference to account: {account}\n{body}" if account not in f"{to} {body}" else body
                 unique.path(accounts / account, f"{worker}|{to}").write_text(text)
                 messages.post(worker, to, text)
@@ -48,7 +48,7 @@ def run(worker, llm_provider, llm_model):
                 to = line.split(':')[1].strip()
                 body = ""
             elif not line.startswith("From:"):
-                body += f"\n{line}".rstrip()
+                body += f"\n{line}"
 
         post()
 
