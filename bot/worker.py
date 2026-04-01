@@ -48,7 +48,7 @@ def run(worker, llm_provider, llm_model):
                 to = line.split(':')[1].strip()
                 body = ""
             elif not line.startswith("From:"):
-                body += f"\n{line}"
+                body += f"\n{line}".rstrip()
 
         post()
 
