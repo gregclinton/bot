@@ -32,7 +32,7 @@ def run(worker, llm_provider, llm_model):
         to = frm
         text = text.replace("<account>", account)
         text += f"\nFrom: {worker}"
-        response = llm.invoke(llm_provider, llm_model, "", text).strip()
+        response = llm.invoke(llm_provider, llm_model, "", text)
         print(f"From: {worker}\n{response}\n")
         body = ""
 

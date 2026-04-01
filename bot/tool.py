@@ -9,7 +9,7 @@ for frm, body, _ in messages.inbox(tool):
     account = scrape(f"{frm} {body}")
     if account:
         out = subprocess.run(["sh", tool, account, body], capture_output = True, text = True)
-        result = (out.stdout + out.stderr).strip()
+        result = (out.stdout + out.stderr)
 
         if account not in result:
             result = f"In reference to account: {account}\n{result}"
