@@ -23,6 +23,7 @@ def invoke(provider, model, sys, user):
             "deepinfra": "api.deepinfra.com/v1/openai",
             "nebius": "api.tokenfactory.nebius.com/v1",
             "cerebras": "api.cerebras.ai/v1",
+            "vercel": "ai-gateway.vercel.sh/v1",
             "taalas": "api.taalas.com/v1",
         }[provider])}/chat/completions""",
         headers = {
