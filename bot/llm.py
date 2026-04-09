@@ -22,6 +22,7 @@ def invoke(provider, model, sys, user):
             "openrouter": "openrouter.ai/api/v1",
             "deepinfra": "api.deepinfra.com/v1/openai",
             "nebius": "api.tokenfactory.nebius.com/v1",
+            "cerebras": "api.cerebras.ai/v1",
             "taalas": "api.taalas.com/v1",
         }[provider])}/chat/completions""",
         headers = {
