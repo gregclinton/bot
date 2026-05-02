@@ -25,6 +25,7 @@ def invoke(provider, model, sys, user):
             "cerebras": "api.cerebras.ai/v1",
             "vercel": "ai-gateway.vercel.sh/v1",
             "taalas": "api.taalas.com/v1",
+            "baseten": "inference.baseten.co/v1",
         }[provider])}/chat/completions""",
         headers = {
             'Authorization': f"Bearer {key}",
